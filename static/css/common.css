@@ -1,0 +1,53 @@
+html,body {
+  /*height: 100%;*/
+  user-select: none;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  line-height: 1.6;
+  background-color: #ffffff;
+  color: #4a4a4a;
+  font-size: 14px;
+  font-family: Arial,'微软雅黑',Helvetica Neue,Helvetica,sans-serif;
+  -webkit-overflow-scrolling: touch;
+  overflow-scrolling: touch;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+
+a img {
+  border: 0;
+}
+
+a {
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-appearance: none;
+}
+
+@font-face {
+  font-weight: 400;
+  font-style: normal;
+  font-size: 14px;
+  font-family: Arial,'微软雅黑',Helvetica Neue,Helvetica,sans-serif;
+
+}
+
+input,textarea{
+  border: 0;
+  outline: 0;
+  -webkit-appearance:none;
+  -webkit-tap-highlight-color: transparent;
+  font-size: inherit;
+  color: inherit;
+}
+
+.message_btn_color{
+
+  color: #eb5e26;
+
+}

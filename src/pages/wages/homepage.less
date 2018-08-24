@@ -1,0 +1,203 @@
+.homepage{
+  background-color: rgb(245,244,243);
+  min-height: calc(100vh - 55px);
+  .money_detail{
+    width: 100%;
+    height: 180px;
+    box-sizing: border-box;
+    background-color: rgb(234,94,38);
+    background-image: url("/static/images/jx_wave.png");
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: 100%;
+    padding: 15px 6%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content : space-around;
+    .balance{
+      position: relative;
+
+      .money{
+        p{
+          color: rgb(255,199,175);
+          font-size: 14px;
+          padding: 20px 0;
+        }
+      }
+      .details_money{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        div{
+          font-size: 32px;
+          color: white;
+        }
+      }
+      .show_img{
+        width: 24px;
+        height: 24px;
+        img{
+          width: 100%;
+          height: 100%;
+          vertical-align: top;
+        }
+      }
+
+    }
+
+  }
+  .money_detail_month{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 4%;
+    text-align: left;
+    .filter{
+      display: inline-block;
+      justify-content: space-around;
+      align-items: center;
+      border: 1px solid rgb(255,134,0);
+      border-radius: 5px;
+      padding: 0 7px;
+      position: relative;
+      span{
+        color: rgb(255,134,0);
+        vertical-align: middle;
+        line-height: 22px;
+
+      }
+
+      img{
+        width: 24px;
+        height: 24px;
+        vertical-align: middle;
+      }
+      .dropdown_list{
+        display: none;
+        position: absolute;
+        top: 130%;
+        left: -5px;
+        z-index: 99;
+        background-color: white;
+        border-radius: 5px;
+        width: 100px;
+        box-shadow: #dddddd 1px 1px 1px;
+        .list_one{
+          padding: 10px 5px;
+          position: relative;
+          span{
+            color: #4a4a4a;
+
+          }
+
+          img{
+            width: 18px;
+            height: 18px;
+
+          }
+
+        }
+      }
+
+    }
+
+    .money_detail_month_one{
+      width: 100%;
+      margin: 10px 0;
+      position: relative;
+      background-color: white;
+      padding: 10px 10px 10px 15px;
+      box-sizing: border-box;
+      border-radius : 5px;
+      overflow: hidden;
+      &:before{
+        content: '';
+        display: block;
+        width: 1px;
+        height: 100%;
+        border-left: 4px solid rgb(255,169,79);
+        position: absolute;
+        top: 0;
+        left: 0;
+
+      }
+      .money_detail_title{
+        display: flex;
+        align-items: center;
+        position: relative;
+        padding: 0 0 10px;
+        &:after{
+          content: '';
+          display: block;
+          width: 100%;
+          height: 1px;
+          border-top: 1px solid rgb(247,247,246);
+          position: absolute;
+          bottom: 0;
+          left: 0;
+
+        }
+        .title{
+          display: flex;
+          align-items: center;
+          margin-right: auto;
+          img{
+            width: 18px;
+            height: 18px;
+            margin-right: 15px;
+          }
+        }
+        .confirm{
+          color: rgb(255,117,0);
+
+        }
+
+      }
+      .money_detail_content{
+        width: 100%;
+        box-sizing: border-box;
+        padding: 10px 0 5px;
+
+        p{
+          padding: 5px 0;
+          color: rgb(167,163,158);
+          &.company{
+            span{
+              color: rgb(109,107,102);
+
+            }
+          }
+          &.money{
+
+            font-size: 16px;
+            span{
+
+              color: rgb(255,127,0);
+            }
+          }
+
+        }
+      }
+    }
+
+  }
+}
+
+
+.mint-msgbox-content .mint-msgbox-message{
+  line-height: 22px;
+  font-size: 12px;
+
+}
+.mint-msgbox-btns .mint-msgbox-cancel{
+  color: rgb(187,186,186);
+  font-size: 16px;
+}
+.mint-msgbox-btns .mint-msgbox-confirm{
+  font-size: 16px;
+  color: rgb(255,146,29);
+}
+.dropdown{
+  transition: all 0.5s;
+}

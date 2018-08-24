@@ -1,0 +1,655 @@
+<template>
+
+  <div class="homepage">
+    <!-- 余额 -->
+    <div class="money_detail">
+      <div class="balance">
+        <div class="money">
+          <p>工资余额（元）</p>
+
+        </div>
+
+        <div class="details_money">
+          <div>{{lookWages ? totalSalary : '******'}}</div>
+          <div class="show_img" v-on:click="balanceShowChange">
+            <img src="/static/images/jx_open_bright.png" v-if="lookWages">
+            <img src="/static/images/jx_close_bright.png" v-else>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="money_detail_month">
+      <!-- 下拉 -->
+      <div class="filter" v-on:click="dropdown">
+        <span>筛选</span>
+        <img src="/static/images/go_yellow.png" class="dropdown">
+        <div class="dropdown_list">
+          <div class="list_one">
+            <img src="/static/images/jx_down.png">
+            <span>全部</span>
+          </div>
+          <div class="list_one">
+            <img src="/static/images/jx_drop.png">
+            <span>嘉福平台</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 工资 -->
+      <div class="money_detail_month_one" v-for="item in wagesList">
+
+        <div class="money_detail_title">
+          <div class="title">
+            <img src="/static/images/jx_money.png">
+            <span>{{item.salaryMonth}}工资</span>
+          </div>
+          <div class="confirm">{{item.state}}</div>
+        </div>
+        <div class="money_detail_content">
+          <p class="company">发薪企业：<span>{{item.entName}}</span></p>
+          <p class="money">实发工资：<span>{{lookWages ? item.realAmount : '******'}}元</span></p>
+        </div>
+    </div>
+
+    </div>
+  </div>
+</template>
+
+<script>
+
+  export default {
+
+    name: 'homepage',
+
+    data () {
+
+      return {
+
+        firstOptions: '筛选',//默认选项
+
+        selectSalary: true,//选择企业 true为隐藏 false为显示
+
+        selectArea: false,
+
+        wages: '--.--',//获取用户余额信息
+
+        moreText: '没有更多数据啦~',//加载更多数据
+
+        salaryDetailId: '',//发薪企业明细id
+
+        wagesList: [],//发薪企业列表
+
+        thisWagesListLength: 0,//获取当前发薪企业列表的长度
+
+        selectSalaryOptions: [],//获取企业列表
+
+        isAllCom: true,//判断是不是全部企业
+
+        entId: '',//发薪企业id
+
+        pageNum: 1,//初始值为2
+
+        pageSize: 10,//一页的数量
+
+        hasMoreData: true,//是否可以加载更多
+
+        noData: true,//是否显示暂无数据 true为隐藏 false为显示
+
+        userName: '',//姓名
+
+        idNumber: '',//身份证号码
+
+        dataText: true,//true为隐藏 false为显示
+
+        hasCompany: false,//有没有企业
+
+        lookWages: true,//看不看余额
+
+        type: '',//是否认证锁定
+
+        num: '',//选择全部&单个企业 1为单个企业 2为全部
+
+        needRefresh: true,//刷新的开关 false为不刷新 true为刷新
+
+        frozenSalary: '--.--',//冻结资金
+
+        totalSalary: '--.--',//工资余额
+
+
+      }
+
+    },
+    mounted(){
+
+      //重新调用data方法
+      Object.assign(this.$data, this.$options.data())
+
+      /**
+       * 接口：工资提醒
+       * 请求方式：GET
+       * 接口：/salary/home/selecttiptype
+       * 入参：null
+       **/
+
+      this.$http({
+
+        method: 'post',
+
+        url:this.API_HOST+'/jx/action/login',
+
+        headers:{
+
+          'Content-type': 'application/x-www-form-urlencoded'
+        },
+
+
+      }).then((res)=>{
+
+
+        var thisType = res.data.data[0].type;
+
+
+        //存储entId
+        this.setStorage('entId', res.data.data[0].entId);
+
+
+        //存储salaryId
+        this.setStorage('salaryDetailId', res.data.data[0].salaryDetailId);
+
+        //存储type
+        this.setStorage('thisType', res.data.data[0].type);
+
+        //console.log('发薪'+wx.getStorageSync('salaryDetailId'))
+
+
+        //是否查看工资条
+        if (thisType == 1) {
+
+
+          this.$toast({
+            message: '加载中',
+            iconClass: 'icon icon-loading',
+
+          });
+
+
+
+          var thisEnName = res.data.data[0].entName;
+
+          var thisSalaryMonth = res.data.data[0].salaryMonth;
+
+          /*console.log('发薪企业id'+that.data.salaryDetailId);*/
+
+
+          setTimeout(function () {
+
+
+            setTimeout(() => {
+              instance.close();
+            }, 1500);
+
+            this.$messagebox({
+              title: '提示',
+              message: thisEnName + '邀请您查看' + thisSalaryMonth + '工资',
+              showCancelButton: true,
+              showConfirmButton: true,
+              confirmButtonText: '暂不查看',
+              cancelButtonText: '查看',
+              closeOnClickModal:true,
+              confirmButtonClass:'orange_color_btn'
+            }).then(action => {
+
+              if (action == 'confirm') {
+
+                console.log('确定');
+
+                /**
+                 * 接口：锁定状态查询
+                 * 请求方式：POST
+                 * 接口：/salary/home/selectlockstatus
+                 * 入参：null
+                 **/
+
+                this.$http({
+
+                  method: 'get',
+
+                  url:this.API_HOST+'/salary/home/selectlockstatus',
+
+
+                }).then((res)=>{
+
+                    this.type = res.data.data.type
+
+                  if(this.type=='1'){
+
+ /*                   wx.navigateTo({
+
+                      url: '../../common/wages_authentication/authentication'
+
+                    })*/
+
+                  }
+
+                  else if(res.data.data.type=='0'){
+
+              /*      wx.navigateTo({
+
+                      url:'../../user/locked/locked'
+                    })*/
+
+                  }
+
+
+
+                }).catch((res)=>{
+
+
+
+                })
+
+
+
+              }
+            }).catch(err => {
+              if (err == 'cancel') {
+
+                console.log('取消');
+
+                //调用暂不查看工资条
+                noSeeSalary();
+
+                this.$toast({
+
+                  message: '必须加入企业才可查看工资条哦~关闭后可在“我的发薪企业”中继续加入',
+                  duration: 1500
+
+                })
+              }
+            });
+
+
+          },1000)
+
+
+
+
+
+        }
+
+        //是否加入企业
+        else if (thisType == 2) {
+
+
+
+          this.$toast({
+            message: '加载中',
+            iconClass: 'icon icon-loading',
+
+          });
+
+
+          var thisEnName = res.data.data[0].entName;
+
+          setTimeout(function () {
+
+
+            setTimeout(() => {
+              instance.close();
+            }, 1500);
+
+            this.$messagebox({
+              title: '提示',
+              message: thisEnName + '邀请您查看' + thisSalaryMonth + '工资',
+              showCancelButton: true,
+              showConfirmButton: true,
+              confirmButtonText: '暂不查看',
+              cancelButtonText: '查看',
+              closeOnClickModal:true,
+              confirmButtonClass:'orange_color_btn'
+            }).then(action => {
+
+              if (action == 'confirm') {
+
+                console.log('确定');
+
+                /**
+                 * 接口：锁定状态查询
+                 * 请求方式：POST
+                 * 接口：/salary/home/selectlockstatus
+                 * 入参：null
+                 **/
+
+                this.$http({
+
+                  method: 'get',
+
+                  url:this.API_HOST+'/salary/home/selectlockstatus',
+
+
+                }).then((res)=>{
+
+                  this.type = res.data.data.type
+
+                  if(this.type=='1'){
+
+                    /*                   wx.navigateTo({
+
+                     url: '../../common/wages_authentication/authentication'
+
+                     })*/
+
+                  }
+
+                  else if(res.data.data.type=='0'){
+
+                    /*      wx.navigateTo({
+
+                     url:'../../user/locked/locked'
+                     })*/
+
+                  }
+
+
+
+                }).catch((res)=>{
+
+
+
+                })
+
+
+
+              }
+            }).catch(err => {
+              if (err == 'cancel') {
+
+                console.log('取消');
+
+                //调用暂不加入企业
+                noJoinSalary();
+
+                this.$toast({
+
+                  message: '必须加入企业才可查看工资条哦~关闭后可在“我的工作单位”',
+                  duration: 1500
+
+                })
+              }
+            });
+
+
+          },1000)
+
+
+        }
+
+        //未收到任何邀请
+        else if (thisType == 0) {
+
+          setTimeout(() => {
+            instance.close();
+          }, 1500);
+
+
+        }
+
+
+        //获取entId
+        var thisEntId = this.getStorage('entId');
+
+        //获取发薪企业id
+        var thisSalaryDetailId = this.getStorage('salaryDetailId');
+
+
+
+        //暂不加入企业
+        function noJoinSalary() {
+
+          /**
+           * 接口：暂不加入企业
+           * 请求方式：POST
+           * 接口：/salary/home/updatejoinentstatus
+           * 入参：entId
+           **/
+
+          this.$http({
+
+            method: 'post',
+
+            url:this.API_HOST+'/salary/home/updatejoinentstatus',
+
+            headers:{
+
+              'Content-type': 'application/x-www-form-urlencoded'
+            },
+
+            params: {
+
+              entId: thisEntId
+
+            }
+          }).then((res)=>{
+
+
+
+          }).catch((res)=>{
+
+
+
+          })
+
+
+
+
+
+        }
+
+        //暂不看工资单
+        function noSeeSalary() {
+
+          /**
+           * 接口：暂不查看工资条
+           * 请求方式：POST
+           * 接口：salary/home/updateselectsalary
+           * 入参：salaryDetailId
+           **/
+          wx.request({
+
+            url: thisNoSeeUrl,
+
+            method: 'POST',
+
+            data: json2FormFn.json2Form({
+
+              salaryDetailId: thisSalaryDetailId
+
+            }),
+
+            header: {
+
+              'content-type': 'application/x-www-form-urlencoded',// post请求
+
+              'jxsid': jx_sid,
+
+              'Authorization': Authorization
+
+            },
+
+            success: function (res) {
+
+              console.log(res.data);
+
+
+
+
+
+            },
+
+
+            fail: function (res) {
+              console.log(res)
+            }
+
+          })
+
+
+        }
+
+        //发薪企业
+        function getSelectEnt() {
+
+
+          var Authorization = wx.getStorageSync('Authorization');
+          /**
+           * 接口：发薪企业
+           * 请求方式：GET
+           * 接口：/user/account/getbalance
+           * 入参：null
+           **/
+          wx.request({
+
+            url: thisSalaryUrl,
+
+            method: 'GET',
+
+            header: {
+
+              'jxsid': jx_sid,
+
+              'Authorization': Authorization
+
+            },
+
+            success: function (res) {
+
+              console.log(res.data);
+
+              app.globalData.repeat(res.data.code,res.data.msg);
+
+              if(res.data.code=='3001') {
+
+                //console.log('登录');
+
+                setTimeout(function () {
+
+                  wx.reLaunch({
+
+                    url:'../../common/signin/signin'
+                  })
+
+                },1500)
+
+                /*                          wx.showToast({
+                 title: res.data.msg,
+                 icon: 'none',
+                 duration: 1500,
+                 success:function () {
+
+
+
+                 }
+
+                 })*/
+
+                return false
+
+
+              }
+              else if(res.data.code=='3004'){
+
+                var Authorization = res.data.token.access_token;//Authorization数据
+
+                wx.setStorageSync('Authorization', Authorization);
+
+                that.onShow()
+
+                return false
+              }
+              else {
+
+                var thisEntName = res.data.data;
+
+                //console.log(res.data.data)
+
+                that.setData({
+
+                  selectSalaryOptions: thisEntName,
+
+                });
+
+
+
+
+              }
+
+
+
+            },
+
+
+            fail: function (res) {
+
+              console.log(res)
+
+            }
+
+          })
+
+
+        }
+
+        //分页
+        that.chooseEntId();
+
+        //发薪企业
+        getSelectEnt();
+
+
+      }).catch((res)=>{
+
+
+      })
+
+
+
+    },
+    methods: {
+
+      balanceShowChange: function () {
+
+        this.lookWages = !this.lookWages
+
+      },
+      dropdown: function () {
+
+        var img = document.getElementsByClassName('dropdown')[0]
+
+        var div = document.getElementsByClassName('dropdown_list')[0]
+
+        if (img.style.transform === '') {
+
+          img.style.transform = 'rotate(180deg)'
+
+          div.style.display = 'block'
+
+        } else {
+
+          img.style.transform = ''
+
+          div.style.display = ''
+
+        }
+      }
+    }
+  }
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style lang="less" scoped>
+  @import "homepage.less";
+
+</style>

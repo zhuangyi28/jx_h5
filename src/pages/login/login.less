@@ -1,0 +1,88 @@
+body{
+  color: white;
+}
+.login{
+  background-color: white;
+  width: 100%;
+  .login_form{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 4%;
+    margin: 60px 0 30px 0;
+    .company_logo{
+      width: 100px;
+      height: 100px;
+      margin: auto;
+      padding: 25px 0;
+
+      img{
+        width: 100%;
+        height: 100%;
+
+      }
+    }
+
+  }
+  .login_tel,.login_password{
+    width: 100%;
+    background-color: rgb(249,249,251);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 5px 0 15px;
+
+    input{
+
+      height: 40px;
+      border: 0;
+      flex: 1;
+      background-color: rgb(249,249,251);
+      font-size: 16px;
+      color: #4a4a4a;
+      &::placeholder{
+        font-size: 16px;
+        color: rgb(171,171,171);
+      }
+
+      &:focus{
+
+        outline: none;
+      }
+
+    }
+
+    img{
+
+      display: inline-block;
+      width: 15px;
+      height: 18px;
+      margin: 0 20px;
+
+    }
+
+
+
+
+  }
+  .login_button{
+    width: 100%;
+    padding: 0 4%;
+    box-sizing: border-box;
+    .another_page{
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      margin: 10px 0;
+      color: #8a8a8a;
+      font-size: 16px;
+      a{
+        color: #8a8a8a;
+        text-decoration: none;
+        font-size: 14px;
+      }
+    }
+  }
+}
+

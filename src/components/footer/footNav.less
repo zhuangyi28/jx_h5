@@ -1,0 +1,36 @@
+.tabs {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background-color: #f5f5f9;
+  border-top: 1px solid #ddd;
+  width: 100%;
+  & > ul, & > ul > li {
+    margin: 0;
+    padding: 0;
+  }
+  ul {
+    display: table;
+    width: 100%;
+    & > li {
+      text-align: center;
+      font-size: 16px;
+      display: table-cell;
+      padding: 4px 12px;
+      cursor: pointer;
+      color:#ababab;
+      line-height: 24px;
+      &.router-link-active{
+        color: #eb5e26;
+      }
+      & > div {
+        font-size: 12px;
+        & > i {
+          font-size: 30px;
+          margin-top: 8px;
+          display: block;
+        }
+      }
+    }
+  }
+}

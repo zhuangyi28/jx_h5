@@ -1,0 +1,99 @@
+.register {
+
+  .register_input{
+    width: 100%;
+    padding: 20px 4%;
+    box-sizing: border-box;
+    >div{
+      width: 100%;
+      box-sizing: border-box;
+      margin: 15px 0;
+      background-color: rgb(249,249,251);
+      display: flex;
+      border-radius: 5px;
+      align-items: center;
+      input{
+        height: 40px;
+        border: 0;
+        font-size: 16px;
+        flex: 1;
+        background-color: rgb(249,249,251);
+        color: #4a4a4a;
+        &:focus {
+          outline: none;
+        }
+        &::placeholder{
+
+          font-size: 16px;
+          color: rgb(171,171,171);
+
+        }
+      }
+      img{
+        width: 18px;
+        height: 22px;
+        margin: 0 15px;
+
+      }
+    }
+    .register_code{
+
+      .code{
+
+        width: 180px;
+
+
+      }
+
+      span{
+
+        background-color: transparent;
+        border: 0;
+        color: rgb(240,156,68);
+        padding: 0 10px;
+        position: relative;
+        &:focus{
+
+          outline: none;
+
+        }
+
+        &:before{
+          content: '';
+          width: 1px;
+          height: 40px;
+          border-left: 1px solid rgb(237,236,236);
+          position: absolute;
+          left: 0;
+          top: -8px;
+
+
+        }
+
+
+      }
+
+    }
+
+  }
+
+  .register_button{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 4%;
+
+    .register_ps{
+      text-align: center;
+      color: rgb(156,156,156);
+      margin: 10px 0;
+      font-size: 14px;
+
+      span{
+        color: rgb(240,156,68);
+
+      }
+    }
+  }
+
+
+}
