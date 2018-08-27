@@ -29,7 +29,7 @@
 </template>
 <script>
 
-  import orangeBtn from '../../components/orange_btn/orange_btn'
+  import orangeBtn from '../../../components/orange_btn/orange_btn'
 
   export default {
     name: 'register',

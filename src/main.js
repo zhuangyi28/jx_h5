@@ -10,9 +10,9 @@ import router from './router'
 //http.js文件，即全局配置axios请求，与main.js在同级目录
 import axios from 'axios'
 //封装的插件
-import api from './utils/index'
+import api from './api/index'
 //joson转表单对象
-import json2Form from './utils/json2Form'
+import json2Form from './api/json2Form'
 //Md5
 import MD5 from '../static/js/MD5.min'
 //导入 mint-ui
@@ -20,7 +20,7 @@ import MintUI from 'mint-ui'
 
 import VueWechatTitle from 'vue-wechat-title';
 import VueResource from 'vue-resource'
- import Filters from './utils/filters'
+import Filters from './api/filters'
 //跨域
 Vue.prototype.API_HOST = '/api';
 

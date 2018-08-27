@@ -10,7 +10,8 @@
         </div>
 
         <div class="details_money">
-          <div>{{lookWages ? totalSalary : '******'}}</div>
+          <div v-if="lookWages">{{totalSalary|thousandBitSeparator}}</div>
+          <div v-else>******</div>
           <div class="show_img" v-on:click="balanceShowChange">
             <img src="/static/images/jx_open_bright.png" v-if="lookWages">
             <img src="/static/images/jx_close_bright.png" v-else>
@@ -24,16 +25,16 @@
     <div class="money_detail_month">
       <!-- 下拉 -->
       <div class="filter" v-on:click="dropdown">
-        <span>筛选</span>
+        <span>{{firstOptions}}</span>
         <img src="/static/images/go_yellow.png" class="dropdown">
         <div class="dropdown_list">
-          <div class="list_one">
+          <div class="list_one" :class="num==1? 'is_checked':''" v-on:click="mySelectAll" v-bind:data-num='1'>
             <img src="/static/images/jx_down.png">
             <span>全部</span>
           </div>
-          <div class="list_one">
+          <div class="list_one" :class="item.entId==entId&&num==2?'is_checked':''" v-on:click="mySelect" v-bind:data-id="item.entId" v-bind:data-salary="item.entName" v-for="item in selectSalaryOptions">
             <img src="/static/images/jx_drop.png">
-            <span>嘉福平台</span>
+            <span>{{item.entName}}</span>
           </div>
         </div>
       </div>
@@ -41,6 +42,7 @@
       <!-- 工资 -->
       <div class="money_detail_month_one" v-for="item in wagesList">
 
+        <div :class="item.state == '已确认'? '':'already_confirm'" v-on:click="clickSeeList" v-bind:data-detail="item.salaryDetailId">
         <div class="money_detail_title">
           <div class="title">
             <img src="/static/images/jx_money.png">
@@ -50,10 +52,10 @@
         </div>
         <div class="money_detail_content">
           <p class="company">发薪企业：<span>{{item.entName}}</span></p>
-          <p class="money">实发工资：<span>{{lookWages ? item.realAmount : '******'}}元</span></p>
+          <p class="money">实发工资：<span v-if="lookWages">{{item.realAmount|thousandBitSeparator}}元</span><span v-else>******元</span></p>
         </div>
     </div>
-
+    </div>
     </div>
   </div>
 </template>
@@ -136,31 +138,30 @@
 
       this.$http({
 
-        method: 'post',
+        method: 'get',
 
-        url:this.API_HOST+'/jx/action/login',
-
-        headers:{
-
-          'Content-type': 'application/x-www-form-urlencoded'
-        },
+        url:this.API_HOST+'/salary/home/selecttiptype',
 
 
       }).then((res)=>{
 
+          console.log(res.data)
+
+           console.log('成功')
+
 
         var thisType = res.data.data[0].type;
 
-
         //存储entId
         this.setStorage('entId', res.data.data[0].entId);
-
 
         //存储salaryId
         this.setStorage('salaryDetailId', res.data.data[0].salaryDetailId);
 
         //存储type
         this.setStorage('thisType', res.data.data[0].type);
+
+
 
         //console.log('发薪'+wx.getStorageSync('salaryDetailId'))
 
@@ -390,9 +391,12 @@
         //未收到任何邀请
         else if (thisType == 0) {
 
+
           setTimeout(() => {
             instance.close();
           }, 1500);
+
+
 
 
         }
@@ -403,8 +407,6 @@
 
         //获取发薪企业id
         var thisSalaryDetailId = this.getStorage('salaryDetailId');
-
-
 
         //暂不加入企业
         function noJoinSalary() {
@@ -454,159 +456,38 @@
           /**
            * 接口：暂不查看工资条
            * 请求方式：POST
-           * 接口：salary/home/updateselectsalary
+           * 接口：/salary/home/updateselectsalary
            * 入参：salaryDetailId
            **/
-          wx.request({
 
-            url: thisNoSeeUrl,
+          this.$http({
 
-            method: 'POST',
+            method: 'post',
 
-            data: json2FormFn.json2Form({
+            url:this.API_HOST+'/salary/home/updateselectsalary',
+
+            headers:{
+
+              'Content-type': 'application/x-www-form-urlencoded'
+            },
+
+            params: {
 
               salaryDetailId: thisSalaryDetailId
 
-            }),
-
-            header: {
-
-              'content-type': 'application/x-www-form-urlencoded',// post请求
-
-              'jxsid': jx_sid,
-
-              'Authorization': Authorization
-
-            },
-
-            success: function (res) {
-
-              console.log(res.data);
-
-
-
-
-
-            },
-
-
-            fail: function (res) {
-              console.log(res)
             }
+          }).then((res)=>{
+
+
+
+          }).catch((res)=>{
+
+
 
           })
 
 
         }
-
-        //发薪企业
-        function getSelectEnt() {
-
-
-          var Authorization = wx.getStorageSync('Authorization');
-          /**
-           * 接口：发薪企业
-           * 请求方式：GET
-           * 接口：/user/account/getbalance
-           * 入参：null
-           **/
-          wx.request({
-
-            url: thisSalaryUrl,
-
-            method: 'GET',
-
-            header: {
-
-              'jxsid': jx_sid,
-
-              'Authorization': Authorization
-
-            },
-
-            success: function (res) {
-
-              console.log(res.data);
-
-              app.globalData.repeat(res.data.code,res.data.msg);
-
-              if(res.data.code=='3001') {
-
-                //console.log('登录');
-
-                setTimeout(function () {
-
-                  wx.reLaunch({
-
-                    url:'../../common/signin/signin'
-                  })
-
-                },1500)
-
-                /*                          wx.showToast({
-                 title: res.data.msg,
-                 icon: 'none',
-                 duration: 1500,
-                 success:function () {
-
-
-
-                 }
-
-                 })*/
-
-                return false
-
-
-              }
-              else if(res.data.code=='3004'){
-
-                var Authorization = res.data.token.access_token;//Authorization数据
-
-                wx.setStorageSync('Authorization', Authorization);
-
-                that.onShow()
-
-                return false
-              }
-              else {
-
-                var thisEntName = res.data.data;
-
-                //console.log(res.data.data)
-
-                that.setData({
-
-                  selectSalaryOptions: thisEntName,
-
-                });
-
-
-
-
-              }
-
-
-
-            },
-
-
-            fail: function (res) {
-
-              console.log(res)
-
-            }
-
-          })
-
-
-        }
-
-        //分页
-        that.chooseEntId();
-
-        //发薪企业
-        getSelectEnt();
 
 
       }).catch((res)=>{
@@ -615,15 +496,341 @@
       })
 
 
+        /**
+         * 接口：发薪企业
+         * 请求方式：GET
+         * 接口：/salary/home/getselectent
+         * 入参：null
+         **/
+        this.$http({
+
+          method: 'get',
+
+          url:this.API_HOST+'/salary/home/getselectent',
+
+
+        }).then((res)=>{
+
+          console.log(res.data)
+
+          var thisEntName = res.data.data;
+
+          this.selectSalaryOptions= thisEntName
+
+
+        }).catch((res)=>{})
+
+
+
+      //分页
+      this.chooseEntId();
+
+
+
+
+      /**
+       * 接口：获取用户工资金额状况
+       * 请求方式：GET
+       * 接口：/user/bank/getsalarystatus
+       * 入参：null
+       **/
+      this.$http({
+
+        method: 'get',
+
+        url:this.API_HOST+'/user/bank/getsalarystatus',
+
+      }).then((res)=>{
+
+        console.log(res.data)
+
+        if(!res.data.data.totalSalary){
+
+
+          this.totalSalary = '--.--'
+
+
+        }
+
+        else {
+
+
+          this.totalSalary = res.data.data.totalSalary
+
+
+
+        }
+
+
+
+      }).catch((res)=>{
+
+      })
+
+
+
 
     },
     methods: {
 
+      //工资条发放列表 入参数企业id,分页数，
+      salaryInfo: function (thisSalaryEntId, thisPageSize, thisPageNum, fn) {
+
+        //修改入参
+        var thisIdData = {};
+
+        if (thisSalaryEntId) {
+
+          thisIdData = {
+
+            entId: thisSalaryEntId,
+
+            pageNum: thisPageNum,
+
+            pageSize: thisPageSize
+
+          }
+
+        }
+
+        else {
+
+          thisIdData = {
+
+            pageNum: thisPageNum,
+
+            pageSize: thisPageSize
+          }
+
+        }
+
+
+        /**
+         * 接口：工资条发放列表
+         * 请求方式：GET
+         * 接口：/salary/home/salaryinfo
+         * 入参：entId,pageNum,pageSize
+         **/
+
+        this.$http({
+
+          method: 'get',
+
+          url:this.API_HOST+'/salary/home/salaryinfo',
+
+          params: thisIdData
+
+        }).then((res)=>{
+
+            console.log(res.data)
+
+          //获取现在的list
+          var thislist = res.data.data.list;
+
+          var wagesListLength;
+
+          //var _dataText = res.data.data.hasOwnProperty('list')
+
+
+          var pickThisList = [];
+
+          //判断有没有列表数据
+
+          if (thislist) {
+
+
+            //获取现在list的长度
+            wagesListLength = thislist.length;
+
+            //上一次获取到的list
+
+            var lastList = this.wagesList;
+
+            //把获取到的list合并成一个数组
+            var nowList = lastList.concat(thislist);
+
+              this.thisWagesListLength = wagesListLength;
+
+              this.wagesList = nowList;
+
+
+            //判空
+            if (fn) {
+              //数据加载之后使用的方法
+              fn();
+            }
+
+
+          }
+
+          else {
+
+
+            if (this.pageNum == '1') {
+
+
+               this.moreText= '还未收到工资哦~'//加载更多数据
+
+
+            }
+
+            else {
+
+
+                this.moreText= '没有更多数据啦~'//加载更多数据
+
+
+
+            }
+
+            this.hasMoreData=false;
+
+            this.noData = false;
+
+
+          }
+
+
+        }).catch((res)=>{
+
+
+        });
+
+
+      },
+      //分页方法
+      chooseEntId: function () {
+
+
+        //console.log('是否有更多数据'+that.data.hasMoreData);
+
+
+        if (this.hasMoreData) {
+
+
+            this.hasMoreData= false
+
+          //判断后面是否要加载分页
+          var useFn = function () {
+
+
+            //如果现在列表页的长度小于一页数量
+            if (this.thisWagesListLength < this.pageSize) {
+
+                this.hasMoreData = false
+
+                this.noData = false
+
+
+            }
+
+            else {
+
+
+              //页数加1
+
+
+                this.pageNum= this.pageNum + 1
+
+
+
+              //可以加载
+              setTimeout(function () {
+
+                  this.hasMoreData= true
+
+
+              }, 500)
+
+
+            }
+
+
+          };
+
+          //如果查看全部企业
+          if (this.isAllCom) {
+
+            this.salaryInfo('', this.pageSize, this.pageNum, useFn);
+
+          }
+
+          //如果看单独企业
+          else {
+
+            this.salaryInfo(this.entId, this.pageSize, this.pageNum, useFn);
+
+          }
+
+
+        }
+      },
+      //点击切换
+      mySelect: function (e) {
+
+
+          //选择的企业名称回显
+          this.firstOptions = e.target.dataset.salary;
+
+          //存取企业id
+          this.entId = e.target.dataset.id,
+
+          this.num=2,
+
+
+        //分页数据初始化
+
+            this.isAllCom = false;//不是全部企业
+
+            this.pageNum= 1;//初始值为2
+
+            this.hasMoreData= true;//是否可以加载更多
+
+            this.noData= true;//是否显示暂无数据 true为隐藏 false为显示
+
+            this.wagesList= [];//发薪企业列表
+
+        //在渲染数据
+        //that.salaryInfo(that.data.entId,that.data.pageSize,1);
+
+        this.chooseEntId();
+
+
+      },
+      //点击选择全部
+      mySelectAll: function () {
+
+
+         this.firstOptions= '全部';
+
+          this.selectSalary= true;
+
+          this.selectArea= false;
+
+          this.isAllCom= true;//是全部企业
+
+          this.pageNum= 1;//初始值为2
+
+          this.hasMoreData= true;//是否可以加载更多
+
+          this.noData= true;//是否显示暂无数据 true为隐藏 false为显示
+
+          this.wagesList= [];//发薪企业列表
+
+          this.num=1;
+
+
+        this.chooseEntId();
+
+
+      },
+      //时候查看余额
       balanceShowChange: function () {
 
         this.lookWages = !this.lookWages
 
       },
+      //点击选择企业
       dropdown: function () {
 
         var img = document.getElementsByClassName('dropdown')[0]
@@ -643,7 +850,15 @@
           div.style.display = ''
 
         }
-      }
+      },
+      //点击查看工资条跳转链接
+      clickSeeList: function (e) {
+
+        this.setStorage('salaryDetailId', e.currentTarget.dataset.detail);
+
+
+
+      },
     }
   }
 </script>

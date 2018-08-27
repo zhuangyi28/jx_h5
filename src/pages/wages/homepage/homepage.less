@@ -81,11 +81,19 @@
         z-index: 99;
         background-color: white;
         border-radius: 5px;
-        width: 100px;
         box-shadow: #dddddd 1px 1px 1px;
         .list_one{
-          padding: 10px 5px;
-          position: relative;
+          text-align:left;
+          background-color:#fff;
+          max-width:250px;
+          padding:5px 10px;
+          line-height:40px;
+          color:#4a4a4a;
+          border-bottom:1px solid #f5f5f5;
+          overflow:hidden;
+          text-overflow:ellipsis;
+          white-space:nowrap;
+
           span{
             color: #4a4a4a;
 
@@ -94,6 +102,14 @@
           img{
             width: 18px;
             height: 18px;
+
+          }
+
+          &.is_checked{
+
+            background-color:rgb(254,246,243);
+            color:#E87B17;
+            border-left:4px solid #E87B17;
 
           }
 
@@ -200,4 +216,7 @@
 }
 .dropdown{
   transition: all 0.5s;
+}
+.already_confirm{
+  border-left: 5px #ababab solid;
 }

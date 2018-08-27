@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import login from '@/pages/login/login'
+import login from '@/pages/login/login/login'
 import workDesk from '@/pages/work_desk'
-import homepage from '@/pages/wages/homepage'
-import register from '@/pages/register/register'
-import agreement from '@/pages/user_agreement/user_agreement'
-import forgetPsw from '@/pages/forget_password/forget_password'
+import homepage from '@/pages/wages/homepage/homepage'
+import register from '@/pages/login/register/register'
+import agreement from '@/pages/login/user_agreement/user_agreement'
+import forgetPsw from '@/pages/login/forget_password/forget_password'
 import mine from '@/pages/mine/mine'
 
 
