@@ -16,7 +16,6 @@
         </span>
       </div>
     </div>
-      <orangeBtn v-bind:name="btnName" v-on:clickEvent="logout"></orangeBtn>
   </div>
 </template>
 <script>
