@@ -6,27 +6,27 @@
         <img src="/static/images/jx_mine_image.png">
       </div>
       <div class="user_information">
-        <div class="user_tel">{{mobile|plusXing(3,4)}}</div>
+        <div class="user_tel">{{mobile | plusXing(3, 4)}}</div>
 
         <!-- 未认证-->
         <div class="user_auth" v-if="isVerify=='0'">
           <img src="/static/images/jx_uncertified.png">
-          <span>未认证</span>
+          <div>未认证</div>
         </div>
         <!-- 已认证-->
         <div class="user_auth" v-else-if="isVerify=='1'">
           <img src="/static/images/jx_authentication.png">
-          <span>已认证</span>
+          <div>已认证</div>
         </div>
         <!-- 已认证-->
         <div class="user_auth" v-else-if="isVerify=='2'">
           <img src="/static/images/jx_uncertified.png">
-          <span>审核中</span>
+          <div>审核中</div>
         </div>
         <!-- 已认证-->
         <div class="user_auth" v-else-if="isVerify=='3'">
           <img src="/static/images/jx_uncertified.png">
-          <span>审核未通过</span>
+          <div>审核未通过</div>
         </div>
       </div>
     </div>
@@ -34,46 +34,79 @@
     <!-- 列表1 -->
 
     <div class="list">
-      <mt-cell title="工资余额" is-link>
-        <span class="red">{{totalSalary|thousandBitSeparator}}</span>
-        <img slot="icon" src="/static/images/jx_balance.png" width="24" height="24">
-      </mt-cell>
+      <!--工资余额 -->
+      <div class="cell">
+        <div class="title">
+          <img src="/static/images/jx_balance.png"><span class="cell_text">工资余额</span>
+        </div>
+        <div class="cell_value"><span class="red">{{totalSalary | thousandBitSeparator}}</span></div>
+        <i class="allow_right"></i>
+      </div>
+      <!--我的账单 -->
+      <div class="cell">
+        <div class="title">
+          <img src="/static/images/jx_bill.png"><span class="cell_text">我的账单</span>
+        </div>
+        <div class="cell_value"></div>
+        <i class="allow_right"></i>
+      </div>
+      <!--银行卡 -->
+      <div class="cell">
+        <div class="title">
+          <img src="/static/images/jx_bank.png"><span class="cell_text">银行卡</span>
+        </div>
+        <div class="cell_value"></div>
+        <i class="allow_right"></i>
+      </div>
 
-      <mt-cell title="我的账单" is-link>
-        <img slot="icon" src="/static/images/jx_bill.png" width="24" height="24">
-      </mt-cell>
-
-      <mt-cell title="银行卡" is-link>
-        <img slot="icon" src="/static/images/jx_bank.png" width="24" height="24">
-      </mt-cell>
 
     </div>
 
     <!-- 列表2 -->
 
     <div class="list">
-      <mt-cell title="我的发薪企业" is-link>
-        <span v-show="hasJoinEnt" class="orange">您有新的企业邀请</span>
-        <img slot="icon" src="/static/images/jx_unit.png" width="24" height="24">
-      </mt-cell>
 
-      <mt-cell title="消息" is-link>
-        <span v-show="hasNewMsg" class="red">您有新消息</span>
-        <img slot="icon" src="/static/images/jx_mail.png" width="24" height="24">
-      </mt-cell>
+      <!--我的发薪企业 -->
+      <div class="cell" v-on:click="$router.push('/company')">
+        <div class="title">
+          <img src="/static/images/jx_unit.png"><span class="cell_text">我的发薪企业</span>
+        </div>
+        <div v-show="hasJoinEnt" class="cell_value"><span class="orange">您有新的企业邀请</span></div>
+        <i class="allow_right"></i>
+      </div>
+      <!--消息 -->
+      <div class="cell">
+        <div class="title">
+          <img src="/static/images/jx_mail.png"><span class="cell_text">消息</span>
+        </div>
+        <div v-show="hasNewMsg" class="cell_value"><span class="red">您有新消息</span></div>
+        <i class="allow_right"></i>
+      </div>
+
+
 
     </div>
 
     <!-- 列表3 -->
 
     <div class="list">
-      <mt-cell title="设置" is-link>
-        <img slot="icon" src="/static/images/jx_set.png" width="24" height="24">
-      </mt-cell>
+      <!--设置 -->
+      <div class="cell">
+        <div class="title">
+          <img src="/static/images/jx_set.png"><span class="cell_text">设置</span>
+        </div>
+        <div class="cell_value"></div>
+        <i class="allow_right"></i>
+      </div>
+      <!--消息 -->
+      <div class="cell">
+        <div class="title">
+          <img src="/static/images/jx_ask.png"><span class="cell_text">帮助与客服</span>
+        </div>
+        <div class="cell_value"></div>
+        <i class="allow_right"></i>
+      </div>
 
-      <mt-cell title="帮助与客服" is-link>
-        <img slot="icon" src="/static/images/jx_ask.png" width="24" height="24">
-      </mt-cell>
 
     </div>
 
@@ -86,7 +119,7 @@
 
     data(){
 
-      return{
+      return {
 
         mobile: '',//个人中心手机号
 
@@ -104,7 +137,7 @@
 
     mounted(){
 
-        let _this = this
+      let _this = this
 
       /**
        * 接口：用户中心
@@ -117,82 +150,77 @@
 
         method: 'post',
 
-        url:this.API_HOST+'/user/center/usercenter',
-
-        headers:{
-
-          'Content-type': 'application/x-www-form-urlencoded'
-        },
+        url: this.API_HOST + '/user/center/usercenter',
 
 
-      }).then((res)=>{
+
+      }).then((res) => {
 
         console.log(res.data);
 
-      if(res.data.code=='0000'){
+        if (res.data.code == '0000') {
 
 
-        let ishasNewMsg = res.data.data.isHaveNewMsg;
+          let ishasNewMsg = res.data.data.isHaveNewMsg;
 
-        _this.mobile = res.data.data.mobile;
+          _this.mobile = res.data.data.mobile;
 
-        _this.isVerify =  res.data.data.isVerify;
+          _this.isVerify = res.data.data.isVerify;
 
-        //获取手机号
-        this.setStorage('mobile', res.data.data.mobile);
+          //获取手机号
+          this.setStorage('mobile', res.data.data.mobile);
 
-        //获取是否设置密码
-        this.setStorage('isPayPwd', res.data.data.isPayPwd);
+          //获取是否设置密码
+          this.setStorage('isPayPwd', res.data.data.isPayPwd);
 
-        //是否开启验证
-        this.setStorage('isSecurity', res.data.data.isSecurity);
+          //是否开启验证
+          this.setStorage('isSecurity', res.data.data.isSecurity);
 
-        //存姓名和身份证
-        this.setStorage('idNumber', res.data.data.idNumber);
+          //存姓名和身份证
+          this.setStorage('idNumber', res.data.data.idNumber);
 
-        this.setStorage('userName', res.data.data.userName);
+          this.setStorage('userName', res.data.data.userName);
 
-        //是否实名认证
-        this.setStorage('isVerify', res.data.data.isVerify);
+          //是否实名认证
+          this.setStorage('isVerify', res.data.data.isVerify);
 
-        //证件类型 只有花名册导入的时候有
-        this.setStorage('idType',res.data.data.idType);
+          //证件类型 只有花名册导入的时候有
+          this.setStorage('idType', res.data.data.idType);
 
-        //国籍
-        this.setStorage('nationality',res.data.data.nationality);
+          //国籍
+          this.setStorage('nationality', res.data.data.nationality);
 
-        this.setStorage('source',res.data.data.source);
+          this.setStorage('source', res.data.data.source);
 
-        //如果审核不通过的话 存储一下不通过的原因
-        if(this.setStorage('isVerify')=='3'){
+          //如果审核不通过的话 存储一下不通过的原因
+          if (this.setStorage('isVerify') == '3') {
 
-          this.setStorage('refuseReason',res.data.data.refuseReason);
+            this.setStorage('refuseReason', res.data.data.refuseReason);
 
-        }
+          }
 
 
-        //判断是否有新消息
+          //判断是否有新消息
 
-        if (ishasNewMsg == '1') {
+          if (ishasNewMsg == '1') {
 
             _this.hasNewMsg = true
 
 
+          }
+
+          else {
+
+            _this.hasNewMsg = false
+
+
+          }
+
+
         }
 
-        else {
 
-          _this.hasNewMsg = false
-
-
-        }
-
-
-        }
-
-
-
-      }).catch((res)=>{
+      }).catch((res) => {
 
       })
 
@@ -207,10 +235,10 @@
 
         method: 'get',
 
-        url:this.API_HOST+'/user/workunit/selectisjoinent',
+        url: this.API_HOST + '/user/workunit/selectisjoinent',
 
 
-      }).then((res)=>{
+      }).then((res) => {
 
         console.log(res.data);
 
@@ -220,19 +248,18 @@
 
         if (hasEntType == '1') {
 
-            _this.hasJoinEnt=true
+          _this.hasJoinEnt = true
 
         }
 
         else {
 
-          _this.hasJoinEnt=false
+          _this.hasJoinEnt = false
 
         }
 
 
-
-      }).catch((res)=>{
+      }).catch((res) => {
 
         //console.log(res.data);
 
@@ -250,17 +277,16 @@
 
         method: 'get',
 
-        url:this.API_HOST+'/user/bank/getsalarystatus',
+        url: this.API_HOST + '/user/bank/getsalarystatus',
 
-      }).then((res)=>{
+      }).then((res) => {
 
         console.log(res.data);
 
-        if(!res.data.data.totalSalary){
+        if (!res.data.data.totalSalary) {
 
 
-            _this.totalSalary= '--.--'
-
+          _this.totalSalary = '--.--'
 
 
         }
@@ -268,14 +294,13 @@
         else {
 
 
-          _this.totalSalary= res.data.data.totalSalary
+          _this.totalSalary = res.data.data.totalSalary
 
 
         }
 
 
-
-      }).catch((res)=>{
+      }).catch((res) => {
 
         //console.log(res.data);
 
@@ -283,15 +308,8 @@
       })
 
 
-
-
-
-  },
-    methods:{
-
-
-
-    }
+    },
+    methods: {}
   }
 </script>
 <style lang="less" scoped>

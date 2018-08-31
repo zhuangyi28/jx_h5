@@ -18,17 +18,14 @@ import MD5 from '../static/js/MD5.min'
 //导入 mint-ui
 import MintUI from 'mint-ui'
 
+import BasicJs from './js/basic'
+
 import VueWechatTitle from 'vue-wechat-title';
 import VueResource from 'vue-resource'
 import Filters from './api/filters'
 //跨域
 Vue.prototype.API_HOST = '/api';
-
-Vue.prototype.$http = axios;
-
-axios.defaults.withCredentials=true;
-
-Vue.config.productionTip = false;
+Vue.prototype.$basicjs = BasicJs;
 
 Vue.use(VueResource);
 Vue.use(api);

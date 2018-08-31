@@ -1,24 +1,28 @@
 <template>
   <div class="register">
 
-    <div class="register_input">
-      <div class="register_tel">
-        <img src="/static/images/tel.png">
-        <input type="number" v-model="mobile" placeholder="请输入手机号" class="tel" maxlength="11">
-      </div>
-      <div class="register_code">
-        <img src="/static/images/jx_pen.png">
-        <input type="number" v-model="checkCode" placeholder="请输入验证码" class="code" maxlength="6">
-        <span v-show="show" class="get_code" @click="registerMsg">获取验证码</span>
-        <span v-show="!show" class="get_code">{{count}}s后重新发送</span>
-      </div>
-      <div class="register_password">
-        <img src="/static/images/lock.png">
-        <input type="password" v-model="password" placeholder="请输入6-20位字母数字密码" maxlength="20" class="password">
-      </div>
+    <div class="content_box">
+        <div class="field">
+          <i class="iconfont icon-sign_phone"></i>
+          <input type="text" v-model="mobile" pattern="\d*" placeholder="请输入手机号" class="tel" maxlength="11">
+        </div>
+        <div class="field">
+          <i class="iconfont icon-sign_pen"></i>
+          <input type="text" pattern="\d*" v-model="checkCode" placeholder="请输入验证码" class="code" maxlength="6">
+          <span v-show="show" class="get_code" @click="registerMsg">获取验证码</span>
+          <span v-show="!show" class="get_code">{{count}}s后重新发送</span>
+        </div>
+        <div class="field">
+          <i class="iconfont icon-sign_password"></i>
+          <input type="password" v-model="password" placeholder="请输入6-20位字母数字密码" maxlength="20" class="password">
+        </div>
+
     </div>
+
+
+    <orangeBtn v-on:clickEvent="register" :name="btnName"></orangeBtn>
     <div class="register_button">
-      <orangeBtn v-on:clickEvent="register" :name="btnName"></orangeBtn>
+
       <div class="register_ps">
         <p>点击注册，即表示您同意<span @click="$router.push('/Agreement')">《用户注册协议》</span></p>
       </div>
@@ -36,6 +40,8 @@
     components: {
       orangeBtn: orangeBtn,
     },
+
+
     data(){
       return{
 
@@ -56,6 +62,8 @@
       }
 
     },
+
+
     methods:{
 
       register:function () {
@@ -143,10 +151,6 @@
 
             //url:process.env.API_ROOT+'/jx/action/register',
 
-            headers:{
-
-              'Content-type': 'application/x-www-form-urlencoded'
-            },
 
             params: {
 
@@ -391,11 +395,6 @@
 
             //url:process.env.API_ROOT+'/jx/action/login',
 
-            headers:{
-
-              'Content-type': 'application/x-www-form-urlencoded'
-            },
-
             params:{
 
               mobile:_this.mobile,
@@ -423,7 +422,7 @@
             else if(res.data.code=='0000'){
 
               //跳转
-              _this.$router.push('/Homepage')
+              _this.$router.push('/workDesk/homepage')
             }
 
 

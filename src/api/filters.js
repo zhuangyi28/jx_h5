@@ -57,41 +57,37 @@ Vue.filter('plusXing', (str, frontLen, endLen) => {
  * 时间过滤
  * date:'yyyy-MM-dd'
  */
-Vue.filter('fmtDateStr', (date) => {
+Vue.filter('fmtDateStr', (value) => {
 
-  if(!date) return '';
+  if(value){
 
-  let temp = date.split(" ")[0].split("-");
+    let cc = new Date(value);
+    Date.prototype.toLocaleString = function () {
 
-  return temp.join("/");
+      //补0操作
+      function getzf(num) {
+        if (parseInt(num) < 10) {
+          num = '0' + num;
+        }
+        return num;
+      };
 
-});
-Vue.filter('fmtDateStr2', (date) => {
+      var oYear = this.getFullYear(),
+        oMonth = this.getMonth() + 1,
+        oDay = this.getDate(),
+        oHour = this.getHours(),
+        oMin = this.getMinutes(),
+        oSen = this.getSeconds(),
+        oTime = oYear + '-' + getzf(oMonth) + '-' + getzf(oDay) + ' ' + getzf(oHour) + ':' + getzf(oMin) + ':' + getzf(oSen);//最后拼接时间
 
-  if(!date) return '';
+      return oTime;
+    };
+    return cc.toLocaleString();
+  }
 
-  let temp = date.split(" ")[0].split("-");
 
-  return temp[0] + "年" + temp[1] + "月" + temp[2] + "日";
 
-});
-Vue.filter('fmtTimeStr', (date) => {
+  }
 
-  if(!date) return '';
-
-  let temp = date.split(" ")[0].split("-");
-
-  return temp.join("/") + " " + date.split(" ")[1];
-
-});
-
-Vue.filter('fmtTimeStr2', (date) => {
-
-  if(!date) return '';
-
-  let temp = date.split(" ")[0].split("-");
-
-  return temp[0] + "年" + temp[1] + "月" + temp[2] + "日" + " " + date.split(" ")[1];
-
-});
+);
 

@@ -7,7 +7,10 @@ import register from '@/pages/login/register/register'
 import agreement from '@/pages/login/user_agreement/user_agreement'
 import forgetPsw from '@/pages/login/forget_password/forget_password'
 import mine from '@/pages/mine/mine'
-
+import payroll from '@/pages/wages/payroll/payroll'
+import company from '@/pages/company/company/company'
+import CoAuthentication from '@/pages/company/authentication/authentication'
+import locked from '@/pages/company/locked/locked'
 
 Vue.use(Router)
 
@@ -42,6 +45,7 @@ export default new Router({
 
 
     },
+
     {
       path: '/forgetPsw',
       name: 'forgetPsw',
@@ -52,22 +56,68 @@ export default new Router({
 
 
     },
+
+    {
+
+      path: '/payroll',
+      name: 'payroll',
+      meta: {
+        title: '工资条明细'
+      },
+      component: payroll,
+
+
+    },
+
+    {
+      path: '/company',
+
+      name: 'company',
+      meta: {
+        title: '我的发薪企业'
+      },
+      component: company,
+
+    },
+
+    {
+      path: '/locked',
+
+      name: 'locked',
+      meta: {
+        title: '身份验证'
+      },
+      component: locked,
+
+    },
+
+    {
+      path: '/authentication',
+      name: 'authentication',
+      meta: {
+        title: '身份验证'
+      },
+      component: CoAuthentication,
+
+    },
     {
       path: '/workDesk',
       name: 'workDesk',
       component: workDesk,
-      redirect: '/workDesk/homepage',
       children: [
         {
-          path: '/workDesk/homepage',
+          path: 'homepage',
           name: 'homepage',
           meta: {
             title: '工资条'
           },
-          component: homepage
+          component: homepage,
+
         },
+
+
        {
-          path: '/workDesk/mine',
+          path: 'mine',
           name: 'mine',
           meta: {
             title: '我的'

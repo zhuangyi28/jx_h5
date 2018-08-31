@@ -1,0 +1,158 @@
+#app {
+  .payroll {
+    min-height: 100vh;
+    background-color: #f5f5f5;
+  }
+}
+.payroll{
+.company_and_money {
+  width: 100%;
+  height: 130px;
+  box-sizing: border-box;
+  background-color: rgb(234, 94, 38);
+  background-image: url("/static/images/jx_wave.png");
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: 100%;
+  padding: 15px 4%;
+  position: relative;
+  display: flex;
+  color: white;
+  justify-content: space-around;
+  align-items: center;
+
+  .money{
+
+    div{
+      color:#ffc7b0;
+      display:flex;
+      justify-content:center;
+      &.wages{
+
+        color:#fff;
+        font-size:32px;
+        display:flex;
+        justify-content:center;
+        &+div{
+
+          font-size: 16px;
+        }
+
+      }
+
+    }
+  }
+
+}
+  .money_detail_project_all{
+    margin: 10px 4% 0;
+    box-sizing: border-box;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow:2px 2px 2px #f4f4f4;
+
+    .money_detail_project{
+      background-color: white;
+      .money_detail_project_one{
+        padding: 10px 15px;
+        display: flex;
+        justify-content: space-between;
+        color: #ababab;
+        font-size: 14px;
+        position: relative;
+        span:last-child{
+
+          color: #4a4a4a;
+
+        }
+        &.special{
+
+          font-size: 16px;
+          span:first-child{
+
+            color: #4a4a4a;
+          }
+          span:last-child{
+
+            color:#fe9728;
+
+
+
+          }
+
+        }
+        &:before{
+          content: '';
+          height:1px;
+          width: 92%;
+          border-bottom: 1px solid #ddd;
+          transform: scaleY(.6);
+          position: absolute;
+          bottom: 0;
+          left: 15px;
+
+        }
+
+      }
+
+      &:last-of-type{
+        .money_detail_project_one{
+          &:before{
+            content: '';
+            border-bottom: none;
+            position: absolute;
+            bottom: 0;
+            left: 15px;
+
+          }
+        }
+      }
+    }
+  }
+}
+
+.money_confirm_btn{
+  width: 100%;
+  box-sizing: border-box;
+  padding: 4%;
+
+  .button_all{
+
+    display:flex;
+    position:relative;
+    width:100%;
+    justify-content:space-between;
+    .payroll_prompt{
+      display: block;
+      padding-top: 10px;
+      color: #bbb;
+    }
+
+    .dot{
+      position: absolute;
+      right: -2px;
+      top: 0px;
+      width: 15px;
+      height: 15px;
+      background: #ff4646;
+      border-radius: 50%;
+    }
+
+  }
+  .button_left{
+    position: relative;
+    display: block;
+    border-radius: 5px;
+    -webkit-tap-highlight-color: transparent;
+    background: #fff;
+    font-size: 16px;
+    width: 35%;
+    height: 35px;
+    color: #fe9728;
+    border: 1px solid #fe9728;
+    outline: none;
+    margin: 5px auto;
+  }
+
+
+}

@@ -1,6 +1,6 @@
 <template>
   <div class="button">
-    <mt-button size="large" class="orange" v-on:click="clickEvent">{{name}}</mt-button>
+    <mt-button size="large"  class="orange" :class="className" v-on:click="clickEvent">{{name}}</mt-button>
   </div>
 </template>
 <script>
@@ -10,11 +10,15 @@
 
     props: {
 
-      name: ''//定义传值的类型
+      name: '',//定义传值的类型
+
+      className:''
 
     },
     methods: {
+
       clickEvent: function () {
+
         this.$emit('clickEvent')
       }
     }
