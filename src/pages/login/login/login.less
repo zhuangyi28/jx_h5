@@ -1,17 +1,18 @@
-body{
-  color: white;
-}
+
 .login{
   background-color: white;
+  height: calc(100vh);
   width: 100%;
+  position: fixed;
+  z-index: 11;
   .login_form{
     width: 100%;
     box-sizing: border-box;
     padding: 0 4%;
-    margin: 60px 0 30px 0;
+    margin: 80px 0 30px 0;
     .company_logo{
-      width: 100px;
-      height: 100px;
+      width: 80px;
+      height: 80px;
       margin: auto;
       padding: 25px 0;
 
@@ -23,49 +24,83 @@ body{
     }
 
   }
-  .login_tel,.login_password{
-    width: 100%;
-    background-color: rgb(249,249,251);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 5px;
+  .content_box{
+    border-radius: 8px;
     overflow: hidden;
-    margin: 5px 0 15px;
+    margin: 15px 0;
+    box-shadow: 0 0 8px #ddd;
+    z-index: 500;
+    .field{
+      position: relative;
+      background-color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      &:last-of-type{
+        &:after{
+          content: '';
+          position: absolute;
+          bottom:0;
+          border-bottom: none;
+          height: 1px;
 
-    input{
+        }
 
-      height: 40px;
-      border: 0;
-      flex: 1;
-      background-color: rgb(249,249,251);
-      font-size: 16px;
-      color: #4a4a4a;
-      &::placeholder{
+      }
+
+      &:after{
+        content: '';
+        position: absolute;
+        bottom:0;
+        left: 15px;
+        width: 92%;
+        border-bottom: 1px solid #ddd;
+        height: 1px;
+        transform:scaleY(0.4);
+
+      }
+      input{
+
+        height: 50px;
+        border: 0;
+        flex: 1;
+        background-color: #fff;
         font-size: 16px;
-        color: rgb(171,171,171);
+        color: #4a4a4a;
+        padding: 0 15px;
+        &::placeholder{
+          font-size: 16px;
+          color: #ababab;
+        }
+
+        &:focus{
+
+          outline: none;
+        }
+        &:disabled{
+          opacity: 1;
+          color: #000;
+        }
+
       }
 
-      &:focus{
+      i{
 
-        outline: none;
+        width: 15px;
+        margin: 0 10px;
+        font-size: 32px;
+        color: #ff7a3b;
+
+       &.icon-sign_phone{
+
+         font-size: 28px;
+       }
       }
 
     }
-
-    img{
-
-      display: inline-block;
-      width: 15px;
-      height: 18px;
-      margin: 0 20px;
-
-    }
-
-
-
-
   }
+
+
   .login_button{
     width: 100%;
     padding: 0 4%;
@@ -84,5 +119,86 @@ body{
       }
     }
   }
+
+  .bg-bubbles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    li {
+      position: absolute;
+      bottom: -160px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: rgba(255, 104, 85, .1);
+      list-style: none;
+      animation: square 15s 1 forwards;
+      transition-timing-function: linear;
+
+      &:nth-child(1) {
+
+        width: 140px;
+        height: 140px;
+        left: 2%;
+        background-color: rgba(255, 104, 85, .03);
+      }
+      &:nth-child(2) {
+
+        left: 50%;
+        width: 100px;
+        height: 100px;
+        animation-delay: 2s;
+        animation-duration: 7s;
+
+      }
+      &:nth-child(3) {
+
+        right: 25%;
+        width: 220px;
+        height: 220px;
+        animation-delay: 4s;
+
+      }
+      &:nth-child(4) {
+
+        right: 40%;
+        width: 60px;
+        height: 60px;
+        animation-duration: 8s;
+        background-color: rgba(255, 104, 85, .05);
+
+      }
+      &:nth-child(5) {
+        width: 250px;
+        height: 250px;
+        bottom: 12px;
+        left: 70%;
+      }
+
+    }
+    // 自定义 square 动画；
+    @keyframes square {
+      0% {
+        opacity: 0.5;
+        transform: translateY(0px) rotate(45deg);
+      }
+      25% {
+        opacity: 0.75;
+        transform: translateY(-200px) rotate(90deg)
+      }
+      50% {
+        opacity: 1;
+        transform: translateY(-400px) rotate(135deg);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-750px) rotate(180deg);
+      }
+    }
+  }
+
 }
 

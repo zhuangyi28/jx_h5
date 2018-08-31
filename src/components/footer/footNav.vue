@@ -8,13 +8,13 @@
         <!--this inspection reports XML/HTML tags with missing mandatory attrbutes ,you can specify attrbute name that should not  be reported-->
         <router-link :to="{name:'homepage'}" tag="li" router-active-class>
           <div>
-            <i class="iconfont icon-gongzi"></i>
+            <i class="iconfont icon-bottom-wages1"></i>
           </div>
           <div>工资条</div>
         </router-link>
         <router-link :to="{name:'mine'}" tag="li">
           <div>
-            <i class="iconfont icon-iconfuzhi"></i>
+            <i class="iconfont icon-bottom-main"></i>
           </div>
           <div>我的</div>
         </router-link>

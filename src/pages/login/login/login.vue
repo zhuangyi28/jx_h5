@@ -2,20 +2,36 @@
   <div class="login">
 
     <div class="login_form">
+
       <div class="company_logo">
         <img src="/static/images/logo.png">
       </div>
-      <div class="login_tel">
-        <img src="/static/images/tel.png">
-        <input type="number" v-model="mobile"  maxlength="11" placeholder="请输入手机号" class="tel" >
+
+      <div class="content_box">
+        <div class="field">
+          <i class="iconfont icon-sign_phone"></i>
+          <input type="text" pattern="\d*" v-model="mobile"  maxlength="11" placeholder="请输入手机号" class="tel" >
+        </div>
+        <div class="field">
+          <i class="iconfont icon-sign_password"></i>
+          <input type="password" v-model="password" placeholder="请输入密码" class="password" maxlength="20">
+        </div>
+
       </div>
-      <div class="login_password">
-        <img src="/static/images/lock.png">
-        <input type="password" v-model="password" placeholder="请输入密码" class="password" maxlength="20">
-      </div>
+
+
+
+
+
     </div>
+
+    <ul class="bg-bubbles">
+      <li v-for="(item, index) in bubbles" :key="index"></li>
+    </ul>
+
+
+    <orangeBtn v-on:clickEvent="signin" :name="btnName"></orangeBtn>
     <div class="login_button">
-      <orangeBtn v-on:clickEvent="signin" :name="btnName"></orangeBtn>
       <div class="another_page">
         <div @click="$router.push('/forgetPsw')">忘记密码?</div>
         <div @click="$router.push('/Register')">免费注册</div>
@@ -31,8 +47,11 @@
     components: {
       orangeBtn: orangeBtn,
     },
+
     data(){
         return{
+
+          bubbles:[],
 
           mobile: '',
 
@@ -43,6 +62,11 @@
         }
 
     },
+
+    created() {
+      this.bubbles.length = 5;
+    },
+
     methods:{
 
         signin:function () {
@@ -89,11 +113,6 @@
               method: 'post',
 
               url:this.API_HOST+'/jx/action/login',
-
-              headers:{
-
-                'Content-type': 'application/x-www-form-urlencoded'
-              },
 
               params: {
 

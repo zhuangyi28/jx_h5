@@ -7,7 +7,7 @@ html {
 }
 body {
   line-height: 1.6;
-  background-color: #ffffff;
+  background-color: #f5f5f9;
   color: #4a4a4a;
   font-size: 14px;
   font-family: Arial,'微软雅黑',Helvetica Neue,Helvetica,sans-serif;
@@ -23,7 +23,7 @@ a img {
   border: 0;
 }
 
-a {
+a,ul,li,button,span {
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
   -webkit-appearance: none;
@@ -47,7 +47,40 @@ input,textarea{
 }
 
 .message_btn_color{
-
   color: #eb5e26;
+}
+/*加载更多*/
+.loadmore {
+  text-align: center;
+  color: #8a8a8a;
+  margin: 10px 0 15px;
 
+}
+.loadmore span,
+.loadmore div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.loadmore span.data {
+  position: relative;
+  padding: 0 15px;
+}
+.loadmore span.data:after {
+  content: '';
+  position: absolute;
+  border-top: 1px solid #ddd;
+  top: 11px;
+  left: -80px;
+  width: 50%;
+  height: 1px;
+}
+.loadmore span.data:before {
+  content: '';
+  position: absolute;
+  border-top: 1px solid #ddd;
+  top: 11px;
+  right: -80px;
+  width: 50%;
+  height: 1px;
 }
