@@ -1,7 +1,7 @@
 <template>
   <div class="mine">
     <!-- 个人信息 -->
-    <div class="user">
+    <div class="user" v-on:click="$router.push('/personalCenter')">
       <div class="user_img">
         <img src="/static/images/jx_mine_image.png">
       </div>
@@ -51,7 +51,7 @@
         <i class="allow_right"></i>
       </div>
       <!--银行卡 -->
-      <div class="cell">
+      <div class="cell" v-on:click="$router.push('/bankCard')">
         <div class="title">
           <img src="/static/images/jx_bank.png"><span class="cell_text">银行卡</span>
         </div>

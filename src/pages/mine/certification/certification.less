@@ -1,0 +1,106 @@
+.certification{
+  background-color: rgb(245,245,245);
+  min-height: 100vh;
+  .certification_information{
+    width: 92%;
+    margin: 30px 15px 15px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 8px #ddd;
+    .certification_name{
+      display: flex;
+      align-items : center;
+      padding: 10px 4%;
+      position: relative;
+
+      &>*{
+        flex: 1;
+        text-align: left;
+      }
+      &>div{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: #4a4a4a;
+      }
+      img{
+        width: 20px;
+        height: 20px;
+      }
+      input{
+        border: none;
+        outline: none;
+        &::placeholder{
+          color: #dddddd;
+          font-size: 14px;
+        }
+      }
+      &>span{
+        display: block;
+        max-width: 35%;
+        color: #ababab;
+      }
+    }
+    .certification_name+.certification_name:before{
+      content: '';
+      display: block;
+      position: absolute;
+      width: 92%;
+      height: 1px;
+      border-top: 1px solid rgb(242,242,242);
+      top: 0;
+      left: 4%;
+    }
+  }
+  .information_picker{
+    width: 100%;
+    background-color: white;
+    .picker_btn{
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      &:after{
+        content: '';
+        display: block;
+        width: 100%;
+        height: 1px;
+        position: absolute;
+        border-bottom: 1px solid #f5f5f5;
+        bottom: 0;
+        left: 0;
+      }
+      &>button{
+        background-color: white;
+        box-shadow: none;
+      }
+      &>button:first-child{
+        color: #ababab;
+      }
+      &>button:last-child{
+        color: green;
+      }
+    }
+    .picker{
+      width: 100%;
+    }
+
+  }
+  .certification_btn{
+    margin-top: 30px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 4%;
+  }
+}
+.mint-indexlist{
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 50;
+  *{
+    text-align: left;
+    flex: 1;
+  }
+}
