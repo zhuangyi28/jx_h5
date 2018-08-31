@@ -1,0 +1,70 @@
+.personal_center{
+  background-color: rgb(247,247,247);
+  min-height: 100vh;
+  width: 100%;
+  padding: 10px 0;
+  box-sizing: border-box;
+  .personal_information{
+    width: 92%;
+    margin: 0 4% 30px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    overflow: hidden;
+    .information_list{
+      width: 100%;
+      background-color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 4%;
+      box-sizing : border-box;
+      position : relative;
+      color: #ababab;
+      .mobile{
+        color: #4a4a4a;
+      }
+      .identification{
+        color: rgb(236,86,78);
+        display: flex;
+        align-items : center;
+      }
+      img{
+        width: 20px;
+        height: 20px;
+        vertical-align: middle;
+      }
+    }
+    .information_list+.information_list:before{
+      content: '';
+      width: 92%;
+      height: 1px;
+      display: block;
+      position: absolute;
+      border-top: 1px solid rgb(245,245,245);
+      top: 0;
+      left: 4%;
+    }
+  }
+  .personal_btn{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 4%;
+  }
+}
+.mint-msgbox-content{
+  .mint-msgbox-message{
+    line-height: 22px;
+    font-size: 14px;
+    margin-top: 8px;
+  }
+}
+.mint-msgbox-btns{
+  .mint-msgbox-cancel{
+    color: #4a4a4a;
+    font-size: 16px;
+  }
+  .mint-msgbox-confirm{
+    font-size: 16px;
+    color: rgb(255,146,29);
+  }
+}
