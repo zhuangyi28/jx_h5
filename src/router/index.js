@@ -11,6 +11,13 @@ import payroll from '@/pages/wages/payroll/payroll'
 import company from '@/pages/company/company/company'
 import CoAuthentication from '@/pages/company/authentication/authentication'
 import locked from '@/pages/company/locked/locked'
+import personalCenter from '@/pages/mine/personal_center/personal_center'
+import telChange from '@/pages/mine/tel_change/tel_change'
+import changeCertification from '@/pages/mine/change_certification/change_certification'
+import chaneNewTel from '@/pages/mine/change_new_tel/change_new_tel'
+import certification from '@/pages/mine/certification/certification'
+import bankCard from '@/pages/mine/bank_card/bank_card'
+
 
 Vue.use(Router)
 
@@ -99,6 +106,55 @@ export default new Router({
       },
       component: CoAuthentication,
 
+    },
+
+    {
+      path: '/personalCenter',
+      name: 'personalCenter',
+      meta: {
+        title: '个人中心'
+      },
+      component: personalCenter
+    },
+    {
+      path: '/telChange',
+      name: 'telChange',
+      meta: {
+        title: '登录账号'
+      },
+      component: telChange
+    },
+    {
+      path: '/changeCertification',
+      name: 'changeCertification',
+      meta: {
+        title: '安全验证'
+      },
+      component: changeCertification
+    },
+    {
+      path: '/changeNewTel',
+      name: 'changeNewTel',
+      meta: {
+        title: '更换手机号'
+      },
+      component: chaneNewTel
+    },
+    {
+      path: '/certification',
+      name: 'certification',
+      meta: {
+        title: '实名认证'
+      },
+      component: certification
+    },
+    {
+      path: '/bankCard',
+      name: 'bankCard',
+      meta: {
+        title: '银行卡'
+      },
+      component: bankCard
     },
     {
       path: '/workDesk',

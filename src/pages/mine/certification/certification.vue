@@ -43,9 +43,7 @@
         </mt-index-section>
       </mt-index-list>
     </div>
-    <div class="certification_btn">
-      <orangeBtn v-bind:name="btnName" v-on:clickEvent="submit"></orangeBtn>
-    </div>
+
   </div>
 </template>
 <script>
