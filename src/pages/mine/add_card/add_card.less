@@ -1,0 +1,174 @@
+
+.add_card_two{
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  .add_card_two_ps{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 4%;
+    display: flex;
+    align-items: center;
+    background-color: #fff5f3;
+    img{
+      width: 16px;
+      height: 16px;
+      margin-right: 8px;
+    }
+    span{
+      font-size: 12px;
+      color: #ff651d;
+    }
+  }
+  .card_information_input{
+    padding: 10px 4%;
+    .card_information{
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0 4%;
+      background-color: white;
+      border-radius: 5px;
+      .card_user{
+        width: 100%;
+        display: flex;
+        font-size: 14px;
+        color: #ababab;
+        padding: 10px;
+        position: relative;
+        &:after{
+          content: '';
+          display: block;
+          position: absolute;
+          width: 100%;
+          height: 1px;
+          border-bottom: 1px solid #f5f5f5;
+          left: 0;
+          bottom: 0;
+        }
+        span:first-child{
+          width: 30%;
+          text-align: left;
+        }
+        span:last-child{
+          width: 70%;
+          text-align: left;
+          color: #4a4a4a;
+        }
+      }
+      .card_ID{
+        width: 100%;
+        display: flex;
+        font-size: 14px;
+        color: #ababab;
+        padding: 10px;
+        position: relative;
+        align-items: flex-end;
+        &:after{
+          content: '';
+          display: block;
+          position: absolute;
+          width: 100%;
+          height: 1px;
+          border-bottom: 1px solid #f5f5f5;
+          bottom: 0;
+          left: 0;
+        }
+        input{
+          width: 70%;
+          border: none;
+          outline: none;
+        }
+        span{
+          width: 30%;
+          text-align: left;
+        }
+      }
+      .card_bank {
+        width: 100%;
+        display: flex;
+        font-size: 14px;
+        color: #ababab;
+        padding: 10px 5px;
+        position: relative;
+        align-items: center;
+        justify-content: space-between;
+        .bank_name{
+          display: flex;
+          align-items: center;
+          img{
+            width: 26px;
+            height: 26px;
+            margin-right: 5px;
+          }
+        }
+        &>span{
+          color: #ff9786;
+        }
+      }
+    }
+    .card_information_ps{
+      padding: 10px 5px;
+      font-size: 12px;
+      color: #808080;
+      text-align: left;
+    }
+    .bank_information{
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0 4%;
+      background-color: white;
+      border-radius: 5px;
+      .bank_place{
+        width: 100%;
+        display: flex;
+        font-size: 14px;
+        color: #ababab;
+        padding: 10px 5px;
+        position: relative;
+        align-items: center;
+        justify-content: space-between;
+        &>span{
+          width: 30%;
+          text-align: left;
+        }
+        div{
+          color: #4a4a4a;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          width: 70%;
+        }
+        img{
+          width: 24px;
+          height: 24px;
+        }
+      }
+      .bank_sub{
+        width: 100%;
+        display: flex;
+        font-size: 14px;
+        color: #ababab;
+        padding: 10px 5px;
+        position: relative;
+        align-items: flex-end;
+        justify-content: space-between;
+        span{
+          width: 30%;
+          text-align: left;
+        }
+        input{
+          width: 70%;
+          border: none;
+          outline: none;
+          font-size: 16px;
+        }
+      }
+    }
+  }
+  .information_picker{
+    width: 100%;
+    .picker_btn{
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}

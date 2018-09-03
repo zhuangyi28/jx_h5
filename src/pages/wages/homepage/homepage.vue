@@ -6,11 +6,6 @@
       <!-- 余额 -->
       <div class="money_detail">
         <div class="balance">
-          <div class="money">
-            <p>工资余额（元）</p>
-
-          </div>
-
           <div class="details_money">
             <div v-if="lookWages">{{totalSalary | thousandBitSeparator}}</div>
             <div v-else>******</div>
@@ -20,6 +15,13 @@
             </div>
           </div>
 
+
+          <div class="money">
+            <p>工资余额（元）</p>
+
+          </div>
+
+
         </div>
 
       </div>
@@ -27,8 +29,12 @@
       <div class="money_detail_month">
         <!-- 下拉 -->
         <div class="filter" v-on:click="dropdown">
-          <span>{{firstOptions}}</span>
-          <img src="/static/images/go_yellow.png" class="dropdown">
+          <div class="filter_box">
+            <i class="iconfont icon-wages_chioce"></i>
+            <span>{{firstOptions}}</span>
+            <img src="/static/images/go_yellow.png" class="dropdown">
+          </div>
+
           <div class="dropdown_list" v-on:touchmove="stopEvent">
             <!-- 全部-->
             <div class="list_one" :class="num==1? 'is_checked':''" v-on:click="mySelectAll" v-bind:data-num='1'>
@@ -48,20 +54,19 @@
 
         <div class="money_detail_month_one" v-for="item in wagesList">
 
-          <div :class="item.state == '已确认'? '':'already_confirm'" v-on:click="clickSeeList"
-               v-bind:data-detail="item.salaryDetailId">
+          <div :class="item.state == '已确认'? '':'already_confirm'" v-on:click="clickSeeList" v-bind:data-detail="item.salaryDetailId">
+
+            <div class="money_detail_content">
+              <p class="company"><span>{{item.entName}}</span></p>
+              <p class="money">实发工资：<span v-if="lookWages"><span>{{item.realAmount | thousandBitSeparator}}</span><span>元</span></span><span
+                v-else><span class="star">******</span><span>元</span></span>
+              </p>
+            </div>
             <div class="money_detail_title">
               <div class="title">
-                <img src="/static/images/jx_money.png">
                 <span>{{item.salaryMonth}}工资</span>
               </div>
-              <div class="confirm">{{item.state}}</div>
-            </div>
-            <div class="money_detail_content">
-              <p class="company">发薪企业：<span>{{item.entName}}</span></p>
-              <p class="money">实发工资：<span v-if="lookWages">{{item.realAmount | thousandBitSeparator}}元</span><span
-                v-else>******元</span>
-              </p>
+              <div class="confirm"><span>{{item.state}}</span></div>
             </div>
           </div>
         </div>
@@ -224,10 +229,6 @@
             setTimeout(function () {
 
 
-              setTimeout(() => {
-                instance.close();
-              }, 1500);
-
               this.$messagebox({
                 title: '提示',
                 message: thisEnName + '邀请您查看' + thisSalaryMonth + '工资',
@@ -236,7 +237,8 @@
                 confirmButtonText: '暂不查看',
                 cancelButtonText: '查看',
                 closeOnClickModal: true,
-                confirmButtonClass: 'orange_color_btn'
+                cancelButtonClass: 'cancel_btn',
+                confirmButtonClass: 'confirm_btn_orange',
               }).then(action => {
 
                 if (action == 'confirm') {
@@ -263,20 +265,15 @@
 
                     if (this.type == '1') {
 
-                      /*                   wx.navigateTo({
 
-                       url: '../../common/wages_authentication/authentication'
+                      _this.$router.push('/authentication')
 
-                       })*/
 
                     }
 
                     else if (res.data.data.type == '0') {
 
-                      /*      wx.navigateTo({
-
-                       url:'../../user/locked/locked'
-                       })*/
+                      _this.$router.push('/locked')
 
                     }
 
@@ -327,10 +324,6 @@
             setTimeout(function () {
 
 
-              setTimeout(() => {
-                instance.close();
-              }, 1500);
-
               this.$messagebox({
                 title: '提示',
                 message: thisEnName + '邀请您查看' + thisSalaryMonth + '工资',
@@ -339,7 +332,8 @@
                 confirmButtonText: '暂不查看',
                 cancelButtonText: '查看',
                 closeOnClickModal: true,
-                confirmButtonClass: 'orange_color_btn'
+                cancelButtonClass: 'cancel_btn',
+                confirmButtonClass: 'confirm_btn_orange',
               }).then(action => {
 
                 if (action == 'confirm') {
@@ -366,20 +360,15 @@
 
                     if (this.type == '1') {
 
-                      /*                   wx.navigateTo({
 
-                       url: '../../common/wages_authentication/authentication'
+                      _this.$router.push('/authentication')
 
-                       })*/
 
                     }
 
                     else if (res.data.data.type == '0') {
 
-                      /*      wx.navigateTo({
-
-                       url:'../../user/locked/locked'
-                       })*/
+                      _this.$router.push('/locked')
 
                     }
 
@@ -416,11 +405,6 @@
 
           //未收到任何邀请
           else if (thisType == 0) {
-
-
-            setTimeout(() => {
-              instance.close();
-            }, 1500);
 
 
           }
@@ -673,6 +657,8 @@
 
             if (this.pageNum == '1') {
 
+                console.log('第一页没有 数据')
+
 
               this.moreText = '还未收到工资哦~'//加载更多数据
 
@@ -681,6 +667,7 @@
 
             else {
 
+              console.log('后面数据')
 
               this.moreText = '没有更多数据啦~'//加载更多数据
 

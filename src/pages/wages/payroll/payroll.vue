@@ -39,9 +39,9 @@
         <div class="button_all">
           <!--需要确认-->
 
-          <orangeBtn :name="btnName1">确认</orangeBtn>
+          <orangeBtn :name="btnName1" :class="className" v-on:clickEvent="confirmFn"></orangeBtn>
 
-          <button class="button_left" bindtap="feedbackFn">反馈</button>
+          <button class="button_left">反馈</button>
 
           <div v-show="hiddenDot" class="dot"></div>
 
@@ -49,22 +49,22 @@
         </div>
 
         <!--提示-->
-        <div class="payroll_prompt ">7天后将自动确认以上信息</div>
+        <div class="payroll_prompt">7天后将自动确认以上信息</div>
 
 
       </div>
 
 
 
-      <div v-else-if="comfrimBtn==1" >
+      <div v-else-if="comfrimBtn==1">
 
 
         <div class="button_all">
           <!--确认中-->
 
-          <orangeBtn>确认中</orangeBtn>
+          <orangeBtn :name="btnName2" :class="className"></orangeBtn>
 
-          <button :name="btnName2" class=" button_left" hover-class="none" bindtap="feedbackFn">反馈</button>
+          <button class=" button_left">反馈</button>
 
           <div v-show="hiddenDot" class="dot"></div>
 
@@ -82,7 +82,7 @@
 
           <orangeBtn :name="btnName3" class="disabled_btn" :class="className">已确认</orangeBtn>
 
-          <button class="button_left"  hover-class="none" bindtap="feedbackFn">反馈</button>
+          <button class="button_left" >反馈</button>
 
           <div v-show="hiddenDot" class="dot"></div>
 
@@ -134,7 +134,7 @@
 
       hiddenDot:false,//默认不显示有新消息 true为显示 false为不显示
 
-      btnName1:'确认',//按钮名称
+      btnName1:'确认工资条',//按钮名称
 
       btnName2:'确认中',//按钮名称
 
@@ -301,6 +301,8 @@
 
           this.comfrimBtn=1
 
+        var _this = this
+
 
 
         /**
@@ -315,8 +317,6 @@
           method: 'post',
 
           url:this.API_HOST+'/salary/home/confirmsalary',
-
-          //url:process.env.API_ROOT+'/jx/action/register',
 
           params: {
 
@@ -334,15 +334,16 @@
 
               this.comfrimBtn = 2
 
-
-            setTimeout(function () {
-
-              this.$router.go(-1)
-
-            }, 500)
-
-
           }
+
+          setTimeout(function () {
+
+            //console.log('返回上个页面');
+
+            _this.$router.go(-1)
+
+          }, 1000)
+
 
 
         }).catch((res)=>{
