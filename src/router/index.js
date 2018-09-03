@@ -17,7 +17,9 @@ import changeCertification from '@/pages/mine/change_certification/change_certif
 import chaneNewTel from '@/pages/mine/change_new_tel/change_new_tel'
 import certification from '@/pages/mine/certification/certification'
 import bankCard from '@/pages/mine/bank_card/bank_card'
-
+import balance from '@/pages/balance/index/index'
+import addCard from '@/pages/mine/add_card/add_card'
+import bankList from '@/pages/mine/bank_list/bank_list'
 
 Vue.use(Router)
 
@@ -155,6 +157,38 @@ export default new Router({
         title: '银行卡'
       },
       component: bankCard
+    },
+    {
+      path: '/balance',
+      name: 'balance',
+      meta: {
+        title: '工资余额'
+      },
+      component: balance
+    },
+    {
+      path: '/bankCard',
+      name: 'bankCard',
+      meta: {
+        title: '银行卡'
+      },
+      component: bankCard
+    },
+    {
+      path: '/addCard',
+      name: 'addCard',
+      meta: {
+        title: '添加银行卡'
+      },
+      component: addCard
+    },
+    {
+      path: '/bankList',
+      name: 'bankList',
+      meta: {
+        title: '支持添加的银行'
+      },
+      component: bankList
     },
     {
       path: '/workDesk',

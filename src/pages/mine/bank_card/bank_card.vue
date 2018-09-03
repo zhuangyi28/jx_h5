@@ -8,35 +8,36 @@
         </div>
         <div class="bank_card_information">
           <span>{{bank.bankName}}</span>
-          <span v-if="bank.cardType == 1">储蓄卡</span>
-          <span v-else-if="bank.cardType == 2">信用卡</span>
-          <div class="card_ID">{{bank.bankNo}}</div>
+          <div v-if="bank.cardType == 1">储蓄卡</div>
+          <div v-else-if="bank.cardType == 2">信用卡</div>
+          <div class="card_ID" v-bind:bankCardId="bank.bankCardId">{{bank.bankNo}}</div>
         </div>
         <div class="delete_btn" v-on:click="deleteCard">
           <img src="/static/images/jx_delate.png">
         </div>
       </div>
     </div>
-    <div class="add_card_btn">
-      <orangeBtn v-bind:name="btnName"></orangeBtn>
+
+    <!-- 添加 -->
+    <div class="add_card_btn" v-on:click="addCard">
+      <p>＋</p>
+      <p>添加银行卡</p>
     </div>
+
+
   </div>
 </template>
 <script>
-  import orangeBtn from '../../../components/orange_btn/orange_btn'
   import { bankCardJson } from "../../../../static/js/bankCardJson"
 
   export default {
     name: 'addCard',
-    components: {
-      orangeBtn: orangeBtn
-    },
     data () {
       return {
-        btnName: '+添加银行卡',
         banks: [],
         bankCardJson: bankCardJson,
-        cardID: ''
+        cardID: '',
+        bankCardId: ''
       }
     },
     mounted () {
@@ -54,41 +55,85 @@
           }
         }
       }).catch((res) => {
-        debugger
+        console.log(res);
       });
     },
     methods: {
       deleteCard: function () {
         for(var parent of event.path){
           if(parent.classList.contains('bank_card')){
-            this.cardID = parent.getElementsByClassName('card_ID')[0].innerText;
+            var div_card_id = parent.getElementsByClassName('card_ID')[0];
+            this.cardID = div_card_id.innerText;
+            this.bankCardId = div_card_id.getAttribute('bankCardId');
             break;
           }
         }
         var divArr = event.path;
-        this.$messagebox.confirm('确认删除尾号是'+this.cardID.substr(this.cardID.length - 4)+'的银行卡', '提示').then(action => {
-          for (var obj of divArr) {
-            if (obj.classList.contains('bank_card')) {
-              this.$http({
-                method: 'get',
-                url: this.API_HOST+ '/user/bank/deletebankcardinfo?bankCardId='+this.cardID
-              }).then((res)=>{
-                if(res.data.code == '0000'){
-                  obj.remove();
-                }else{
-                  this.$toast({
-                    message: res.data.msg,
-                    position: 'middle',
-                    duration: 1500
-                  });
-                }
-              }).catch((res)=>{
-                alert(res.data.msg);
-              });
-              return;
+        this.$messagebox({
+          title: '提示',
+          message: '确认删除尾号是'+this.cardID.substr(this.cardID.length - 4)+'的银行卡',
+          showCancelButton: true,
+          cancelButtonText: '取消',
+          confirmButtonText: '删除',
+          cancelButtonClass: 'cancel_btn',
+          confirmButtonClass: 'confirm_btn_orange',
+
+        }).then(action => {
+
+          if(action == 'confirm'){
+
+            for (var obj of divArr) {
+              if (obj.classList.contains('bank_card')) {
+                this.$http({
+                  method: 'get',
+                  url: this.API_HOST+ '/user/bank/deletebankcardinfo?bankCardId='+this.bankCardId
+                }).then((res)=>{
+                  if(res.data.code == '0000'){
+                    obj.remove();
+                  }else{
+                    this.$toast({
+                      message: res.data.msg,
+                      position: 'middle',
+                      duration: 1500
+                    });
+                  }
+                }).catch((res)=>{
+                  alert(res.data.msg);
+                });
+                return;
+              }
             }
           }
+
+
         })
+      },
+      addCard: function () {
+        var thisisVerify = this.getStorage('isVerify');
+        if(thisisVerify == 0 || thisisVerify == 3){
+          this.$messagebox({
+            title: '提示',
+            message: '未完成实名认证的用户，需先完成实名认证才可添加银行卡',
+            showCancelButton: true,
+            cancelButtonText: '取消',
+            confirmButtonText: '去认证',
+            cancelButtonClass: 'cancel_btn',
+            confirmButtonClass: 'confirm_btn_orange',
+          }).then((res)=>{
+            if(res == 'confirm'){
+              this.$router.push('/certification');
+            }
+          })
+        }else if(thisisVerify == 2){
+          this.$messagebox({
+            title: '提示',
+            message: '实名认证审核中，审核通过后即可添加银行卡',
+            confirmButtonText: '我知道了',
+            confirmButtonClass: 'confirm_btn_orange',
+          })
+        }else{
+          this.$router.push('/addCard');
+        }
       }
     }
   }

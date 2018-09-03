@@ -1,7 +1,14 @@
 .personal_center{
   background-color: rgb(247,247,247);
-  min-height: 100vh;
-  width: 100%;
+  .personal_information{
+
+    margin: 30px 15px 0 15px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    box-shadow: 0 0 8px #ddd;
+    overflow: hidden;
+  }
+
 
     .information_list{
       width: 100%;
@@ -33,7 +40,8 @@
       height: 1px;
       display: block;
       position: absolute;
-      border-top: 1px solid rgb(245,245,245);
+      border-top: 1px solid #ddd;
+      transform: scaleY(.6);
       top: 0;
       left: 4%;
     }
@@ -43,21 +51,5 @@
     box-sizing: border-box;
     padding: 0 4%;
   }
-}
-.mint-msgbox-content{
-  .mint-msgbox-message{
-    line-height: 22px;
-    font-size: 14px;
-    margin-top: 8px;
-  }
-}
-.mint-msgbox-btns{
-  .mint-msgbox-cancel{
-    color: #4a4a4a;
-    font-size: 16px;
-  }
-  .mint-msgbox-confirm{
-    font-size: 16px;
-    color: rgb(255,146,29);
-  }
-}
+
+

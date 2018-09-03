@@ -16,6 +16,8 @@
         </span>
       </div>
     </div>
+
+    <orange-btn :name="btnName"></orange-btn>
   </div>
 </template>
 <script>
@@ -44,7 +46,9 @@
           showConfirmButton: 'true',
           showCancelButton: 'true',
           confirmButtonText: '确定',
-          cancelButtonText: '取消'
+          cancelButtonText: '取消',
+          cancelButtonClass:'cancel_btn',
+          confirmButtonClass:'confirm_btn_orange',
         }).then((res) => {
           if(res == 'cancel'){
             return;
@@ -67,7 +71,7 @@
           }
         }).catch((res) => {
           console.log(res);
-          alert(res.data.msg);
+
         })
       }
     }
@@ -75,4 +79,5 @@
 </script>
 <style lang="less" scoped>
   @import 'personal_center.less';
+
 </style>

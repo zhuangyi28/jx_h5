@@ -6,21 +6,19 @@
     padding: 0 4%;
     width: 100%;
     box-sizing: border-box;
+
     .bank_card{
       width: 100%;
       margin: 0 0 10px;
-      padding: 10px;
-      background-color: #ffac3a;
-      background-image: url("/static/images/jx_background_money.png");
-      background-repeat: no-repeat;
-      background-position: 90%;
-      background-size: 33%;
+      padding: 15px 10px;
+      background: -webkit-linear-gradient(left,#ff6559,#ff7d37);
       box-sizing: border-box;
       border-radius: 5px;
       position: relative;
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
+      overflow: hidden;
       .bank_logo{
         width: 30px;
         height: 30px;
@@ -36,9 +34,12 @@
         text-align: left;
         color: white;
         line-height: 30px;
-        span:nth-child(2){
-          font-size: 12px;
-          margin-left: 5px;
+        font-size: 16px;
+        div{
+          font-size: 14px;
+        }
+        div+div{
+          font-size: 16px;
         }
         .card_ID{
           letter-spacing: 2px;
@@ -50,18 +51,54 @@
         }
       }
       .delete_btn{
-        width: 30px;
-        height: 30px;
+        width: 24px;
+        height: 24px;
+        z-index: 100;
         img{
           width: 100%;
           height: 100%;
         }
       }
+      &:after{
+
+        content: '';
+        position: absolute;
+        top: -250px;
+        left: -150px;
+        width: 400px;
+        height: 400px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.1);
+        z-index: 1;
+
+
+
+      }
     }
   }
   .add_card_btn{
-    width: 100%;
-    box-sizing: border-box;
-    padding: 40px 4% 0;
+    margin: 15px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 10px 0;
+    p{
+      text-align: center;
+
+    }
+    p:first-child{
+      width: 30px;
+      height: 30px;
+      margin: 0 auto;
+      background-color: #ff7d37;
+      color: #fff;
+      border-radius: 100%;
+      font-size: 18px;
+      line-height: 30px;
+      font-weight: bold;
+    }
+    p+p{
+       margin-top: 5px;
+      color: #ababab;
+    }
   }
 }

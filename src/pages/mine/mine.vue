@@ -1,47 +1,55 @@
 <template>
   <div class="mine">
+
+    <div class="mine_content">
     <!-- 个人信息 -->
     <div class="user" v-on:click="$router.push('/personalCenter')">
-      <div class="user_img">
-        <img src="/static/images/jx_mine_image.png">
-      </div>
-      <div class="user_information">
-        <div class="user_tel">{{mobile | plusXing(3, 4)}}</div>
+      <div class="user_box">
+        <div class="user_img">
+          <img src="/static/images/jx_mine_image.png">
+        </div>
+        <div class="user_information">
+          <div class="user_tel">{{mobile | plusXing(3, 4)}}</div>
 
-        <!-- 未认证-->
-        <div class="user_auth" v-if="isVerify=='0'">
-          <img src="/static/images/jx_uncertified.png">
-          <div>未认证</div>
-        </div>
-        <!-- 已认证-->
-        <div class="user_auth" v-else-if="isVerify=='1'">
-          <img src="/static/images/jx_authentication.png">
-          <div>已认证</div>
-        </div>
-        <!-- 已认证-->
-        <div class="user_auth" v-else-if="isVerify=='2'">
-          <img src="/static/images/jx_uncertified.png">
-          <div>审核中</div>
-        </div>
-        <!-- 已认证-->
-        <div class="user_auth" v-else-if="isVerify=='3'">
-          <img src="/static/images/jx_uncertified.png">
-          <div>审核未通过</div>
+          <!-- 未认证-->
+          <div class="user_auth" v-if="isVerify=='0'">
+            <img src="/static/images/jx_uncertified.png">
+            <span>未认证</span>
+          </div>
+          <!-- 已认证-->
+          <div class="user_auth" v-else-if="isVerify=='1'">
+            <img src="/static/images/jx_authentication.png">
+            <span>已认证</span>
+          </div>
+          <!-- 已认证-->
+          <div class="user_auth" v-else-if="isVerify=='2'">
+            <img src="/static/images/jx_uncertified.png">
+            <span>审核中</span>
+          </div>
+          <!-- 已认证-->
+          <div class="user_auth" v-else-if="isVerify=='3'">
+            <img src="/static/images/jx_uncertified.png">
+            <span>审核未通过</span>
+          </div>
         </div>
       </div>
+      <i class="allow_right"></i>
     </div>
+    <!--工资余额 -->
+    <div class="balance" v-on:click="$router.push('/balance')">
+      <div class="title">
+       <span class="cell_text">工资余额</span>
+      </div>
+      <div class="cell_value"><span class="red">{{totalSalary | thousandBitSeparator}}</span></div>
+      <i class="allow_right"></i>
+    </div>
+
+  </div>
 
     <!-- 列表1 -->
 
     <div class="list">
-      <!--工资余额 -->
-      <div class="cell">
-        <div class="title">
-          <img src="/static/images/jx_balance.png"><span class="cell_text">工资余额</span>
-        </div>
-        <div class="cell_value"><span class="red">{{totalSalary | thousandBitSeparator}}</span></div>
-        <i class="allow_right"></i>
-      </div>
+
       <!--我的账单 -->
       <div class="cell">
         <div class="title">

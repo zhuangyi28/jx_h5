@@ -4,27 +4,28 @@
       <div class="certification_name">
         <span>姓名</span>
         <div class="information_btn">
-          <input type="text" v-model="userName">
-          <img src="/static/images/reset_go.png">
+          <input type="text" v-model="userName" placeholder="请输入姓名" v-if="isVerify == 0">
+          <span v-else>{{userName}}</span>
         </div>
       </div>
       <div class="certification_name">
         <span>国籍（地区）</span>
-        <div class="information_btn" v-on:click="indexShow = true">
+        <div class="information_btn">
           <span>{{country}}</span>
-          <img src="/static/images/reset_go.png">
         </div>
       </div>
       <div class="certification_name">
         <span>证件类型</span>
-        <div class="information_btn" v-on:click="pickerShow=true">
+        <div class="information_btn">
           <span>{{cardType}}</span>
-          <img src="/static/images/reset_go.png">
         </div>
       </div>
       <div class="certification_name">
         <span>证件号码</span>
-        <input type="text" placeholder="请填写证件号码" v-model="IDCard">
+        <div class="information_btn">
+          <input type="text" placeholder="请填写证件号码" v-model="IDNumber" v-if="isVerify == 0">
+          <span v-else>{{IDNumber}}</span>
+        </div>
       </div>
     </div>
     <div class="certification_popup">
@@ -44,6 +45,8 @@
       </mt-index-list>
     </div>
 
+    <orangeBtn v-if="isVerify == 0" v-bind:name="btnName" v-on:clickEvent="submit"></orangeBtn>
+
   </div>
 </template>
 <script>
@@ -56,14 +59,15 @@
     data () {
       return {
         btnName: '提交',
-        userName: '王楷焜',
-        IDCard: '230711199209030034',
+        userName: '',
+        IDNumber: '',
         pickerValue: '',
         pickerShow: false,
         cardType: '身份证',
         country: '中国大陆',
         countryArr: {},
         indexShow: false,
+        isVerify: '',
         slots: [
           {
             values: ['身份证','港澳居民来往内地通行证','台湾居民来往内地通行证','护照'],
@@ -73,6 +77,23 @@
       }
     },
     mounted () {
+      this.isVerify = this.getStorage('isVerify');
+      this.userName = this.getStorage('userName');
+      this.country = this.getStorage('nationality');
+      this.cardType = this.getStorage('idType');
+      this.IDNumber = this.getStorage('idNumber');
+      if(this.cardType == 1){
+        this.cardType = '身份证'
+      }
+      if(this.cardType == 2){
+        this.cardType = '护照'
+      }
+      if(this.cardType == 3){
+        this.cardType = '港澳居民来往内地通行证'
+      }
+      if(this.cardType == 4){
+        this.cardType = '台湾居民来往内地通行证'
+      }
       this.$http({
         method: 'post',
         url: this.API_HOST+ '/user/country/getcountry',
@@ -90,7 +111,7 @@
           position: 'middle',
           duration: 1500
         });
-      })
+      });
     },
     methods: {
       onValueChange: function (picker,values) {
@@ -124,7 +145,8 @@
           });
           return;
         }
-        if(!this.IDCard){
+        if(!this.IDNumber){
+
           this.$toast({
             message: '请输入证件号码',
             position: 'middle',
@@ -132,7 +154,7 @@
           });
           return;
         }
-        if(!check.test(this.IDCard)){
+        if(!check.test(this.IDNumber)){
           this.$toast({
             message: '请输入正确的证件号码',
             position: 'middle',
@@ -148,7 +170,7 @@
           },
           params: {
             userName: this.userName,
-            idNumber: this.IDCard,
+            idNumber: this.IDNumber,
             idType: this.cardTypeId,
             nationality: this.country
           }

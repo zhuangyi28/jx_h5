@@ -1,13 +1,17 @@
 .certification{
-  background-color: rgb(245,245,245);
-  min-height: 100vh;
+  padding-top: 10px;
+  .certification_information{
+    width: 92%;
+    margin: 30px 15px 0 15px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 8px #ddd;
 
     .certification_name{
       display: flex;
       align-items : center;
-      padding: 10px 4%;
+      padding: 15px 4%;
       position: relative;
-
       &>*{
         flex: 1;
         text-align: left;
@@ -15,8 +19,9 @@
       &>div{
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: flex-end;
         color: #4a4a4a;
+        text-align: right;
       }
       img{
         width: 20px;
@@ -25,6 +30,7 @@
       input{
         border: none;
         outline: none;
+        text-align: right;
         &::placeholder{
           color: #dddddd;
           font-size: 14px;
@@ -42,7 +48,8 @@
       position: absolute;
       width: 92%;
       height: 1px;
-      border-top: 1px solid rgb(242,242,242);
+      border-top: 1px solid #ddd;
+      transform: scaleY(.6);
       top: 0;
       left: 4%;
     }
