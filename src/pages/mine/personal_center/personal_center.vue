@@ -12,12 +12,12 @@
           <span v-else-if="isVerify == 1">已认证</span>
           <span v-else-if="isVerify == 2">审核中</span>
           <span v-else-if="isVerify == 3">审核未通过</span>
-          <img src="/static/images/reset_go.png">
+          <i class="allow_right"></i>
         </span>
       </div>
     </div>
 
-    <orange-btn :name="btnName"></orange-btn>
+    <orange-btn :name="btnName" v-on:clickEvent="logout"></orange-btn>
   </div>
 </template>
 <script>
@@ -55,7 +55,7 @@
           }else if(res == 'confirm'){
             this.$http({
               method: 'get',
-              url:this.API_HOST+'/user/set/logout',
+              url:process.env.API_ROOT+'user/set/logout',
             }).then( (res) => {
               if(res.data.code == '0000'){
                 this.$router.push('/');

@@ -6,29 +6,29 @@
     <div class="user" v-on:click="$router.push('/personalCenter')">
       <div class="user_box">
         <div class="user_img">
-          <img src="/static/images/jx_mine_image.png">
+          <img src="../../../static/images/jx_mine_image.png">
         </div>
         <div class="user_information">
           <div class="user_tel">{{mobile | plusXing(3, 4)}}</div>
 
           <!-- 未认证-->
           <div class="user_auth" v-if="isVerify=='0'">
-            <img src="/static/images/jx_uncertified.png">
+            <img src="../../../static/images/jx_uncertified.png">
             <span>未认证</span>
           </div>
           <!-- 已认证-->
           <div class="user_auth" v-else-if="isVerify=='1'">
-            <img src="/static/images/jx_authentication.png">
+            <img src="../../../static/images/jx_authentication.png">
             <span>已认证</span>
           </div>
           <!-- 已认证-->
           <div class="user_auth" v-else-if="isVerify=='2'">
-            <img src="/static/images/jx_uncertified.png">
+            <img src="../../../static/images/jx_uncertified.png">
             <span>审核中</span>
           </div>
           <!-- 已认证-->
           <div class="user_auth" v-else-if="isVerify=='3'">
-            <img src="/static/images/jx_uncertified.png">
+            <img src="../../../static/images/jx_uncertified.png">
             <span>审核未通过</span>
           </div>
         </div>
@@ -51,9 +51,9 @@
     <div class="list">
 
       <!--我的账单 -->
-      <div class="cell">
+      <div class="cell" v-on:click="billFn">
         <div class="title">
-          <img src="/static/images/jx_bill.png"><span class="cell_text">我的账单</span>
+          <img src="../../../static/images/jx_bill.png"><span class="cell_text">我的账单</span>
         </div>
         <div class="cell_value"></div>
         <i class="allow_right"></i>
@@ -61,7 +61,7 @@
       <!--银行卡 -->
       <div class="cell" v-on:click="$router.push('/bankCard')">
         <div class="title">
-          <img src="/static/images/jx_bank.png"><span class="cell_text">银行卡</span>
+          <img src="../../../static/images/jx_bank.png"><span class="cell_text">银行卡</span>
         </div>
         <div class="cell_value"></div>
         <i class="allow_right"></i>
@@ -77,7 +77,7 @@
       <!--我的发薪企业 -->
       <div class="cell" v-on:click="$router.push('/company')">
         <div class="title">
-          <img src="/static/images/jx_unit.png"><span class="cell_text">我的发薪企业</span>
+          <img src="../../../static/images/jx_unit.png"><span class="cell_text">我的发薪企业</span>
         </div>
         <div v-show="hasJoinEnt" class="cell_value"><span class="orange">您有新的企业邀请</span></div>
         <i class="allow_right"></i>
@@ -85,7 +85,7 @@
       <!--消息 -->
       <div class="cell">
         <div class="title">
-          <img src="/static/images/jx_mail.png"><span class="cell_text">消息</span>
+          <img src="../../../static/images/jx_mail.png"><span class="cell_text">消息</span>
         </div>
         <div v-show="hasNewMsg" class="cell_value"><span class="red">您有新消息</span></div>
         <i class="allow_right"></i>
@@ -99,9 +99,9 @@
 
     <div class="list">
       <!--设置 -->
-      <div class="cell">
+      <div class="cell" v-on:click="$router.push('/setHomepage')">
         <div class="title">
-          <img src="/static/images/jx_set.png"><span class="cell_text">设置</span>
+          <img src="../../../static/images/jx_set.png"><span class="cell_text">设置</span>
         </div>
         <div class="cell_value"></div>
         <i class="allow_right"></i>
@@ -109,7 +109,7 @@
       <!--消息 -->
       <div class="cell">
         <div class="title">
-          <img src="/static/images/jx_ask.png"><span class="cell_text">帮助与客服</span>
+          <img src="../../../static/images/jx_ask.png"><span class="cell_text">帮助与客服</span>
         </div>
         <div class="cell_value"></div>
         <i class="allow_right"></i>
@@ -158,7 +158,7 @@
 
         method: 'post',
 
-        url: this.API_HOST + '/user/center/usercenter',
+        url: process.env.API_ROOT + 'user/center/usercenter',
 
 
 
@@ -243,7 +243,7 @@
 
         method: 'get',
 
-        url: this.API_HOST + '/user/workunit/selectisjoinent',
+        url: process.env.API_ROOT + 'user/workunit/selectisjoinent',
 
 
       }).then((res) => {
@@ -285,7 +285,7 @@
 
         method: 'get',
 
-        url: this.API_HOST + '/user/bank/getsalarystatus',
+        url: process.env.API_ROOT + 'user/bank/getsalarystatus',
 
       }).then((res) => {
 
@@ -317,7 +317,16 @@
 
 
     },
-    methods: {}
+    methods: {
+
+      billFn:function () {
+
+          this.setStorage('whichBill','3');
+
+           this.$router.push('/bill')
+
+      }
+    }
   }
 </script>
 <style lang="less" scoped>

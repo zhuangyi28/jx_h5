@@ -3,7 +3,7 @@
   <div class="authentication">
 
     <div class="banner_box">
-      <img src="/static/images/jx_id.png"/>
+      <img src="../../../../static/images/jx_id.png"/>
     </div>
 
     <div class="text_box">
@@ -26,7 +26,7 @@
 
     <orangeBtn :name="btnName" v-on:clickEvent="identityFn"></orangeBtn>
 
-    <serviceArea :type1="serviceLeft" :type2="serviceRight"></serviceArea>
+    <serviceArea :type1="serviceLeft" :type2="serviceRight" :iconName1="iconName1" :iconName2="iconName2" :spanShow="true"></serviceArea>
 
   </div>
 
@@ -74,6 +74,10 @@
 
         serviceRight: '联系客服',
 
+        iconName1:'icon-withdraw_custom',
+
+        iconName2:'icon-withdraw_custom',
+
 
       }
 
@@ -93,7 +97,7 @@
 
         method: 'post',
 
-        url: this.API_HOST + '/user/center/usercenter',
+        url: process.env.API_ROOT + 'user/center/usercenter',
 
       }).then((res) => {
 
@@ -160,7 +164,7 @@
 
           method: 'get',
 
-          url: this.API_HOST + '/salary/home/selectidnumber',
+          url: process.env.API_ROOT + 'salary/home/selectidnumber',
 
           params: {
 

@@ -147,9 +147,9 @@
 
             method: 'post',
 
-            url:this.API_HOST+'/jx/action/register',
+            url:process.env.API_ROOT+'jx/action/register',
 
-            //url:process.env.API_ROOT+'/jx/action/register',
+            //url:process.env.API_ROOT+'jx/action/register',
 
 
             params: {
@@ -238,9 +238,9 @@
 
             method: 'get',
 
-            url:this.API_HOST+'/jx/action/registmsg',
+            url:process.env.API_ROOT+'jx/action/registmsg',
 
-            //url:process.env.API_ROOT+'/jx/action/registmsg',
+            //url:process.env.API_ROOT+'jx/action/registmsg',
 
             params:{
 
@@ -391,9 +391,9 @@
 
             method: 'post',
 
-            url:this.API_HOST+'/jx/action/login',
+            url:process.env.API_ROOT+'jx/action/login',
 
-            //url:process.env.API_ROOT+'/jx/action/login',
+            //url:process.env.API_ROOT+'jx/action/login',
 
             params:{
 

@@ -1,9 +1,6 @@
 <template>
   <div class="add_card_two">
-    <div class="add_card_two_ps">
-      <img src="/static/images/jx_prompt.png">
-      <span>请绑定持卡人本人的银行卡</span>
-    </div>
+    <topTips :tips="tipsText"></topTips>
     <div class="card_information_input">
       <div class="card_information">
         <div class="card_user must_input">
@@ -33,7 +30,7 @@
           <div v-on:click="pickerShow=true">
             <span v-if='bankPlaces.length == 0'>请选择开户地区</span>
             <span v-else v-for="bankPlace in bankPlaces">{{bankPlace}}</span>
-            <img src="/static/images/reset_go.png">
+            <i class="allow_right"></i>
           </div>
         </div>
         <div class="bank_sub">
@@ -54,10 +51,12 @@
 </template>
 <script>
   import orangeBtn from '../../../components/orange_btn/orange_btn'
+  import topTips from '../../../components/tips/tips'
   import { bankCardJson } from "../../../../static/js/bankCardJson"
   export default {
     name: 'addCard',
     components: {
+      topTips: topTips,
       orangeBtn: orangeBtn
     },
     data () {
@@ -84,14 +83,15 @@
           }
         ],
         city: '',
-        cardType: ''
+        cardType: '',
+        tipsText:'请绑定持卡人本人的银行卡'
       }
     },
     mounted () {
       this.userName = this.getStorage('userName');
       this.$http({
         method: 'get',
-        url: this.API_HOST + '/user/bank/provinces'
+        url: process.env.API_ROOT + 'user/bank/provinces'
       }).then((res)=>{
         console.log(res);
         this.province = res.data.data;
@@ -105,7 +105,7 @@
         if(this.cardId.length >= 10 && this.bankName == ''){
           this.$http({
             method: 'post',
-            url: this.API_HOST+ '/user/bank/getbankname',
+            url: process.env.API_ROOT+ 'user/bank/getbankname',
             header: {
               'content-type': 'application/x-www-form-urlencoded'
             },
@@ -125,7 +125,7 @@
                 }
               }else{
                 this.bankName = '不支持该银行';
-                this.bankImg = '/static/images/bank_no.png';
+                this.bankImg = '../../../../static/images/bank_no.png';
               }
             }
           }).catch((res)=>{
@@ -143,7 +143,7 @@
       getCity: function (provincesId) {
         this.$http({
           method: 'get',
-          url: this.API_HOST + '/user/bank/citys?provinceId='+provincesId
+          url: process.env.API_ROOT + 'user/bank/citys?provinceId='+provincesId
         }).then((res)=>{
           if(this.slots[1].values.length != 0){
             this.slots[1].values.length = 0;
@@ -233,7 +233,7 @@
         else{
           this.$http({
             method: 'post',
-            url: this.API_HOST + '/user/bank/addbankcardinfo',
+            url: process.env.API_ROOT + 'user/bank/addbankcardinfo',
             headers:{
               'Content-type': 'application/x-www-form-urlencoded'
             },

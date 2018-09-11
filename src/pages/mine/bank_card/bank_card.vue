@@ -13,7 +13,7 @@
           <div class="card_ID" v-bind:bankCardId="bank.bankCardId">{{bank.bankNo}}</div>
         </div>
         <div class="delete_btn" v-on:click="deleteCard">
-          <img src="/static/images/jx_delate.png">
+          <img src="../../../../static/images/jx_delate.png">
         </div>
       </div>
     </div>
@@ -43,7 +43,7 @@
     mounted () {
       this.$http({
         method: 'get',
-        url: this.API_HOST+ '/user/bank/getbankcardinfo',
+        url: process.env.API_ROOT+ 'user/bank/getbankcardinfo',
       }).then((res) => {
         console.log(res.data);
         this.banks = res.data.data;
@@ -86,7 +86,7 @@
               if (obj.classList.contains('bank_card')) {
                 this.$http({
                   method: 'get',
-                  url: this.API_HOST+ '/user/bank/deletebankcardinfo?bankCardId='+this.bankCardId
+                  url: process.env.API_ROOT+ 'user/bank/deletebankcardinfo?bankCardId='+this.bankCardId
                 }).then((res)=>{
                   if(res.data.code == '0000'){
                     obj.remove();

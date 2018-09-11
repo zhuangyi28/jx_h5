@@ -1,14 +1,16 @@
 .locked{
-
+  background-color: #fff;
   overflow: hidden;
+  height: calc(100vh);
+  width: 100%;
   .locked_box{
 
     margin:0 auto;
     background:-webkit-linear-gradient(90deg,#ff7a3b,#ff6855);
     position:relative;
     width:100%;
-    height:200px;
-    &:after{
+    height:250px;
+/*    &:after{
       content: '';
       position: absolute;
       left: -37px;
@@ -19,6 +21,17 @@
       width: 120%;
       border-radius: 100%;
       background: #ff7a3b;
+
+    }*/
+    .wave{
+      background-image: url("/static/images/jx_wave_bg.png");
+      background-repeat: no-repeat;
+      background-size: 100%;
+      width: 100%;
+      height: 100px;
+      position: absolute;
+      top: 73%;
+      left: 0;
 
     }
     img{
@@ -47,7 +60,7 @@
         border-radius:50%;
         opacity:.1;
         transform:translateX(-50%);
-        top:0;
+        top:-13px;
       }
       .circle_mid{
         background-color:#fff;
@@ -58,7 +71,7 @@
         border-radius:50%;
         transform:translateX(-50%);
         position:absolute;
-        top:13px;
+        top:0;
 
       }
     }
@@ -67,11 +80,11 @@
 
   }
   .text_area{
-    margin: 100px 15px 30px;
+    margin: 70px 60px 60px;
     .title{
 
       font-size:16px;
-      color:#8a8a8a;
+      color:#ff7d37;
       text-align: center;
 
 

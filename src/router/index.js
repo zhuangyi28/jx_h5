@@ -20,11 +20,25 @@ import bankCard from '@/pages/mine/bank_card/bank_card'
 import balance from '@/pages/balance/index/index'
 import addCard from '@/pages/mine/add_card/add_card'
 import bankList from '@/pages/mine/bank_list/bank_list'
+import discovery from '@/pages/discovery/discovery'
+import setHomepage from '@/pages/set/set_homepage/set_homepage'
+import code from '@/pages/set/code/code'
+import setPayPassword from '@/pages/set/set_payment_psw/payment_psw'
+import payCertification from '@/pages/set/pay_certification/pay_certification'
+import resetPayment from '@/pages/set/reset_payment/reset_payment'
+import modifyPayPassWord from '@/pages/set/modify_paypassword/modify_paypassword'
+import bill from '@/pages/balance/bill/bill'
+import cashDetail from '@/pages/balance/cash_details/cash_details'
+import transferDetail from '@/pages/balance/transfer_details/transfer_details'
+import detailBill from '@/pages/balance/details/details'
+import withdraw from '@/pages/balance/withdraw/withdraw'
+import helpCenter from '@/pages/help/index/index'
+
 
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
+  mode: 'hash',
   routes: [
     {
       path: '/',
@@ -191,6 +205,107 @@ export default new Router({
       component: bankList
     },
     {
+      path: '/setHomepage',
+      name: 'setHomepage',
+      meta: {
+        title: '设置'
+      },
+      component: setHomepage
+    },
+    {
+      path: '/code',
+      name: 'code',
+      meta: {
+        title: ''
+      },
+      component: code
+    },
+    {
+      path: '/setPayPassword',
+      name: 'setPayPassword',
+      meta: {
+        title: '设置支付密码'
+      },
+      component: setPayPassword
+    },
+    {
+      path: '/payCertification',
+      name: 'payCertification',
+      meta: {
+        title: '支付验证设置'
+      },
+      component: payCertification
+    },
+    {
+      path: '/resetPayment',
+      name: 'resetPayment',
+      meta: {
+        title: '重置支付密码'
+      },
+      component: resetPayment
+    },
+    {
+      path: '/modifyPayPassWord',
+      name: 'modifyPayPassWord',
+      meta: {
+        title: '修改支付密码'
+      },
+      component: modifyPayPassWord
+
+
+    },
+    {
+      path: '/bill',
+      name: 'bill',
+      meta: {
+        title: '我的账单'
+      },
+      component: bill
+    },
+    {
+      path: '/cashDetail',
+      name: 'cashDetail',
+      meta: {
+        title: '提现详情'
+      },
+      component: cashDetail
+    },
+    {
+      path: '/transferDetail',
+      name: 'transferDetail',
+      meta: {
+        title: '转账详情'
+      },
+      component: transferDetail
+    },
+    {
+      path: '/details',
+      name: 'details',
+      meta: {
+        title: '余额明细'
+      },
+      component: detailBill
+    },
+
+    {
+      path: '/withdraw',
+      name: 'withdraw',
+      meta: {
+        title: '提现'
+      },
+      component: withdraw
+      },
+
+    {
+      path: '/helpCenter',
+      name: 'helpCenter',
+      meta: {
+        title: '帮助与客服'
+      },
+      component: helpCenter
+    },
+
+    {
       path: '/workDesk',
       name: 'workDesk',
       component: workDesk,
@@ -204,7 +319,15 @@ export default new Router({
           component: homepage,
 
         },
+        {
+          path: 'discovery',
+          name: 'discovery',
+          meta: {
+            title: '发现'
+          },
+          component: discovery,
 
+        },
 
        {
           path: 'mine',

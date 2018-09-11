@@ -74,7 +74,7 @@
 
         method: 'get',
 
-        url:this.API_HOST+'/user/workunit/selectworkunit',
+        url:process.env.API_ROOT+'user/workunit/selectworkunit',
 
       }).then((res)=>{
 
@@ -119,9 +119,9 @@
 
           method: 'get',
 
-          url:this.API_HOST+'/salary/home/selectlockstatus',
+          url:process.env.API_ROOT+'salary/home/selectlockstatus',
 
-          //url:process.env.API_ROOT+'/jx/action/register',
+          //url:process.env.API_ROOT+'jx/action/register',
 
 
         }).then((res)=>{

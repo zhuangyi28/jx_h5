@@ -1,47 +1,29 @@
 
 .add_card_two{
-  min-height: 100vh;
   background-color: #f5f5f5;
-  .add_card_two_ps{
-    width: 100%;
-    box-sizing: border-box;
-    padding: 10px 4%;
-    display: flex;
-    align-items: center;
-    background-color: #fff5f3;
-    img{
-      width: 16px;
-      height: 16px;
-      margin-right: 8px;
-    }
-    span{
-      font-size: 12px;
-      color: #ff651d;
-    }
-  }
   .card_information_input{
     padding: 10px 4%;
     .card_information{
-      width: 100%;
       box-sizing: border-box;
-      padding: 0 4%;
       background-color: white;
-      border-radius: 5px;
+      border-radius: 8px;
+      box-shadow: 0 0 8px #ddd;
       .card_user{
-        width: 100%;
         display: flex;
         font-size: 14px;
         color: #ababab;
-        padding: 10px;
         position: relative;
+        align-items: center;
+        padding: 15px 4%;
         &:after{
           content: '';
           display: block;
           position: absolute;
-          width: 100%;
+          width: 98%;
           height: 1px;
-          border-bottom: 1px solid #f5f5f5;
-          left: 0;
+          transform: scaleY(.4);
+          border-bottom: 1px solid #e9e9e9;
+          left: 15px;
           bottom: 0;
         }
         span:first-child{
@@ -55,27 +37,29 @@
         }
       }
       .card_ID{
-        width: 100%;
         display: flex;
         font-size: 14px;
         color: #ababab;
-        padding: 10px;
+        padding: 15px 4%;
         position: relative;
         align-items: flex-end;
         &:after{
           content: '';
           display: block;
           position: absolute;
-          width: 100%;
+          width: 98%;
           height: 1px;
-          border-bottom: 1px solid #f5f5f5;
+          transform: scaleY(.4);
+          border-bottom: 1px solid #e9e9e9;
+          left: 15px;
           bottom: 0;
-          left: 0;
         }
         input{
           width: 70%;
+          height: 22px;
           border: none;
           outline: none;
+          color: #4a4a4a;
         }
         span{
           width: 30%;
@@ -83,11 +67,10 @@
         }
       }
       .card_bank {
-        width: 100%;
         display: flex;
         font-size: 14px;
         color: #ababab;
-        padding: 10px 5px;
+        padding: 15px 4%;
         position: relative;
         align-items: center;
         justify-content: space-between;
@@ -107,25 +90,51 @@
     }
     .card_information_ps{
       padding: 10px 5px;
-      font-size: 12px;
+      font-size: 14px;
       color: #808080;
       text-align: left;
     }
     .bank_information{
-      width: 100%;
       box-sizing: border-box;
-      padding: 0 4%;
       background-color: white;
-      border-radius: 5px;
+      border-radius: 8px;
+      box-shadow: 0 0 8px #ddd;
       .bank_place{
-        width: 100%;
         display: flex;
         font-size: 14px;
         color: #ababab;
-        padding: 10px 5px;
+        padding: 15px 4%;
         position: relative;
         align-items: center;
         justify-content: space-between;
+        i {
+          position: relative;
+          &:after {
+
+            border: solid 2px #ddd;
+            border-bottom-width: 0;
+            border-left-width: 0;
+            content: " ";
+            top: 0;
+            right: 5px;
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            transform: translateY(-50%) rotate(45deg);
+          }
+        }
+        &:after{
+          content: '';
+          display: block;
+          position: absolute;
+          width: 98%;
+          height: 1px;
+          transform: scaleY(.4);
+          border-bottom: 1px solid #e9e9e9;
+          left: 15px;
+          bottom: 0;
+        }
+
         &>span{
           width: 30%;
           text-align: left;
@@ -143,11 +152,10 @@
         }
       }
       .bank_sub{
-        width: 100%;
         display: flex;
         font-size: 14px;
         color: #ababab;
-        padding: 10px 5px;
+        padding: 15px 4%;
         position: relative;
         align-items: flex-end;
         justify-content: space-between;
@@ -159,7 +167,9 @@
           width: 70%;
           border: none;
           outline: none;
-          font-size: 16px;
+          font-size: 14px;
+          height: 22px;
+          color: #4a4a4a;
         }
       }
     }

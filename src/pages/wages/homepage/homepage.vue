@@ -10,8 +10,8 @@
             <div v-if="lookWages">{{totalSalary | thousandBitSeparator}}</div>
             <div v-else>******</div>
             <div class="show_img" v-on:click="balanceShowChange">
-              <img src="/static/images/jx_open_bright.png" v-if="lookWages">
-              <img src="/static/images/jx_close_bright.png" v-else>
+              <img src="../../../../static/images/jx_open_bright.png" v-if="lookWages">
+              <img src="../../../../static/images/jx_close_bright.png" v-else>
             </div>
           </div>
 
@@ -32,18 +32,18 @@
           <div class="filter_box">
             <i class="iconfont icon-wages_chioce"></i>
             <span>{{firstOptions}}</span>
-            <img src="/static/images/go_yellow.png" class="dropdown">
+            <img src="../../../../static/images/go_yellow.png" class="dropdown">
           </div>
 
           <div class="dropdown_list" v-on:touchmove="stopEvent">
             <!-- 全部-->
             <div class="list_one" :class="num==1? 'is_checked':''" v-on:click="mySelectAll" v-bind:data-num='1'>
-              <img src="/static/images/jx_down.png">
+              <img src="../../../../static/images/jx_down.png">
               <span>全部</span>
             </div>
             <!-- 帅选 -->
             <div class="list_one" :class="item.entId==entId&&num==2?'is_checked':''" v-on:click="mySelect" v-bind:data-id="item.entId" v-bind:data-salary="item.entName" v-for="item in selectSalaryOptions">
-              <img src="/static/images/jx_drop.png">
+              <img src="../../../../static/images/jx_drop.png">
               <span>{{item.entName}}</span>
             </div>
           </div>
@@ -76,7 +76,7 @@
           <div class="loadmore_tips"><span class="data">{{moreText}}</span></div>
         </div>
         <div class="loadmore" v-show="noData">
-          <mt-spinner class="loadmore_icon" type="fading-circle" color="#8a8a8a" :size="16"></mt-spinner>
+          <mt-spinner class="loadmore_icon" type="double-bounce" color="#ababab" :size="16"></mt-spinner>
           <div class="loadmore_tips">正在加载</div>
         </div>
 
@@ -184,7 +184,7 @@
 
           method: 'get',
 
-          url: this.API_HOST + '/salary/home/selecttiptype',
+          url: process.env.API_ROOT + 'salary/home/selecttiptype',
 
 
         }).then((res) => {
@@ -195,28 +195,32 @@
 
           var thisType = res.data.data[0].type;
 
-          //存储entId
-          this.setStorage('entId', res.data.data[0].entId);
+          console.log('tpye几'+thisType)
 
-          //存储salaryId
-          this.setStorage('salaryDetailId', res.data.data[0].salaryDetailId);
+          console.log(thisType==2)
+
+          if(res.data.data[0].entId){
+            //存储entId
+            this.setStorage('entId', res.data.data[0].entId);
+
+          }
+
+          if(res.data.data[0].salaryDetailId){
+
+            //存储salaryId
+            this.setStorage('salaryDetailId', res.data.data[0].salaryDetailId);
+          }
+
+
 
           //存储type
-          this.setStorage('thisType', res.data.data[0].type);
-
+          //this.setStorage('thisType', res.data.data[0].type);
 
           //console.log('发薪'+wx.getStorageSync('salaryDetailId'))
 
 
           //是否查看工资条
           if (thisType == 1) {
-
-
-            this.$toast({
-              message: '加载中',
-              iconClass: 'icon icon-loading',
-
-            });
 
 
             var thisEnName = res.data.data[0].entName;
@@ -229,14 +233,14 @@
             setTimeout(function () {
 
 
-              this.$messagebox({
+              _this.$messagebox({
                 title: '提示',
                 message: thisEnName + '邀请您查看' + thisSalaryMonth + '工资',
                 showCancelButton: true,
                 showConfirmButton: true,
-                confirmButtonText: '暂不查看',
-                cancelButtonText: '查看',
-                closeOnClickModal: true,
+                confirmButtonText: '查看',
+                cancelButtonText: '暂不查看',
+                closeOnClickModal: false,
                 cancelButtonClass: 'cancel_btn',
                 confirmButtonClass: 'confirm_btn_orange',
               }).then(action => {
@@ -245,62 +249,105 @@
 
                   console.log('确定');
 
-                  /**
-                   * 接口：锁定状态查询
-                   * 请求方式：POST
-                   * 接口：/salary/home/selectlockstatus
-                   * 入参：null
-                   **/
 
-                  this.$http({
+                  lockstatus();
 
-                    method: 'get',
-
-                    url: this.API_HOST + '/salary/home/selectlockstatus',
+                  function lockstatus() {
 
 
-                  }).then((res) => {
+                    /**
+                     * 接口：锁定状态查询
+                     * 请求方式：GET
+                     * 接口：/salary/home/selectlockstatus
+                     * 入参：null
+                     **/
 
-                    this.type = res.data.data.type
+                    _this.$http({
 
-                    if (this.type == '1') {
+                      method: 'get',
 
-
-                      _this.$router.push('/authentication')
-
-
-                    }
-
-                    else if (res.data.data.type == '0') {
-
-                      _this.$router.push('/locked')
-
-                    }
+                      url: process.env.API_ROOT + 'salary/home/selectlockstatus',
 
 
-                  }).catch((res) => {
+                    }).then((res) => {
+
+                      console.log(res.data);
 
 
-                  })
+                      if (res.data.data.type == '1') {
+
+
+                        _this.$router.push('/authentication')
+
+
+                      }
+
+                      else if (res.data.data.type == '0') {
+
+                        _this.$router.push('/locked')
+
+                      }
+
+
+                    }).catch((res) => {})
+
+
+                  }
+
 
 
                 }
-              }).catch(err => {
-                if (err == 'cancel') {
+
+                else {
 
                   console.log('取消');
-
                   //调用暂不查看工资条
                   noSeeSalary();
 
-                  this.$toast({
+                  //暂不看工资单
+                  function noSeeSalary() {
 
-                    message: '必须加入企业才可查看工资条哦~关闭后可在“我的发薪企业”中继续加入',
-                    duration: 1500
+                    /**
+                     * 接口：暂不查看工资条
+                     * 请求方式：POST
+                     * 接口：/salary/home/updateselectsalary
+                     * 入参：salaryDetailId
+                     **/
 
-                  })
+                    _this.$http({
+
+                      method: 'post',
+
+                      url: process.env.API_ROOT + 'salary/home/updateselectsalary',
+
+
+                      params: {
+
+                        salaryDetailId: thisSalaryDetailId
+
+                      }
+                    }).then((res) => {
+
+                      console.log(res.data)
+
+                      _this.$toast({
+
+                        message: '必须加入企业才可查看工资条哦~关闭后可在“我的发薪企业”中继续加入',
+                        duration: 1500
+
+                      })
+
+
+                    }).catch((res) => {
+
+
+                    })
+
+
+                  }
+
                 }
-              });
+              }).catch(err => {});
 
 
             }, 1000)
@@ -312,26 +359,18 @@
           else if (thisType == 2) {
 
 
-            this.$toast({
-              message: '加载中',
-              iconClass: 'icon icon-loading',
-
-            });
-
-
             var thisEnName = res.data.data[0].entName;
 
             setTimeout(function () {
 
-
-              this.$messagebox({
+              _this.$messagebox({
                 title: '提示',
-                message: thisEnName + '邀请您查看' + thisSalaryMonth + '工资',
+                message: thisEnName + '邀请您加入企业，便捷查看工资和工资条',
                 showCancelButton: true,
                 showConfirmButton: true,
-                confirmButtonText: '暂不查看',
-                cancelButtonText: '查看',
-                closeOnClickModal: true,
+                confirmButtonText: '查看',
+                cancelButtonText: '暂不查看',
+                closeOnClickModal: false,
                 cancelButtonClass: 'cancel_btn',
                 confirmButtonClass: 'confirm_btn_orange',
               }).then(action => {
@@ -340,62 +379,111 @@
 
                   console.log('确定');
 
-                  /**
-                   * 接口：锁定状态查询
-                   * 请求方式：POST
-                   * 接口：/salary/home/selectlockstatus
-                   * 入参：null
-                   **/
+                  lockstatus();
 
-                  this.$http({
-
-                    method: 'get',
-
-                    url: this.API_HOST + '/salary/home/selectlockstatus',
+                  function lockstatus() {
 
 
-                  }).then((res) => {
+                    /**
+                     * 接口：锁定状态查询
+                     * 请求方式：GET
+                     * 接口：/salary/home/selectlockstatus
+                     * 入参：null
+                     **/
 
-                    this.type = res.data.data.type
+                    _this.$http({
 
-                    if (this.type == '1') {
+                      method: 'get',
 
-
-                      _this.$router.push('/authentication')
-
-
-                    }
-
-                    else if (res.data.data.type == '0') {
-
-                      _this.$router.push('/locked')
-
-                    }
+                      url:process.env.API_ROOT + 'salary/home/selectlockstatus',
 
 
-                  }).catch((res) => {
+                    }).then((res) => {
+
+                      console.log(res.data);
+
+                      if (res.data.data.type == '1') {
 
 
-                  })
+                        _this.$router.push('/authentication')
+
+
+                      }
+
+                      else if (res.data.data.type == '0') {
+
+                        _this.$router.push('/locked')
+
+                      }
+
+
+                    }).catch((res) => {})
+
+                  }
+
+
 
 
                 }
-              }).catch(err => {
-                if (err == 'cancel') {
+
+                else {
 
                   console.log('取消');
 
                   //调用暂不加入企业
                   noJoinSalary();
+                  //暂不加入企业
+                  function noJoinSalary() {
 
-                  this.$toast({
 
-                    message: '必须加入企业才可查看工资条哦~关闭后可在“我的工作单位”',
-                    duration: 1500
+                    /**
+                     * 接口：暂不加入企业
+                     * 请求方式：POST
+                     * 接口：/salary/home/updatejoinentstatus
+                     * 入参：entId
+                     **/
 
-                  })
+                    _this.$http({
+
+                      method: 'post',
+
+                      url: process.env.API_ROOT + 'salary/home/updatejoinentstatus',
+
+                      params: {
+
+                        entId: thisEntId
+
+                      }
+                    }).then((res) => {
+
+                      console.log(res.data)
+
+                      setTimeout(function () {
+
+                        _this.$toast({
+
+                          message: '必须加入企业才可查看工资条哦~关闭后可在“我的工作单位”',
+                          duration: 1500
+
+                        })
+
+                      },1000)
+
+
+
+
+                    }).catch((res) => {
+
+
+                    })
+
+
+                  }
+
+
+
                 }
-              });
+              }).catch(err => {});
 
 
             }, 1000)
@@ -404,82 +492,7 @@
           }
 
           //未收到任何邀请
-          else if (thisType == 0) {
-
-
-          }
-
-
-          //获取entId
-          var thisEntId = this.getStorage('entId');
-
-          //获取发薪企业id
-          var thisSalaryDetailId = this.getStorage('salaryDetailId');
-
-          //暂不加入企业
-          function noJoinSalary() {
-
-            /**
-             * 接口：暂不加入企业
-             * 请求方式：POST
-             * 接口：/salary/home/updatejoinentstatus
-             * 入参：entId
-             **/
-
-            this.$http({
-
-              method: 'post',
-
-              url: this.API_HOST + '/salary/home/updatejoinentstatus',
-
-              params: {
-
-                entId: thisEntId
-
-              }
-            }).then((res) => {
-
-
-            }).catch((res) => {
-
-
-            })
-
-
-          }
-
-          //暂不看工资单
-          function noSeeSalary() {
-
-            /**
-             * 接口：暂不查看工资条
-             * 请求方式：POST
-             * 接口：/salary/home/updateselectsalary
-             * 入参：salaryDetailId
-             **/
-
-            this.$http({
-
-              method: 'post',
-
-              url: this.API_HOST + '/salary/home/updateselectsalary',
-
-
-              params: {
-
-                salaryDetailId: thisSalaryDetailId
-
-              }
-            }).then((res) => {
-
-
-            }).catch((res) => {
-
-
-            })
-
-
-          }
+          else if (thisType == 0) {}
 
 
         }).catch((res) => {
@@ -501,7 +514,7 @@
 
           method: 'get',
 
-          url: this.API_HOST + '/salary/home/getselectent',
+          url: process.env.API_ROOT + 'salary/home/getselectent',
 
 
         }).then((res) => {
@@ -531,7 +544,7 @@
 
           method: 'get',
 
-          url: this.API_HOST + '/user/bank/getsalarystatus',
+          url: process.env.API_ROOT + 'user/bank/getsalarystatus',
 
         }).then((res) => {
 
@@ -602,7 +615,7 @@
 
           method: 'get',
 
-          url: this.API_HOST + '/salary/home/salaryinfo',
+          url: process.env.API_ROOT + 'salary/home/salaryinfo',
 
           params: thisIdData
 
@@ -689,6 +702,8 @@
 
 
       },
+
+
       //点击切换
       mySelect: function (e) {
 
@@ -754,7 +769,32 @@
       //时候查看余额
       balanceShowChange: function () {
 
-        this.lookWages = !this.lookWages
+        this.lookWages = !this.lookWages;
+
+        /**
+         * 接口：设置用户金额显示
+         * 请求方式：GET
+         * 接口：/user/account/addsalarystate
+         * 入参：null
+         **/
+
+        this.$http({
+
+          method: 'get',
+
+          url: process.env.API_ROOT + 'user/account/addsalarystate',
+
+          params: {
+
+            salaryState:this.lookWages
+
+          }
+
+        }).then((res)=>{
+
+
+        }).catch((res=>{}))
+
 
       },
       //点击选择企业
