@@ -16,7 +16,7 @@
         </div>
 
         <div>
-          <p v-on:click="frozenFn">不可提金额（元）<img src="/static/images/jx_ask_mine.png"/></p>
+          <p v-on:click="frozenFn">不可提金额（元）<img src="../../../../static/images/jx_ask_mine.png"/></p>
           <p>{{frozenSalary| thousandBitSeparator}}</p>
         </div>
 
@@ -27,7 +27,7 @@
 
     <div class="list">
       <!--设置 -->
-      <div class="cell">
+      <div class="cell" v-on:click="$router.push('/details')">
         <div class="title">
           <span class="iconfont icon-wages_details1 blue"></span><span class="cell_text">明细</span>
         </div>
@@ -46,7 +46,7 @@
         <i class="allow_right"></i>
       </div>
       <!--设置 -->
-      <div class="cell">
+      <div class="cell" v-on:click="$router.push('/withdraw')">
         <div class="title">
           <span class="iconfont icon-wages_wallet"></span><span class="cell_text">提现</span>
         </div>
@@ -100,7 +100,7 @@
 
         method: 'get',
 
-        url:this.API_HOST+'/user/bank/getsalarystatus',
+        url:process.env.API_ROOT+'user/bank/getsalarystatus',
 
       }).then((res)=>{
 
@@ -142,7 +142,7 @@
 
         method: 'post',
 
-        url:this.API_HOST+'/user/center/usercenter',
+        url:process.env.API_ROOT+'user/center/usercenter',
 
       }).then((res)=>{
 

@@ -102,9 +102,9 @@
 
             method: 'get',
 
-            url:this.API_HOST+'/jx/action/forgetmsg',
+            url:process.env.API_ROOT+'jx/action/forgetmsg',
 
-            //url:process.env.API_ROOT+'/jx/action/registmsg',
+            //url:process.env.API_ROOT+'jx/action/registmsg',
 
             params:{
 
@@ -279,9 +279,9 @@
 
             method: 'post',
 
-            url:this.API_HOST+'/jx/action/retrievalpwd',
+            url:process.env.API_ROOT+'jx/action/retrievalpwd',
 
-            //url:process.env.API_ROOT+'/jx/action/register',
+            //url:process.env.API_ROOT+'jx/action/register',
 
 
             params: {

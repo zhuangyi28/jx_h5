@@ -1,16 +1,16 @@
 <template>
   <div class="change_new_tel">
     <div class="change_new_tel_ps">
-      <img src="/static/images/jx_prompt.png">
+      <img src="../../../../static/images/jx_prompt.png">
       <span>下次登录请使用更换的新手机号码，账户其他信息不变</span>
     </div>
     <div class="change_new_tel_input">
       <div class="change_new_tel_tel">
-        <img src="/static/images/tel.png">
+        <img src="../../../../static/images/tel.png">
         <input type="number" v-model="newMobile" placeholder="请输入新的手机号码" class="tel">
       </div>
       <div class="change_new_tel_code">
-        <img src="/static/images/jx_pen.png">
+        <img src="../../../../static/images/jx_pen.png">
         <input type="number" v-model="code" placeholder="请输入验证码" class="code">
         <div class="get_code" v-on:click="getCode">
           <span v-if="show===''">获取验证码</span>
@@ -57,7 +57,7 @@
           }
           this.$http({
             method: 'get',
-            url: this.API_HOST + '/jx/action/newmobilecheck?mobile=' + this.newMobile,
+            url: process.env.API_ROOT + 'jx/action/newmobilecheck?mobile=' + this.newMobile,
           }).then( (res) => {
             console.log(res);
             this.$toast({
@@ -138,7 +138,7 @@
         }
         this.$http({
           method: 'post',
-          url: this.API_HOST+ '/user/set/changemobile',
+          url: process.env.API_ROOT+ 'user/set/changemobile',
           headers:{
             'Content-type': 'application/x-www-form-urlencoded'
           },

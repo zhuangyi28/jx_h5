@@ -4,13 +4,13 @@
     <div class="login_form">
 
       <div class="company_logo">
-        <img src="/static/images/logo.png">
+        <img src="../../../../static/images/logo.png">
       </div>
 
       <div class="content_box">
         <div class="field">
           <i class="iconfont icon-sign_phone"></i>
-          <input type="text" pattern="\d*" v-model="mobile"  maxlength="11" placeholder="请输入手机号" class="tel" >
+          <input type="number" pattern="\d*" v-model="mobile"  oninput="if(value.length > 11)value = value.slice(0, 11)" placeholder="请输入手机号" class="tel" >
         </div>
         <div class="field">
           <i class="iconfont icon-sign_password"></i>
@@ -42,6 +42,8 @@
 </template>
 <script>
   import orangeBtn from '../../../components/orange_btn/orange_btn'
+
+  import qs from 'qs';
   export default {
     name: 'login',
     components: {
@@ -72,6 +74,8 @@
         signin:function () {
 
             let _this=this;
+
+          console.log(process.env.API_ROOT)
 
 
           if(_this.mobile==''){
@@ -108,11 +112,12 @@
              * 入参：mobile，password,code
              **/
 
+
             this.$http({
 
               method: 'post',
 
-              url:this.API_HOST+'/jx/action/login',
+              url:process.env.API_ROOT+'jx/action/login',
 
               params: {
 
@@ -121,6 +126,8 @@
                 password:hexMD5(_this.password),
 
               }
+
+
             }).then((res)=>{
 
               console.log(res.data);

@@ -14,6 +14,8 @@
 
       </div>
 
+      <div class="wave"></div>
+
 
     </div>
 
@@ -24,9 +26,9 @@
 
     </div>
 
-    <orangeBtn :name="btnName" v-on:clickEvent="identityFn"></orangeBtn>
+    <orangeBtn :name="btnName" v-on:clickEvent="$router.go(-1)"></orangeBtn>
 
-    <serviceArea :type1="serviceLeft" :type2="serviceRight"></serviceArea>
+    <serviceArea :type1="serviceLeft" :iconName1="iconName1" :spanShow="false"></serviceArea>
 
 
   </div>
@@ -51,6 +53,8 @@
       orangeBtn: orangeBtn,
 
       serviceArea: serviceArea,
+
+
     },
 
     data(){
@@ -61,7 +65,8 @@
 
         serviceLeft: '查看帮助',
 
-        serviceRight: '联系客服',
+        iconName1:'icon-withdraw_custom',
+
 
 
       }

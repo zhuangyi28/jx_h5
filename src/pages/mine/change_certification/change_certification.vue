@@ -48,7 +48,7 @@
         span.style.color = '#ababab';
         this.$http({
           method: 'get',
-          url: this.API_HOST + '/jx/action/oldmobilecheck',
+          url: process.env.API_ROOT + 'jx/action/oldmobilecheck',
         }).then( (res) => {
           console.log(res);
           this.$toast({
@@ -74,7 +74,7 @@
         if(this.code.length == 6){
           this.$http({
             method: 'get',
-            url: this.API_HOST+ '/user/set/oldmobilechange',
+            url: process.env.API_ROOT+ 'user/set/oldmobilechange',
             headers:{
               'Content-type': 'application/x-www-form-urlencoded'
             },

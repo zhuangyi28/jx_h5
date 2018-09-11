@@ -20,11 +20,11 @@ import MintUI from 'mint-ui'
 
 import BasicJs from './js/basic'
 
+
 import VueWechatTitle from 'vue-wechat-title';
 import VueResource from 'vue-resource'
 import Filters from './api/filters'
-//跨域
-Vue.prototype.API_HOST = '/api';
+
 Vue.prototype.$basicjs = BasicJs;
 
 Vue.use(VueResource);
@@ -34,12 +34,6 @@ Vue.use(MD5);
 Vue.use(VueWechatTitle);
 Vue.use(MintUI);
 
-
-Vue.http.interceptors.push(function(request, next) {//拦截器
-// 跨域携带cookie
-  request.credentials = true;
-  next()
-})
 
 
 //实例化 vue 实例

@@ -13,7 +13,7 @@ module.exports = {
     proxyTable: {
       '/api': {
         //设置你调用的接口域名和端口号
-        target:'http://jxtest.99payroll.cn/jx-user',//测试
+        target:'http://jxtest.99payroll.cn/jx-user/',//测试
         //target: 'https://user.99payroll.cn/jx-user',//生产
         changeOrigin: true,
         pathRewrite: {
@@ -24,8 +24,8 @@ module.exports = {
     },
 
     // Various Dev Server settings
-    // host:'localhost',
-    //host:'172.18.1.206',
+    //host:'localhost',
+    // host:'172.18.1.206',
     host: '192.168.120.40', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
@@ -51,13 +51,14 @@ module.exports = {
   },
 
   build: {
+
     // Template for index.html
     index: path.resolve(__dirname, '../dist/index.html'),
 
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: './',
 
     /**
      * Source Maps

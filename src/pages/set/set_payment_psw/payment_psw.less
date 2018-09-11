@@ -1,0 +1,73 @@
+.pay_psw{
+
+  .content_box{
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 30px 15px 15px;
+    box-shadow: 0 0 8px #ddd;
+    z-index: 500;
+    .field{
+      position: relative;
+      background-color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      overflow: hidden;
+      &:last-of-type{
+        &:after{
+          content: '';
+          position: absolute;
+          bottom:0;
+          border-bottom: none;
+          height: 1px;
+
+        }
+
+      }
+
+      &:after{
+        content: '';
+        position: absolute;
+        bottom:0;
+        left: 15px;
+        width: 98%;
+        border-bottom: 1px solid #e9e9e9;
+        height: 1px;
+        transform:scaleY(0.6);
+
+      }
+      input{
+
+        height: 50px;
+        border: 0;
+        flex: 1;
+        background-color: #fff;
+        font-size: 16px;
+        color: #4a4a4a;
+        padding: 0 15px;
+        &::placeholder{
+          font-size: 16px;
+          color: #ababab;
+        }
+
+        &:focus{
+
+          outline: none;
+        }
+        &:disabled{
+          opacity: 1;
+          color: #000;
+        }
+
+      }
+
+      span{
+
+        margin: 0 10px;
+
+      }
+
+    }
+  }
+
+}

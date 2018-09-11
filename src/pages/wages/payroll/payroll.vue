@@ -161,9 +161,9 @@
 
         method: 'get',
 
-        url:this.API_HOST+'/salary/home/salarydetail',
+        url:process.env.API_ROOT+'salary/home/salarydetail',
 
-        //url:process.env.API_ROOT+'/jx/action/register',
+        //url:process.env.API_ROOT+'jx/action/register',
 
         params: {
 
@@ -316,7 +316,7 @@
 
           method: 'post',
 
-          url:this.API_HOST+'/salary/home/confirmsalary',
+          url:process.env.API_ROOT+'salary/home/confirmsalary',
 
           params: {
 

@@ -1,0 +1,69 @@
+.bill{
+
+
+  .bill_box{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    box-sizing: border-box;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    background-color: white;
+    &:after{
+      content: '';
+      position: absolute;
+      bottom:0;
+      left: 15px;
+      width: 98%;
+      border-bottom: 1px solid #e9e9e9;
+      height: 1px;
+      transform:scaleY(.6);
+
+    }
+
+    .bill_img{
+      width: 30px;
+      height: 30px;
+      img{
+        width: 100%;
+      }
+    }
+    .bill_content{
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: calc(~'100vw - 70px');
+      font-size: 14px;
+      color: #4a4a4a;
+      .bill_cell{
+        &:first-child{
+          p{
+            text-align: left;
+          }
+        }
+        p{
+          text-align: right;
+          &.orange{
+            color: #ff7d37;
+          }
+          &.gray{
+            color: #ababab;
+          }
+        }
+        p+p{
+          text-align: left;
+          color: #8a8a8a;
+        }
+      }
+
+
+    }
+
+
+  }
+
+
+}

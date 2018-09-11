@@ -1,7 +1,11 @@
 <template>
   <div class="service_area">
 
-    <span v-on:click="clickEventLeft">{{type1}}</span><span>|</span><span v-on:click="clickEventRight">{{type2}}</span>
+    <div class="area_box"></div>
+    <div class="footer">
+      <span v-on:click="clickEventLeft"><i class="iconfont" :class="iconName1"></i>{{type1}}</span><span v-on:click="clickEventRight" v-show="spanShow" :spanlShow="spanShow"><i class="iconfont" :class="iconName2"></i>{{type2}}</span>
+    </div>
+
 
   </div>
 </template>
@@ -14,7 +18,13 @@
 
       type1: '',
 
-      type2:''
+      type2:'',
+
+      iconName1:'',
+
+      iconName2:'',
+
+      spanShow:true,
 
     },
     methods: {

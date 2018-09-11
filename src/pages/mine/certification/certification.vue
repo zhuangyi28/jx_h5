@@ -96,7 +96,7 @@
       }
       this.$http({
         method: 'post',
-        url: this.API_HOST+ '/user/country/getcountry',
+        url: process.env.API_ROOT+ 'user/country/getcountry',
         headers:{
           'Content-type': 'application/x-www-form-urlencoded'
         }
@@ -164,7 +164,7 @@
         }
         this.$http({
           method: 'post',
-          url: this.API_HOST+ '/user/center/verifyuserinfo',
+          url: process.env.API_ROOT+ 'user/center/verifyuserinfo',
           headers:{
             'Content-type': 'application/x-www-form-urlencoded'
           },
@@ -181,11 +181,68 @@
             position: 'middle',
             duration: 1500
           });
+          var _hrefId = this.getStorage('hrefId');
           if(res.data.code == '0000'){
             this.setStorage('isVerify','1');
+            var _this = this
             setTimeout(()=>{
               toast.close();
-              this.$router.push('/personalCenter');
+
+              if(_hrefId=='1'){
+
+
+
+                console.log('从个人中心');
+
+                setTimeout(function () {
+
+                  _this.$router.push('/personalCenter');
+
+                  _this.mounted();
+
+
+                },1000)
+
+
+              }
+
+              else if(_hrefId=='4'||_hrefId=='8'){
+
+                setTimeout(function () {
+
+                  _this.$router.go(-1)
+
+                },1000)
+
+              }
+
+              else if(_hrefId=='10'){
+
+                console.log('从转账');
+
+
+
+
+
+              }
+
+              else if(_hrefId=='6'){
+
+                console.log('从京东');
+
+                  setTimeout(function () {
+
+                    _this.$router.push('/workDesk/discovery')
+
+                  },1000)
+
+
+
+
+
+              }
+
+
             },500);
           }
         }).catch((res) => {
