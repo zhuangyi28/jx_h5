@@ -79,7 +79,48 @@
 
       init:function () {
 
-        this.loadList();
+        var _whichBill = this.getStorage('whichBill');
+
+
+        //存储从哪个页面跳到我的账单 来判断导航名称（在我的账单取到 1为提现记录 2为转账记录）
+
+        //1为
+        if(_whichBill=='1'){
+
+          console.log('提现')
+
+          this.orderTypes='01',
+
+          //判断导航
+            document.title="提现账单"
+
+          this.loadList();
+
+        }
+
+        else if(_whichBill=='2'){
+
+          console.log('转账')
+
+            this.orderTypes='02,03',
+
+          document.title="转账账单";
+
+          this.loadList();
+
+        }
+
+        else if(_whichBill=='3'){
+
+          console.log('我的');
+
+          document.title="我的账单"
+
+          this.loadList();
+
+        }
+
+
 
         },
 

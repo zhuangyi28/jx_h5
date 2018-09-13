@@ -38,7 +38,7 @@
 
     <div class="list">
       <!--设置 -->
-      <div class="cell">
+      <div class="cell" v-on:click="$router.push('/bankCard')">
         <div class="title">
           <span class="iconfont icon-wages_transfer1"></span><span class="cell_text">转账</span>
         </div>
@@ -155,6 +155,9 @@
 
 
 
+    },
+    destroyed (){
+      this.$messagebox.close();
     },
     methods: {
 

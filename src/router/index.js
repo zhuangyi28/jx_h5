@@ -33,7 +33,15 @@ import transferDetail from '@/pages/balance/transfer_details/transfer_details'
 import detailBill from '@/pages/balance/details/details'
 import withdraw from '@/pages/balance/withdraw/withdraw'
 import helpCenter from '@/pages/help/index/index'
-
+import helpDetail from '@/pages/help/help_detail'
+import paySuccess from '@/pages/balance/pay_success/pay_success'
+import pswCertification from '@/pages/balance/psw_certification/psw_certification'
+import smsCertification from '@/pages/balance/sms_certification/sms_certification'
+import transfer from '@/pages/balance/transfer/transfer'
+import transferAccounts from '@/pages/balance/transfer_accounts/transfer_accounts'
+import transferHistoryUser from '@/pages/balance/transfer_history_user/transfer_history_user'
+import accountCash from '@/pages/balance/account_cash/account_cash'
+import transferSuccess from '@/pages/balance/transfer_success/transfer_success'
 
 Vue.use(Router)
 
@@ -258,7 +266,7 @@ export default new Router({
       path: '/bill',
       name: 'bill',
       meta: {
-        title: '我的账单'
+        title: ''
       },
       component: bill
     },
@@ -305,6 +313,79 @@ export default new Router({
       component: helpCenter
     },
 
+    {
+      path: '/helpDetail',
+      name: 'helpDetail',
+      meta: {
+        title: '问题详情'
+      },
+      component: helpDetail
+
+    },
+    {
+      path: '/paySuccess',
+      name: 'paySuccess',
+      meta: {
+        title: '提现申请已提交'
+      },
+      component: paySuccess
+    },
+    {
+      path: '/pswCertification',
+      name: 'pswCertification',
+      meta: {
+        title: '输入支付密码'
+      },
+      component: pswCertification
+    },
+    {
+      path: '/smsCertification',
+      name: 'smsCertification',
+      meta: {
+        title: '短信支付验证'
+      },
+      component: smsCertification
+    },
+    {
+      path: '/transfer',
+      name: 'transfer',
+      meta: {
+        title: '转账'
+      },
+      component: transfer
+    },
+    {
+      path: '/transferAccounts',
+      name: 'transferAccounts',
+      meta: {
+        title: '转账'
+      },
+      component: transferAccounts
+    },
+    {
+      path: '/transferHistoryUser',
+      name: 'transferHistoryUser',
+      meta: {
+        title: '转账'
+      },
+      component: transferHistoryUser
+    },
+    {
+      path: '/accountCash',
+      name: 'accountCash',
+      meta: {
+        title: '转账'
+      },
+      component: accountCash
+    },
+    {
+      path: '/transferSuccess',
+      name: 'transferSuccess',
+      meta: {
+        title: '转账成功'
+      },
+      component: transferSuccess
+    },
     {
       path: '/workDesk',
       name: 'workDesk',

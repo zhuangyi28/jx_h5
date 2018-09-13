@@ -9,8 +9,28 @@ var jxCustomerService = {
     if (!$("#MEIQIA-PANEL-HOLDER").length > 0) {
 
 
+      var isIosProduct = 0;                                                                                         //判断是不是可能出现位移的页面
+
+
+      function jfServiceInit(visibility) {
+
+        jfServiceSwitch(visibility);
+
+        if (browser.os.iOS && $('html').hasClass('ovfHiden') && $('body').hasClass('ovfHiden')) {                    //解决ios10的在详情页聊天移位问题。
+          isIosProduct = 1;
+          $(document).scrollTop(0);
+        }
+      }
+
+
       function jfServiceSwitch(visibility) {
         if (visibility === 'visible') {
+
+          if (isIosProduct) {                                                                                   //解决ios10的在详情页聊天移位问题。
+            $('html').removeClass('ovfHiden');
+            $('body').removeClass('ovfHiden')
+          }
+
           $('#MEIQIA-PANEL-HOLDER').removeClass('hide').addClass('show');
           setTimeout(
             function () {
@@ -56,4 +76,18 @@ var jxCustomerService = {
   click: function () {                                                                                               //导入使用
     _MEIQIA('showPanel')
   }
+};
+
+
+
+export function customerInit(){
+
+  jxCustomerService.init()
+
+};
+
+export function customerClick(){
+
+  jxCustomerService.click()
+
 };

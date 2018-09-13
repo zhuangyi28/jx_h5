@@ -27,7 +27,7 @@
         <div class="withdraw_money_ps">单笔￥<span>{{amountMin|thousandBitSeparator}}</span>-￥<span>{{amountMax|thousandBitSeparator}}</span>（手续费<span>{{rate/100}}</span>%）</div>
         <div class="withdraw_money_input">
           <span>￥</span>
-          <input type="number" v-model="withdrawMoney">
+          <input type="text" v-model="withdrawMoney">
         </div>
         <div class="withdraw_money_show">
           <span>可提额度{{balance|thousandBitSeparator}}元</span>
@@ -49,7 +49,7 @@
 
     <!-- 联系客服-->
 
-    <serviceArea :type1="serviceLeft" :type2="serviceRight" :iconName1="iconName1" :iconName2="iconName2" v-on:clickEventRight="moreShow=true" :spanShow="true"></serviceArea>
+    <serviceArea :type1="serviceLeft" :type2="serviceRight" :iconName1="iconName1" :iconName2="iconName2" v-on:clickEventLeft="customerFn" v-on:clickEventRight="moreShow=true" :spanShow="true"></serviceArea>
     <mt-popup class="information_picker" v-model="pickerShow" position="bottom">
       <div class="picker_btn">
         <mt-button v-on:click="pickerShow=false">取消</mt-button>
@@ -80,8 +80,8 @@
     <mt-popup position="bottom" v-model="moreShow">
       <div class="more">
         <div class="choose">
-          <div>提现记录</div>
-          <div>常见问题</div>
+          <div v-on:click="cashBillfn">提现记录</div>
+          <div v-on:click="$router.push('/helpCenter')">常见问题</div>
         </div>
         <div class="close" v-on:click="moreShow = false">取消</div>
       </div>
@@ -92,6 +92,7 @@
   import orangeBtn from '../../../components/orange_btn/orange_btn';
   import serviceArea from '../../../components/service/service'
   import {bankCardJson} from "../../../../static/js/bankCardJson";
+  import { customerInit, customerClick } from "../../../../static/js/basic"
   export default {
     name: 'withdraw',
     components: {
@@ -133,6 +134,11 @@
       }
     },
     mounted () {
+      //美恰初始化
+      customerInit({
+        name:this.getStorage('userName'),// 名字
+        tel:this.getStorage('mobile'),// 电话
+      });
       this.$http({
         method: 'post',
         url: process.env.API_ROOT + 'user/center/usercenter',
@@ -207,6 +213,9 @@
         }
       });
     },
+    destroyed (){
+      this.$messagebox.close();
+    },
     watch: {
       mountedDid: function () {
         for(var bankCard of this.userBankCardDTOList){
@@ -226,6 +235,15 @@
           bankInfo.bankNo = bankCard.bankNo;
           this.bankList.push(bankInfo);
         }
+      },
+      withdrawMoney: function () {
+        var reg = /^\d+\.?(\d{1,2})?$/;
+        if(this.withdrawMoney == ''){
+          return;
+        }
+        else if(isNaN(+this.withdrawMoney) || !reg.test(this.withdrawMoney)){
+          this.withdrawMoney = this.withdrawMoney.slice(0,-1);
+        }
       }
     },
     methods: {
@@ -242,7 +260,8 @@
         this.$messagebox({
           title: '提现限额说明',
           message: '单卡单笔'+this.amountMax+'元，当日'+this.dayMaxAmount+'元，当月'+this.monthMaxAmount+'元',
-          confirmButtonText: '确认'
+          confirmButtonText: '确认',
+          confirmButtonClass:'confirm_btn_orange',
         });
       },
       withdrawFn: function () {
@@ -331,8 +350,22 @@
           this.$router.push('/pswCertification');
           return;
         }
-      }
-    }
+      },
+      customerFn:function () {
+        customerClick()
+      },
+
+
+      cashBillfn:function () {
+
+        this.setStorage('whichBill', '1');
+
+        this.$router.push('/bill')
+
+      },
+    },
+
+
   }
 </script>
 <style lang="less" scoped>
