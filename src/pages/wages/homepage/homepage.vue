@@ -168,6 +168,9 @@
         window.event? window.event.cancelBubble = true : e.stopPropagation();
 
       },
+      destroyed (){
+        this.$messagebox.close();
+      },
 
       //页面加载方法
       onShow: function () {

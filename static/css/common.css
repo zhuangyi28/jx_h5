@@ -23,7 +23,7 @@ a img {
   border: 0;
 }
 
-a,ul,li,button,span {
+a,ul,li,button,span,div {
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
   -webkit-appearance: none;
@@ -44,6 +44,11 @@ input,textarea{
   -webkit-tap-highlight-color: transparent;
   font-size: inherit;
   color: inherit;
+}
+
+.ovfHiden {
+  overflow: hidden;
+  height: 100%;
 }
 
 .message_btn_color{

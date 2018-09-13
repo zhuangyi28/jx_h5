@@ -49,6 +49,9 @@
 
 
     },
+    destroyed (){
+      this.$messagebox.close();
+    },
     methods:{
 
       onClickFn:function () {

@@ -1,9 +1,12 @@
 .help{
   .help_box{
     background: #fff;
-    padding: 15px;
+    padding: 15px 0;
+    margin-bottom: 15px;
     .title{
       font-size: 16px;
+      padding: 0 15px;
+      color: #000;
     }
     .help_details{
       width: 100%;
@@ -13,16 +16,116 @@
       div:first-child{
         width: 80px;
         i{
+          display: block;
           font-size:42px;
+          text-align: center;
+          color: #ff7d37;
+
         }
       }
       div+div{
+        position: relative;
         width: calc(~'100vw - 100px');
+        &:after{
+          content: '';
+          position: absolute;
+          top: 15px;
+          left: 0;
+          border-left: 1px solid #ddd;
+          width: 1px;
+          height: 80%;
+
+        }
+        p{
+          padding: 5px 0 10px 15px;
+        }
 
       }
     }
   }
+  .service_area{
 
+    position: relative;
+    z-index: 99;
+
+    .area_box{
+
+      box-sizing: border-box;
+      height: 100%;
+      padding-bottom: 62px;
+      overflow: auto;
+    }
+
+    .footer{
+
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      padding: 10px 15px;
+      width: 100%;
+      box-sizing: border-box;
+      text-align: center;
+      font-size: 12px;
+      &:after{
+        content: '';
+        position: absolute;
+        left: 15px;
+        top: 0px;
+        border-top: 1px solid #ddd;
+        width: 92%;
+        height: 1px;
+        transform:scaleY(.6);
+      }
+      span:active{
+
+        opacity: .6;
+
+      }
+
+      span,a{
+
+        color: #8a8a8a;
+        i{
+          font-size: 32px;
+          vertical-align: middle;
+          line-height: 24px;
+          color:#ff7a3b;
+        }
+      }
+
+      span{
+
+        text-align:right;
+        padding:0;
+        padding-right: 15px;
+
+
+      }
+      a{
+        position: relative;
+        display: inline-block;
+        color: #8a8a8a;
+        text-align:left;
+        &:after{
+          content: '';
+          position: absolute;
+          left: -4px;
+          top: 20%;
+          width: 1px;
+          height: 15px;
+          border-left: 1px solid #ddd;
+          color: #dddddd;
+
+
+        }
+
+
+      }
+
+    }
+
+
+  }
 
 }
 

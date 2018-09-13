@@ -12,7 +12,7 @@
           <div v-else-if="bank.cardType == 2">信用卡</div>
           <div class="card_ID" v-bind:bankCardId="bank.bankCardId">{{bank.bankNo}}</div>
         </div>
-        <div class="delete_btn" v-on:click="deleteCard">
+        <div class="delete_btn" v-bind:data-card="bank.bankCardId" v-bind:data-num="bank.bankNo" v-on:click="deleteCard">
           <img src="../../../../static/images/jx_delate.png">
         </div>
       </div>
@@ -59,19 +59,15 @@
       });
     },
     methods: {
-      deleteCard: function () {
-        for(var parent of event.path){
-          if(parent.classList.contains('bank_card')){
-            var div_card_id = parent.getElementsByClassName('card_ID')[0];
-            this.cardID = div_card_id.innerText;
-            this.bankCardId = div_card_id.getAttribute('bankCardId');
-            break;
-          }
-        }
-        var divArr = event.path;
+      deleteCard: function (e) {
+
+          this.bankCardId=e.currentTarget.dataset.card,
+
+          this.cardID=e.currentTarget.dataset.num,
+
         this.$messagebox({
           title: '提示',
-          message: '确认删除尾号是'+this.cardID.substr(this.cardID.length - 4)+'的银行卡',
+          message: '确认删除尾号是'+ this.cardID.substr(this.cardID.length-4)+'的银行卡',
           showCancelButton: true,
           cancelButtonText: '取消',
           confirmButtonText: '删除',
@@ -107,6 +103,8 @@
 
 
         })
+
+        this.$messagebox.close(false);
       },
       addCard: function () {
         var thisisVerify = this.getStorage('isVerify');

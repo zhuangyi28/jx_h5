@@ -60,8 +60,7 @@
     </div>
 
     <!-- 联系客户 -->
-
-    <serviceArea :type1="serviceLeft"  :iconName1="iconName1" :spanShow="false"></serviceArea>
+    <serviceArea :type1="serviceLeft" :iconName1="iconName1" v-on:clickEventLeft="$router.push('/helpCenter')" :spanShow="false"></serviceArea>
 
   </div>
 </template>
@@ -69,11 +68,11 @@
 
   //帮助
   import serviceArea from '../../../components/service/service'
- export default{
+  export default{
 
      name:'transferDetail',
 
-   components: {
+      components: {
 
      serviceArea: serviceArea,
 
@@ -256,6 +255,7 @@
 
 
      },
+
 
 
    }

@@ -107,7 +107,7 @@
         <i class="allow_right"></i>
       </div>
       <!--消息 -->
-      <div class="cell">
+      <div class="cell" v-on:click="$router.push('/helpCenter')">
         <div class="title">
           <img src="../../../static/images/jx_ask.png"><span class="cell_text">帮助与客服</span>
         </div>

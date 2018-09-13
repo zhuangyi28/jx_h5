@@ -38,6 +38,9 @@
       this.isVerify = this.getStorage('isVerify');
       this.mobile = this.getStorage('mobile');
     },
+    destroyed (){
+      this.$messagebox.close();
+    },
     methods: {
       logout: function () {
         this.$messagebox({
