@@ -149,14 +149,14 @@
             }
             else {
               if (res.data.code == '0000') {
-                this.setStorage('orderId',res.data.data);
+                this.setStorage('transferOrderId',res.data.data);
                 this.$toast({
                   message: res.data.msg,
                   position: 'middle',
                   duration: 1500
                 });
                 setTimeout(() => {
-                  this.$router.push( '/transferSuccess')
+                  this.$router.push( '/paySuccess')
                 },1500);
               }
               else {

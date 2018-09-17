@@ -1,57 +1,72 @@
 .transfer_history{
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 10px;
   background-color: white;
-  margin: 10px;
-  border-radius: 8px;
-  box-shadow: 0 0 8px #e8e8e8;
-  padding: 0 20px;
+  border-radius: 5px;
   .transfer_list{
+    padding: 10px 0;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 0;
     position: relative;
-    .user_img{
-      width: 40px;
-      height: 40px;
-      margin: 0 10px 0 0;
-      img{
-        width: 100%;
-        height: 100%;
+    .transfer_history_user{
+    display: flex;
+    justify-content: space-between;
+      .user_img{
+        width: 40px;
+        height: 40px;
+        margin: 0 5px;
+        img{
+          width: 100%;
+          height: 100%;
+        }
       }
-    }
-    .user_info{
-      margin-right: auto;
-      div:last-child{
-        color: #ababab;
-        font-size: 12px;
+      .user_info{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        text-align: left;
+        margin-left: 8px;
+        div:last-child{
+          color: #ababab;
+          font-size: 12px;
+        }
       }
     }
     .close_btn{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: #dddddd;
-      height: 20px;
-      width: 20px;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
-      position: relative;
-      &:before{
-        content: '';
-        width: 10px;
-        height: 2px;
-        background-color: white;
-        transform: rotate(45deg);
-        position: absolute;
-        transform-origin: center;
-      }
-      &:after{
-        content: '';
-        width: 10px;
-        height: 2px;
-        background-color: white;
-        transform: rotate(-45deg);
-        position: absolute;
-        transform-origin: center;
+      padding: 6px;
+      box-sizing: border-box;
+      div{
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        border: 1px solid #dddddd;
+        border-radius: 50%;
+        display: flex;
+        position: relative;
+        justify-content: center;
+        align-items: center;
+        &:before{
+          content: '';
+          width: 6px;
+          height: 1px;
+          background-color: #dddddd;
+          position: absolute;
+          transform: rotate(45deg);
+        }
+        &:after{
+          content: '';
+          width: 6px;
+          height: 1px;
+          background-color: #dddddd;
+          position: absolute;
+          transform: rotate(-45deg);
+        }
       }
     }
   }

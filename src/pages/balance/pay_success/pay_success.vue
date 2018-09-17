@@ -1,19 +1,16 @@
 <template>
   <div class="pay_success">
     <div class="success_box">
-      <img src="/static/images/jx_success_white.png"/>
+      <img src="../../../../static/images/jx_success_white.png"/>
       <div class="circle">
         <div class="circle_bot"></div>
         <div class="circle_mid"></div>
       </div>
       <div class="wave"></div>
     </div>
-    <div class="success_title" v-if="withdraw == 1">
-      <span class="title">提现申请已提交</span>
-      <span class="money">￥{{money}}</span>
-    </div>
-    <div class="success_title" else-if="change == 1">
-      <span class="title">转账成功</span>
+    <div class="success_title">
+      <span class="title" v-if="withdraw == 1">提现申请已提交</span>
+      <span class="title" v-else-if ="change == 1">转账成功</span>
       <span class="money">￥{{money}}</span>
     </div>
     <orangeBtn v-bind:name="btnName" v-on:clickEvent="jumpTo"></orangeBtn>
@@ -48,6 +45,8 @@
         if(this.withdraw == 1){
           this.$router.push('/cashDetail');
         }else if(this.change == 1){
+          this.setStorage('orderType','2');
+          this.setStorage('billHref','6');
           this.$router.push('/transferDetail');
         }
       }

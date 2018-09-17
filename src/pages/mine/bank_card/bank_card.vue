@@ -104,7 +104,7 @@
 
         })
 
-        this.$messagebox.close(false);
+        this.$messagebox.close();
       },
       addCard: function () {
         var thisisVerify = this.getStorage('isVerify');
@@ -133,6 +133,9 @@
           this.$router.push('/addCard');
         }
       }
+    },
+    destroyed (){
+      this.$messagebox.close();
     }
   }
 </script>

@@ -1,32 +1,31 @@
 <template>
   <div class="transfer_history">
     <div class="transfer_another" v-on:click="$router.push('/transfer')">
-      <img src="/static/images/jx_accounts.png">
-      <span>转给其他账户</span>
+      <img src="../../../../static/images/jx_transfer_users.png">
+      <span>转账给其他账户</span>
     </div>
     <div class="transfer_history_title">
       <span>转给最近收款人</span>
       <div>
-        <img src="/static/images/jx_payee.png">
+        <img src="../../../../static/images/jx_user_note.png">
         <span v-on:click="$router.push('/transferHistoryUser')">全部收款人</span>
       </div>
     </div>
     <div class="transfer_history_recent">
       <div class="transfer_history_one" v-for="user in transferUser" v-bind:recordId="user.recordId" v-on:click="jumpTo">
-        <div class="transfer_history_user"><img src="/static/images/jx_photo.png">
+        <div class="transfer_history_user" v-on:click="jumpToPage">
+          <img src="../../../../static/images/jx_transfer_user.png">
           <div class="transfer_history_user_name">
             <span>{{user.userName}}</span>
             <span>{{user.hideMobile}}</span>
           </div>
         </div>
-        <div class="close_btn" v-on:click="deleteThis"><img src="/static/images/jx_delete_grey.png"></div>
+        <div class="close_btn" v-on:click="deleteThis">
+          <div></div>
+        </div>
       </div>
     </div>
-    <service v-bind:type1="serviceLeft"></service>
-    <div class="transfer_account_help">
-      <span>联系客服</span>
-      <span>转账记录</span>
-    </div>
+    <service v-bind:type1="serviceLeft" v-bind:type2="serviceRight" v-bind:spanShow="true" v-bind:iconName1="iconName1" v-bind:iconName2="iconName2" v-on:clickEventRight="jumpToBill"></service>
   </div>
 </template>
 <script>
@@ -39,7 +38,11 @@
     data () {
       return {
         transferUser: [],//历史收款人
-        recordId: ''//收款人Id
+        recordId: '',//收款人Id
+        serviceLeft: '联系客服',
+        serviceRight: '转账记录',
+        iconName1:'icon-withdraw_custom',
+        iconName2:'icon-wages_transfer1',
       }
     },
     methods: {
@@ -86,10 +89,71 @@
           if(obj.recordId == recordId){
             this.setStorage('transferMobile',obj.mobile);
             this.setStorage('transferName',obj.userName);
-            this.$router.push('/accountCash');
+            /**
+             * 接口：检测用户发起转账操作
+             * 请求方式：post
+             * 接口：/user/work/checktransfer
+             * 入参：mobile
+             **/
+            this.$http({
+              method: 'post',
+              url: process.env.API_ROOT + 'user/work/checktransfer',
+              header: {
+                'content-type': 'application/x-www-form-urlencoded'// post请求
+              },
+              params: {
+                mobile: obj.mobile
+              }
+            }).then((res)=>{
+              if(res.data.code == '0000'){
+                this.$router.push('/accountCash');
+                return;
+              }
+              else{
+                console.log(res);
+              }
+            });
             return;
           }
         }
+      },
+      jumpToPage: function () {
+        var recordId = event.currentTarget.parentElement.getAttribute('recordid');
+        for(var obj of this.transferUser){
+          if(obj.recordId == recordId){
+            this.setStorage('transferMobile',obj.mobile);
+            this.setStorage('transferName',obj.userName);
+            /**
+             * 接口：检测用户发起转账操作
+             * 请求方式：post
+             * 接口：/user/work/checktransfer
+             * 入参：mobile
+             **/
+            this.$http({
+              method: 'post',
+              url: process.env.API_ROOT + 'user/work/checktransfer',
+              header: {
+                'content-type': 'application/x-www-form-urlencoded'// post请求
+              },
+              params: {
+                mobile: obj.mobile
+              }
+            }).then((res)=>{
+              if(res.data.code == '0000'){
+                this.$router.push('/accountCash');
+                return;
+              }
+              else{
+                console.log(res);
+              }
+            });
+            return;
+          }
+        }
+      },
+      jumpToBill: function () {
+        this.setStorage('whichBill','2');
+        this.$router.push('/bill');
       }
     },
     mounted () {
@@ -119,6 +183,9 @@
       }).catch((res)=>{
         console.log(res);
       })
+    },
+    destroyed (){
+      this.$messagebox.close();
     }
   }
 </script>

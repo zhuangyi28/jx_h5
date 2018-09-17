@@ -1,7 +1,7 @@
 <template>
   <div class="change_certification">
     <div class="change_certification_ps">
-      <img src="/static/images/jx_prompt.png">
+      <img src="../../../../static/images/jx_prompt.png">
       <span>更换登录账号，需验证当前登录账号身份</span>
     </div>
     <div class="change_certification_content">

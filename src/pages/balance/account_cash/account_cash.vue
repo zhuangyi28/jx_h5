@@ -2,7 +2,7 @@
   <div class="transfer_accounts">
     <div class="user_information">
       <div class="user_img">
-        <img src="/static/images/jx_photo_account.png">
+        <img src="../../../../static/images/jx_transfer_user.png">
       </div>
       <div class="user_name_tel">
         <div>{{transferName}}</div>
@@ -13,10 +13,13 @@
       <div class="transfer_accounts_input_title">转账金额</div>
       <div class="money_input">
         <span>￥</span>
-        <input type="text" v-bind:placeholder="transferPrompt" v-model="money">
+        <input type="text" placeholder="请输入转账金额" v-model="money">
         <span v-on:click="money = transferBalance">全部</span>
       </div>
-      <div class="transfer_accounts_input_ps">添加备注（20字以内）</div>
+      <div class="transfer_accounts_input_ps">可转余额{{transferBalance}}</div>
+    </div>
+    <div class="transfer_ps">
+      <input type="text" placeholder="添加备注（20字以内）" maxlength="20">
     </div>
     <orangeBtn v-bind:name="btnName" v-on:clickEvent="handleClick"></orangeBtn>
     <mt-popup v-model="transferClick" position="bottom">
@@ -80,11 +83,6 @@
           this.transferBalance = res.data.data;
         }
       });
-    },
-    computed: {
-      transferPrompt: function () {
-        return '可转余额'+ this.transferBalance + '元';
-      }
     },
     methods: {
       //判断输入的转账金额是否符合标准
