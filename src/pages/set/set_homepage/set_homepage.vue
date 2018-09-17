@@ -2,7 +2,7 @@
   <div class="set">
     <div class="set_list">
       <div class="list_one" v-on:click="$router.push('/payCertification')"><span>支付验证</span></div>
-      <div class="list_one"><span>修改登录密码</span></div>
+      <div class="list_one" v-on:click="$router.push('/changeLoginPsw')"><span>修改登录密码</span></div>
       <div v-if="isPayPwd==0" class="list_one" v-on:click="onClickFn"><span>设置支付密码</span></div>
       <div v-else v-on:click="onclickPws" class="list_one"><span>重置支付密码</span></div>
     </div>

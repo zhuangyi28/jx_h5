@@ -1,9 +1,10 @@
 .transfer{
+  padding: 1px 0;
+  box-sizing: border-box;
   .transfer_input{
-    margin: 10px 15px;
+    margin: 15px 0;
     padding: 15px;
     background-color: white;
-    border-radius: 8px;
     box-shadow: 0 0 8px #e8e8e8;
     display: flex;
     justify-content: space-between;
@@ -14,6 +15,7 @@
     }
     span{
       white-space: nowrap;
+      margin-right: 10px;
     }
     input{
       height: 22px;
@@ -22,14 +24,17 @@
       background-color: transparent;
       padding: 0 10px;
       flex: 1;
+      &::placeholder{
+        color: #ababab;
+      }
     }
     .input_img{
-      width: 25px;
-      height: 25px;
-      flex-shrink: 0;
-      img{
-        width: 100%;
-        height: 100%;
+      width: 15px;
+      margin: 0 10px;
+      font-size: 32px;
+      color: #ff7a3b;
+      i.icon-sign_phone{
+        font-size: 28px;
       }
     }
   }

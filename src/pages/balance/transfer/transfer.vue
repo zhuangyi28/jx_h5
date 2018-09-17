@@ -4,30 +4,34 @@
       <span>对方账户</span>
       <input type="text" placeholder="请输入手机号" v-model="transferMobile">
       <div class="input_img" v-on:click="$router.push('/transferHistoryUser')">
-        <img src="/static/images/jx_phone_orange.png">
+        <i class="iconfont icon-sign_phone"></i>
       </div>
     </div>
     <div class="transfer_ps">
-      *资金将实时转入对方账户，无法退款
+      资金将实时转入对方账户，无法退款
     </div>
     <orangeBtn v-bind:name="btnName" v-on:clickEvent="handleClick"></orangeBtn>
-    <div class="transfer_help">
-      <span>联系客服</span><span>转账记录</span>
-    </div>
+    <service v-bind:type1="serviceLeft" v-bind:type2="serviceRight" v-bind:spanShow="true" v-bind:iconName1="iconName1" v-bind:iconName2="iconName2" v-on:clickEventRight="jumpToBill"></service>
   </div>
 </template>
 <script>
   import orangeBtn from '../../../components/orange_btn/orange_btn'
+  import service from '../../../components/service/service'
   export default {
     name: 'transfer',
     components: {
-      orangeBtn: orangeBtn
+      orangeBtn: orangeBtn,
+      service: service
     },
     data () {
       return {
         transferMobile: '',//转账账号
         btnName: '下一步',//按钮名称
-        mobile: ''//当前登录账号
+        mobile: '',//当前登录账号
+        serviceLeft: '联系客服',
+        serviceRight: '转账记录',
+        iconName1:'icon-withdraw_custom',
+        iconName2:'icon-wages_transfer1'
       }
     },
     mounted () {
@@ -70,6 +74,7 @@
               mobile: this.transferMobile
             }
           }).then((res)=>{
+            console.log(res);
             if(res.data.code == -8){
               this.$messagebox({
                 title: res.data.msg,
@@ -117,7 +122,14 @@
             }
           })
         }
+      },
+      jumpToBill: function () {
+        this.setStorage('whichBill','2');
+        this.$router.push('/bill');
       }
+    },
+    destroyed (){
+      this.$messagebox.close();
     }
   }
 </script>

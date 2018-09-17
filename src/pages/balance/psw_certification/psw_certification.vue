@@ -1,7 +1,7 @@
 <template>
   <div class="psw_certification">
     <div class="psw_certification_input">
-      <span>支付密码</span>
+      <span><img src="../../../../static/images/jx_lock.png" ></span>
       <input type="number" style="-webkit-text-security:disc" pattern="\d*" oninput="if(value.length > 6)value = value.slice(0, 6)" placeholder="请输入支付密码" v-model="password" maxlength="6">
     </div>
     <div class="forget_password" v-on:click="$router.push('/code')">忘记支付密码？</div>
@@ -91,7 +91,7 @@
               if(res.data.code == '0000'){
                 toast.close();
                 this.setStorage('orderId',res.data.data);
-                this.$router.push('/transferSuccess')
+                this.$router.push('/paySuccess')
               }
             }).catch((res)=>{
               console.log(res);
@@ -127,15 +127,15 @@
                   }
                 })
               }
-              var toast = this.$toast({
-                message: res.data.msg,
-                position: 'middle',
-                duration: 1500
-              });
               if(res.data.code == '0000'){
-                toast.close();
-                this.setStorage('orderId',res.data.data);
+                this.setStorage('transferOrderId',res.data.data);
                 this.$router.push('/paySuccess')
+              }else{
+                this.$toast({
+                  message: res.data.msg,
+                  position: 'middle',
+                  duration: 1500
+                });
               }
             }).catch((res)=>{
               console.log(res);
@@ -143,6 +143,9 @@
           }
         }
       }
+    },
+    destroyed (){
+      this.$messagebox.close();
     }
   }
 </script>

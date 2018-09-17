@@ -1,0 +1,48 @@
+.change_login_psw{
+  min-height: 100vh;
+  padding: 1px 0;
+  box-sizing: border-box;
+  .change_login_psw_input{
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 15px;
+    box-shadow: 0 0 8px #ddd;
+    z-index: 500;
+    .input{
+      position: relative;
+      background-color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      overflow: hidden;
+      span{
+        margin: 0 10px;
+        display: inline-block;
+        min-width: 60px;
+      }
+      input{
+        height: 50px;
+        border: 0;
+        flex: 1;
+        background-color: #fff;
+        font-size: 16px;
+        color: #4a4a4a;
+        padding: 0 15px;
+        outline: none;
+        &::placeholder{
+          color: #dddddd;
+        }
+      }
+    }
+    .input+.input:after{
+      content: '';
+      display: block;
+      position: absolute;
+      width: 92%;
+      height: 1px;
+      border-top: 1px solid #f5f5f5;
+      top: 0;
+      left: 4%;
+    }
+  }
+}

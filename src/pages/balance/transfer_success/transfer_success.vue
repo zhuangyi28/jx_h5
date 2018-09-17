@@ -4,9 +4,9 @@
       <div class="out"></div>
       <div class="middle"></div>
       <div class="in">
-        <img src="/static/images/jx_success.png">
+        <img src="../../../../static/images/jx_success.png">
       </div>
-      <img src="/static/images/jx_background.png">
+      <img src="../../../../static/images/jx_background.png">
     </div>
     <div class="success_title">
       <span class="title">转账成功</span>

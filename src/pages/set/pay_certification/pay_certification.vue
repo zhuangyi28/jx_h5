@@ -144,15 +144,19 @@
             pwdMode: pwdMode
           }
         }).then((res)=>{
+          console.log(res);
           this.$toast({
             message: res.data.msg,
             position: 'middle',
-            durationa: 1500
+            duration: 1500
           });
         }).catch((res)=>{
           console.log(res);
         })
       }
+    },
+    destroyed (){
+      this.$messagebox.close();
     }
   }
 </script>
