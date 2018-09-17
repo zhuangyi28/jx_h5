@@ -42,7 +42,8 @@ import transferAccounts from '@/pages/balance/transfer_accounts/transfer_account
 import transferHistoryUser from '@/pages/balance/transfer_history_user/transfer_history_user'
 import accountCash from '@/pages/balance/account_cash/account_cash'
 import transferSuccess from '@/pages/balance/transfer_success/transfer_success'
-
+import feedbackList from '@/pages/feedback/list/list'
+import feedback from '@/pages/feedback/feedback/feedback'
 Vue.use(Router)
 
 export default new Router({
@@ -385,6 +386,22 @@ export default new Router({
         title: '转账成功'
       },
       component: transferSuccess
+    },
+    {
+      path: '/feedbackList',
+      name: 'feedbackList',
+      meta: {
+        title: '消息'
+      },
+      component: feedbackList
+    },
+    {
+      path: '/feedback',
+      name: 'feedback',
+      meta: {
+        title: '工资条反馈'
+      },
+      component: feedback
     },
     {
       path: '/workDesk',

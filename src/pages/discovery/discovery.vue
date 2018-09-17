@@ -22,9 +22,7 @@
 
     },
 
-    methods: {
 
-    }
   }
 </script>
 <style lang="less" scoped>

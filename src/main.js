@@ -19,9 +19,6 @@ import MD5 from '../static/js/MD5.min'
 import MintUI from 'mint-ui'
 
 //import BasicJs from './js/basic'
-
-
-
 import VueWechatTitle from 'vue-wechat-title';
 import VueResource from 'vue-resource'
 import Filters from './api/filters'
