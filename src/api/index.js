@@ -14,7 +14,13 @@ exports.install = function (Vue, options) {
    */
   Vue.prototype.setStorage = function (key,value){
 
-    window.localStorage.setItem(key.toString(),value.toString());
+    if(key){
+
+      window.localStorage.setItem(key.toString(),value.toString());
+
+    }
+
+
 
   };
   /**

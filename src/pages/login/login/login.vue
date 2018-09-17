@@ -19,10 +19,6 @@
 
       </div>
 
-
-
-
-
     </div>
 
     <ul class="bg-bubbles">
@@ -43,7 +39,6 @@
 <script>
   import orangeBtn from '../../../components/orange_btn/orange_btn'
 
-  import qs from 'qs';
   export default {
     name: 'login',
     components: {

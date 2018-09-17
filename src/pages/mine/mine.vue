@@ -83,9 +83,9 @@
         <i class="allow_right"></i>
       </div>
       <!--消息 -->
-      <div class="cell">
+      <div class="cell" v-on:click="$router.push('/feedbackList')">
         <div class="title">
-          <img src="../../../static/images/jx_mail.png"><span class="cell_text">消息</span>
+          <img src="../../../static/images/jx_mail.png" ><span class="cell_text">消息</span>
         </div>
         <div v-show="hasNewMsg" class="cell_value"><span class="red">您有新消息</span></div>
         <i class="allow_right"></i>
