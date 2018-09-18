@@ -169,7 +169,7 @@
         if (res.data.code == '0000') {
 
 
-          let ishasNewMsg = res.data.data.isHaveNewMsg;
+          var ishasNewMsg = res.data.data.isHaveNewMsg;
 
           _this.mobile = res.data.data.mobile;
 
@@ -200,6 +200,24 @@
 
           this.setStorage('source', res.data.data.source);
 
+
+
+          //判断是否有新消息
+
+          if (ishasNewMsg == '1') {
+
+
+             _this.hasNewMsg = true
+
+
+          }
+
+          else {
+
+             _this.hasNewMsg = false
+
+
+          }
           //如果审核不通过的话 存储一下不通过的原因
           if (this.setStorage('isVerify') == '3') {
 
@@ -208,21 +226,6 @@
           }
 
 
-          //判断是否有新消息
-
-          if (ishasNewMsg == '1') {
-
-            _this.hasNewMsg = true
-
-
-          }
-
-          else {
-
-            _this.hasNewMsg = false
-
-
-          }
 
 
         }

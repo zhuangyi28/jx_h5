@@ -27,11 +27,10 @@
         <div class="withdraw_money_ps">单笔￥<span>{{amountMin|thousandBitSeparator}}</span>-￥<span>{{amountMax|thousandBitSeparator}}</span>（手续费<span>{{rate/100}}</span>%）</div>
         <div class="withdraw_money_input">
           <span>￥</span>
-          <input type="text" v-model="withdrawMoney">
+          <input type="text" v-model="withdrawMoney" placeholder="请输入提现金额">
         </div>
         <div class="withdraw_money_show">
-          <span>可提额度{{balance|thousandBitSeparator}}元</span>
-          <span class="pop_up" v-on:click="popUp">?</span>
+          <span>可提额度{{balance|thousandBitSeparator}}元<span class="pop_up" v-on:click="popUp">?</span></span>
           <span v-on:click="withdrawMoney = balance">全部提现</span>
         </div>
       </div>
