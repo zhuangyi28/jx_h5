@@ -1,16 +1,18 @@
 <template>
-  <div class="transfer_history">
-    <div class="transfer_list" v-for="list in transferList" v-bind:recordId="list.recordId" v-on:click="jumpTo">
-      <div class="transfer_history_user">
-        <div class="user_img">
-          <img src="../../../../static/images/jx_transfer_user.png">
+  <div class="transfer_history" v-infinite-scroll="addList" infinite-scroll-disabled="moreLoading" infinite-scroll-distance="20" infinite-scroll-immediate-check="false">
+    <div class="transfer_history_user_list">
+      <div class="transfer_list" v-for="list in transferList" v-bind:recordId="list.recordId" v-on:click="jumpTo">
+        <div class="transfer_history_user">
+          <div class="user_img">
+            <img src="../../../../static/images/jx_transfer_user.png">
+          </div>
+          <div class="user_info">
+            <div>{{list.userName}}</div>
+            <div>{{list.hideMobile}}</div>
+          </div>
         </div>
-        <div class="user_info">
-          <div>{{list.userName}}</div>
-          <div>{{list.hideMobile}}</div>
-        </div>
+        <div class="close_btn" v-on:click="deleteThisOne"><div></div></div>
       </div>
-      <div class="close_btn" v-on:click="deleteThisOne"><div></div></div>
     </div>
     <div class="loadmore" v-show="!noData">
       <div class="loadmore_tips"><span class="data">{{moreText}}</span></div>
@@ -28,7 +30,9 @@
       return {
         transferList: [],
         noData: true,
-        moreText: '加载中'
+        moreText: '加载中',
+        pageNum: 1,
+        moreLoading: false
       }
     },
     mounted () {
@@ -111,9 +115,13 @@
         }
       },
       addList: function () {
+        this.moreLoading = true;
         this.$http({
           method: 'get',
-          url: process.env.API_ROOT + 'record/selectallhistoricalpayee'
+          url: process.env.API_ROOT + 'record/selectallhistoricalpayee',
+          params:{
+            pageNum: this.pageNum
+          }
         }).then((res)=>{
           console.log(res);
           if(res.data.code == '0000'){
@@ -128,6 +136,8 @@
             }
             else{
               this.transferList = this.transferList.concat(res.data.data.list);
+              this.pageNum++;
+              this.moreLoading = false;
             }
           }
         })
