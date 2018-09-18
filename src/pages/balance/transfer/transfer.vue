@@ -37,6 +37,7 @@
         serviceRight: '转账记录',
         iconName1:'icon-withdraw_custom',
         iconName2:'icon-wages_transfer1',
+        unused: false //控制显示button
       }
     },
     mounted () {

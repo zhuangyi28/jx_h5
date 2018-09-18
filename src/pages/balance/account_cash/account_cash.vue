@@ -70,6 +70,7 @@
         transferBalance: '',//可转金额
         transferClick: false,//控制弹框
         transferBtnName: '确认转账',//弹框内按钮名称
+        unused: false //控制显示button
       }
     },
     mounted () {
