@@ -1,33 +1,37 @@
 <template>
-  <div class="feedback">
+  <div class="feedback" >
 
-    <div class="list" v-for="item in feedBackList">
+    <div id="feedbackList">
 
-      <div class="people_list" v-bind:class="item.type=='1'? '':'sevice_left'">
+      <div class="list" v-for="item in feedBackList" >
 
-        <div class="feedback-time">{{item.sendDate|fmtDateStr}}</div>
+        <div class="people_list" v-bind:class="item.type=='1'? '':'sevice_left'">
 
-        <!-- 用户发起的列表-->
-        <div v-if="item.type=='1'" class="tips_box">
+          <div class="feedback-time">{{item.sendDate|fmtDateStr}}</div>
 
-          <div><span class="tips">{{item.content}}</span></div>
+          <!-- 用户发起的列表-->
+          <div v-if="item.type=='1'" class="tips_box">
 
-          <div class="people_img"><img src="../../../../static/images/feedback_mine.png"/></div>
+            <div><span class="tips">{{item.content}}</span></div>
+
+            <div class="people_img"><img src="../../../../static/images/feedback_mine.png"/></div>
+
+          </div>
+
+          <div v-else-if="item.type=='2'" class="tips_box">
+
+            <div class="people_img"><img src="../../../../static/images/feedback_staff.png"/></div>
+
+            <div><span class="tips">{{item.content}}</span></div>
+
+          </div>
+
+
 
         </div>
-
-        <div v-else-if="item.type=='2'" class="tips_box">
-
-          <div class="people_img"><img src="../../../../static/images/feedback_staff.png"/></div>
-
-          <div><span class="tips">{{item.content}}</span></div>
-
-        </div>
-
-
-
       </div>
     </div>
+
 
     <div class="feedback_content">
       <div class="input_box"></div>
@@ -66,18 +70,42 @@
 
         repeatSend: 1,//防止重复提交
 
+
       }
     },
 
     mounted: function () {
 
-
       this.init()
+
+      this.scrollBottom()
+
     },
+
+    updated:function(){
+
+        this.scrollBottom()
+
+    },
+
 
     methods: {
 
-        init:function () {
+
+        scrollBottom:function () {
+
+          this.$nextTick(() => {
+
+            var container = document.getElementById('feedbackList');
+
+            container.scrollTop = container.scrollHeight;
+
+
+          })
+        },
+
+
+      init:function () {
 
           /**
            * 接口：获取工资条反馈详情
@@ -100,6 +128,7 @@
 
 
           }).then((res)=>{
+
               console.log(res.data)
 
             var list = res.data.data;
@@ -117,10 +146,18 @@
                 this.feedBackList= list;//反馈消息列表
 
 
+
+
             }
 
 
+
+
+
           }).catch((res)=>{})
+
+
+
 
 
 
@@ -201,7 +238,7 @@
                var userImf = {
                  feedBackDetailId: "1",
                  feedBackId: "123",
-                 content: that.data.contentTitle,
+                 content: this.contentTitle,
                  type: "1",
                  sendDate: Date.parse(new Date())
 
@@ -212,7 +249,7 @@
 
                _list.push(userImf);
 
-               //消息清空
+                //消息清空
 
                  this.contentTitle= '';
 
@@ -220,6 +257,8 @@
 
 
                //平滑到底部
+
+                this.scrollBottom();
 
 
              }

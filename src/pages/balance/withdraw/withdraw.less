@@ -100,6 +100,9 @@
         span{
           font-size: 30px;
           color: #4a4a4a;
+          &:first-child{
+            vertical-align: sub;
+          }
         }
         input{
           background-color: transparent;
@@ -110,6 +113,10 @@
           flex: 1;
           min-width: 0;
           color: #4a4a4a;
+          &::placeholder{
+            font-size: 24px;
+            color: #ddd;
+          }
         }
       }
       .withdraw_money_show{
@@ -131,11 +138,7 @@
         span:first-child{
           position: relative;
           display: inline-block;
-        }
-        span:last-child{
-          color: #ff7a3b;
-        }
-        .pop_up{
+          .pop_up{
           width: 14px;
           height: 14px;
           line-height: 14px;
@@ -143,8 +146,13 @@
           color: #ababab;
           border: 1px solid #ababab;
           border-radius: 50%;
-          margin: 0 auto 0 20px;
+          margin: 0 auto 0 8px;
         }
+        }
+        span:last-child{
+          color: #ff7a3b;
+        }
+
       }
     }
   }

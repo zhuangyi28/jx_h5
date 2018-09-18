@@ -41,7 +41,7 @@
 
           <orangeBtn :name="btnName1" :class="className" v-on:clickEvent="confirmFn"></orangeBtn>
 
-          <button class="button_left">反馈</button>
+          <button class="button_left" v-on:click="$router.push('/feedback')">反馈</button>
 
           <div v-show="hiddenDot" class="dot"></div>
 
@@ -64,7 +64,7 @@
 
           <orangeBtn :name="btnName2" :class="className"></orangeBtn>
 
-          <button class=" button_left">反馈</button>
+          <button class=" button_left" v-on:click="$router.push('/feedback')">反馈</button>
 
           <div v-show="hiddenDot" class="dot"></div>
 
@@ -82,7 +82,7 @@
 
           <orangeBtn :name="btnName3" class="disabled_btn" :class="className">已确认</orangeBtn>
 
-          <button class="button_left" >反馈</button>
+          <button class="button_left" v-on:click="$router.push('/feedback')">反馈</button>
 
           <div v-show="hiddenDot" class="dot"></div>
 

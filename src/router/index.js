@@ -44,7 +44,7 @@ import accountCash from '@/pages/balance/account_cash/account_cash'
 import transferSuccess from '@/pages/balance/transfer_success/transfer_success'
 import feedbackList from '@/pages/feedback/list/list'
 import feedback from '@/pages/feedback/feedback/feedback'
-import changeLoginPsw from '@/pages/mine/change_login_psw/change_login_psw'
+import changeLoginPsw from '@/pages/set/change_login_psw/change_login_psw'
 Vue.use(Router)
 
 export default new Router({

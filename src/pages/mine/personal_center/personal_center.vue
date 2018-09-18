@@ -3,7 +3,12 @@
     <div class="personal_information">
       <div class="information_list" v-on:click="$router.push('/telChange')">
         <span>账号</span>
-        <span class="mobile">{{mobile|plusXing(3,4)}}</span>
+        <span class="identification">
+            <span class="mobile">{{mobile|plusXing(3,4)}}</span>
+            <i class="allow_right"></i>
+        </span>
+
+
       </div>
       <div class="information_list" v-on:click="$router.push('/certification')">
         <span>实名认证</span>
