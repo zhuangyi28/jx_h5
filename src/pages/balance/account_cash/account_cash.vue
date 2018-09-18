@@ -14,14 +14,20 @@
       <div class="money_input">
         <span>￥</span>
         <input type="text" placeholder="请输入转账金额" v-model="money">
+      </div>
+      <div class="transfer_accounts_input_ps">可转余额{{transferBalance}}
         <span v-on:click="money = transferBalance">全部</span>
       </div>
-      <div class="transfer_accounts_input_ps">可转余额{{transferBalance}}</div>
     </div>
     <div class="transfer_ps">
       <input type="text" placeholder="添加备注（20字以内）" maxlength="20">
     </div>
-    <orangeBtn v-bind:name="btnName" v-on:clickEvent="handleClick"></orangeBtn>
+    <div v-if="unused">
+      <orangeBtn v-bind:name="transferBtnName" v-on:clickEvent="btnName"></orangeBtn>
+    </div>
+    <div class="click_btn" v-else>
+      <button>确认转账</button>
+    </div>
     <mt-popup v-model="transferClick" position="bottom">
       <div class="withdraw_money_info">
         <div class="withdraw_title">确认转账<span class="close_btn" v-on:click="withdrawClick=false"></span></div>
@@ -63,7 +69,7 @@
         transferName: '',//收款人姓名
         transferBalance: '',//可转金额
         transferClick: false,//控制弹框
-        transferBtnName: '确认转账'//弹框内按钮名称
+        transferBtnName: '确认转账',//弹框内按钮名称
       }
     },
     mounted () {
@@ -147,6 +153,24 @@
             console.log(res);
           }
         })
+      }
+    },
+    watch: {
+      money: function () {
+        var reg = /^\d+\.?(\d{1,2})?$/;
+        if(this.money == ''){
+          this.unused = false;
+          return;
+        }
+        else if(isNaN(+this.money) || !reg.test(this.money)){
+          this.money = this.money.slice(0,-1);
+        }
+        else if((+this.money) > 0){
+          this.unused = true;
+        }
+        else if((+this.money) == 0){
+          this.unused = false;
+        }
       }
     }
   }

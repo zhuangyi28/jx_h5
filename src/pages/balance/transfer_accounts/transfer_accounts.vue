@@ -174,7 +174,7 @@
         if(res.data.code == '0000'){
           //没有历史收款人直接跳转到输入账号页面
           if(res.data.data.length == 0){
-            this.$router.push('/transfer');
+            this.$router.replace('/transfer');
             return;
           }else{
             this.transferUser = res.data.data;

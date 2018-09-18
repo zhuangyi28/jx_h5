@@ -10,7 +10,12 @@
     <div class="transfer_ps">
       资金将实时转入对方账户，无法退款
     </div>
-    <orangeBtn v-bind:name="btnName" v-on:clickEvent="handleClick"></orangeBtn>
+    <div v-if="unused">
+      <orangeBtn v-bind:name="btnName" v-on:clickEvent="handleClick"></orangeBtn>
+    </div>
+    <div class="transfer_click_btn" v-else>
+      <button>下一步</button>
+    </div>
     <service v-bind:type1="serviceLeft" v-bind:type2="serviceRight" v-bind:spanShow="true" v-bind:iconName1="iconName1" v-bind:iconName2="iconName2" v-on:clickEventRight="jumpToBill"></service>
   </div>
 </template>
@@ -31,7 +36,7 @@
         serviceLeft: '联系客服',
         serviceRight: '转账记录',
         iconName1:'icon-withdraw_custom',
-        iconName2:'icon-wages_transfer1'
+        iconName2:'icon-wages_transfer1',
       }
     },
     mounted () {
@@ -126,6 +131,16 @@
       jumpToBill: function () {
         this.setStorage('whichBill','2');
         this.$router.push('/bill');
+      }
+    },
+    watch: {
+      transferMobile: function () {
+        if(this.transferMobile == ''){
+          this.unused = false;
+        }
+        else if(this.transferMobile != ''){
+          this.unused = true;
+        }
       }
     },
     destroyed (){
