@@ -46,8 +46,8 @@
             this.$messagebox({
               title: '提示',
               message: '是否需要删除该联系人',
-              showConfirmButton: 'true',
-              showCancelButton: 'true',
+              showConfirmButton: true,
+              showCancelButton: true,
               confirmButtonText: '删除',
               cancelButtonText: '取消',
               cancelButtonClass:'cancel_btn',

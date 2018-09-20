@@ -38,7 +38,7 @@
 
     <div class="list">
       <!--设置 -->
-      <div class="cell" v-on:click="$router.push('/transferAccounts')">
+      <div class="cell" v-on:click="transferUrlFn">
         <div class="title">
           <span class="iconfont icon-wages_transfer1"></span><span class="cell_text">转账</span>
         </div>
@@ -188,7 +188,126 @@
         })
 
 
+      },
+
+      transferUrlFn:function () {
+
+
+        //获取已认证未认证
+        var _isVerify = this.isVerify;
+
+
+        //没认证的去认证 已认证直接跳接口
+        if (_isVerify == '0'||_isVerify == '3') {
+
+          //存指定的页面  （在实名认证中取值）
+          this.setStorage('hrefId','10');
+
+          this.setStorage('personCenter','2');
+
+          this.$messagebox({
+            title: '提示',
+            message: '为保障账户资金安全，实名用户才能使用转账服务，请先完成实名认证',
+            showConfirmButton: true,
+            showCancelButton: true,
+            confirmButtonText: '去认证',
+            cancelButtonText: '取消',
+            cancelButtonClass:'cancel_btn',
+            confirmButtonClass:'confirm_btn_orange',
+          }).then((res)=>{
+
+              if(res == 'confirm'){
+
+                this.$router.push('/certification');
+
+              }
+              else {
+
+                 return
+
+              }
+
+          }).catch((res=>{}))
+
+
+
+
+
+        }
+
+        else if(_isVerify == '2'){
+          //存指定的页面  （在实名认证中取值）
+          this.setStorage('hrefId','10');
+
+          this.setStorage('personCenter','2');
+
+          this.$messagebox({
+            title: '提示',
+            message: '实名认证审核中，审核通过后即可使用转账服务',
+            showCancelButton: false,
+            confirmButtonText: '我知道了',
+            confirmButtonClass:'confirm_btn_orange',
+          }).then((res)=>{
+
+            if(res == 'confirm'){
+
+              //this.$router.push('/certification');
+
+            }
+
+
+          }).catch((res=>{}))
+
+
+        }
+
+
+        else{
+
+          /**
+           * 接口：查询历史收款人
+           * 请求方式：post
+           * 接口：/record/selecthistoricalpayee
+           * 入参：null
+           **/
+
+          this.$http({
+
+            method: 'post',
+
+            url: process.env.API_ROOT + 'record/selecthistoricalpayee',
+
+          }).then((res)=>{
+
+              console.log(res.data)
+
+            if(res.data.data.length !=0){
+
+              console.log('有历史');
+
+              this.$router.push('/transferAccounts')
+
+            }
+
+            else {
+
+              //储存刚进来时候的状态 在转账成功的时候获取
+
+              this.$router.push('/transfer')
+
+
+
+            }
+
+
+          }).catch((res)=>{})
+
+
+        }
+
+
       }
+
     }
   }
 </script>
