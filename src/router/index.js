@@ -45,6 +45,7 @@ import transferSuccess from '@/pages/balance/transfer_success/transfer_success'
 import feedbackList from '@/pages/feedback/list/list'
 import feedback from '@/pages/feedback/feedback/feedback'
 import changeLoginPsw from '@/pages/set/change_login_psw/change_login_psw'
+import certificationPic from '@/pages/mine/certification_pic/certification_pic'
 Vue.use(Router)
 
 export default new Router({
@@ -411,6 +412,14 @@ export default new Router({
         title: '工资条反馈'
       },
       component: feedback
+    },
+    {
+      path: '/certificationPic',
+      name: 'certificationPic',
+      meta: {
+        title: '实名认证'
+      },
+      component: certificationPic
     },
     {
       path: '/workDesk',

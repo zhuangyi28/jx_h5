@@ -23,7 +23,7 @@
       <input type="text" placeholder="添加备注（20字以内）" maxlength="20">
     </div>
     <div v-if="unused">
-      <orangeBtn v-bind:name="transferBtnName" v-on:clickEvent="btnName"></orangeBtn>
+      <orangeBtn v-bind:name="btnName" v-on:clickEvent="handleClick"></orangeBtn>
     </div>
     <div class="click_btn" v-else>
       <button>确认转账</button>
@@ -162,6 +162,9 @@
         if(this.money == ''){
           this.unused = false;
           return;
+        }
+        else if(this.money == '00'){
+          this.money = 0;
         }
         else if(isNaN(+this.money) || !reg.test(this.money)){
           this.money = this.money.slice(0,-1);
