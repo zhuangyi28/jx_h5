@@ -22,7 +22,7 @@
     </div>
 
     <ul class="bg-bubbles">
-      <li v-for="(item, index) in bubbles" :key="index"></li>
+      <li v-for="(item,index) in bubbles" :key="index"></li>
     </ul>
 
 
@@ -70,7 +70,6 @@
 
             let _this=this;
 
-          console.log(process.env.API_ROOT)
 
 
           if(_this.mobile==''){
@@ -100,13 +99,18 @@
 
           else {
 
+
+            this.$indicator.open({
+              text: '加载中...',
+              spinnerType: 'double-bounce'
+            });
+
             /**
              * 接口：登录
              * 请求方式：POST
              * 接口：/jx/action/login
              * 入参：mobile，password,code
              **/
-
 
             this.$http({
 
@@ -144,9 +148,13 @@
 
                 var Authorization = res.data.token.access_token;//Authorization数据
 
+                this.$indicator.close();
+
+                //存取token
                 this.setStorage('Authorization',Authorization);
 
                 _this.$router.push('/workDesk/homepage')
+
               }
 
 
@@ -157,6 +165,8 @@
 
 
             })
+
+
 
           }
 

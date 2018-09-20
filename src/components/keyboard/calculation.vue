@@ -33,8 +33,7 @@
     	data(){
     		return{
 
-
-				money : ''
+          money : ''
 
 
             }
@@ -42,6 +41,7 @@
         methods : {
 			//处理按键
 			_handleKeyPress(e) {
+
 				let num = e.target.dataset.num;
 
 				//不同按键处理逻辑

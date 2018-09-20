@@ -6,8 +6,7 @@
     </div>
     <div class="transfer_history_title">
       <span>转给最近收款人</span>
-      <div>
-        <img src="../../../../static/images/jx_user_note.png">
+      <div><i class="iconfont icon-all_people"></i>
         <span v-on:click="$router.push('/transferHistoryUser')">全部收款人</span>
       </div>
     </div>
@@ -42,7 +41,7 @@
         serviceLeft: '联系客服',
         serviceRight: '转账记录',
         iconName1:'icon-withdraw_custom',
-        iconName2:'icon-wages_transfer1',
+        iconName2:'icon-transfer_money',
       }
     },
     methods: {

@@ -45,17 +45,25 @@ import transferSuccess from '@/pages/balance/transfer_success/transfer_success'
 import feedbackList from '@/pages/feedback/list/list'
 import feedback from '@/pages/feedback/feedback/feedback'
 import changeLoginPsw from '@/pages/set/change_login_psw/change_login_psw'
-import certificationPic from '@/pages/mine/certification_pic/certification_pic'
 Vue.use(Router)
 
 export default new Router({
   mode: 'hash',
   routes: [
+
     {
-      path: '/',
+      path: '/loadingPage',
+      name: 'loadingPage',
+      meta: {
+        title: '嘉薪'
+      },
+      component: loadingPage,
+    },
+    {
+      path: '/login',
       name: 'Login',
       meta: {
-        title: '登录'
+        title: '登录',
       },
       component: login
     },
@@ -229,8 +237,14 @@ export default new Router({
       meta: {
         title: ''
       },
-      component: code
+      component: code,
+    /*  beforeEnter:(to,from,next)=>{
+        console.log(from.path);
+        from.path == '/paySuccess'? next('/withdraw'):next()
+      }*/
     },
+
+
     {
       path: '/setPayPassword',
       name: 'setPayPassword',
@@ -430,7 +444,8 @@ export default new Router({
           path: 'homepage',
           name: 'homepage',
           meta: {
-            title: '工资条'
+            title: '工资条',
+            auth: true,
           },
           component: homepage,
 
@@ -440,6 +455,7 @@ export default new Router({
           name: 'discovery',
           meta: {
             title: '发现'
+
           },
           component: discovery,
 
@@ -459,3 +475,6 @@ export default new Router({
 
   ]
 })
+
+
+

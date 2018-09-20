@@ -67,8 +67,8 @@
                 this.$messagebox({
                   title: '提示',
                   message: res.data.msg,
-                  showConfirmButton: 'true',
-                  showCancelButton: 'true',
+                  showConfirmButton: true,
+                  showCancelButton: true,
                   confirmButtonText: '忘记密码',
                   cancelButtonText: '重新输入',
                   cancelButtonClass:'cancel_btn',
@@ -111,15 +111,15 @@
                 this.$messagebox({
                   title: '提示',
                   message: res.data.msg,
-                  showConfirmButton: 'true',
-                  showCancelButton: 'true',
+                  showConfirmButton: true,
+                  showCancelButton: true,
                   confirmButtonText: '忘记密码',
                   cancelButtonText: '重新输入',
                   cancelButtonClass:'cancel_btn',
                   confirmButtonClass:'confirm_btn_orange',
                 }).then((res)=>{
                   if(res == 'confirm'){
-                    this.$router.push('/');
+                    this.$router.push('/login');
                     return;
                   }else if(res == 'cancel'){
                     this.password = '';

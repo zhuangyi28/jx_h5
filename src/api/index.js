@@ -54,7 +54,7 @@ exports.install = function (Vue, options) {
    * @param {string} key 缓存键
 
    */
-  Vue.prototype.removeStorage = function (){
+  Vue.prototype.clearStorage = function (){
 
     window.localStorage.clear();
 

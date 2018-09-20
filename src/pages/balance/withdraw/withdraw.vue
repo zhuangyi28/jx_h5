@@ -48,7 +48,14 @@
 
     <!-- 联系客服-->
 
-    <serviceArea :type1="serviceLeft" :type2="serviceRight" :iconName1="iconName1" :iconName2="iconName2" v-on:clickEventLeft="customerFn" v-on:clickEventRight="moreShow=true" :spanShow="true"></serviceArea>
+    <div class="withdraw_service">
+
+      <div class="footer">
+        <span v-on:click="customerFn"><i class="iconfont icon-withdraw_custom"></i>联系客服</span><span v-on:click="moreShow=true"><i class="iconfont icon-withdraw_more"></i>更多</span>
+      </div>
+
+    </div>
+<!--    <serviceArea :type1="serviceLeft" :type2="serviceRight" :iconName1="iconName1" :iconName2="iconName2" v-on:clickEventLeft="customerFn" v-on:clickEventRight="moreShow=true" :spanShow="true"></serviceArea>-->
     <mt-popup class="information_picker" v-model="pickerShow" position="bottom">
       <div class="picker_btn">
         <mt-button v-on:click="pickerShow=false">取消</mt-button>
@@ -125,10 +132,12 @@
         withdrawClick: false,
         withdrawBtnName: '确认',
         moreShow: false,
-        serviceLeft: '查看帮助',
+/*
+        serviceLeft: '联系客服',
         serviceRight: '更多',
         iconName1:'icon-withdraw_custom',
-        iconName2:'icon-withdraw_custom',
+        iconName2:'icon-withdraw_more',
+*/
 
       }
     },
@@ -153,8 +162,8 @@
             this.$messagebox({
               title: '提示',
               message: '当前账户尚未进行实名认证，完成实名认证后方可提现',
-              showConfirmButton: 'true',
-              showCancelButton: 'true',
+              showConfirmButton: true,
+              showCancelButton: true,
               confirmButtonText: '去认证',
               cancelButtonText: '取消',
               cancelButtonClass:'cancel_btn',
@@ -184,8 +193,8 @@
                 this.$messagebox({
                   title: '提示',
                   message: res.data.msg,
-                  showConfirmButton: 'true',
-                  showCancelButton: 'true',
+                  showConfirmButton: true,
+                  showCancelButton: true,
                   confirmButtonText: '去添加',
                   cancelButtonText: '取消',
                   cancelButtonClass:'cancel_btn',

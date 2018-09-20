@@ -1,6 +1,6 @@
 <template>
   <div class="help_pages">
-    <div class="title"><i></i>{{ask}}</div>
+    <div class="title"><i class="iconfont icon-question_time1"></i>{{ask}}</div>
     <div v-html="answer" class="answer"></div>
   </div>
 </template>
