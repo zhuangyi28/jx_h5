@@ -8,16 +8,18 @@
           <span v-else>{{userName}}</span>
         </div>
       </div>
-      <div class="certification_name">
+      <div class="certification_name" v-on:click="indexShow = true">
         <span>国籍（地区）</span>
         <div class="information_btn">
           <span>{{country}}</span>
+          <img src="../../../../static/images/reset_go.png" v-if="isVerify == 0">
         </div>
       </div>
-      <div class="certification_name">
+      <div class="certification_name" v-on:click="pickerShow = true">
         <span>证件类型</span>
         <div class="information_btn">
           <span>{{cardType}}</span>
+          <img src="../../../../static/images/reset_go.png" v-if="isVerify == 0">
         </div>
       </div>
       <div class="certification_name">
@@ -137,6 +139,22 @@
       },
       submit: function () {
         var check = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
+        if(this.cardTypeId == 1){
+          //身份证
+          check = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
+        }
+        else if(this.cardTypeId == 2){
+          //港澳
+          check = /^[a-z0-9A-Z]{11}$/;
+        }
+        else if(this.cardTypeId == 3){
+          //台湾
+          check = /^[a-z0-9A-Z]{11}$/;
+        }
+        else if(this.cardTypeId == 4){
+          //护照
+          check = /^[a-z0-9A-Z]{6,20}$/;
+        }
         if(!this.userName){
           this.$toast({
             message: '请输入姓名',
@@ -162,73 +180,74 @@
           });
           return;
         }
-        this.$http({
-          method: 'post',
-          url: process.env.API_ROOT+ 'user/center/verifyuserinfo',
-          headers:{
-            'Content-type': 'application/x-www-form-urlencoded'
-          },
-          params: {
-            userName: this.userName,
-            idNumber: this.IDNumber,
-            idType: this.cardTypeId,
-            nationality: this.country
-          }
-        }).then((res) => {
-          console.log(res);
-          var toast = this.$toast({
-            message: res.data.msg,
-            position: 'middle',
-            duration: 1500
-          });
-          var _hrefId = this.getStorage('hrefId');
-          if(res.data.code == '0000'){
-            this.setStorage('isVerify','1');
-            var _this = this
-            setTimeout(()=>{
-              toast.close();
+        if(this.cardTypeId == 1){
+          this.$http({
+            method: 'post',
+            url: process.env.API_ROOT+ 'user/center/verifyuserinfo',
+            headers:{
+              'Content-type': 'application/x-www-form-urlencoded'
+            },
+            params: {
+              userName: this.userName,
+              idNumber: this.IDNumber,
+              idType: this.cardTypeId,
+              nationality: this.country
+            }
+          }).then((res) => {
+            console.log(res);
+            var toast = this.$toast({
+              message: res.data.msg,
+              position: 'middle',
+              duration: 1500
+            });
+            var _hrefId = this.getStorage('hrefId');
+            if(res.data.code == '0000'){
+              this.setStorage('isVerify','1');
+              var _this = this
+              setTimeout(()=>{
+                toast.close();
 
-              if(_hrefId=='1'){
-
-
-
-                console.log('从个人中心');
-
-                setTimeout(function () {
-
-                  _this.$router.push('/personalCenter');
-
-                  _this.mounted();
-
-
-                },1000)
-
-
-              }
-
-              else if(_hrefId=='4'||_hrefId=='8'){
-
-                setTimeout(function () {
-
-                  _this.$router.go(-1)
-
-                },1000)
-
-              }
-
-              else if(_hrefId=='10'){
-
-                console.log('从转账');
+                if(_hrefId=='1'){
 
 
 
+                  console.log('从个人中心');
+
+                  setTimeout(function () {
+
+                    _this.$router.push('/personalCenter');
+
+                    _this.mounted();
 
 
-              }
+                  },1000)
 
-              else if(_hrefId=='6'){
 
-                console.log('从京东');
+                }
+
+                else if(_hrefId=='4'||_hrefId=='8'){
+
+                  setTimeout(function () {
+
+                    _this.$router.go(-1)
+
+                  },1000)
+
+                }
+
+                else if(_hrefId=='10'){
+
+                  console.log('从转账');
+
+
+
+
+
+                }
+
+                else if(_hrefId=='6'){
+
+                  console.log('从京东');
 
                   setTimeout(function () {
 
@@ -240,24 +259,33 @@
 
 
 
-              }
+                }
 
 
-            },500);
-          }
-        }).catch((res) => {
-          var toast = this.$toast({
-            message: res.data.msg,
-            position: 'middle',
-            duration: 1500
+              },500);
+            }
+          }).catch((res) => {
+            var toast = this.$toast({
+              message: res.data.msg,
+              position: 'middle',
+              duration: 1500
+            });
+            if(res.data.code == '3001'){
+              setTimeout( () => {
+                toast.close();
+                this.$router.push('/');
+              },500);
+            }
           });
-          if(res.data.code == '3001'){
-            setTimeout( () => {
-              toast.close();
-              this.$router.push('/');
-            },500);
-          }
-        })
+        }
+        else{
+          this.setStorage('cardTypeId',this.cardTypeId);
+          this.setStorage('idNumber',this.IDNumber);
+          this.setStorage('userName',this.userName);
+          this.setStorage('country',this.country);
+          this.setStorage('cardType',this.cardType);
+          this.$router.push('/certificationPic');
+        }
       }
     },
     computed: {

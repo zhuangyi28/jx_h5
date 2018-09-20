@@ -249,6 +249,9 @@
         if(this.withdrawMoney == ''){
           return;
         }
+        else if(this.withdrawMoney == '00'){
+          this.withdrawMoney = 0;
+        }
         else if(isNaN(+this.withdrawMoney) || !reg.test(this.withdrawMoney)){
           this.withdrawMoney = this.withdrawMoney.slice(0,-1);
         }
