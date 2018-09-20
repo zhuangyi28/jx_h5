@@ -42,10 +42,23 @@
         &:first-child{
           p{
             text-align: left;
+            &:first-child{
+              font-size:16px;
+            }
+
+          }
+        }
+        &:last-child{
+          p:first-child{
+            font-size:16px;
+          }
+          p:last-child{
+            color: #ababab;
           }
         }
         p{
           text-align: right;
+
           &.orange{
             color: #ff7d37;
           }

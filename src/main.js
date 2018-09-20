@@ -33,6 +33,57 @@ Vue.use(MintUI);
 //Vue.use(BasicJs)
 
 
+//判断用户是否处于登录状态，访问权限验证
+
+router.beforeEach((to,from,next)=>{
+
+  var Authorization = window.localStorage.getItem('Authorization');//Authorization数据
+
+  //console.log('token'+Authorization)
+  //如果跳转页面不是登录页面的话
+  if(Authorization){
+
+    //console.log(to.path)
+
+    //console.log(to.path=='/'||to.path=='/login')
+
+    if(from.path === '/workDesk/homepage' && to.path === '/login'){
+
+
+      next({path: '/workDesk/homepage'})
+
+    }
+    else {
+
+      next()
+
+    }
+
+
+  }else {
+
+    console.log('没有token跳转登录页');
+
+    //如果是loading页面或登录页面或者忘记密码或者注册
+
+    if(to.path==='/loadingPage'||to.path ==='/'||to.path ==='/login'||to.path === '/Register' || to.path === '/forgetPsw'){
+
+      next();
+
+
+    } else {
+      //不然就跳转到登录
+      next({path: '/login'})
+    }
+
+
+
+  }
+
+
+
+});
+
 
 //实例化 vue 实例
 new Vue({

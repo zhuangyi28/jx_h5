@@ -105,7 +105,7 @@
 
            serviceLeft: '查看帮助',
 
-           iconName1:'icon-withdraw_custom',
+           iconName1:'icon-help_question',
 
 
 

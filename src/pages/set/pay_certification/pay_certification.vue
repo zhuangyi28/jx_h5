@@ -74,8 +74,8 @@
             this.$messagebox({
               title: '提示',
               message: '当前账户尚未进行实名认证，完成实名认证后即可设置支付密码',
-              showConfirmButton: 'true',
-              showCancelButton: 'true',
+              showConfirmButton: true,
+              showCancelButton: true,
               confirmButtonText: '去认证',
               cancelButtonText: '取消',
               cancelButtonClass:'cancel_btn',
@@ -108,8 +108,8 @@
               this.$messagebox({
                 title: '提示',
                 message: '还未设置支付密码，设置后即可开启',
-                showConfirmButton: 'true',
-                showCancelButton: 'true',
+                showConfirmButton: true,
+                showCancelButton: true,
                 confirmButtonText: '去设置',
                 cancelButtonText: '取消',
                 cancelButtonClass:'cancel_btn',

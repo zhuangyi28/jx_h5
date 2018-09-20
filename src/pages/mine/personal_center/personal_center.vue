@@ -51,8 +51,8 @@
         this.$messagebox({
           title: '提示',
           message: '确定要退出登录',
-          showConfirmButton: 'true',
-          showCancelButton: 'true',
+          showConfirmButton: true,
+          showCancelButton: true,
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           cancelButtonClass:'cancel_btn',
@@ -65,16 +65,20 @@
               method: 'get',
               url:process.env.API_ROOT+'user/set/logout',
             }).then( (res) => {
+                console.log(res.data)
               if(res.data.code == '0000'){
-                this.$router.push('/');
+                //清除token
+                this.removeStorage('Authorization');
+                this.$router.push('/login');
               }else{
                 console.log(res.data);
-                alert(res.data.msg);
+                //alert(res.data.msg);
               }
             }).catch( (res) => {
-              console.log(res);
-              alert(res.data.msg);
-              this.$router.push('/');
+
+                //console.log(res);
+              //alert(res.data.msg);
+              //this.$router.push('/login');
             })
           }
         }).catch((res) => {

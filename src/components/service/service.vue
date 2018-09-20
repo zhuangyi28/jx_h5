@@ -2,7 +2,7 @@
   <div class="service_area">
 
     <div class="area_box"></div>
-    <div class="footer">
+    <div class="footer" :class="classBgName">
       <span v-on:click="clickEventLeft"><i class="iconfont" :class="iconName1"></i>{{type1}}</span><span v-on:click="clickEventRight" v-show="spanShow" :spanlShow="spanShow"><i class="iconfont" :class="iconName2"></i>{{type2}}</span>
     </div>
 
@@ -25,6 +25,8 @@
       iconName2:'',
 
       spanShow:true,
+
+      classBgName:'',
 
     },
     methods: {

@@ -85,9 +85,9 @@
               this.$messagebox({
                 title: res.data.msg,
                 message: '分享微信小程序，邀请好友注册“嘉薪”并实名认证，通过后即可给该好友转账',
-                showConfirmButton: 'true',
-                showCancelButton: 'true',
-                confirmButtonText: '去分享',
+                showConfirmButton: true,
+                showCancelButton: true,
+                confirmButtonText: 去分享,
                 cancelButtonText: '取消',
                 cancelButtonClass:'cancel_btn',
                 confirmButtonClass:'confirm_btn_orange',
@@ -102,8 +102,8 @@
               this.$messagebox({
                 title: res.data.msg,
                 message: '分享微信小程序，提醒好友完成实名认证，通过后即可给该好友转账',
-                showConfirmButton: 'true',
-                showCancelButton: 'true',
+                showConfirmButton: true,
+                showCancelButton: true,
                 confirmButtonText: '去分享',
                 cancelButtonText: '取消',
                 cancelButtonClass:'cancel_btn',
