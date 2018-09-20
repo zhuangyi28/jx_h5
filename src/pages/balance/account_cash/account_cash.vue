@@ -163,6 +163,9 @@
           this.unused = false;
           return;
         }
+        else if(this.money == '00'){
+          this.money = 0;
+        }
         else if(isNaN(+this.money) || !reg.test(this.money)){
           this.money = this.money.slice(0,-1);
         }

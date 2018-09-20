@@ -1,0 +1,91 @@
+.certification_pic{
+  min-height: 100vh;
+  background-color: white;
+  padding: 1px 0 30px;
+  box-sizing: border-box;
+  position: relative;
+  .certification_pic_title{
+    padding: 10px 15px;
+  }
+  .certification_pic_input{
+    background-color: white;
+    text-align: center;
+    padding: 10px 0;
+    .img{
+      margin: 0 auto;
+      width: 228px;
+      height: 153px;
+      position: relative;
+      img{
+        width: 100%;
+        height: 100%;
+      }
+      input{
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        opacity: 0;
+      }
+    }
+    .title{
+      padding: 5px;
+      color: #ababab;
+      span:last-child{
+        padding-left: 15px;
+        color: #ff7a3b;
+      }
+    }
+  }
+  .certification_pic_ps{
+    color: #dddddd;
+    font-size: 12px;
+    text-align: center;
+    position: absolute;
+    bottom: 15px;
+    width: 100%;
+  }
+  .mint-popup{
+    border-radius: 5px;
+    overflow: hidden;
+    .example{
+      padding: 15px 0 0;
+      .example_title{
+        font-size: 16px;
+        text-align: center;
+      }
+      .example_img{
+        width: 228px;
+        height: 153px;
+        margin: auto;
+        padding: 10px 20px;
+        img{
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .example_button{
+        text-align: center;
+        position: relative;
+        &:before{
+          content: '';
+          display: block;
+          width: 100%;
+          height: 1px;
+          position: absolute;
+          top: 0;
+          left: 0;
+          border-top: 1px solid #eeeeee;
+        }
+        button{
+          padding: 8px 0 15px;
+          width: 100%;
+          background-color: transparent;
+          color: forestgreen;
+          font-size: 18px;
+        }
+      }
+    }
+  }
+}
