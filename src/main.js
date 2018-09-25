@@ -36,15 +36,63 @@ Vue.use(axios)
 Vue.config.productionTip = false;
 
 //判断用户是否处于登录状态，访问权限验证
+let token ;
 
 router.beforeEach((to,from,next)=>{
 
 
   var Authorization = window.localStorage.getItem('Authorization');//Authorization数据
 
-  //console.log('token'+Authorization)
+  if(!token){
+
+    token=Authorization;
+  }
+
+  if(to.path!=='/login'){
+
+    console.log('不去登录')
+
+
+    if((from.path === '/workDesk/homepage' && to.path === '/login')||(from.path === '/workDesk/homepage' && to.path === '/Register')){
+
+
+      next({path: '/workDesk/homepage'})
+
+    }
+
+    else {
+
+      next()
+
+    }
+
+
+  }
+  else {
+
+
+    if(Authorization!=token){
+
+      window.location.reload();
+    }
+    if (to.path&&to.name) {
+
+      next()
+
+    }else {
+
+
+
+        next({ path: '/workDesk/homepage'})
+
+
+    }
+
+
+  }
+
   //如果跳转页面不是登录页面的话
-  if(Authorization){
+/*  if(Authorization){
 
     //console.log(to.path)
 
@@ -73,15 +121,16 @@ router.beforeEach((to,from,next)=>{
 
       next();
 
-
-    } else {
-      //不然就跳转到登录
-      next({path: '/login'})
     }
+    else {
 
 
+        //不然就跳转到登录
+        next({path: '/login'})
+      }
 
-  }
+
+  }*/
 
 
 

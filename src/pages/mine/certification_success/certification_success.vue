@@ -19,9 +19,20 @@
     name: 'certificationSuccess',
     data () {
       return {
-        btnName: '查看订单'
       }
-    }
+    },
+    destroyed(){
+
+        //从个人中心到审核中页面不退回
+        if(this.getStorage('hrefId')!='1'){
+
+          this.setAutoBack(3)
+
+        }
+
+
+
+    },
   }
 </script>
 <style lang="less" scoped>

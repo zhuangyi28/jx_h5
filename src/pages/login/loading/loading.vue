@@ -1,7 +1,9 @@
 <template>
   <div class="loading">
 
-    <div>天下没有难发的薪水</div>
+    <div class="bg"><img src="../../../../static/images/jx_start_page7.png"></div>
+    <div class="font">天下没有难发的薪水</div>
+    <div class="bottom"><img src="../../../../static/images/jx_start_page8.png"></div>
   </div>
 </template>
  <script>
@@ -21,9 +23,27 @@
 
     mounted () {
 
+
+        if(this.getStorage('loadingShow')!=1){
+
+          this.$indicator.open({
+            text: '加载中...',
+            spinnerType: 'fading-circle'
+          });
+
+
+        }
+
       this.init();
 
     },
+
+    destroyed(){
+
+      this.$indicator.close()
+
+    },
+
     methods: {
 
       init: function () {
@@ -46,6 +66,21 @@
         }).then((res) => {
 
             console.log(res.data)
+
+
+          if(res.data.code=='0000'){
+
+                setTimeout(()=> {
+
+                  console.log('触发')
+
+                  this.$router.push('/workDesk/homepage')
+
+                },1500)
+
+
+
+          }
 
 
         }).catch(function (error) {
