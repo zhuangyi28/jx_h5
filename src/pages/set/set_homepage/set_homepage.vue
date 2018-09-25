@@ -24,6 +24,8 @@
     },
     mounted(){
 
+      this.setStorage('forgetPsw','0');
+
       /**
        * 接口：查看是否设置支付密码
        * 请求方式：POST

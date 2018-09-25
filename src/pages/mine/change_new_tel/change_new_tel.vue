@@ -33,28 +33,32 @@
     },
     data () {
       return {
-        oldMobile: '',
-        newMobile: '',
-        code: '',
-        btnName: '确认',
-        seconds: 60,
-        show: '',
-        oldCode: '000000'
+        oldMobile: '',//当前登录账号
+        newMobile: '',//更换的手机号
+        code: '',//验证码
+        btnName: '确认',//按钮名称
+        seconds: 60,//验证码倒计时
+        show: '',//获取验证码显示
+        oldCode: ''//上一页面验证码
       }
     },
     mounted () {
       this.oldMobile = this.getStorage('mobile');
+      this.oldCode = this.getStorage('oldCode');
     },
     methods: {
+      //获取验证码
       getCode: function () {
         if(!this.mobileTest()){
           return
         }
         if (!this.show) {
-          this.show = true;
-          if(!this.seconds){
-            this.seconds = 60;
-          }
+          /*
+          * 接口： 更换用户手机号-新手机号验证
+          * 请求方式： GET
+          * 接口： /jx/action/newmobilecheck
+          * 传参： mobile
+          * */
           this.$http({
             method: 'get',
             url: process.env.API_ROOT + 'jx/action/newmobilecheck?mobile=' + this.newMobile,
@@ -65,21 +69,29 @@
               position: 'middle',
               duration: 2000
             });
-            var countDown = setInterval( () => {
-              var time = this.seconds;
-              time--;
-              this.seconds = time;
-              if (!time) {
-                clearInterval(countDown);
-                this.show = false;
+            if(res.data.msg == '0000'){
+              this.show = true;
+              if(!this.seconds){
+                this.seconds = 60;
               }
-            }, 1000);
+              //获取验证码倒计时
+              var countDown = setInterval( () => {
+                var time = this.seconds;
+                time--;
+                this.seconds = time;
+                if (!time) {
+                  clearInterval(countDown);
+                  this.show = false;
+                }
+              }, 1000);
+            }
           }).catch( (res) => {
             console.log(res);
             alert(res.data.msg);
           });
         }
       },
+      //验证手机号
       mobileTest: function () {
         let reg = /^1([358][0-9]|4[579]|66|7[0135678]|9[89])[0-9]{8}$/;
         if(this.newMobile == this.oldMobile){
@@ -93,7 +105,7 @@
         if (!this.newMobile) {
           this.$toast({
             message: '请输入手机号',
-            position: 'bottom',
+            position: 'middle',
             duration: 2000
           });
           return false;
@@ -101,14 +113,18 @@
         if (!reg.test(this.newMobile)) {
           this.$toast({
             message: '请输入正确的手机号',
-            position: 'bottom',
+            position: 'middle',
             duration: 2000
           });
           return false;
         }
         return true;
       },
+      //更换手机号提交
       handleClick: function () {
+        if(!this.mobileTest()){
+          return
+        }
         if(this.show === ''){
           this.$toast({
             message: '请先获取验证码',
@@ -136,6 +152,12 @@
           });
           return;
         }
+        /*
+        * 接口： 更换用户手机号
+        * 请求方式： POST
+        * 接口： /user/set/changemobile
+        * 传参： mobile, oldCode, newCode
+        * */
         this.$http({
           method: 'post',
           url: process.env.API_ROOT+ 'user/set/changemobile',
@@ -155,7 +177,7 @@
           });
           if(res.data.code == '0000'){
             this.setStorage('mobile',this.newMobile);
-            this.$router.push('/personalCenter');
+            this.$router.go(-3);
           }
         }).catch( (res) => {
           console.log(res);

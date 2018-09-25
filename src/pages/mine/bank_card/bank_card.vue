@@ -34,13 +34,19 @@
     name: 'addCard',
     data () {
       return {
-        banks: [],
-        bankCardJson: bankCardJson,
-        cardID: '',
-        bankCardId: ''
+        banks: [],//银行卡数组
+        bankCardJson: bankCardJson,//银行卡信息数组
+        cardID: '',//银行卡卡号
+        bankCardId: ''//银行卡唯一ID
       }
     },
     mounted () {
+      /*
+      * 接口： 获取用户银行卡信息
+      * 请求方式： GET
+      * 接口： /user/bank/getbankcardinfo
+      * 传参： null
+      * */
       this.$http({
         method: 'get',
         url: process.env.API_ROOT+ 'user/bank/getbankcardinfo',
@@ -61,9 +67,11 @@
     methods: {
       deleteCard: function (e) {
 
-          this.bankCardId=e.currentTarget.dataset.card,
+        var div_bank_card = e.currentTarget.parentElement;
 
-          this.cardID=e.currentTarget.dataset.num,
+        this.bankCardId=e.currentTarget.dataset.card;
+
+        this.cardID=e.currentTarget.dataset.num;
 
         this.$messagebox({
           title: '提示',
@@ -73,38 +81,43 @@
           confirmButtonText: '删除',
           cancelButtonClass: 'cancel_btn',
           confirmButtonClass: 'confirm_btn_orange',
+        }).then((action) =>{
 
-        }).then(action => {
+          console.log(action);
 
-          if(action == 'confirm'){
+          if (action == 'confirm') {
 
-            for (var obj of divArr) {
-              if (obj.classList.contains('bank_card')) {
-                this.$http({
-                  method: 'get',
-                  url: process.env.API_ROOT+ 'user/bank/deletebankcardinfo?bankCardId='+this.bankCardId
-                }).then((res)=>{
-                  if(res.data.code == '0000'){
-                    obj.remove();
-                  }else{
-                    this.$toast({
-                      message: res.data.msg,
-                      position: 'middle',
-                      duration: 1500
-                    });
-                  }
-                }).catch((res)=>{
-                  alert(res.data.msg);
+            /*
+               * 接口： 删除用户银行卡信息
+               * 请求方式： GET
+               * 接口： /user/bank/deletebankcardinfo
+               * 传参： bankCardId
+               * */
+            this.$http({
+              method: 'get',
+              url: process.env.API_ROOT + 'user/bank/deletebankcardinfo?bankCardId=' + this.bankCardId
+            }).then((res) => {
+              console.log(res);
+              if (res.data.code == '0000') {
+                div_bank_card.remove();
+              } else {
+                this.$toast({
+                  message: res.data.msg,
+                  position: 'middle',
+                  duration: 1500
                 });
-                return;
               }
-            }
+            }).catch((res) => {
+
+              console.log(res);
+
+            });
           }
 
 
-        })
-
-        this.$messagebox.close();
+        }).catch((res)=>{
+          console.log(res);
+        });
       },
       addCard: function () {
         var thisisVerify = this.getStorage('isVerify');
@@ -119,6 +132,7 @@
             confirmButtonClass: 'confirm_btn_orange',
           }).then((res)=>{
             if(res == 'confirm'){
+              this.setStorage('hrefId','4');
               this.$router.push('/certification');
             }
           })

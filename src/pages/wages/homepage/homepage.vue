@@ -5,11 +5,11 @@
     <mt-loadmore :top-method="loadTop" ref="loadmore">
       <!-- 余额 -->
       <div class="money_detail">
-        <div class="balance">
+        <div class="balance" v-on:click="$router.push('/balance')">
           <div class="details_money">
             <div v-if="lookWages">{{totalSalary | thousandBitSeparator}}</div>
             <div v-else>******</div>
-            <div class="show_img" v-on:click="balanceShowChange">
+            <div class="show_img" v-on:click="balanceShowChange" v-on:click.stop>
               <img src="../../../../static/images/jx_open_bright.png" v-if="lookWages">
               <img src="../../../../static/images/jx_close_bright.png" v-else>
             </div>
@@ -174,6 +174,33 @@
 
       //页面加载方法
       onShow: function () {
+
+        /**
+         * 接口：工资提醒
+         * 请求方式：GET
+         * 接口：/salary/home/selecttiptype
+         * 入参：null
+         **/
+        this.$http({
+
+          method: 'get',
+
+          url: process.env.API_ROOT + 'user/account/getsalarystate'
+
+        }).then((res)=>{
+
+          if(res.data.code == '0000'){
+
+            console.log(res);
+
+            this.lookWages = res.data.data;
+          }
+
+        }).catch((res)=>{
+
+          console.log(res);
+
+        });
 
         /**
          * 接口：工资提醒
@@ -763,8 +790,6 @@
       //时候查看余额
       balanceShowChange: function () {
 
-        this.lookWages = !this.lookWages;
-
         /**
          * 接口：设置用户金额显示
          * 请求方式：GET
@@ -780,14 +805,25 @@
 
           params: {
 
-            salaryState:this.lookWages
+            salaryState: !this.lookWages
 
           }
 
         }).then((res)=>{
 
+          console.log(res);
 
-        }).catch((res=>{}))
+          if(res.data.code == '0000'){
+
+            this.lookWages = !this.lookWages;
+
+          }
+
+        }).catch((res)=>{
+
+          console.log(res);
+
+        })
 
 
       },
