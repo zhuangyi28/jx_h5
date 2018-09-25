@@ -216,7 +216,17 @@
 
                 toast.close();
 
-                _this.$router.push('/setHomepage')
+                if(_this.getStorage('forgetPsw') == 0){
+
+                  _this.$router.push('/setHomepage');
+
+                }
+
+                else if(_this.getStorage('forgetPsw') == 1){
+
+                  _this.$router.push('/pswCertification');
+
+                }
 
               }, 1500)
 

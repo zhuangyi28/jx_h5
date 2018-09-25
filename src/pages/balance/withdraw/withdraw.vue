@@ -42,7 +42,7 @@
         <span>1.订单提交后工作日一般2小时内处理，如出款失败，则5个工作日内退款至原支付账户，具体以银行事件为准，正常退款时间内，建议咨询相关银行</span>
       </div>
       <div class="content">
-        <span>2.限额说明：单卡单笔<span>{{amountMax|thousandBitSeparator}}</span>元，当日<span>{{dayMaxAmount|thousandBitSeparator}}</span>元，当月<span>{{monthMaxAmount|thousandBitSeparator}}</span>元</span>
+        <span>2.限额说明：单卡单笔<span>{{amountMax|thousandBitSeparator}}</span>元，当日100,000元，当月100,000元</span>
       </div>
     </div>
 
@@ -115,23 +115,23 @@
         dayMaxAmount: '',//每日最大提现金额
         monthMaxAmount: '',//每月最大提现金额
         rate: '',//费率,
-        isSecurity: '',
-        userBankCardDTOList: [],
-        mountedDid: false,
-        bankList: [],
-        bankCardJson: bankCardJson,
+        isSecurity: '',//支付验证方式
+        userBankCardDTOList: [],//银行卡信息列表
+        mountedDid: false,//检测数据是否获取成功
+        bankList: [],//处理后的银行卡信息列表，用于页面循环中
+        bankCardJson: bankCardJson,//银行卡信息数组
         slots: [
           {
             values: [],
             textAlign: 'center'
           }
-        ],
-        pickerShow: false,
-        changeValue: '',
-        index: 0,
-        withdrawClick: false,
-        withdrawBtnName: '确认',
-        moreShow: false,
+        ],//选择银行卡弹窗的数据
+        pickerShow: false,//控制选择银行卡弹窗是否显示
+        changeValue: '',//选择银行卡弹窗的数值
+        index: 0,//被选择的银行卡位于银行卡数组的位置
+        withdrawClick: false,//控制提现弹窗是否显示
+        withdrawBtnName: '确认',//提现弹窗按钮名称
+        moreShow: false,//控制联系客服按钮是否显示
 /*
         serviceLeft: '联系客服',
         serviceRight: '更多',
@@ -147,6 +147,12 @@
         name:this.getStorage('userName'),// 名字
         tel:this.getStorage('mobile'),// 电话
       });
+      /**
+       * 接口：用户中心
+       * 请求方式：POST
+       * 接口：/user/center/usercenter
+       * 入参：null
+       **/
       this.$http({
         method: 'post',
         url: process.env.API_ROOT + 'user/center/usercenter',
@@ -168,10 +174,12 @@
               cancelButtonText: '取消',
               cancelButtonClass:'cancel_btn',
               confirmButtonClass:'confirm_btn_orange',
+              closeOnClickModal: false
             }).then((res)=>{
               if(res == 'cancel'){
-                this.$router.push(-1);
+                this.$router.go(-1);
               }else if(res == 'confirm'){
+                this.setStorage('hrefId','4');
                 this.$router.push('/certification');
               }
             });
@@ -185,6 +193,12 @@
               this.$router.go(-1);
             })
           }else{
+            /**
+             * 接口：检测用户发起提现操作
+             * 请求方式：GET
+             * 接口：user/work/checkwithdraw
+             * 入参：null
+             **/
             this.$http({
               method: 'get',
               url: process.env.API_ROOT + 'user/work/checkwithdraw'
@@ -203,7 +217,7 @@
                   if(res == 'cancel'){
                     this.$router.go(-1);
                   }else if(res == 'confirm'){
-                    this.$router.push('/bankCard');
+                    this.$router.push('/addCard');
                   }
                 })
               }else if(res.data.code == '0000'){
@@ -225,6 +239,7 @@
       this.$messagebox.close();
     },
     watch: {
+      //监听数据是否获取成功
       mountedDid: function () {
         for(var bankCard of this.userBankCardDTOList){
           var bankInfo = {};
@@ -244,6 +259,7 @@
           this.bankList.push(bankInfo);
         }
       },
+      //监听提现金额格式
       withdrawMoney: function () {
         var reg = /^\d+\.?(\d{1,2})?$/;
         if(this.withdrawMoney == ''){
@@ -258,15 +274,18 @@
       }
     },
     methods: {
+      //选择银行卡弹出框值
       onValueChange: function (picker,values) {
         console.log(picker);
         console.log(values);
         this.changeValue = values;
       },
+      //获取选择银行卡弹出框值
       getCardType: function () {
         this.index = this.slots[0].values.indexOf(this.changeValue[0]);
         this.pickerShow = false;
       },
+      //弹出限额提醒
       popUp: function () {
         this.$messagebox({
           title: '提现限额说明',
@@ -275,6 +294,7 @@
           confirmButtonClass:'confirm_btn_orange',
         });
       },
+      //提现按钮，弹出提现弹窗
       withdrawFn: function () {
         var reg = /^\d+\.?(\d{1,2})?$/;
         var dot = /([1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?)/;
@@ -353,6 +373,7 @@
         }
         this.withdrawClick = true;
       },
+      //跳转到输入密码界面
       jumpTo: function () {
         if(this.isSecurity == 1){
           this.$router.push('/smsCertification');
