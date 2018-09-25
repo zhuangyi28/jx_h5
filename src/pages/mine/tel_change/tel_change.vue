@@ -26,7 +26,32 @@
       }
     },
     mounted () {
-      this.mobile = this.getStorage('mobile');
+
+      /**
+       * 接口：个人中心
+       * 请求方式：POST
+       * 接口：/user/center/usercenter
+       * 入参：null
+       **/
+      this.$http({
+
+        method: 'post',
+
+        url: process.env.API_ROOT + 'user/center/usercenter',
+
+
+      }).then((res) => {
+
+        console.log(res.data);
+
+        if (res.data.code == '0000') {
+
+          this.mobile= res.data.data.mobile.substr(0, 3) + '****' + res.data.data.mobile.substr(7)
+
+
+        }
+      }).catch((res=>{}))
+
     }
   }
 </script>

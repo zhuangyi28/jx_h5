@@ -4,11 +4,11 @@
       <div class="certification_name">
         <span>姓名</span>
         <div class="information_btn">
-          <input type="text" v-model="userName" placeholder="请输入姓名" v-if="isVerify == 0">
+          <input type="text" v-model="userName" placeholder="请输入姓名" v-if="isVerify == 0||isVerify == 3">
           <span v-else>{{userName}}</span>
         </div>
       </div>
-      <div class="certification_name" v-on:click="indexShow = true" v-if="isVerify == 0">
+      <div class="certification_name" v-on:click="indexShow = true" v-if="isVerify == 0||isVerify == 3">
         <span>国籍（地区）</span>
         <div class="information_btn">
           <span>{{country}}</span>
@@ -21,7 +21,7 @@
           <span>{{country}}</span>
         </div>
       </div>
-      <div class="certification_name" v-on:click="pickerShow = true" v-if="isVerify == 0">
+      <div class="certification_name" v-on:click="pickerShow = true" v-if="isVerify == 0||isVerify == 3">
         <span>证件类型</span>
         <div class="information_btn">
           <span>{{cardType}}</span>
@@ -37,7 +37,7 @@
       <div class="certification_name">
         <span>证件号码</span>
         <div class="information_btn">
-          <input type="text" placeholder="请填写证件号码" v-model="IDNumber" v-if="isVerify == 0">
+          <input type="text" placeholder="请填写证件号码" v-model="IDNumber" v-if="isVerify == 0||isVerify == 3">
           <span v-else>{{IDNumber}}</span>
         </div>
       </div>
@@ -66,7 +66,7 @@
       </mt-index-list>
     </div>
 
-    <orangeBtn v-if="isVerify == 0" v-bind:name="btnName" v-on:clickEvent="submit"></orangeBtn>
+    <orangeBtn v-if="isVerify == 0||isVerify == 3" v-bind:name="btnName" v-on:clickEvent="submit"></orangeBtn>
 
   </div>
 </template>

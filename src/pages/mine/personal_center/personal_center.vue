@@ -10,7 +10,7 @@
 
 
       </div>
-      <div class="information_list" v-on:click="$router.push('/certification')">
+      <div class="information_list" v-on:click="onclickCertificationFn">
         <span>实名认证</span>
         <span class="identification">
           <span v-if="isVerify == 0">未认证</span>
@@ -40,9 +40,47 @@
       }
     },
     mounted () {
-      this.isVerify = this.getStorage('isVerify');
       this.mobile = this.getStorage('mobile');
       this.setStorage('hrefId','1');
+
+      /**
+       * 接口：个人中心
+       * 请求方式：POST
+       * 接口：/user/center/usercenter
+       * 入参：null
+       **/
+      this.$http({
+
+        method: 'post',
+
+        url: process.env.API_ROOT + 'user/center/usercenter',
+
+
+
+      }).then((res) => {
+
+        console.log(res.data);
+
+        if (res.data.code == '0000') {
+
+          this.setStorage('idNumber', res.data.data.idNumber);
+
+          this.setStorage('isVerify', res.data.data.isVerify);
+
+          this.setStorage('source', res.data.data.source);
+
+
+
+            this.mobile= res.data.data.mobile.substr(0, 3) + '****' + res.data.data.mobile.substr(7),
+
+            this.isVerify=res.data.data.isVerify,
+
+            this.idNumber=res.data.data.idNumber
+
+
+        }
+      }).catch((res=>{}))
+
     },
     destroyed (){
       this.$messagebox.close();
@@ -86,6 +124,45 @@
           console.log(res);
 
         })
+      },
+      onclickCertificationFn:function () {
+
+
+        var _isVerify = this.isVerify
+
+        //console.log(_isVerify)
+
+        //如果为1跳转的页面名字和身份证不能修改
+
+        if(_isVerify=='1'||_isVerify=='0'){
+
+          this.$router.push('/certification')
+
+
+        }
+
+
+        //审核中
+        else if(_isVerify=='2'){
+
+          this.$router.push('/certificationSuccess')
+
+
+        }
+
+        //审核不通过
+        else if(_isVerify=='3'){
+
+
+          this.$router.push('/certificationFail')
+
+
+        }
+
+
+
+
+
       }
     }
   }

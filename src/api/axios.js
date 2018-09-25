@@ -41,10 +41,12 @@ axios.install = (Vue) => {
 
     if(error.response.data.code=='3001'||error.response.data.code=='3003') {
 
+      localStorage.setItem('loadingShow',1)
+
       Toast({
 
         message: error.response.data.msg,
-        duration: 1500
+        duration: 500
 
       })
 

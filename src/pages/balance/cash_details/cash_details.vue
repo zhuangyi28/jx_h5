@@ -7,7 +7,7 @@
           <p><img src="../../../../static/images/cash_detail1.png"></p>
           <p v-if="orderState=='0'">待支付</p>
           <p v-else-if="orderState=='5'">订单关闭</p>
-          <p v-else>待支付</p>
+          <p v-else>提交成功</p>
           <p class="border"></p>
         </div>
         <div class="step" v-bind:class="orderState=='3'||orderState=='7'? 'selected':''">

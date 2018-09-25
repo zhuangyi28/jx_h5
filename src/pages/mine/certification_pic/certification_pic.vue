@@ -81,7 +81,7 @@
 
         var param = new FormData(); //创建form对象
 
-        param.append('File',file,file.name);//通过append向form对象添加数据
+        param.append('File',file);//通过append向form对象添加数据
 
 
         this.$http.post(process.env.API_ROOT + 'jx/uploadimg/oss',param,{
@@ -162,14 +162,14 @@
               /**
                * 接口：实名认证
                * 请求方式：POST
-               * 接口：/user/center/userverify
+               * 接口：user/center/verifyuserinfo
                * 入参：userName,idNumber,idType,nationality,urls
                **/
               this.$http({
 
                 method: 'post',
 
-                url: process.env.API_ROOT + 'user/center/userverify',
+                url: process.env.API_ROOT + 'user/center/verifyuserinfo',
 
                 header: {
 

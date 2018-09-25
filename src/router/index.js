@@ -48,7 +48,7 @@ import changeLoginPsw from '@/pages/set/change_login_psw/change_login_psw'
 import loadingPage from '@/pages/login/loading/loading'
 import certificationPic from '@/pages/mine/certification_pic/certification_pic'
 import certificationSuccess from '@/pages/mine/certification_success/certification_success'
-
+import certificationFail from '@/pages/mine/certification_fail/certification_fail'
 
 Vue.use(Router)
 
@@ -455,7 +455,14 @@ export default new Router({
       },
       component: certificationSuccess
     },
-
+    {
+      path: '/certificationFail',
+      name: 'certificationFail',
+      meta: {
+        title: '实名认证'
+      },
+      component: certificationFail
+    },
     {
       path: '/workDesk',
       name: 'workDesk',
