@@ -42,6 +42,7 @@
     mounted () {
       this.isVerify = this.getStorage('isVerify');
       this.mobile = this.getStorage('mobile');
+      this.setStorage('hrefId','1');
     },
     destroyed (){
       this.$messagebox.close();

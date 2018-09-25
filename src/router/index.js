@@ -45,12 +45,25 @@ import transferSuccess from '@/pages/balance/transfer_success/transfer_success'
 import feedbackList from '@/pages/feedback/list/list'
 import feedback from '@/pages/feedback/feedback/feedback'
 import changeLoginPsw from '@/pages/set/change_login_psw/change_login_psw'
+import loadingPage from '@/pages/login/loading/loading'
+import certificationPic from '@/pages/mine/certification_pic/certification_pic'
+import certificationSuccess from '@/pages/mine/certification_success/certification_success'
+
+
 Vue.use(Router)
 
 export default new Router({
   mode: 'hash',
   routes: [
-
+    {
+      path: '/',
+      name: 'Login',
+      meta: {
+        title: '登录',
+      },
+      component: login,
+      redirect: '/login',
+    },
     {
       path: '/loadingPage',
       name: 'loadingPage',
@@ -238,10 +251,7 @@ export default new Router({
         title: ''
       },
       component: code,
-    /*  beforeEnter:(to,from,next)=>{
-        console.log(from.path);
-        from.path == '/paySuccess'? next('/withdraw'):next()
-      }*/
+
     },
 
 
@@ -367,9 +377,11 @@ export default new Router({
       path: '/smsCertification',
       name: 'smsCertification',
       meta: {
-        title: '短信支付验证'
+        title: '短信支付验证',
+        //keepAlive: true // 需要被缓存
       },
-      component: smsCertification
+      component: smsCertification,
+
     },
     {
       path: '/transfer',
@@ -435,6 +447,15 @@ export default new Router({
       },
       component: certificationPic
     },
+    {
+      path: '/certificationSuccess',
+      name: 'certificationSuccess',
+      meta: {
+        title: '实名认证'
+      },
+      component: certificationSuccess
+    },
+
     {
       path: '/workDesk',
       name: 'workDesk',

@@ -8,7 +8,7 @@ import App from './App'
 // 导入 路由
 import router from './router'
 //http.js文件，即全局配置axios请求，与main.js在同级目录
-import axios from 'axios'
+import axios from './api/axios'
 //封装的插件
 import api from './api/index'
 //joson转表单对象
@@ -18,24 +18,27 @@ import MD5 from '../static/js/MD5.min'
 //导入 mint-ui
 import MintUI from 'mint-ui'
 
+
+
 //import BasicJs from './js/basic'
 import VueWechatTitle from 'vue-wechat-title';
-import VueResource from 'vue-resource'
+/*import VueResource from 'vue-resource'*/
 import Filters from './api/filters'
 
-
-Vue.use(VueResource);
+//Vue.use(VueResource);
 Vue.use(api);
 Vue.use(json2Form);
 Vue.use(MD5);
 Vue.use(VueWechatTitle);
 Vue.use(MintUI);
+Vue.use(axios)
 //Vue.use(BasicJs)
-
+Vue.config.productionTip = false;
 
 //判断用户是否处于登录状态，访问权限验证
 
 router.beforeEach((to,from,next)=>{
+
 
   var Authorization = window.localStorage.getItem('Authorization');//Authorization数据
 
@@ -84,6 +87,61 @@ router.beforeEach((to,from,next)=>{
 
 });
 
+$(function () {
+
+  window.addEventListener('popstate',function () {
+
+    let thisBackRouter=localStorage.getItem('thisBackRouter');
+
+    if(router.history.current.path!=thisBackRouter){
+
+      localStorage.setItem('backNum',0);
+
+    }
+
+    let backNum=localStorage.getItem('backNum');
+
+
+    if(backNum-1>0){
+
+      localStorage.setItem('backing',1);//backing为1时，正在退回，0是没有退回
+
+
+
+      localStorage.setItem('backNum',backNum);
+
+
+      setTimeout(function () {
+
+        window.history.go(1-backNum)
+
+        console.log('backNum='+backNum)
+
+        backNum=0;
+
+      },1)
+
+
+      //console.log('backing='+localStorage.getItem('backing'))
+
+    }
+
+    else {
+
+      localStorage.setItem('backing',0);//backing为1时，正在退回，0是没有退回
+
+      //alert(localStorage.getItem('backing'))
+
+      //console.log('backing='+localStorage.getItem('backing'))
+
+    }
+
+
+  },false)
+
+})
+
+
 
 //实例化 vue 实例
 new Vue({
@@ -94,5 +152,5 @@ new Vue({
   // 声明根组件可以访问的组件
   components: { App },
   // 传入 router 到 vue 实例
-  router
+  router,
 }).$mount('#app')// app 上装载 router

@@ -8,18 +8,30 @@
           <span v-else>{{userName}}</span>
         </div>
       </div>
-      <div class="certification_name" v-on:click="indexShow = true">
+      <div class="certification_name" v-on:click="indexShow = true" v-if="isVerify == 0">
         <span>国籍（地区）</span>
         <div class="information_btn">
           <span>{{country}}</span>
-          <img src="../../../../static/images/reset_go.png" v-if="isVerify == 0">
+          <img src="../../../../static/images/reset_go.png">
         </div>
       </div>
-      <div class="certification_name" v-on:click="pickerShow = true">
+      <div class="certification_name" v-else>
+        <span>国籍（地区）</span>
+        <div class="information_btn">
+          <span>{{country}}</span>
+        </div>
+      </div>
+      <div class="certification_name" v-on:click="pickerShow = true" v-if="isVerify == 0">
         <span>证件类型</span>
         <div class="information_btn">
           <span>{{cardType}}</span>
-          <img src="../../../../static/images/reset_go.png" v-if="isVerify == 0">
+          <img src="../../../../static/images/reset_go.png">
+        </div>
+      </div>
+      <div class="certification_name" v-else>
+        <span>证件类型</span>
+        <div class="information_btn">
+          <span>{{cardType}}</span>
         </div>
       </div>
       <div class="certification_name">
@@ -39,9 +51,16 @@
         <mt-picker v-bind:slots="slots" v-on:change="onValueChange"></mt-picker>
       </mt-popup>
       <mt-index-list v-if="indexShow">
+        <div class="select_box">
+          <div class="select_input">
+            <img src="../../../../static/images/jx_found.png">
+            <input type="text" placeholder="请输入国家中文名/英文名" v-on:click="closeBtn=true" v-model="select">
+          </div>
+          <div class="close_btn" v-if="closeBtn==true" v-on:click="indexShow = false">取消</div>
+        </div>
         <mt-index-section v-for="(values, key, index) in countryArr" v-bind:index="key">
           <div v-on:click="getPlace">
-            <mt-cell v-for="value of values" v-bind:title="value.shortName" v-bind:value="value.englishName"></mt-cell>
+            <mt-cell v-for="value of values" v-bind:title="value.shortName" v-bind:value="value.englishName" v-if="(value.shortName + value.englishName).match(select)"></mt-cell>
           </div>
         </mt-index-section>
       </mt-index-list>
@@ -60,22 +79,24 @@
     },
     data () {
       return {
-        btnName: '提交',
-        userName: '',
-        IDNumber: '',
-        pickerValue: '',
-        pickerShow: false,
-        cardType: '身份证',
-        country: '中国大陆',
-        countryArr: {},
-        indexShow: false,
-        isVerify: '',
+        btnName: '提交',//按键名称
+        userName: '',//用户姓名
+        IDNumber: '',//证件号码
+        pickerValue: '',//证件弹窗取值
+        pickerShow: false,//证件弹窗显示
+        cardType: '身份证',//证件类型
+        country: '中国大陆',//国籍
+        countryArr: {},//国家列表
+        indexShow: false,//国家列表显示
+        isVerify: '',//是否认证
         slots: [
           {
             values: ['身份证','港澳居民来往内地通行证','台湾居民来往内地通行证','护照'],
             textAlign: 'center'
           }
-        ]
+        ],//证件类型弹窗值
+        closeBtn: '',//国家列表取消按键显示
+        select: ''//国家列表筛选值
       }
     },
     mounted () {
@@ -96,6 +117,12 @@
       if(this.cardType == 4){
         this.cardType = '台湾居民来往内地通行证'
       }
+      /*
+      * 接口： 国籍查询
+      * 访问方式： POST
+      * 接口： /user/country/getcountry
+      * 传参： null
+      * */
       this.$http({
         method: 'post',
         url: process.env.API_ROOT+ 'user/country/getcountry',
@@ -104,8 +131,8 @@
         }
       }).then( (res) => {
         var getCountry = res.data.data;
-        delete getCountry.firstLetter;
-        getCountry = JSON.parse(JSON.stringify(getCountry).replace(/hotCountry/g,'热门城市'));
+        delete getCountry.firstLetter;//去掉首字母列
+        getCountry = JSON.parse(JSON.stringify(getCountry).replace(/hotCountry/g,'热门城市'));//将列表中hotCountry改成热门城市
         this.countryArr = getCountry;
       }).catch((res) => {
         this.$toast({
@@ -116,15 +143,18 @@
       });
     },
     methods: {
+      //证件类型切换
       onValueChange: function (picker,values) {
         console.log(picker);
         console.log(values);
         this.pickerValue = values[0];
       },
+      //证件类型弹窗点击确定后获取证件类型
       getCardType: function () {
         this.cardType = this.pickerValue;
         this.pickerShow = false;
       },
+      //国家弹窗点击国家获取国家名称
       getPlace: function () {
         for(var parent of event.path){
           if(parent.nodeName == 'A'){
@@ -137,6 +167,7 @@
           }
         }
       },
+      //提交
       submit: function () {
         var check = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
         if(this.cardTypeId == 1){
@@ -180,6 +211,12 @@
           });
           return;
         }
+        /*
+        * 接口： 证件实名认证
+        * 访问方式： POST
+        * 接口： /user/center/vertifyuserinfo
+        * 参数： userName, idNumber, idType, nationality
+        * */
         if(this.cardTypeId == 1){
           this.$http({
             method: 'post',
@@ -279,7 +316,7 @@
           });
         }
         else{
-          this.setStorage('cardTypeId',this.cardTypeId);
+          this.setStorage('idType',this.cardTypeId);
           this.setStorage('idNumber',this.IDNumber);
           this.setStorage('userName',this.userName);
           this.setStorage('country',this.country);
@@ -308,4 +345,9 @@
 </script>
 <style lang="less" scoped>
   @import 'certification.less';
+</style>
+<style>
+  .mint-indexlist-nav{
+    display: none;
+  }
 </style>

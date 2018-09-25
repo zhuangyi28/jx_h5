@@ -6,11 +6,11 @@
     </div>
     <div class="change_new_tel_input">
       <div class="change_new_tel_tel">
-        <img src="../../../../static/images/tel.png">
+        <i class="iconfont icon-sign_phone"></i>
         <input type="number" v-model="newMobile" placeholder="请输入新的手机号码" class="tel">
       </div>
       <div class="change_new_tel_code">
-        <img src="../../../../static/images/jx_pen.png">
+        <i class="iconfont icon-sign_pen"></i>
         <input type="number" v-model="code" placeholder="请输入验证码" class="code">
         <div class="get_code" v-on:click="getCode">
           <span v-if="show===''">获取验证码</span>
