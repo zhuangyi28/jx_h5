@@ -6,18 +6,18 @@
     <div class="certification_pic_input">
       <div class="img">
         <img v-bind:src="faceUrl">
-        <input type="file" v-on:change="changeImg" class="face">
+        <input type="file" name="file" accept="image/png,image/gif,image/jpeg" @change="updateface" class="face_img"/>
       </div>
       <div class="title">
-        <span v-if="cardTypeId == 2 || cardTypeId == 3">上传港、澳、台通行证正面</span>
-        <span v-else-if="cardTypeId == 4">上传护照照片</span>
+        <span v-if="cardTypeId == 4 || cardTypeId == 3">上传港、澳、台通行证正面</span>
+        <span v-else-if="cardTypeId == 2">上传护照照片</span>
         <span v-on:click="exampleImg" class="face">示例</span>
       </div>
     </div>
-    <div class="certification_pic_input" v-if="cardTypeId == 2 || cardTypeId == 3">
+    <div class="certification_pic_input" v-if="cardTypeId == 4 || cardTypeId == 3">
       <div class="img">
         <img v-bind:src="backUrl">
-        <input type="file" v-on:change="changeImg" class="back">
+        <input type="file" name="file" accept="image/png,image/gif,image/jpeg" @change="updateface" class="back_img"/>
       </div>
       <div class="title">
         上传港、澳、台通行证反面<span v-on:click="exampleImg" class="back">示例</span>
@@ -52,41 +52,70 @@
     data () {
       return {
         btnName: '提交',
-        cardTypeId: '2',
-        idNumber: 'fda4s456',
+        cardTypeId: '',
+        idNumber: '',
         popupExample: false,
-        faceUrl: "/static/images/ID_card_face.png",
-        backUrl: "/static/images/ID_card_back.png",
+        faceUrl: "../../../../static/images/ID_card_face.png",
+        backUrl: "../../../../static/images/ID_card_back.png",
         exampleUrl: '',
-        files: []
+        files: [],
+        userName: '',
+        nationality: ''
       }
     },
     mounted () {
-      //this.cardTypeId = this.getStorage('cardTypeId');
-      //this.idNumber = this.getStorage('idNumber');
+      this.cardTypeId = this.getStorage('idType');
+      this.idNumber = this.getStorage('idNumber');
+      this.userName = this.getStorage('userName');
+      this.nationality = this.getStorage('country');
     },
     methods: {
-      changeImg: function () {
+
+      updateface: function () {
+
         var Event = event;
-        var file = event.currentTarget.files[0];
-        var reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = ()=>{
-          var url = reader.result;
-          this.files.push(file);
-          if(Event.target.classList.contains('face')){
-            this.faceUrl = url;
+
+        var file = event.target.files[0];
+
+        console.log(file);
+
+        var param = new FormData(); //创建form对象
+
+        param.append('File',file,file.name);//通过append向form对象添加数据
+
+
+        this.$http.post(process.env.API_ROOT + 'jx/uploadimg/oss',param,{
+          headers:{'Content-Type':'multipart/form-data'}
+
+        }).then((res)=>{
+
+          console.log(res);
+
+          if (Event.target.classList.contains('face_img')){
+
+            this.faceUrl = res.data.data.url;
+
           }
-          else if(Event.target.classList.contains('back')){
-            this.backUrl = url;
+
+          else if(Event.target.classList.contains('back_img')){
+
+
+            this.backUrl = res.data.data.url;
+
           }
-        }
+
+
+
+        }).catch((res)=>{
+          console.log(res);
+        })
+
       },
       exampleImg: function () {
-        if(this.cardTypeId == 4){
+        if(this.cardTypeId == 2){
           this.exampleUrl = '/static/images/jx_example_password.jpg'
         }
-        else if(this.cardTypeId == 3 || this.cardTypeId == 2){
+        else if(this.cardTypeId == 3 || this.cardTypeId == 4){
           if(event.currentTarget.classList.contains('back')){
             this.exampleUrl = '/static/images/jx_example_back.jpg'
           }
@@ -97,22 +126,101 @@
         this.popupExample = true;
       },
       handleClick: function () {
-        for(var file of this.files){
-          this.$http({
-            method: 'post',
-            url: process.env.API_ROOT+ 'jx/uploadimg/oss',
-            headers:{
-              'Content-Type':'multipart/form-data'
-            },
-            params: {
-              File: file
+
+          if(this.faceUrl == "../../../../static/images/ID_card_face.png"){
+
+            this.$toast({
+
+              message: '请上传证件照正面',
+
+              position: 'middle',
+
+              duration: 1500
+
+            });
+
+          }
+
+          else{
+
+            if(this.cardTypeId != 2 && this.backUrl == "../../../../static/images/ID_card_back.png"){
+
+              this.$toast({
+
+                message: '请上传证件照反面',
+
+                position: 'middle',
+
+                duration: 1500
+
+              })
+
             }
-          }).then((res)=>{
-            debugger;
-          }).catch((res)=>{
-            console.log(res);
-          })
-        }
+
+            else{
+
+              /**
+               * 接口：实名认证
+               * 请求方式：POST
+               * 接口：/user/center/userverify
+               * 入参：userName,idNumber,idType,nationality,urls
+               **/
+              this.$http({
+
+                method: 'post',
+
+                url: process.env.API_ROOT + 'user/center/userverify',
+
+                header: {
+
+                  'content-type': 'application/x-www-form-urlencoded'
+
+                },
+
+                params: {
+
+                  userName:this.userName,
+
+                  idNumber:this.idNumber,
+
+                  idType:this.cardTypeId,
+
+                  nationality:this.nationality,
+
+                  urls:this.faceUrl+','+this.backUrl
+
+                }
+
+              }).then((res)=>{
+
+                console.log(res);
+
+                if(res.data.code == '0000'){
+
+                  this.$router.push('/certificationSuccess');
+
+                }else{
+
+                  this.$toast({
+                    message: res.data.msg,
+                    position: 'middle',
+                    duration: 1500
+                  });
+
+                }
+
+              }).catch((res)=>{
+
+                debugger;
+
+                console.log(res);
+
+              })
+
+            }
+
+          }
+
       }
     }
   }

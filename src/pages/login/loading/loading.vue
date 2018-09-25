@@ -41,11 +41,18 @@
 
           url: process.env.API_ROOT + 'user/center/usercenter',
 
+
+
         }).then((res) => {
 
-          console.log(res.data);
+            console.log(res.data)
 
-        }).catch((res)=>{})
+
+        }).catch(function (error) {
+
+            console.log(error)
+
+        }.bind(this))
 
 
 }

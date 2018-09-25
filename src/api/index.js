@@ -3,7 +3,11 @@
  */
 //const root = process.env.API_ROOT;
 
+
+
+
 exports.install = function (Vue, options) {
+
 
   /**
    * @description 存变量进入缓存区
@@ -60,6 +64,16 @@ exports.install = function (Vue, options) {
 
   };
 
+  Vue.prototype.setAutoBack = function (num){
+
+    //记录需要退回的页面
+    localStorage.setItem('thisBackRouter',this.$router.history.current.path);
+
+    localStorage.setItem('backNum',num);
+
+    //console.log(this.$router)
+
+  };
 
 };
 

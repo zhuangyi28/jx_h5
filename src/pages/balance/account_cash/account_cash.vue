@@ -73,9 +73,11 @@
         unused: false //控制显示button
       }
     },
+
     mounted () {
       this.transferName = this.getStorage('transferName');
       this.transferMobile = this.getStorage('transferMobile');
+
       /*
       * 接口： 获取账户余额信息
       * 请求方式： GET

@@ -31,6 +31,11 @@
         withdraw: ''
       }
     },
+    destroyed(){
+
+      this.setAutoBack(4)
+
+    },
     mounted () {
       this.change = this.getStorage('change');
       this.withdraw = this.getStorage('withdraw');

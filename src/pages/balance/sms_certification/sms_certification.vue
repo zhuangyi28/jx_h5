@@ -27,10 +27,16 @@
         change: '',//转账识别
         withdraw: '',//提现识别
         transferMoney: '',//转账金额
-        transferMobile: ''//转账账号
+        transferMobile: '',//转账账号
+
       }
     },
     mounted () {
+
+      //重新调用data方法
+      this.seconds = 60;
+      this.used =true;
+
       this.mobile = this.getStorage('mobile');
       this.withdrawMoney = this.getStorage('withdrawMoney');
       this.bankCardId = this.getStorage('bankCardId');
@@ -38,9 +44,24 @@
       this.withdraw = this.getStorage('withdraw');
       this.transferMoney = this.getStorage('transferMoney');
       this.transferMobile = this.getStorage('transferMobile');
-      this.getAgain();
+
+
+
+      //this.setCodeBack(this.getAgain())
+
+
+      setTimeout(function () {
+
+        if(localStorage.getItem('backing')==0) {
+
+          this.getAgain()
+
+        }
+      }.bind(this),1)
+
     },
     methods: {
+
       //获取验证码
       getAgain: function () {
         if(this.used){
@@ -73,6 +94,22 @@
             console.log(res);
           })
         }
+
+/*
+        if(thisBackNum-1>0){
+
+
+            console.log('不触发')
+
+
+        }
+        else {
+          console.log('触发')
+
+        }
+*/
+
+
       },
       handleClick: function () {
         if(this.code == ''){
@@ -92,11 +129,11 @@
         }
         if(this.withdraw == 1){
           /*
-          * 接口： 用户发起提现操作
-          * 请求方式： GET
-          * 接口： /user/withdraw/dowithdraw
-          * 入参： bankCardId,balance,code
-          * */
+           * 接口： 用户发起提现操作
+           * 请求方式： GET
+           * 接口： /user/withdraw/dowithdraw
+           * 入参： bankCardId,balance,code
+           * */
           this.$http({
             method: 'get',
             url: process.env.API_ROOT + 'user/withdraw/dowithdraw?bankCardId='+this.bankCardId+'&balance='+this.withdrawMoney+'&code='+this.code
@@ -105,37 +142,37 @@
             if(res.data.code=='3001') {
               setTimeout( ()=> {
                 this.$router.push('/');
+              },1500);
+              return false;
+            }
+            else {
+              if (res.data.code == '0000') {
+                this.setStorage('orderId',res.data.data);
+                this.$toast({
+                  message: res.data.msg,
+                  position: 'middle',
+                  duration: 500
+                });
+                setTimeout(() => {
+                  this.$router.push( '/paySuccess')
                 },1500);
-                return false;
               }
               else {
-                if (res.data.code == '0000') {
-                  this.setStorage('orderId',res.data.data);
-                  this.$toast({
-                    message: res.data.msg,
-                    position: 'middle',
-                    duration: 1500
-                  });
-                  setTimeout(() => {
-                    this.$router.push( '/paySuccess')
-                  },1500);
-                }
-                else {
-                  this.$toast({
-                    message: res.data.msg,
-                    position: 'middle',
-                    duration: 1500
-                  })
-                }
+                this.$toast({
+                  message: res.data.msg,
+                  position: 'middle',
+                  duration: 500
+                })
               }
+            }
           })
         }else if(this.change == 1){
           /*
-          * 接口： 用户发起转账操作
-          * 请求方式： GET
-          * 接口： /user/withdraw/dowithdraw
-          * 入参： mobile,balance,code
-          * */
+           * 接口： 用户发起转账操作
+           * 请求方式： GET
+           * 接口： /user/withdraw/dowithdraw
+           * 入参： mobile,balance,code
+           * */
           this.$http({
             method: 'get',
             url: process.env.API_ROOT + 'user/transfer/dotransfer?mobile='+this.transferMobile+'&balance='+this.transferMoney+'&code='+this.code
@@ -170,6 +207,8 @@
           })
         }
       }
+
+
     }
   }
 </script>

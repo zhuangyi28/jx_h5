@@ -93,8 +93,8 @@
     </div>
 
 
-    <!-- 联系客户 -->
-    <serviceArea :type1="serviceLeft"  :iconName1="iconName1" :spanShow="false"></serviceArea>
+    <!-- 查看幫助 -->
+    <serviceArea :type1="serviceLeft"  :iconName1="iconName1" v-on:clickEventLeft="customerFn"  :spanShow="false"></serviceArea>
 
   </div>
 </template>
@@ -104,6 +104,8 @@
 
   //帮助
   import serviceArea from '../../../components/service/service'
+
+  import { customerInit, customerClick } from "../../../../static/js/basic"
 
   export default{
 
@@ -151,15 +153,21 @@
 
            btnName:'去支付',
 
-           serviceLeft: '查看帮助',
+           serviceLeft: '联系客服',
 
-           iconName1:'icon-help_question',
+           iconName1:'icon-withdraw_custom',
 
 
          }
 
     },
    mounted () {
+
+     //美恰初始化
+     customerInit({
+       name:this.getStorage('userName'),// 名字
+       tel:this.getStorage('mobile'),// 电话
+     });
 
      this.init();
 
@@ -403,6 +411,12 @@
 
 
        }
+
+     },
+
+     customerFn:function () {
+
+       customerClick()
 
      }
 

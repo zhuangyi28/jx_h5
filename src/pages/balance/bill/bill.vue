@@ -75,6 +75,7 @@
         this.init();
 
     },
+
     methods: {
 
       init:function () {
@@ -286,7 +287,6 @@
       },
 
       clickBill: function (e) {
-
 
         this.orderId=e.currentTarget.dataset.no;
 
