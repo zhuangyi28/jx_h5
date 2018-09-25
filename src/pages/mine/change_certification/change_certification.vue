@@ -44,26 +44,38 @@
     },
     data () {
       return {
-        mobile: '',
-        seconds: 0,
-        lockBtn:1,
-        code: '',
+        mobile: '',//当前登录账号
+        seconds: 0,//获取验证码倒计时
+        lockBtn:1,//获取验证码按钮显示
+        code: '',//验证码
         btnName: '确认'
       }
     },
     mounted () {
       this.mobile = this.getStorage('mobile');
-      this.getAgain();
+
+      setTimeout(function () {
+
+        if(localStorage.getItem('backing')==0) {
+
+          this.getAgain()
+        }
+      }.bind(this),1);
     },
     methods: {
+      //获取验证码
       getAgain: function () {
         if(this.seconds){
           return;
         }else{
           this.seconds = 60;
         }
-        //var span = document.getElementsByClassName('get_again')[0];
-        //span.style.color = '#ababab';
+        /*
+        * 接口： 更换用户手机号-原手机号验证
+        * 请求方式： GET
+        * 接口： /jx/action/oldmobilecheck
+        * 传参： null
+        * */
         this.$http({
           method: 'get',
           url: process.env.API_ROOT + 'jx/action/oldmobilecheck',
@@ -90,8 +102,15 @@
           alert(res.data.msg);
         });
       },
+      //验证验证码并跳转到下一页面
       enter: function () {
         if(this.code.length == 6){
+          /*
+          * 接口： 更换用户手机号-原号码验证
+          * 请求方式： POST
+          * 接口： /user/set/oldmobilechange
+          * 传参： code
+          * */
           this.$http({
             method: 'get',
             url: process.env.API_ROOT+ 'user/set/oldmobilechange',
@@ -110,6 +129,7 @@
             if(res.data.code == '0000'){
               setTimeout( () => {
                 instance.close();
+                this.setStorage('oldCode',this.code);
                 this.$router.push('/changeNewTel');
               },500);
             }
