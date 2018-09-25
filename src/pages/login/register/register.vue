@@ -327,115 +327,67 @@
 
         var _this=this;
 
-        var empty = /[@#\$%\^&\*]+/g;
+        /**
+         * 接口：登录
+         * 请求方式：POST
+         * 接口：/jx/action/login
+         * 入参：mobile，password,code
+         **/
 
-        var reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/;
+        this.$http({
 
+          method: 'post',
 
-        if(_this.mobile==''||_this.mobile.length<11){
+          url:process.env.API_ROOT+'jx/action/login',
 
-          this.$toast({
+          //url:process.env.API_ROOT+'jx/action/login',
 
-            message: '请输入正确手机号',
-            duration: 1500
+          params:{
 
-          });
+            mobile:_this.mobile,
 
-        }
+            password:hexMD5(_this.password),
 
-        else if(empty.test(_this.password)){
+          }
+        }).then((res)=>{
 
-          this.$toast({
-
-            message: '密码包含非法字符',
-            duration: 1500
-
-          });
-
-        }
-
-
-        else if(_this.password==''||_this.password.length<6){
-
-          this.$toast({
-
-            message: '请输入6位到20位密码',
-            duration: 1500
-
-          });
+          console.log(res.data);
 
 
-        }
+          if(res.data.code=='-1'){
 
-        else if(!reg.test(_this.password)){
-
-          this.$toast({
-
-            message: '密码需包含数字和字母',
-            duration: 1500
-
-          });
-
-        }
-
-        else {
-
-          /**
-           * 接口：登录
-           * 请求方式：POST
-           * 接口：/jx/action/login
-           * 入参：mobile，password,code
-           **/
-
-          this.$http({
-
-            method: 'post',
-
-            url:process.env.API_ROOT+'jx/action/login',
-
-            //url:process.env.API_ROOT+'jx/action/login',
-
-            params:{
-
-              mobile:_this.mobile,
-
-              password:hexMD5(_this.password),
-
-            }
-          }).then((res)=>{
-
-            console.log(res.data);
+            this.$toast({
+              message: res.data.msg,
+              duration: 1500
 
 
-            if(res.data.code=='-1'){
-
-              this.$toast({
-                message: res.data.msg,
-                duration: 1500
+            });
 
 
-              });
+          }
 
+          else if(res.data.code=='0000'){
 
-            }
+            console.log('跳转');
 
-            else if(res.data.code=='0000'){
+            var Authorization = res.data.token.access_token;//Authorization数据
 
-              //跳转
-              _this.$router.push('/workDesk/homepage')
-            }
+            //存取token
+            this.setStorage('Authorization',Authorization);
+
+            //跳转
+            _this.$router.push('/workDesk/homepage');
+
+          }
 
 
 
-          }).catch((res)=>{
+        }).catch((res)=>{
 
-            //console.log(res.data);
-
-
-          })
+          //console.log(res.data);
 
 
-        }
+        })
 
 
 

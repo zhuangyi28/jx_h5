@@ -41,8 +41,10 @@
       this.withdraw = this.getStorage('withdraw');
       if(this.change == 1){
         this.money = this.getStorage('transferMoney');
+        document.title = '转账成功';
       }else if(this.withdraw == 1){
         this.money = this.getStorage('withdrawMoney');
+        document.title = '提现申请已提交';
       }
     },
     methods: {

@@ -34,6 +34,7 @@
       this.withdraw = this.getStorage('withdraw');
       this.transferMoney = this.getStorage('transferMoney');
       this.transferMobile = this.getStorage('transferMobile');
+      this.setStorage('forgetPsw','1');
     },
     methods: {
       handleClick: function () {

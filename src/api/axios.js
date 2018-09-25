@@ -61,7 +61,10 @@ axios.install = (Vue) => {
       },1000)
 
     }
+    else if(error.response.data.code=='3004'){
 
+
+    }
 
     return Promise.reject(error)
 
