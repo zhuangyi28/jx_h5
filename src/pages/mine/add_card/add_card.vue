@@ -13,7 +13,7 @@
         </div>
         <div class="card_bank">
           <div class="bank_name" v-if="bankName == ''">
-            <img src="/static/images/bank_orc.png">
+            <img src="../../../../static/images/bank_orc.png">
             <span>自动识别开户行</span>
           </div>
           <div class="bank_name" v-else>
@@ -125,7 +125,7 @@
                 }
               }else{
                 this.bankName = '不支持该银行';
-                this.bankImg = '../../../../static/images/bank_no.png';
+                this.bankImg = './static/images/bank_no.png';
               }
             }
           }).catch((res)=>{

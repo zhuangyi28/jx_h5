@@ -1,7 +1,12 @@
 <template>
   <div class="loading">
+    <div class="bg">
+      <img src="../../../../static/images/jx_start_page7.png">
+      <div class="card"><img src="../../../../static/images/jx_start_page1.png"/></div>
+      <div class="msg"><img src="../../../../static/images/jx_start_page2.png"/></div>
+      <div class="paper"><img src="../../../../static/images/jx_start_page3.png"/></div>
 
-    <div class="bg"><img src="../../../../static/images/jx_start_page7.png"></div>
+    </div>
     <div class="font">天下没有难发的薪水</div>
     <div class="bottom"><img src="../../../../static/images/jx_start_page8.png"></div>
   </div>
