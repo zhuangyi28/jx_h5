@@ -92,7 +92,6 @@
             setTimeout(()=>{
               this.certificationSelect = !this.certificationSelect;
             },10);
-            this.certificationSelect = !this.certificationSelect;
             this.$messagebox({
               title: '提示',
               message: '实名认证审核中，审核通过后即可设置支付密码',
@@ -118,7 +117,7 @@
                 if(res == 'cancel'){
                   return;
                 }else if(res == 'confirm'){
-                  this.$router.push("/safeCertification");
+                  this.$router.push("/code");
                 }
               });
               return;

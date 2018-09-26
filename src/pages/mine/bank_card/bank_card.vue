@@ -144,6 +144,7 @@
             confirmButtonClass: 'confirm_btn_orange',
           })
         }else{
+            this.setStorage('addCard','');
           this.$router.push('/addCard');
         }
       }
