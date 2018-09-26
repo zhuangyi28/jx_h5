@@ -75,7 +75,7 @@
           }).then((res)=>{
             this.$toast({
               message: res.data.msg,
-              position: 'middle',
+              position: 'bottom',
               duration: 1500
             });
             if(res.data.code == '0000'){
@@ -115,14 +115,14 @@
         if(this.code == ''){
           this.$toast({
             message: '请输入验证码',
-            position: 'middle',
+            position: 'bottom',
             duration: 1500
           });
           return;
         }else if(this.code.length != 6){
           this.$toast({
             message: '请输入正确的验证码',
-            position: 'middle',
+            position: 'bottom',
             duration: 1500
           });
           return;
@@ -150,7 +150,7 @@
                 this.setStorage('orderId',res.data.data);
                 this.$toast({
                   message: res.data.msg,
-                  position: 'middle',
+                  position: 'bottom',
                   duration: 500
                 });
                 setTimeout(() => {
@@ -160,7 +160,7 @@
               else {
                 this.$toast({
                   message: res.data.msg,
-                  position: 'middle',
+                  position: 'bottom',
                   duration: 500
                 })
               }
@@ -189,7 +189,7 @@
                 this.setStorage('transferOrderId',res.data.data);
                 this.$toast({
                   message: res.data.msg,
-                  position: 'middle',
+                  position: 'bottom',
                   duration: 1500
                 });
                 setTimeout(() => {
@@ -199,7 +199,7 @@
               else {
                 this.$toast({
                   message: res.data.msg,
-                  position: 'middle',
+                  position: 'bottom',
                   duration: 1500
                 })
               }

@@ -24,11 +24,12 @@
         </div>
       </div>
     </div>
-    <service v-bind:type1="serviceLeft" v-bind:type2="serviceRight" v-bind:spanShow="true" v-bind:iconName1="iconName1" v-bind:iconName2="iconName2" v-on:clickEventRight="jumpToBill"></service>
+    <service v-bind:type1="serviceLeft" v-bind:type2="serviceRight" v-bind:spanShow="true" v-bind:iconName1="iconName1" v-bind:iconName2="iconName2" v-on:clickEventLeft="customerFn" v-on:clickEventRight="jumpToBill"></service>
   </div>
 </template>
 <script>
   import service from '../../../components/service/service'
+  import { customerInit, customerClick } from "../../../../static/js/basic"
   export default {
     name: 'transferHistory',
     components: {
@@ -153,9 +154,19 @@
       jumpToBill: function () {
         this.setStorage('whichBill','2');
         this.$router.push('/bill');
-      }
+      },
+      customerFn:function () {
+        customerClick()
+      },
+
     },
+
     mounted () {
+        //美恰初始化
+        customerInit({
+          name:this.getStorage('userName'),// 名字
+          tel:this.getStorage('mobile'),// 电话
+        });
       /*
       * 接口： 查询历史收款人
       * 请求方式： POST

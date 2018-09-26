@@ -84,6 +84,7 @@
               if(res == 'cancel'){
                 return;
               }else if(res == 'confirm'){
+                this.setStorage('hrefId','4');
                 this.$router.push('/certification');
               }
             });
@@ -117,6 +118,7 @@
                 if(res == 'cancel'){
                   return;
                 }else if(res == 'confirm'){
+                  this.setStorage('paySettingHref','4');
                   this.$router.push("/code");
                 }
               });
@@ -146,7 +148,7 @@
           console.log(res);
           this.$toast({
             message: res.data.msg,
-            position: 'middle',
+            position: 'bottom',
             duration: 1500
           });
         }).catch((res)=>{

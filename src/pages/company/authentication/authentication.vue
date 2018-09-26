@@ -26,7 +26,7 @@
 
     <orangeBtn :name="btnName" v-on:clickEvent="identityFn"></orangeBtn>
 
-    <serviceArea :type1="serviceLeft" :type2="serviceRight" :iconName1="iconName1" :iconName2="iconName2" :spanShow="true"></serviceArea>
+    <serviceArea :type1="serviceLeft" :type2="serviceRight" :iconName1="iconName1" :iconName2="iconName2" v-on:clickEventRight="customerFn" v-on:clickEventLeft="$router.push('/helpCenter')" :spanShow="true"></serviceArea>
 
   </div>
 
@@ -40,6 +40,8 @@
 
   //帮助
   import serviceArea from '../../../components/service/service'
+
+  import { customerInit, customerClick } from "../../../../static/js/basic"
 
   export default {
 
@@ -74,7 +76,7 @@
 
         serviceRight: '联系客服',
 
-        iconName1:'icon-withdraw_custom',
+        iconName1:'icon-help_question',
 
         iconName2:'icon-withdraw_custom',
 
@@ -84,6 +86,12 @@
     },
 
     mounted(){
+
+      //美恰初始化
+      customerInit({
+        name:this.getStorage('userName'),// 名字
+        tel:this.getStorage('mobile'),// 电话
+      });
 
       /**
        * 接口：用户中心
@@ -188,6 +196,7 @@
             this.$toast({
 
               message: res.data.msg,
+              position: 'bottom',
               duration: 1500
 
             });
@@ -238,7 +247,13 @@
 
 
 
-      }
+      },
+
+      customerFn:function () {
+        customerClick()
+      },
+
+
 
     }
 

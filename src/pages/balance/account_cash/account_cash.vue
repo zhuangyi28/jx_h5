@@ -30,7 +30,7 @@
     </div>
     <mt-popup v-model="transferClick" position="bottom">
       <div class="withdraw_money_info">
-        <div class="withdraw_title">确认转账<span class="close_btn" v-on:click="withdrawClick=false"></span></div>
+        <div class="withdraw_title">确认转账<span class="close_btn" v-on:click="transferClick=false"></span></div>
         <div class="withdraw_detail">
           <div class="pay_money">
             <span>支付金额</span>

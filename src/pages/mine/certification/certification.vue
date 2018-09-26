@@ -174,15 +174,16 @@
           //身份证
           check = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
         }
-        else if(this.cardTypeId == 2){
+        else if(this.cardTypeId == 3){
           //港澳
           check = /^[a-z0-9A-Z]{11}$/;
         }
-        else if(this.cardTypeId == 3){
-          //台湾
-          check = /^[a-z0-9A-Z]{11}$/;
-        }
         else if(this.cardTypeId == 4){
+          //台湾
+          check = /^[a-z0-9A-Z]{8}$/;
+        }
+        else if(this.cardTypeId == 2){
+
           //护照
           check = /^[a-z0-9A-Z]{6,20}$/;
         }
@@ -190,7 +191,7 @@
           this.$toast({
             message: '请输入姓名',
             position: 'middle',
-            duration: 2000
+            duration: 1500
           });
           return;
         }
@@ -199,7 +200,7 @@
           this.$toast({
             message: '请输入证件号码',
             position: 'middle',
-            duration: 2000
+            duration: 1500
           });
           return;
         }
@@ -207,7 +208,7 @@
           this.$toast({
             message: '请输入正确的证件号码',
             position: 'middle',
-            duration: 2000
+            duration: 1500
           });
           return;
         }

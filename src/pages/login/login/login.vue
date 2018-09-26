@@ -76,6 +76,7 @@
 
             this.$toast({
               message: '请输入手机号',
+              position: 'bottom',
               duration: 1500
 
 
@@ -88,6 +89,7 @@
 
             this.$toast({
               message: '请输入密码',
+              position: 'bottom',
               duration: 1500
 
 
@@ -136,6 +138,7 @@
 
                 this.$toast({
                   message: res.data.msg,
+                  position: 'bottom',
                   duration: 1500
 
 

@@ -89,20 +89,32 @@
 
         }).then((res)=>{
 
-          console.log(res);
+          console.log(res.data);
 
-          if (Event.target.classList.contains('face_img')){
+          if(res.data.code=='0000'){
 
-            this.faceUrl = res.data.data.url;
+            this.$toast({
 
+              message: '上传成功',
+              position: 'middle',
+              duration: 1500
+            })
+
+            if (Event.target.classList.contains('face_img')){
+
+              this.faceUrl = res.data.data.url;
+
+            }
+
+            else if(Event.target.classList.contains('back_img')){
+
+
+              this.backUrl = res.data.data.url;
+
+            }
           }
 
-          else if(Event.target.classList.contains('back_img')){
 
-
-            this.backUrl = res.data.data.url;
-
-          }
 
 
 

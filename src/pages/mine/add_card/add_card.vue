@@ -25,7 +25,7 @@
       </div>
       <div class="card_information_ps">信息填写完整，资金更安全</div>
       <div class="bank_information">
-        <div class="bank_place">
+        <div class="bank_place must_input">
           <span>开户地区</span>
           <div v-on:click="pickerShow=true">
             <span v-if='bankPlaces.length == 0'>请选择开户地区</span>
@@ -187,7 +187,7 @@
           this.$toast({
 
             message: '请填写正确的银行卡号',
-            position: 'middle',
+            position: 'bottom',
             duration: 1500
 
           });
@@ -198,8 +198,7 @@
           this.$toast({
 
             message: '请填写正确的银行卡号',
-
-            position: 'middle',
+            position: 'bottom',
             duration: 1500
 
           });
@@ -211,7 +210,7 @@
           this.$toast({
 
             message: '不支持该银行卡',
-            position: 'middle',
+            position: 'bottom',
             duration: 1500
 
           });
@@ -224,7 +223,7 @@
           this.$toast({
 
             message: '请选择开户地区',
-            position: 'middle',
+            position: 'bottom',
             duration: 1500
 
           });
@@ -247,7 +246,7 @@
           }).then((res)=>{
             var toast = this.$toast({
               message: res.data.msg,
-              position: 'middle',
+              position: 'bottom',
               duration: 1500
             });
             if(res.data.code == '0000'){

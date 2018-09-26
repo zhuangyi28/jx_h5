@@ -16,12 +16,13 @@
     <div class="transfer_click_btn" v-else>
       <button>下一步</button>
     </div>
-    <service v-bind:type1="serviceLeft" v-bind:type2="serviceRight" v-bind:spanShow="true" v-bind:iconName1="iconName1" v-bind:iconName2="iconName2" v-on:clickEventRight="jumpToBill"></service>
+    <service v-bind:type1="serviceLeft" v-bind:type2="serviceRight" v-bind:spanShow="true" v-bind:iconName1="iconName1" v-bind:iconName2="iconName2" v-on:clickEventLeft="customerFn" v-on:clickEventRight="jumpToBill"></service>
   </div>
 </template>
 <script>
   import orangeBtn from '../../../components/orange_btn/orange_btn'
   import service from '../../../components/service/service'
+  import { customerInit, customerClick } from "../../../../static/js/basic"
   export default {
     name: 'transfer',
     components: {
@@ -41,6 +42,11 @@
       }
     },
     mounted () {
+      //美恰初始化
+      customerInit({
+        name:this.getStorage('userName'),// 名字
+        tel:this.getStorage('mobile'),// 电话
+      });
       this.mobile = this.getStorage('mobile');
     },
     methods: {
@@ -48,19 +54,19 @@
         if(this.transferMobile == ''){
           this.$toast({
             message: '请输入手机号',
-            position: 'middle',
+            position: 'bottom',
             duration: 1500
           })
         }else if(this.transferMobile.length != 11){
           this.$toast({
             message: '请输入正确的手机号',
-            position: 'middle',
+            position: 'bottom',
             duration: 1500
           })
         }else if(this.transferMobile == this.mobile){
           this.$toast({
             message: '不能给自己转账',
-            position: 'middle',
+            position: 'bottom',
             duration: 1500
           })
         }else{
@@ -84,10 +90,10 @@
             if(res.data.code == -8){
               this.$messagebox({
                 title: res.data.msg,
-                message: '分享微信小程序，邀请好友注册“嘉薪”并实名认证，通过后即可给该好友转账',
+                message: '分享微信公众号，邀请好友注册“嘉工资”并实名认证，通过后即可给该好友转账',
                 showConfirmButton: true,
                 showCancelButton: true,
-                confirmButtonText: 去分享,
+                confirmButtonText: '去分享',
                 cancelButtonText: '取消',
                 cancelButtonClass:'cancel_btn',
                 confirmButtonClass:'confirm_btn_orange',
@@ -101,7 +107,7 @@
             }else if(res.data.code == -9){
               this.$messagebox({
                 title: res.data.msg,
-                message: '分享微信小程序，提醒好友完成实名认证，通过后即可给该好友转账',
+                message: '分享微信公众号，提醒好友完成实名认证，通过后即可给该好友转账',
                 showConfirmButton: true,
                 showCancelButton: true,
                 confirmButtonText: '去分享',
@@ -122,7 +128,7 @@
             }else{
               this.$toast({
                 message: res.data.msg,
-                position: 'middle',
+                position: 'bottom',
                 duration: 1500
               })
             }
@@ -132,6 +138,9 @@
       jumpToBill: function () {
         this.setStorage('whichBill','2');
         this.$router.push('/bill');
+      },
+      customerFn:function () {
+        customerClick()
       }
     },
     watch: {

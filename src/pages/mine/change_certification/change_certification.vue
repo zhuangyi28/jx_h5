@@ -83,8 +83,8 @@
           console.log(res);
           this.$toast({
             message: res.data.msg,
-            position: 'middle',
-            duration: 2000
+            position: 'bottom',
+            duration: 1500
           });
           var countDown = setInterval( () => {
             var time = this.seconds;
@@ -123,8 +123,8 @@
           }).then( (res) => {
             var instance = this.$toast({
               message: res.data.msg,
-              position: 'middle',
-              duration: 2000
+              position: 'bottom',
+              duration: 1500
             });
             if(res.data.code == '0000'){
               setTimeout( () => {
@@ -137,14 +137,14 @@
         }else if(this.code == ''){
           this.$toast({
             message: '请输入验证码',
-            position: 'middle',
-            duration: 2000
+            position: 'bottom',
+            duration: 1500
           })
         }else{
           this.$toast({
             message: '输入的验证码有误',
-            position: 'middle',
-            duration: 2000
+            position: 'bottom',
+            duration: 1500
           })
         }
       }

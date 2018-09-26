@@ -302,7 +302,7 @@
         if(this.withdrawMoney == ''){
           this.$toast({
             message: '请输入金额',
-            position: 'middle',
+            position: 'bottom',
             duration: 1500
           });
           return;
@@ -310,7 +310,7 @@
         if(parseFloat(this.withdrawMoney) < parseFloat(this.amountMin)){
           this.$toast({
             message: '单笔提现金额需大于'+this.amountMin+'元',
-            position: 'middle',
+            position: 'bottom',
             duration: 1500
           });
           return;
@@ -318,7 +318,7 @@
         if(parseFloat(this.withdrawMoney) > parseFloat(this.amountMax)){
           this.$toast({
             message: '单笔提现金额需小于'+this.amountMax+'元',
-            position: 'middle',
+            position: 'bottom',
             duration: 1500
           });
           return;
@@ -326,7 +326,7 @@
         if(parseFloat(this.withdrawMoney) > parseFloat(this.dayMaxAmount)){
           this.$toast({
             message: '提现金额超出当日最大额度',
-            position: 'middle',
+            position: 'bottom',
             duration: 1500
           });
           return;
@@ -334,7 +334,7 @@
         if(parseFloat(this.withdrawMoney) > parseFloat(this.monthMaxAmount)){
           this.$toast({
             message: '提现金额超出当月最大限额',
-            position: 'middle',
+            position: 'bottom',
             duration: 1500
           });
           return;
@@ -342,7 +342,7 @@
         if(parseFloat(this.withdrawMoney) > parseFloat(this.balance)){
           this.$toast({
             message: '金额已超过可提余额',
-            position: 'middle',
+            position: 'bottom',
             duration: 1500
           });
           return;
@@ -350,7 +350,7 @@
         if(!dot.test(this.withdrawMoney)){
           this.$toast({
             message: '输入金额格式有误',
-            position: 'middle',
+            position: 'bottom',
             duration: 1500
           });
           return;
@@ -358,7 +358,7 @@
         if(!reg.test(this.withdrawMoney)){
           this.$toast({
             message: '输入金额限小数点后两位',
-            position: 'middle',
+            position: 'bottom',
             duration: 1500
           });
           return;

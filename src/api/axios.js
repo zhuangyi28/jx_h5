@@ -43,12 +43,12 @@ axios.install = (Vue) => {
 
       localStorage.setItem('loadingShow',1)
 
-      Toast({
+  /*    Toast({
 
         message: error.response.data.msg,
         duration: 500
 
-      })
+      })*/
 
       localStorage.clear();
 

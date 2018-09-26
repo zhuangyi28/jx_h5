@@ -7,7 +7,7 @@
       <div class="paper"><img src="../../../../static/images/jx_start_page3.png"/></div>
 
     </div>
-    <div class="font">天下没有难发的薪水</div>
+    <div class="font"><img src="../../../../static/images/jx_loading_title.png"></div>
     <div class="bottom"><img src="../../../../static/images/jx_start_page8.png"></div>
   </div>
 </template>
