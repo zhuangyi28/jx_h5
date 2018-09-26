@@ -1,4 +1,6 @@
 <template>
+
+        <div class='input-box'>{{ money }}</div>
         <div class='keyboard' @click.stop='_handleKeyPress'>
             <div class='key-row'>
                 <div class='key-cell' data-num='7'>7</div>

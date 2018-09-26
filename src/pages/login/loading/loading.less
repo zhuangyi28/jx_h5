@@ -3,10 +3,75 @@
   height: calc(100vh);
   width: 100%;
   position: fixed;
+
   .bg{
+    position: relative;
     width: 280px;
     height: 272px;
-    margin: 100px auto;
+    margin: 150px auto 100px;
+    .card{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 32px;
+      height: 32px;
+      animation: heart 1.3s ease-in-out 2.7s infinite alternate;
+      @keyframes heart{
+        from{
+          transform:translateY(0) rotate(0deg)
+
+        }
+        to{
+          transform:translateY(6px) rotate(15deg)
+        }
+      }
+      img{
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .msg{
+      position: absolute;
+      top: -20%;
+      left: 40%;
+      width: 32px;
+      height: 32px;
+      animation: heart 3.3s ease-in-out 0.7s infinite alternate;
+      @keyframes heart{
+        from{
+          transform:translateY(3px) rotate(5deg)
+
+        }
+        to{
+          transform:translateY(10px) rotate(5deg)
+        }
+      }
+      img{
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .paper{
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 32px;
+      height: 32px;
+      animation: heart 1.3s ease-in-out 2.7s infinite alternate;
+      @keyframes heart{
+        from{
+          transform:translateY(-1px) rotate(0deg)
+
+        }
+        to{
+          transform:translateY(2px) rotate(15deg)
+        }
+      }
+      img{
+        width: 100%;
+        height: 100%;
+      }
+    }
     img{
       width: 100%;
       height: 100%;

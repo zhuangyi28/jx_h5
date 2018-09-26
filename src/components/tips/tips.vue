@@ -2,7 +2,7 @@
   <div class="tips">
 
     <div class="add_card_two_ps">
-      <img src="/static/images/jx_prompt.png">
+      <img src="../../../static/images/jx_prompt.png">
       <span>{{tips}}</span>
     </div>
 
