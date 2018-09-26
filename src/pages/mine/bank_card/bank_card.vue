@@ -103,7 +103,7 @@
               } else {
                 this.$toast({
                   message: res.data.msg,
-                  position: 'middle',
+                  position: 'bottom',
                   duration: 1500
                 });
               }

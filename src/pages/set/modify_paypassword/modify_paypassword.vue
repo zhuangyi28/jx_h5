@@ -78,6 +78,7 @@
           this.$toast({
 
             message: '请输入原6位支付密码',
+            position: 'bottom',
             duration: 1500
 
           });
@@ -89,6 +90,7 @@
           this.$toast({
 
             message: '输入6位新支付密码',
+            position: 'bottom',
             duration: 1500
 
           });
@@ -100,6 +102,7 @@
           this.$toast({
 
             message: '密码包含非法字符',
+            position: 'bottom',
             duration: 1500
 
           });
@@ -112,6 +115,7 @@
           this.$toast({
 
             message: '请输入非连续、重复的6位密码',
+            position: 'bottom',
             duration: 1500
 
           });
@@ -124,6 +128,7 @@
           this.$toast({
 
             message: '请输入非连续、重复的6位密码',
+            position: 'bottom',
             duration: 1500
 
           });
@@ -135,6 +140,7 @@
           this.$toast({
 
             message: '请两次输入相同的密码',
+            position: 'bottom',
             duration: 1500
 
           });
@@ -175,6 +181,7 @@
 
              this.$toast({
                message: res.data.msg,
+               position: 'bottom',
                duration: 1500
              });
 
@@ -182,6 +189,7 @@
 
              this.$toast({
                message: res.data.msg,
+               position: 'bottom',
                duration: 1500
              });
 

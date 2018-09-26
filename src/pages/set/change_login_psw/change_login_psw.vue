@@ -39,49 +39,49 @@
         if(this.oldPassword == ''){
           this.$toast({
             message: '请输入原密码',
-            position: 'middle',
+            position: 'bottom',
             duration: 1500
           });
         }
         else if(this.newPassword == '' || this.newPassword.length < 6){
           this.$toast({
             message: '请输入正确的新密码',
-            position: 'middle',
+            position: 'bottom',
             duration: 1500
           });
         }
         else if(this.newPasswordAgain == '' || this.newPasswordAgain.length < 6){
           this.$toast({
             message: '请再次输入正确的密码',
-            position: 'middle',
+            position: 'bottom',
             duration: 1500
           });
         }
         else if(a.test(this.newPassword) || a.test(this.newPasswordAgain)){
           this.$toast({
             message: '密码包含非法字符',
-            position: 'middle',
+            position: 'bottom',
             duration: 1500
           });
         }
         else if(this.newPassword.length < 6 || this.newPasswordAgain.length < 6){
           this.$toast({
             message: '密码长度为6-20位',
-            position: 'middle',
+            position: 'bottom',
             duration: 1500
           });
         }
         else if(!reg.test(this.newPassword)){
           this.$toast({
             message: '密码需要包含数字和字母',
-            position: 'middle',
+            position: 'bottom',
             duration: 1500
           });
         }
         else if(this.newPassword != this.newPasswordAgain){
           this.$toast({
             message: '两次密码输入不一致',
-            position: 'middle',
+            position: 'bottom',
             duration: 1500
           });
         }
@@ -112,7 +112,7 @@
             else if(res.data.code == '0000'){
               this.$toast({
                 message: res.data.msg,
-                position: 'middle',
+                position: 'bottom',
                 duration: 500
               });
               setTimeout(()=>{
@@ -121,7 +121,7 @@
             }else{
               this.$toast({
                 message: res.data.msg,
-                position: 'middle',
+                position: 'bottom',
                 duration: 1500
               });
             }

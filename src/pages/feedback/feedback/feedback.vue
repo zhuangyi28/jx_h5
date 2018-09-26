@@ -172,7 +172,7 @@
 
                message: '请输入反馈内容',
                duration: 1500,
-               position: 'middle',
+               position: 'bottom',
 
 
              })
@@ -228,7 +228,7 @@
 
                   message: res.data.msg,
                   duration: 1500,
-                  position: 'middle',
+                  position: 'bottom',
 
 
                 });
@@ -270,7 +270,7 @@
 
                   message:res.data.msg,
                   duration: 1500,
-                  position: 'middle',
+                  position: 'bottom',
 
 
                 });

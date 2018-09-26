@@ -83,6 +83,7 @@
           this.$toast({
 
             message: '请输入正确手机号',
+            position: 'bottom',
             duration: 1500
 
           });
@@ -121,6 +122,7 @@
               this.$toast({
 
                 message:  res.data.msg,
+                position: 'bottom',
                 duration: 1500
 
               });
@@ -135,6 +137,7 @@
               this.$toast({
 
                 message:  res.data.msg,
+                position: 'bottom',
                 duration: 1500
 
               });
@@ -201,6 +204,7 @@
           this.$toast({
 
             message: '请输入正确的手机号',
+            position: 'bottom',
             duration: 1500
 
           });
@@ -212,6 +216,7 @@
           this.$toast({
 
             message: '请输入正确的验证码',
+            position: 'bottom',
             duration: 1500
 
           });
@@ -224,6 +229,7 @@
           this.$toast({
 
             message: '密码包含非法字符',
+            position: 'bottom',
             duration: 1500
 
           });
@@ -236,6 +242,7 @@
           this.$toast({
 
             message: '密码长度为6-20位',
+            position: 'bottom',
             duration: 1500
 
           });
@@ -246,6 +253,7 @@
           this.$toast({
 
             message: '密码需包含数字和字母',
+            position: 'bottom',
             duration: 1500
 
           });
@@ -258,6 +266,7 @@
           this.$toast({
 
             message: '请保证两次输入密码一致',
+            position: 'bottom',
             duration: 1500
 
           });
@@ -304,6 +313,7 @@
               this.$toast({
 
                 message: res.data.msg,
+                position: 'bottom',
                 duration: 1500
 
               });

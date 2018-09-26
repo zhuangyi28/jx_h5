@@ -6,11 +6,11 @@
     <div class="content_box">
       <div class="field">
         <span>设置支付密码</span>
-        <input type="password" v-model="password"  maxlength="6" placeholder="请输入6位数字支付密码">
+        <input type="text" pattern="\d*" style="-webkit-text-security:disc" v-model="password"  maxlength="6" placeholder="请输入6位数字支付密码">
       </div>
       <div class="field">
         <span>设置支付密码</span>
-        <input type="password" v-model="confirmPassword" placeholder="请再次输入6位数字支付密码" maxlength="6">
+        <input type="text" pattern="\d*" style="-webkit-text-security:disc" v-model="confirmPassword" placeholder="请再次输入6位数字支付密码" maxlength="6">
       </div>
 
     </div>
@@ -92,6 +92,7 @@
           this.$toast({
 
             message: '请输入6位支付密码',
+            position: 'bottom',
             duration: 1500
 
           });
@@ -103,6 +104,7 @@
           this.$toast({
 
             message: '请再次输入6位支付密码',
+            position: 'bottom',
             duration: 1500
 
 
@@ -115,6 +117,7 @@
           this.$toast({
 
             message: '密码包含非法字符',
+            position: 'bottom',
             duration: 1500
 
 
@@ -128,6 +131,7 @@
           this.$toast({
 
             message: '请输入非连续、重复的6位密码',
+            position: 'bottom',
             duration: 1500
 
           });
@@ -141,6 +145,7 @@
           this.$toast({
 
             message: '请输入非连续、重复的6位密码',
+            position: 'bottom',
             duration: 1500
 
           });
@@ -152,6 +157,7 @@
           this.$toast({
 
             message: '请两次输入相同的密码',
+            position: 'bottom',
             duration: 1500
 
           });
@@ -207,7 +213,7 @@
               var toast = this.$toast({
 
                 message: res.data.msg,
-
+                position: 'bottom',
                 duration: 1500
 
               });
@@ -243,16 +249,13 @@
 
 
                   method: 'post',
-
-                  url: process.env.API_ROOT + 'user/set/getpaymode',
-
+                  url: process.env.API_ROOT + 'user/set/updatepaymode',
+                  header: {
+                    'content-type': 'application/x-www-form-urlencoded', // post请求
+                  },
                   params: {
-
                     msgMode: 0,
-
                     pwdMode: 1
-
-
                   }
 
 
@@ -261,6 +264,8 @@
                     console.log(res.data);
 
                     this.pswSetSucess='5'
+
+                  this.setStorage('paySettingHref','');
 
                 })
 
@@ -275,7 +280,7 @@
               this.$toast({
 
                 message: res.data.msg,
-
+                position: 'bottom',
                 duration: 1500
 
               })

@@ -116,6 +116,7 @@
             this.$toast({
 
               message: res.data.msg,
+              position: 'bottom',
               duration: 1500
 
             })
@@ -127,6 +128,7 @@
             this.$toast({
 
               message: res.data.msg,
+              position: 'bottom',
               duration: 1500
 
             })
@@ -182,6 +184,7 @@
           this.$toast({
 
             message: '请输入验证码',
+            position: 'bottom',
             duration: 1500
 
           })
@@ -195,6 +198,7 @@
           this.$toast({
 
             message: '输入的验证码有误',
+            position: 'bottom',
             duration: 1500
 
           })
@@ -235,6 +239,7 @@
               var toast = this.$toast({
 
                 message: res.data.msg,
+                position: 'bottom',
                 duration: 1500
 
               })
@@ -256,6 +261,7 @@
 
               this.$toast({
                 message: res.data.msg,
+                position: 'bottom',
                 duration: 1500
 
               })
@@ -269,7 +275,8 @@
         }
 
       }
-    }
+    },
+
 
   }
 </script>

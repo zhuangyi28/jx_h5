@@ -41,14 +41,14 @@
         if(this.password == ''){
           this.$toast({
             message: '请输入密码',
-            position: 'middle',
+            position: 'bottom',
             duration: 1500
           });
           return;
         }else if(this.password.length != 6){
           this.$toast({
             message: '请输入正确的密码',
-            position: 'middle',
+            position: 'bottom',
             duration: 1500
           });
           return;
@@ -76,7 +76,7 @@
                   confirmButtonClass:'confirm_btn_orange',
                 }).then((res)=>{
                   if(res == 'confirm'){
-                    this.$router.push('/');
+                    this.$router.push('/code');
                     return;
                   }else if(res == 'cancel'){
                     this.password = '';
@@ -86,7 +86,7 @@
               }
               var toast = this.$toast({
                 message: res.data.msg,
-                position: 'middle',
+                position: 'bottom',
                 duration: 1500
               });
               if(res.data.code == '0000'){
@@ -120,7 +120,7 @@
                   confirmButtonClass:'confirm_btn_orange',
                 }).then((res)=>{
                   if(res == 'confirm'){
-                    this.$router.push('/login');
+                    this.$router.push('/code');
                     return;
                   }else if(res == 'cancel'){
                     this.password = '';
@@ -134,7 +134,7 @@
               }else{
                 this.$toast({
                   message: res.data.msg,
-                  position: 'middle',
+                  position: 'bottom',
                   duration: 1500
                 });
               }

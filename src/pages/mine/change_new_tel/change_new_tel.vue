@@ -66,8 +66,8 @@
             console.log(res);
             this.$toast({
               message: res.data.msg,
-              position: 'middle',
-              duration: 2000
+              position: 'bottom',
+              duration: 1500
             });
             if(res.data.msg == '0000'){
               this.show = true;
@@ -97,24 +97,24 @@
         if(this.newMobile == this.oldMobile){
           this.$toast({
             message: '新手机号不能和原手机号一致，请更换新号码',
-            position: 'middle',
-            duration: 2000
+            position: 'bottom',
+            duration: 1500
           });
           return false
         }
         if (!this.newMobile) {
           this.$toast({
             message: '请输入手机号',
-            position: 'middle',
-            duration: 2000
+            position: 'bottom',
+            duration: 1500
           });
           return false;
         }
         if (!reg.test(this.newMobile)) {
           this.$toast({
             message: '请输入正确的手机号',
-            position: 'middle',
-            duration: 2000
+            position: 'bottom',
+            duration: 1500
           });
           return false;
         }
@@ -128,8 +128,8 @@
         if(this.show === ''){
           this.$toast({
             message: '请先获取验证码',
-            position: 'middle',
-            duration: 2000
+            position: 'bottom',
+            duration: 1500
           });
           return;
         }
@@ -139,16 +139,16 @@
         if(!this.code){
           this.$toast({
             message: '请输入验证码',
-            position: 'middle',
-            duration: 2000
+            position: 'bottom',
+            duration: 1500
           });
           return;
         }
         if(this.code.length != 6){
           this.$toast({
             message: '请输入正确的验证码',
-            position: 'middle',
-            duration: 2000
+            position: 'bottom',
+            duration: 1500
           });
           return;
         }
@@ -172,8 +172,8 @@
         }).then( (res) => {
           this.$toast({
             message: res.data.msg,
-            position: 'middle',
-            duration: 2000
+            position: 'bottom',
+            duration: 1500
           });
           if(res.data.code == '0000'){
             this.setStorage('mobile',this.newMobile);

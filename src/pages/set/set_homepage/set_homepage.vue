@@ -19,12 +19,47 @@
 
         hasUserName:true,
 
+        isVerify:'',
+
       }
 
     },
     mounted(){
 
       this.setStorage('forgetPsw','0');
+
+      /**
+       * 接口：用户中心
+       * 请求方式：POST
+       * 接口：/user/center/usercenter
+       * 入参：null
+       **/
+
+      this.$http({
+
+        method: 'post',
+
+        url: process.env.API_ROOT + 'user/center/usercenter',
+
+
+
+      }).then((res) => {
+
+        console.log(res.data);
+
+        if (res.data.code == '0000') {
+
+          //是否实名认证
+          this.isVerify= res.data.data.isVerify;
+
+
+          //判断是否有新消息
+
+
+        }
+
+
+      }).catch((res) => {})
 
       /**
        * 接口：查看是否设置支付密码
@@ -58,12 +93,8 @@
 
       onClickFn:function () {
 
-          console.log('点击')
-
-        var _isVerify = this.getStorage('isVerify');
-
         //判断是否认证
-        if(_isVerify=='0'||_isVerify == '3'){
+        if(this.isVerify=='0'||this.isVerify == '3'){
 
           //存指定的页面
           this.setStorage('hrefId','8');
@@ -92,7 +123,7 @@
 
         }
 
-        else if(_isVerify == '2'){
+        else if(this.isVerify == '2'){
 
           //存指定的页面
           this.setStorage('hrefId','8');
@@ -125,12 +156,6 @@
 
 
           this.$router.push('/code')
-
-        /*  wx.navigateTo({
-
-            url: '../code/code'
-
-          })*/
 
 
         }
