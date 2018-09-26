@@ -21,7 +21,7 @@
         </div>
       </div>
       <div class="withdraw_money">
-        <div class="add_bank" v-on:click="$router.push('/bankCard')">
+        <div class="add_bank" v-on:click="$router.push('/addCard')">
           <span>添加新卡</span>
         </div>
         <div class="withdraw_money_ps">单笔￥<span>{{amountMin|thousandBitSeparator}}</span>-￥<span>{{amountMax|thousandBitSeparator}}</span>（手续费<span>{{rate/100}}</span>%）</div>
@@ -234,6 +234,7 @@
           }
         }
       });
+      this.setStorage('addCard','withdraw');
     },
     destroyed (){
       this.$messagebox.close();

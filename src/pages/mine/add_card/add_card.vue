@@ -253,6 +253,10 @@
             if(res.data.code == '0000'){
               setTimeout(()=>{
                 toast.close();
+                if(this.getStorage('addCard') == 'withdraw'){
+                  this.$router.push('/withdraw');
+                  return;
+                }
                 this.$router.push('/bankCard');
               },500);
             }
