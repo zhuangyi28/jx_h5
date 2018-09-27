@@ -101,7 +101,8 @@
                 if(res == 'cancel'){
                   return;
                 }else if(res == 'confirm'){
-                  debugger;
+                  this.setStorage('share','true');
+                  this.$router.push('/share');
                 }
               })
             }else if(res.data.code == -9){
