@@ -33,15 +33,7 @@
     },
   destroyed(){
 
-        console.log(this.$router)
-
-        if(this.$router.history.current.path!=='/transferDetail'||this.$router.history.current.path!=='/cashDetail'){
-
-            console.log('不调用')
-
           this.setAutoBack(4)
-
-          }
 
     },
     mounted () {

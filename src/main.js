@@ -41,55 +41,86 @@ let token ;
 router.beforeEach((to,from,next)=>{
 
 
+  // var Authorization = window.localStorage.getItem('Authorization');//Authorization数据
+  //
+  // if(!token){
+  //
+  //   token=Authorization;
+  // }
+  //
+  // if(to.path!=='/login'){
+  //
+  //   console.log('不去登录')
+  //
+  //
+  //   if((from.path === '/workDesk/homepage' && to.path === '/login')||(from.path === '/workDesk/homepage' && to.path === '/Register')){
+  //
+  //
+  //     next({path: '/workDesk/homepage'})
+  //
+  //   }
+  //
+  //   else {
+  //
+  //     next()
+  //
+  //   }
+  //
+  //
+  // }
+  // else {
+  //
+  //
+  //   if(Authorization!=token){
+  //
+  //     //window.location.reload();
+  //   }
+  //   if (to.path&&to.name) {
+  //
+  //     next()
+  //
+  //   }else {
+  //
+  //
+  //
+  //       next({ path: '/workDesk/homepage'})
+  //
+  //
+  //   }
+  //
+  //
+  // }
+
   var Authorization = window.localStorage.getItem('Authorization');//Authorization数据
 
-  if(!token){
+  if(Authorization){
 
-    token=Authorization;
-  }
+    next();
 
-  if(to.path!=='/login'){
+  } else {
 
-    console.log('不去登录')
+    console.log(to.path)
 
+    if(to.path=='/login'||to.path=='/Register'||to.path=='/'||to.path=='forgetPsw'){
 
-    if((from.path === '/workDesk/homepage' && to.path === '/login')||(from.path === '/workDesk/homepage' && to.path === '/Register')){
-
-
-      next({path: '/workDesk/homepage'})
+      next();
 
     }
+    else  if((from.path === '/workDesk/homepage' && to.path === '/login')||(from.path === '/workDesk/homepage' && to.path === '/Register')){
 
+
+         next({path: '/workDesk/homepage'})
+
+     }
     else {
 
-      next()
-
+      next('/login');
     }
-
 
   }
-  else {
+})
 
 
-    if(Authorization!=token){
-
-      window.location.reload();
-    }
-    if (to.path&&to.name) {
-
-      next()
-
-    }else {
-
-
-
-        next({ path: '/workDesk/homepage'})
-
-
-    }
-
-
-  }
 
   //如果跳转页面不是登录页面的话
 /*  if(Authorization){
@@ -134,7 +165,7 @@ router.beforeEach((to,from,next)=>{
 
 
 
-});
+/*});*/
 
 $(function () {
 

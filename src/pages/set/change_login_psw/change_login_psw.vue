@@ -3,7 +3,7 @@
     <div class="change_login_psw_input">
       <div class="input">
         <span>原密码</span>
-        <input type="text" placeholder="请输入原密码" maxlength="20" v-model="oldPassword">
+        <input type="password" placeholder="请输入原密码" maxlength="20" v-model="oldPassword">
       </div>
       <div class="input">
         <span>新密码</span>
