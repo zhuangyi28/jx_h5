@@ -19,7 +19,7 @@
             <span>{{user.hideMobile}}</span>
           </div>
         </div>
-        <div class="close_btn" v-on:click="deleteThis">
+        <div class="close_btn" v-on:click="deleteThis" v-bind:recordId="user.recordId" v-on:click.stop>
           <div></div>
         </div>
       </div>
@@ -47,7 +47,8 @@
     },
     methods: {
       deleteThis: function () {
-        var nodes = event.path;
+        var target = event.currentTarget;
+        this.recordId = target.getAttribute('recordId');
         this.$messagebox({
           title: '提示',
           message: '确认删除？',
@@ -61,24 +62,25 @@
           if(res == 'cancel'){
             return;
           }else if(res == 'confirm'){
-            for (var obj of nodes) {
-              if (obj.classList.contains('transfer_history_one')) {
-                this.recordId = obj.getAttribute('recordId');
-                /*
+            /*
                 * 接口： 删除历史收款人
                 * 请求方式：GET
                 * 接口： /record/deletehistoricalpayye
                 * 入参： recordId
                 * */
-                this.$http({
-                  method: 'get',
-                  url: process.env.API_ROOT + 'record/deletehistoricalpayee?recordId='+this.recordId
-                }).then((res)=>{
-                  obj.remove();
-                });
-                break;
+            this.$http({
+              method: 'get',
+              url: process.env.API_ROOT + 'record/deletehistoricalpayee?recordId='+this.recordId
+            }).then((res)=>{
+              if(res.data.code == '0000'){
+                target.parentElement.remove();
               }
-            }
+              else{
+                console.log(res);
+              }
+            }).catch((res)=>{
+              console.log(res);
+            })
           }
         });
       },

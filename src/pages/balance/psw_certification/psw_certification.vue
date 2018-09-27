@@ -4,7 +4,7 @@
       <span><img src="../../../../static/images/jx_lock.png" ></span>
       <input type="number" style="-webkit-text-security:disc" pattern="\d*" oninput="if(value.length > 6)value = value.slice(0, 6)" placeholder="请输入支付密码" v-model="password" maxlength="6">
     </div>
-    <div class="forget_password" v-on:click="$router.push('/code')">忘记支付密码？</div>
+    <div class="forget_password"><span v-on:click="$router.push('/code')">忘记支付密码？</span></div>
     <orangeBtn v-bind:name="btnName" v-on:clickEvent="handleClick"></orangeBtn>
   </div>
 </template>
@@ -35,6 +35,7 @@
       this.transferMoney = this.getStorage('transferMoney');
       this.transferMobile = this.getStorage('transferMobile');
       this.setStorage('forgetPsw','1');
+      document.getElementsByTagName('input')[0].focus();
     },
     methods: {
       handleClick: function () {
@@ -90,9 +91,11 @@
                 duration: 1500
               });
               if(res.data.code == '0000'){
-                toast.close();
-                this.setStorage('orderId',res.data.data);
-                this.$router.push('/paySuccess')
+                setTimeout(()=>{
+                  toast.close();
+                  this.setStorage('orderId',res.data.data);
+                  this.$router.push('/paySuccess')
+                },500);
               }
             }).catch((res)=>{
               console.log(res);
@@ -128,15 +131,16 @@
                   }
                 })
               }
+              this.$toast({
+                message: res.data.msg,
+                position: 'bottom',
+                duration: 1500
+              });
               if(res.data.code == '0000'){
-                this.setStorage('transferOrderId',res.data.data);
-                this.$router.push('/paySuccess')
-              }else{
-                this.$toast({
-                  message: res.data.msg,
-                  position: 'bottom',
-                  duration: 1500
-                });
+                setTimeout(()=>{
+                  this.setStorage('transferOrderId',res.data.data);
+                  this.$router.push('/paySuccess');
+                },500);
               }
             }).catch((res)=>{
               console.log(res);

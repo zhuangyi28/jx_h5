@@ -54,7 +54,7 @@
         <div class="select_box">
           <div class="select_input">
             <img src="../../../../static/images/jx_found.png">
-            <input type="text" placeholder="请输入国家中文名/英文名" v-on:click="closeBtn=true" v-model="select">
+            <input type="text" placeholder="请输入国家中文名/英文名" v-on:click="closeBtn=true" v-model="select" v-on:input="displayChange">
           </div>
           <div class="close_btn" v-if="closeBtn==true" v-on:click="indexShow = false">取消</div>
         </div>
@@ -324,6 +324,19 @@
           this.setStorage('cardType',this.cardType);
           this.$router.push('/certificationPic');
         }
+      },
+      displayChange: function () {
+        setTimeout(()=>{
+          var nodes = document.getElementsByClassName('mint-indexsection');
+          for(var node of nodes){
+            var child = node.getElementsByClassName('mint-cell');
+            if(child.length == 0){
+              node.style.display = 'none';
+            }else{
+              node.style.display = '';
+            }
+          }
+        },10);
       }
     },
     computed: {
@@ -350,5 +363,8 @@
 <style>
   .mint-indexlist-nav{
     display: none;
+  }
+  .mint-indexlist{
+    background-color: white;
   }
 </style>
