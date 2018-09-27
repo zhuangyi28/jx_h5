@@ -115,18 +115,26 @@
          }
 
     },
+    destroyed(){
+
+    },
    mounted () {
+
+
+
 
      //美恰初始化
      customerInit({
        name:this.getStorage('userName'),// 名字
        tel:this.getStorage('mobile'),// 电话
+
      });
 
 
      this.init();
 
    },
+
    methods: {
 
      init:function () {

@@ -44,11 +44,8 @@
       this.withdraw = this.getStorage('withdraw');
       this.transferMoney = this.getStorage('transferMoney');
       this.transferMobile = this.getStorage('transferMobile');
-
-
-
+      this.transferTips = this.getStorage('transferTips')
       //this.setCodeBack(this.getAgain())
-
 
       setTimeout(function () {
 
@@ -94,20 +91,6 @@
             console.log(res);
           })
         }
-
-/*
-        if(thisBackNum-1>0){
-
-
-            console.log('不触发')
-
-
-        }
-        else {
-          console.log('触发')
-
-        }
-*/
 
 
       },
@@ -175,7 +158,7 @@
            * */
           this.$http({
             method: 'get',
-            url: process.env.API_ROOT + 'user/transfer/dotransfer?mobile='+this.transferMobile+'&balance='+this.transferMoney+'&code='+this.code
+            url: process.env.API_ROOT + 'user/transfer/dotransfer?mobile='+this.transferMobile+'&balance='+this.transferMoney+'&code='+this.code+'&remark='+this.transferTips
           }).then((res)=>{
             console.log(res.data);
             if(res.data.code=='3001') {

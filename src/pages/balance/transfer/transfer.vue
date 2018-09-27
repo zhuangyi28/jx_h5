@@ -2,7 +2,7 @@
   <div class="transfer">
     <div class="transfer_input">
       <span>对方账户</span>
-      <input type="text" placeholder="请输入手机号" v-model="transferMobile">
+      <input type="number" pattern="\d*"  placeholder="请输入手机号" v-model="transferMobile" oninput="if(value.length > 11)value = value.slice(0, 11)">
       <div class="input_img" v-on:click="$router.push('/transferHistoryUser')">
         <i class="iconfont icon-sign_phone"></i>
       </div>

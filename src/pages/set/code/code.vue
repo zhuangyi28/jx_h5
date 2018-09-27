@@ -68,7 +68,20 @@
     },
     mounted () {
 
-        this.init()
+      this.init()
+
+
+      console.log('num='+localStorage.getItem('backing'))
+
+      setTimeout(function () {
+
+        if(localStorage.getItem('backing')==0) {
+
+          //发验证码
+          this.getCode();
+
+        }
+      }.bind(this),1)
 
     },
     methods:{
@@ -90,10 +103,11 @@
           document.title="忘记支付密码"
         }
 
-        this.mobile = _mobile
+        this.mobile = _mobile;
 
-        //发验证码
-        this.getCode();
+
+
+
 
         /**
          * 接口：设置支付密码
