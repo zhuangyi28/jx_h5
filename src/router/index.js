@@ -49,6 +49,7 @@ import loadingPage from '@/pages/login/loading/loading'
 import certificationPic from '@/pages/mine/certification_pic/certification_pic'
 import certificationSuccess from '@/pages/mine/certification_success/certification_success'
 import certificationFail from '@/pages/mine/certification_fail/certification_fail'
+import share from '@/pages/balance/share/share'
 
 Vue.use(Router)
 
@@ -498,6 +499,14 @@ export default new Router({
           component: mine
         }
       ]
+    },
+    {
+      path: '/share',
+      name: 'share',
+      meta: {
+        title: '分享'
+      },
+      component: share
     }
 
 
