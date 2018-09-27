@@ -20,7 +20,7 @@
       </div>
     </div>
     <div class="transfer_ps">
-      <input type="text" placeholder="添加备注（20字以内）" maxlength="20">
+      <input type="text" placeholder="添加备注（20字以内）" maxlength="20" v-model="tips">
     </div>
     <div v-if="unused">
       <orangeBtn v-bind:name="btnName" v-on:clickEvent="handleClick"></orangeBtn>
@@ -70,7 +70,8 @@
         transferBalance: '',//可转金额
         transferClick: false,//控制弹框
         transferBtnName: '确认转账',//弹框内按钮名称
-        unused: false //控制显示button
+        unused: false, //控制显示button
+        tips: '',//备注
       }
     },
 
@@ -98,6 +99,12 @@
       handleClick: function () {
         var reg = /^\d+\.?(\d{1,2})?$/;
         var dot = /([1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?)/;
+
+        if(this.tips){
+          this.setStorage('transferTips', this.tips);//存备注
+        }
+
+
         if(this.money == ''){
           this.$toast({
             message: '请输入金额',

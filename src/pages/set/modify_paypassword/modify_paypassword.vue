@@ -6,15 +6,15 @@
     <div class="content_box">
       <div class="field">
         <span>原密码</span>
-        <input type="password" v-model="oldPassword"  maxlength="6" placeholder="请输入原密码">
+        <input type="number" pattern="\d*" style="-webkit-text-security:disc" v-model="oldPassword" oninput="if(value.length > 6)value = value.slice(0, 6)"  placeholder="请输入原密码">
       </div>
       <div class="field">
         <span>新密码</span>
-        <input type="password" v-model="password" placeholder="请再次输入6位数字支付密码" maxlength="6">
+        <input type="number" pattern="\d*" style="-webkit-text-security:disc" oninput="if(value.length > 6)value = value.slice(0, 6)" v-model="password" placeholder="请再次输入6位数字支付密码">
       </div>
       <div class="field">
         <span>确认密码</span>
-        <input type="password" v-model="confirmPassword" placeholder="请再次输入6位数字支付密码" maxlength="6">
+        <input type="number" pattern="\d*" style="-webkit-text-security:disc" oninput="if(value.length > 6)value = value.slice(0, 6)" v-model="confirmPassword" placeholder="请再次输入6位数字支付密码">
       </div>
     </div>
 
