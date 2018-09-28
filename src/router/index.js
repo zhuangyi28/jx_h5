@@ -65,15 +65,6 @@ export default new Router({
       },
       component: loadingPage,
     },
-/*    {
-      path: '/',
-      name: 'Login',
-      meta: {
-        title: '登录',
-      },
-      component: login,
-      redirect: '/login',
-    },*/
 
     {
       path: '/login',
