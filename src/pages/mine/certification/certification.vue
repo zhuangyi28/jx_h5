@@ -8,7 +8,7 @@
           <span v-else>{{userName}}</span>
         </div>
       </div>
-      <div class="certification_name" v-on:click="indexShow = true" v-if="isVerify == 0||isVerify == 3">
+      <div class="certification_name" onclick="if(!!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) ){setTimeout(function() {$('.mint-indexlist-content').css('height','auto') },200)}" v-on:click="indexShow = true;" v-if="isVerify == 0||isVerify == 3">
         <span>国籍（地区）</span>
         <div class="information_btn">
           <span>{{country}}</span>
@@ -58,9 +58,9 @@
           </div>
           <div class="close_btn" v-if="closeBtn==true" v-on:click="indexShow = false">取消</div>
         </div>
-        <mt-index-section v-for="(values, key, index) in countryArr" v-bind:index="key">
+        <mt-index-section v-for="(values, key, index) in countryArr" v-bind:index="key" v-on:click="console.log('cehsi')">
           <div v-on:click="getPlace">
-            <mt-cell v-for="value of values" v-bind:title="value.shortName" v-bind:value="value.englishName" v-if="(value.shortName + value.englishName).match(select)"></mt-cell>
+            <mt-cell :data-shortname="value.shortName" onclick="localStorage.setItem('dataCountry',this.getAttribute('data-shortName'))" v-for="value in values" v-bind:title="value.shortName" v-bind:value="value.englishName" v-if="(value.shortName + value.englishName).match(select)"></mt-cell>
           </div>
         </mt-index-section>
       </mt-index-list>
@@ -143,6 +143,9 @@
       });
     },
     methods: {
+
+
+
       //证件类型切换
       onValueChange: function (picker,values) {
         console.log(picker);
@@ -156,16 +159,50 @@
       },
       //国家弹窗点击国家获取国家名称
       getPlace: function () {
-        for(var parent of event.path){
-          if(parent.nodeName == 'A'){
-            var parentTest = parent.innerText.split('\n');
-            this.country = parentTest[0];
-          }
-          if(parent.nodeName == 'BODY'){
-            this.indexShow = false;
-            return;
+
+
+        if(!!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) ){
+
+
+            setTimeout(function () {
+
+
+                var dataCountry=localStorage.getItem('dataCountry');
+
+                if(dataCountry){
+
+                  this.country = localStorage.getItem('dataCountry');
+
+                  this.indexShow = false;
+
+                  localStorage.removeItem('dataCountry')
+
+
+                }
+
+
+
+
+            }.bind(this),300)
+
+
+
+
+        }
+        else {
+          for (var parent of event.path) {
+            if (parent.nodeName == 'A') {
+              var parentTest = parent.innerText.split('\n');
+              this.country = parentTest[0];
+            }
+            if (parent.nodeName == 'BODY') {
+              this.indexShow = false;
+              return;
+            }
           }
         }
+
+
       },
       //提交
       submit: function () {
@@ -366,5 +403,14 @@
   }
   .mint-indexlist{
     background-color: white;
+  }
+  .mint-indexlist{
+    overflow: scroll;
+    height:auto;
+    bottom: auto;
+  }
+  .mint-indexlist-content{
+    overflow: scroll!important;
+
   }
 </style>

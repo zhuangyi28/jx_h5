@@ -102,7 +102,11 @@
                   return;
                 }else if(res == 'confirm'){
                   this.setStorage('share','true');
-                  this.$router.push('/share');
+
+                  localStorage.setItem('fingerShow',1);//分享是否出現遮罩
+
+                  window.location.href='http://jxtest.99payroll.cn/jxpf-h5/share.html'
+                  //this.$router.push('/share');
                 }
               })
             }else if(res.data.code == -9){

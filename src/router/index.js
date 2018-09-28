@@ -56,15 +56,7 @@ Vue.use(Router)
 export default new Router({
   mode: 'hash',
   routes: [
-    {
-      path: '/',
-      name: 'Login',
-      meta: {
-        title: '登录',
-      },
-      component: login,
-      redirect: '/login',
-    },
+
     {
       path: '/loadingPage',
       name: 'loadingPage',
@@ -73,6 +65,16 @@ export default new Router({
       },
       component: loadingPage,
     },
+/*    {
+      path: '/',
+      name: 'Login',
+      meta: {
+        title: '登录',
+      },
+      component: login,
+      redirect: '/login',
+    },*/
+
     {
       path: '/login',
       name: 'Login',

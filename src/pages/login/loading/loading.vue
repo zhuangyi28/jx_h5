@@ -77,8 +77,6 @@
 
                 setTimeout(()=> {
 
-                  console.log('触发')
-
                   this.$router.push('/workDesk/homepage')
 
                 },1500)
@@ -90,7 +88,6 @@
 
         }).catch(function (error) {
 
-            console.log(error)
 
         }.bind(this))
 

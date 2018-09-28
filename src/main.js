@@ -101,7 +101,7 @@ router.beforeEach((to,from,next)=>{
 
     console.log(to.path)
 
-    if(to.path=='/login'||to.path=='/Register'||to.path=='/'||to.path=='forgetPsw'){
+    if(to.path=='/login'||to.path=='/Register'||to.path=='/loadingPage'||to.path=='/forgetPsw'||to.path=='/Agreement'){
 
       next();
 
@@ -173,7 +173,9 @@ $(function () {
 
     let thisBackRouter=localStorage.getItem('thisBackRouter');
 
-    if(router.history.current.path!=thisBackRouter){
+    let thisPath=router.history.current.path;//此時路由
+
+    if(thisPath!=thisBackRouter||thisPath.indexOf('transferDetail')>-1||thisPath.indexOf('cashDetail')>-1){
 
       localStorage.setItem('backNum',0);
 
