@@ -190,7 +190,7 @@
 
 
       <div class="weui-help">
-        <img src="/static/icon/bank_04.png" class="jx_cash"/>
+        <img src="../../../../static/icon/bank_04.png" class="jx_cash"/>
         <span class="service_title">建设银行</span>
       </div>
 

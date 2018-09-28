@@ -55,8 +55,8 @@
         cardTypeId: '',
         idNumber: '',
         popupExample: false,
-        faceUrl: "../../../../static/images/ID_card_face.png",
-        backUrl: "../../../../static/images/ID_card_back.png",
+        faceUrl: "./static/images/ID_card_face.png",
+        backUrl: "./static/images/ID_card_back.png",
         exampleUrl: '',
         files: [],
         userName: '',
@@ -125,21 +125,21 @@
       },
       exampleImg: function () {
         if(this.cardTypeId == 2){
-          this.exampleUrl = '/static/images/jx_example_password.jpg'
+          this.exampleUrl = './static/images/jx_example_password.jpg'
         }
         else if(this.cardTypeId == 3 || this.cardTypeId == 4){
           if(event.currentTarget.classList.contains('back')){
-            this.exampleUrl = '/static/images/jx_example_back.jpg'
+            this.exampleUrl = './static/images/jx_example_back.jpg'
           }
           else if(event.currentTarget.classList.contains('face')){
-            this.exampleUrl = '/static/images/jx_example_paper.jpg'
+            this.exampleUrl = './static/images/jx_example_paper.jpg'
           }
         }
         this.popupExample = true;
       },
       handleClick: function () {
 
-          if(this.faceUrl == "../../../../static/images/ID_card_face.png"){
+          if(this.faceUrl == "./static/images/ID_card_face.png"){
 
             this.$toast({
 
@@ -155,7 +155,7 @@
 
           else{
 
-            if(this.cardTypeId != 2 && this.backUrl == "../../../../static/images/ID_card_back.png"){
+            if(this.cardTypeId != 2 && this.backUrl == "./static/images/ID_card_back.png"){
 
               this.$toast({
 
