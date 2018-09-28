@@ -4,8 +4,8 @@
       <div class="certification_name">
         <span>姓名</span>
         <div class="information_btn">
-          <input type="text" v-model="userName" placeholder="请输入姓名" v-if="isVerify == 0||isVerify == 3">
-          <span v-else>{{userName}}</span>
+          <input type="text" v-model="userName" placeholder="请输入姓名" v-if="isVerify == 3||source==1">
+          <span v-else-if="source==0">{{userName}}</span>
         </div>
       </div>
       <div class="certification_name" onclick="if(!!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) ){setTimeout(function() {$('.mint-indexlist-content').css('height','auto') },200)}" v-on:click="indexShow = true;" v-if="isVerify == 0||isVerify == 3">
@@ -21,14 +21,14 @@
           <span>{{country}}</span>
         </div>
       </div>
-      <div class="certification_name" v-on:click="pickerShow = true" v-if="isVerify == 0||isVerify == 3">
+      <div class="certification_name" v-on:click="pickerShow = true" v-if="isVerify == 3||source==1">
         <span>证件类型</span>
         <div class="information_btn">
           <span>{{cardType}}</span>
           <img src="../../../../static/images/reset_go.png">
         </div>
       </div>
-      <div class="certification_name" v-else>
+      <div class="certification_name" v-else-if="source==0">
         <span>证件类型</span>
         <div class="information_btn">
           <span>{{cardType}}</span>
@@ -66,7 +66,7 @@
       </mt-index-list>
     </div>
 
-    <orangeBtn v-if="isVerify == 0||isVerify == 3" v-bind:name="btnName" v-on:clickEvent="submit"></orangeBtn>
+    <orangeBtn v-if="isVerify == 0||isVerify == 3||source==1" v-bind:name="btnName" v-on:clickEvent="submit"></orangeBtn>
 
   </div>
 </template>
@@ -96,7 +96,8 @@
           }
         ],//证件类型弹窗值
         closeBtn: '',//国家列表取消按键显示
-        select: ''//国家列表筛选值
+        select: '',//国家列表筛选值
+        source:'',
       }
     },
     mounted () {
@@ -105,6 +106,36 @@
       this.country = this.getStorage('nationality');
       this.cardType = this.getStorage('idType');
       this.IDNumber = this.getStorage('idNumber');
+
+      /**
+       * 接口：用户中心
+       * 请求方式：POST
+       * 接口：/user/center/usercenter
+       * 入参：null
+       **/
+
+      this.$http({
+
+        method: 'post',
+
+        url: process.env.API_ROOT + 'user/center/usercenter',
+
+
+
+      }).then((res) => {
+
+        console.log(res.data)
+
+
+        if(res.data.code=='0000'){
+
+            this.source=res.data.data.source
+
+        }
+
+
+      }).catch(function (error) {}.bind(this))
+
       if(this.cardType == 1){
         this.cardType = '身份证'
       }

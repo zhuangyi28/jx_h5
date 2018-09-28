@@ -9,26 +9,32 @@
     </div>
 
     <div class="money_detail_project_all" >
-      <!-- 基本信息 -->
-      <div class="money_detail_project" v-for="item in addAmount">
-        <div class="money_detail_project_one"><span>{{item.name}}</span><span>{{item.record|thousandBitSeparator}}</span></div>
+
+      <div class="money_detail_project" v-show="salaryType=='6'?false:true">
+        <div class="money_detail_project_one special"><span>应发金额</span><span>{{payableAmount|thousandBitSeparator}}</span></div>
       </div>
       <!-- 实发金额 -->
       <div class="money_detail_project">
         <div class="money_detail_project_one special"><span>实发金额</span><span>{{realAmount|thousandBitSeparator}}</span></div>
       </div>
+
+      <!-- 基本信息 -->
+      <div class="money_detail_project" v-for="item in salaryDetails">
+        <div class="money_detail_project_one"><span>{{item.name}}</span><span>{{item.record|thousandBitSeparator}}</span></div>
       </div>
 
-    <div class="money_detail_project_all" >
-      <!-- 扣除信息 -->
+      </div>
+
+<!--    <div class="money_detail_project_all" >
+      &lt;!&ndash; 扣除信息 &ndash;&gt;
       <div class="money_detail_project" v-for="item in subtractAmount">
         <div class="money_detail_project_one"><span>{{item.name}}</span><span>{{item.record|thousandBitSeparator}}</span></div>
       </div>
-      <!-- 应发金额 -->
+      &lt;!&ndash; 应发金额 &ndash;&gt;
       <div class="money_detail_project">
         <div class="money_detail_project_one special"><span>实发金额</span><span>{{realAmount|thousandBitSeparator}}</span></div>
       </div>
-    </div>
+    </div>-->
 
     <div class="money_confirm_btn" v-show="isHiddenBtn">
 
@@ -112,9 +118,11 @@
 
     return{
 
-      addAmount: [],//应发明细
+      //addAmount: [],//应发明细
 
-      subtractAmount: [],//代扣明细
+      //subtractAmount: [],//代扣明细
+
+      salaryDetails:[],//发放明细
 
       payableAmount: '',//应发金额
 
@@ -140,7 +148,9 @@
 
       btnName3:'已确认',//按钮名称
 
-      className:'middle_btn'
+      className:'middle_btn',
+
+      salaryType:''//默认不显示有新消息 true为不显示 false为显示
 
 
     }
@@ -161,7 +171,7 @@
 
         method: 'get',
 
-        url:process.env.API_ROOT+'salary/home/salarydetail',
+        url:process.env.API_ROOT+'salary/home/salarydetailALL',
 
         //url:process.env.API_ROOT+'jx/action/register',
 
@@ -174,70 +184,94 @@
 
         console.log(res.data);
 
+        //console.log(res.data.data.salaryDetails)
+
         //缓存salaryId - 反馈页面
-       this.setStorage('salaryId',res.data.data[0].salaryId);
+       this.setStorage('salaryId',res.data.data.salaryId);
 
-        var _state = res.data.data[0].state;
-
-
-        var ishasNewMsg = res.data.data[0].isHaveNewMsg;
+        var _state = res.data.data.state;
 
 
-        //将给的数据转成字符串
-        var _addAmount = JSON.parse(res.data.data[0].addAmount);
+        var ishasNewMsg = res.data.data.isHaveNewMsg;
 
+        this.salaryType = res.data.data.salaryType
 
-        var _addAmountArray = [], x;
+        var _salaryDetails = JSON.parse(res.data.data.salaryDetails)
 
-        /*遍历json，产生可以渲染的data*/
+        var _salaryDetailsArray = [], x
 
-        for (x in _addAmount) {
+        for(x in _salaryDetails){
 
           /*添加数组*/
-          _addAmountArray.push({
+          _salaryDetailsArray.push({
 
             name: x,
 
-            record: _addAmount[x]
+            record: _salaryDetails[x]
 
           })
 
         }
+
+
 
         //将给的数据转成字符串
-        var _subtractAmount = JSON.parse(res.data.data[0].subtractAmount);
-
-        var _subtractAmountArray = [], y;
-
-
-        for (y in _subtractAmount) {
-
-          /*添加数组*/
-          _subtractAmountArray.push({
-
-            name: y,
-
-            record: _subtractAmount[y]
-
-          })
-
-
-        }
+//        var _addAmount = JSON.parse(res.data.data[0].addAmount);
+//
+//
+//        var _addAmountArray = [], x;
+//
+//        /*遍历json，产生可以渲染的data*/
+//
+//        for (x in _addAmount) {
+//
+//          /*添加数组*/
+//          _addAmountArray.push({
+//
+//            name: x,
+//
+//            record: _addAmount[x]
+//
+//          })
+//
+//        }
+//
+//        //将给的数据转成字符串
+//        var _subtractAmount = JSON.parse(res.data.data[0].subtractAmount);
+//
+//        var _subtractAmountArray = [], y;
+//
+//
+//        for (y in _subtractAmount) {
+//
+//          /*添加数组*/
+//          _subtractAmountArray.push({
+//
+//            name: y,
+//
+//            record: _subtractAmount[y]
+//
+//          })
+//
+//
+//        }
 
 
         //获取entName数据
 
-          this.entName= res.data.data[0].entName,//企业名称
+          this.entName= res.data.data.entName,//企业名称
 
-          this.addAmount= _addAmountArray,//基本工资
+            this.salaryDetails =_salaryDetailsArray,//工资
 
-          this.salaryMonth= res.data.data[0].salaryMonth,//发薪企业年月
+          //this.addAmount= _addAmountArray,//基本工资
 
-          this.payableAmount= res.data.data[0].payableAmount,//实发金额
+          this.salaryMonth= res.data.data.salaryMonth,//发薪企业年月
 
-          this.subtractAmount= _subtractAmountArray,//代扣明细
+          this.payableAmount= res.data.data.payableAmount,//实发金额
 
-          this.realAmount= res.data.data[0].realAmount//实发金额
+          //this.subtractAmount= _subtractAmountArray,//代扣明细
+
+          this.realAmount= res.data.data.realAmount//实发金额
 
 
         //判断是否有新消息
