@@ -9,10 +9,6 @@
     </div>
 
     <div class="money_detail_project_all" >
-
-      <div class="money_detail_project" v-show="salaryType=='6'?false:true">
-        <div class="money_detail_project_one special"><span>应发金额</span><span>{{payableAmount|thousandBitSeparator}}</span></div>
-      </div>
       <!-- 实发金额 -->
       <div class="money_detail_project">
         <div class="money_detail_project_one special"><span>实发金额</span><span>{{realAmount|thousandBitSeparator}}</span></div>
@@ -20,7 +16,11 @@
 
       <!-- 基本信息 -->
       <div class="money_detail_project" v-for="item in salaryDetails">
-        <div class="money_detail_project_one"><span>{{item.name}}</span><span>{{item.record|thousandBitSeparator}}</span></div>
+        <div class="money_detail_project_one">
+          <span>{{item.name}}</span>
+          <span v-if="item.record.length>12 || isNaN(+item.record)">{{item.record}}</span>
+          <span v-else>{{item.record|thousandBitSeparator}}</span>
+        </div>
       </div>
 
       </div>
