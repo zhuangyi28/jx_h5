@@ -28,7 +28,10 @@
     </div>
 
     <div class="loadmore" v-show="noData">
-      <div class="loadmore_tips"><span class="data">暂无数据~</span></div>
+      <div class="company_nocompany_img">
+        <img src="/static/images/nocompany_img.png">
+        <div>暂无发薪企业</div>
+      </div>
     </div>
 
   </div>

@@ -12,8 +12,14 @@
     </div>
   </div>
 
+
+
   <div class="loadmore" v-show="!noData">
-    <div class="loadmore_tips"><span class="data">{{moreText}}</span></div>
+    <div class="list_box_nomessage_img" v-if="feedBackList.length == 0">
+      <img src="/static/images/nomessage_img.png">
+      <div>暂无相关消息反馈</div>
+    </div>
+    <div class="loadmore_tips" v-else><span class="data">{{moreText}}</span></div>
   </div>
   <div class="loadmore" v-show="noData">
     <mt-spinner class="loadmore_icon" type="double-bounce" color="#ababab" :size="16"></mt-spinner>
