@@ -33,7 +33,11 @@
       </div>
 
       <div class="loadmore" v-show="!noData">
-        <div class="loadmore_tips"><span class="data">{{moreText}}</span></div>
+        <div class="bill_nodata_img" v-if="billList.length == 0">
+          <img src="/static/images/nodetail_img.png">
+          <div>暂无相关账单</div>
+        </div>
+        <div class="loadmore_tips" v-else><span class="data">{{moreText}}</span></div>
       </div>
       <div class="loadmore" v-show="noData">
         <mt-spinner class="loadmore_icon" type="double-bounce" color="#ababab" :size="16"></mt-spinner>
