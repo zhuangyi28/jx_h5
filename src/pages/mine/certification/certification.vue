@@ -4,8 +4,8 @@
       <div class="certification_name">
         <span>姓名</span>
         <div class="information_btn">
-          <input type="text" v-model="userName" placeholder="请输入姓名" v-if="isVerify == 3||source==1">
-          <span v-else-if="source==0">{{userName}}</span>
+          <input type="text" v-model="userName" placeholder="请输入姓名" v-if="isVerify == 3||source==0">
+          <span v-else-if="source==1">{{userName}}</span>
         </div>
       </div>
       <div class="certification_name" onclick="if(!!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) ){setTimeout(function() {$('.mint-indexlist-content').css('height','auto') },200)}" v-on:click="indexShow = true;" v-if="isVerify == 0||isVerify == 3">
@@ -21,14 +21,14 @@
           <span>{{country}}</span>
         </div>
       </div>
-      <div class="certification_name" v-on:click="pickerShow = true" v-if="isVerify == 3||source==1">
+      <div class="certification_name" v-on:click="pickerShow = true" v-if="isVerify == 3||source==0">
         <span>证件类型</span>
         <div class="information_btn">
           <span>{{cardType}}</span>
           <img src="../../../../static/images/reset_go.png">
         </div>
       </div>
-      <div class="certification_name" v-else-if="source==0">
+      <div class="certification_name" v-else-if="source==1">
         <span>证件类型</span>
         <div class="information_btn">
           <span>{{cardType}}</span>
