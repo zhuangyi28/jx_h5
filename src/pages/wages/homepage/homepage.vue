@@ -76,7 +76,7 @@
 
         <div class="loadmore" v-show="!noData">
           <div class="money_detail_nodata_img" v-if="wagesList.length == 0">
-            <img src="/static/images/nomoney_img.png">
+            <img src="../../../../static/images/nomoney_img.png">
             <div>还未收到工资哦~</div>
           </div>
           <div class="loadmore_tips" v-else><span class="data">{{moreText}}</span></div>

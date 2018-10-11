@@ -7,11 +7,11 @@
     <div class="change_new_tel_input">
       <div class="change_new_tel_tel">
         <i class="iconfont icon-sign_phone"></i>
-        <input type="number" v-model="newMobile" placeholder="请输入新的手机号码" class="tel">
+        <input type="number" v-model="newMobile" placeholder="请输入新的手机号码"  pattern="\d*" oninput="if(value.length > 11)value = value.slice(0, 11)" class="tel">
       </div>
       <div class="change_new_tel_code">
         <i class="iconfont icon-sign_pen"></i>
-        <input type="number" v-model="code" placeholder="请输入验证码" class="code">
+        <input type="number" v-model="code" placeholder="请输入验证码"  pattern="\d*" oninput="if(value.length > 6)value = value.slice(0, 6)" class="code">
         <div class="get_code" v-on:click="getCode">
           <span v-if="show===''">获取验证码</span>
           <span v-else-if="show===true">{{seconds}}s后重新发送</span>
@@ -69,7 +69,7 @@
               position: 'bottom',
               duration: 1500
             });
-            if(res.data.msg == '0000'){
+            if(res.data.code == '0000'){
               this.show = true;
               if(!this.seconds){
                 this.seconds = 60;

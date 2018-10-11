@@ -4,7 +4,7 @@
 
     <div class="locked_box">
 
-      <img src="/static/images/jx_locked.png"/>
+      <img src="../../../../static/images/jx_locked.png"/>
 
       <div class="circle">
 
