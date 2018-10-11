@@ -1,5 +1,5 @@
 <template>
-  <div class="withdraw">
+  <div class="withdraw" v-on:click="inputShow=false">
     <div class="withdraw_info">
       <div class="withdraw_bank">
         <div v-on:click="pickerShow=true">
@@ -27,7 +27,7 @@
         <div class="withdraw_money_ps">单笔￥<span>{{amountMin|thousandBitSeparator}}</span>-￥<span>{{amountMax|thousandBitSeparator}}</span>（手续费<span>{{rate/100}}</span>%）</div>
         <div class="withdraw_money_input">
           <span>￥</span>
-          <input type="text" v-model="withdrawMoney" placeholder="请输入提现金额">
+          <input type="text" v-model="withdrawMoney" placeholder="请输入提现金额" v-on:focus="inputShow=true" v-on:click.stop onfocus="blur()">
         </div>
         <div class="withdraw_money_show">
           <span>可提额度{{balance|thousandBitSeparator}}元<span class="pop_up" v-on:click="popUp">?</span></span>
@@ -92,6 +92,7 @@
         <div class="close" v-on:click="moreShow = false">取消</div>
       </div>
     </mt-popup>
+    <calculation v-on:num="numInput" v-if="inputShow" v-bind:newNum="withdrawMoney" v-on:inputClose="inputClose"></calculation>
   </div>
 </template>
 <script>
@@ -99,11 +100,13 @@
   import serviceArea from '../../../components/service/service'
   import {bankCardJson} from "../../../../static/js/bankCardJson";
   import { customerInit, customerClick } from "../../../../static/js/basic"
+  import calculation from '../../../components/keyboard/calculation'
   export default {
     name: 'withdraw',
     components: {
       orangeBtn: orangeBtn,
       serviceArea: serviceArea,
+      calculation: calculation
     },
     data () {
       return {
@@ -132,6 +135,7 @@
         withdrawClick: false,//控制提现弹窗是否显示
         withdrawBtnName: '确认',//提现弹窗按钮名称
         moreShow: false,//控制联系客服按钮是否显示
+        inputShow: true//控制输入框是否显示
 /*
         serviceLeft: '联系客服',
         serviceRight: '更多',
@@ -396,6 +400,14 @@
         this.$router.push('/bill')
 
       },
+
+      numInput: function (num) {
+        this.withdrawMoney = num;
+      },
+
+      inputClose: function (value) {
+        this.inputShow = value;
+      }
     },
 
 

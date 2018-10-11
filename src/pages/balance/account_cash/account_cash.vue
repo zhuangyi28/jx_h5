@@ -1,5 +1,5 @@
 <template>
-  <div class="transfer_accounts">
+  <div class="transfer_accounts" v-on:click="inputShow=false">
     <div class="user_information">
       <div class="user_img">
         <img src="../../../../static/images/jx_transfer_user.png">
@@ -13,7 +13,7 @@
       <div class="transfer_accounts_input_title">转账金额</div>
       <div class="money_input">
         <span>￥</span>
-        <input type="text" placeholder="请输入转账金额" v-model="money">
+        <input type="text" placeholder="请输入转账金额" v-model="money" v-on:focus="inputShow=true" v-on:click.stop onfocus="blur()">
       </div>
       <div class="transfer_accounts_input_ps">可转余额{{transferBalance}}
         <span v-on:click="money = transferBalance">全部</span>
@@ -52,14 +52,17 @@
       </div>
       <orangeBtn v-bind:name="transferBtnName" v-on:clickEvent="jumpTo"></orangeBtn>
     </mt-popup>
+    <calculation v-on:num="numInput" v-if="inputShow" v-bind:newNum="money" v-on:inputClose="inputClose"></calculation>
   </div>
 </template>
 <script>
   import orangeBtn from '../../../components/orange_btn/orange_btn'
+  import calculation from '../../../components/keyboard/calculation'
   export default {
     name: 'transferAccounts',
     components: {
-      orangeBtn: orangeBtn
+      orangeBtn: orangeBtn,
+      calculation: calculation
     },
     data () {
       return {
@@ -72,6 +75,7 @@
         transferBtnName: '确认转账',//弹框内按钮名称
         unused: false, //控制显示button
         tips: '',//备注
+        inputShow: true//控制输入框是否显示
       }
     },
 
@@ -163,6 +167,14 @@
             console.log(res);
           }
         })
+      },
+
+      numInput: function (num) {
+        this.money = num;
+      },
+
+      inputClose: function (value) {
+        this.inputShow = value;
       }
     },
     watch: {
