@@ -1,37 +1,46 @@
-<template>
+ <template>
 
-        <div class='input-box'>{{ money }}</div>
-        <div class='keyboard' @click.stop='_handleKeyPress'>
+        <div>
+          <div class='input-box'>{{ money }}</div>
+          <div class='keyboard' @click.stop='_handleKeyPress'>
             <div class='key-row'>
-                <div class='key-cell' data-num='7'>7</div>
-                <div class='key-cell' data-num='8'>8</div>
-                <div class='key-cell' data-num='9'>9</div>
-                <div class='key-cell' data-num='D'>C</div>
+              <div class='key-cell' data-num='7'>7</div>
+              <div class='key-cell' data-num='8'>8</div>
+              <div class='key-cell' data-num='9'>9</div>
+              <div class='key-cell' data-num='D'>C</div>
             </div>
             <div class='key-row'>
-                <div class='key-cell' data-num='4'>4</div>
-                <div class='key-cell' data-num='5'>5</div>
-                <div class='key-cell' data-num='6'>6</div>
-                <div class='key-cell' data-num='C'>清空</div>
+              <div class='key-cell' data-num='4'>4</div>
+              <div class='key-cell' data-num='5'>5</div>
+              <div class='key-cell' data-num='6'>6</div>
+              <div class='key-cell' data-num='C'>清空</div>
             </div>
             <div class='key-row'>
-                <div class='key-cell' data-num='1'>1</div>
-                <div class='key-cell' data-num='2'>2</div>
-                <div class='key-cell' data-num='3'>3</div>
-                <div class='key-cell' data-num='-1'></div>
+              <div class='key-cell' data-num='1'>1</div>
+              <div class='key-cell' data-num='2'>2</div>
+              <div class='key-cell' data-num='3'>3</div>
+              <div class='key-cell' data-num='-1'></div>
             </div>
             <div class='key-row'>
-                <div class='key-cell disabled' data-num='-1'></div>
-                <div class='key-cell' data-num='.'>.</div>
-                <div class='key-cell' data-num='0'>0</div>
-                <div class='key-cell' data-num='-1'></div>
+              <div class='key-cell disabled' data-num='-1'></div>
+              <div class='key-cell' data-num='.'>.</div>
+              <div class='key-cell' data-num='0'>0</div>
+              <div class='key-cell' data-num='-1'></div>
             </div>
             <div class='key-confirm' data-num='S'>确认</div>
+          </div>
         </div>
 </template>
 
 <script>
     export default{
+
+      name: 'calculation',
+
+      props: {
+        newNum: ''
+      },
+
     	data(){
     		return{
 
@@ -71,6 +80,8 @@
 						this._handleNumberKey(num);
 						break;
 				}
+
+				this.$emit('num',this.money);
 			},
 			//处理小数点函数
 			_handleDecimalPoint() {
@@ -123,21 +134,27 @@
 			},
 			//提交
 			_handleConfirmKey() {
-				let S = this.money;
+				//let S = this.money;
 				//未输入
-				if (!S.length){
+				/*if (!S.length){
 					alert( '您目前未输入!' )
 					return false;
-				}
+				}*/
 
-				//将 8. 这种转换成 8.00
+				/*//将 8. 这种转换成 8.00
 				if (S.indexOf('.') > -1 && S.indexOf('.') == (S.length - 1))
 					S = Number(S.substring(0, S.length - 1)).toFixed(2);
 				//保留两位
 				S = Number(S).toFixed(2);
-				this.$emit('confirmEvent',S)
+				this.$emit('confirmEvent',S)*/
+				this.$emit('inputClose',false);
 			}
-        }
+
+        },
+
+      mounted() {
+        this.money = this.newNum;
+      }
     }
 </script>
 
