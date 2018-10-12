@@ -54,7 +54,11 @@
 
           password:'',
 
-          btnName:'登录'//按钮名称
+          btnName:'登录',//按钮名称
+
+          Authorization:'',
+
+          openId:''
 
         }
 
@@ -151,7 +155,15 @@
 
                 var Authorization = res.data.token.access_token;//Authorization数据
 
-                this.$indicator.close();
+                this.Authorization = res.data.token.access_token;
+
+                this.openId = res.data.data.openId;
+
+                console.log(this.Authorization)
+
+                console.log(this.openId)
+
+                 this.$indicator.close();
 
                 //存取token
                 this.setStorage('Authorization',Authorization);
@@ -168,6 +180,32 @@
 
 
             })
+
+            //获取UnionID
+
+            this.$http({
+
+              method: 'get',
+
+              url: 'https://api.weixin.qq.com/cgi-bin/user/info',
+
+              params: {
+
+                access_token:this.Authorization,
+
+                openid:this.openId,
+
+              }
+
+
+
+            }).then((res) => {
+
+                console.log(res.data)
+
+
+            }).catch((res)=>{})
+
 
 
 

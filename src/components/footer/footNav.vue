@@ -12,12 +12,12 @@
           </div>
           <div>工资条</div>
         </router-link>
-        <!--<router-link :to="{name:'discovery'}" tag="li">-->
-          <!--<div>-->
-            <!--<i class="iconfont icon-bottom-find"></i>-->
-          <!--</div>-->
-          <!--<div>发现</div>-->
-        <!--</router-link>-->
+        <router-link :to="{name:'discovery'}" tag="li">
+          <div>
+            <i class="iconfont icon-bottom-find"></i>
+          </div>
+          <div>发现</div>
+        </router-link>
         <router-link :to="{name:'mine'}" tag="li">
           <div>
             <i class="iconfont icon-bottom-main1"></i>
