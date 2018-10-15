@@ -52,7 +52,9 @@
       </div>
       <orangeBtn v-bind:name="transferBtnName" v-on:clickEvent="jumpTo"></orangeBtn>
     </mt-popup>
-    <calculation v-on:num="numInput" v-if="inputShow" v-bind:newNum="money" v-on:inputClose="inputClose"></calculation>
+    <transition name="toggle">
+      <calculation v-on:num="numInput" v-if="inputShow" v-bind:newNum="money" v-on:inputClose="inputClose"></calculation>
+    </transition>
   </div>
 </template>
 <script>
@@ -202,4 +204,15 @@
 </script>
 <style lang="less" scoped>
   @import "account_cash.less";
+</style>
+<style>
+  .toggle-enter-active, .toggle-leave-active{
+    transition: all 1s;
+  }
+  .toggle-enter, .toggle-leave-to{
+    transform: translateY(100vh);
+  }
+  .toggle-enter-to, .toggle-leave{
+    transform: none;
+  }
 </style>
