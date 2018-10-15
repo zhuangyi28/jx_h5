@@ -159,14 +159,12 @@
 
                 this.openId = res.data.data.openId;
 
-                console.log(this.Authorization)
-
-                console.log(this.openId)
-
                  this.$indicator.close();
 
                 //存取token
                 this.setStorage('Authorization',Authorization);
+
+                this.setStorage('userId',res.data.data.userId);
 
                 _this.$router.push('/workDesk/homepage')
 
@@ -183,7 +181,7 @@
 
             //获取UnionID
 
-            this.$http({
+/*            this.$http({
 
               method: 'get',
 
@@ -204,7 +202,7 @@
                 console.log(res.data)
 
 
-            }).catch((res)=>{})
+            }).catch((res)=>{})*/
 
 
 

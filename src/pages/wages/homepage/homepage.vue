@@ -181,6 +181,40 @@
       //页面加载方法
       onShow: function () {
 
+
+        var thisUserId = this.getStorage('userId');
+
+        /**
+         * 接口：用户静默授权
+         * 请求方式：POST
+         * 接口：user/callBack
+         * 入参：userId
+         **/
+        this.$http({
+
+          method: 'post',
+
+          url: process.env.API_ROOT + 'user/callBack',
+
+          params:{
+
+            userId:thisUserId
+          }
+
+        }).then((res)=>{
+
+          if(res.data.code == '0000'){
+
+            console.log(res);
+
+          }
+
+        }).catch((res)=>{
+
+          console.log(res);
+
+        });
+
         /**
          * 接口：工资提醒
          * 请求方式：GET
