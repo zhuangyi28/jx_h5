@@ -21,7 +21,8 @@
     "vue": "^2.5.2",
     "vue-resource": "^1.5.1",
     "vue-router": "^3.0.1",
-    "vue-wechat-title": "^2.0.4"
+    "vue-wechat-title": "^2.0.4",
+    "weixin-js-sdk": "^1.4.0-test"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

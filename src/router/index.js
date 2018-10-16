@@ -50,12 +50,21 @@ import certificationPic from '@/pages/mine/certification_pic/certification_pic'
 import certificationSuccess from '@/pages/mine/certification_success/certification_success'
 import certificationFail from '@/pages/mine/certification_fail/certification_fail'
 import share from '@/pages/balance/share/share'
-
+import openPage from '@/pages/login/open/open'
 Vue.use(Router)
 
 export default new Router({
   mode: 'hash',
   routes: [
+
+    {
+      path: '/openPage',
+      name: 'openPage',
+      meta: {
+        title: '嘉薪'
+      },
+      component: openPage,
+    },
 
     {
       path: '/loadingPage',
