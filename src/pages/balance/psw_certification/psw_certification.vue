@@ -2,7 +2,7 @@
   <div class="psw_certification">
     <div class="psw_certification_input">
       <span><img src="../../../../static/images/jx_lock.png" ></span>
-      <input type="number" style="-webkit-text-security:disc" pattern="\d*" oninput="if(value.length > 6)value = value.slice(0, 6)" placeholder="请输入支付密码" v-model="password" maxlength="6">
+      <input type="number" style="-webkit-text-security:disc" pattern="\d*" oninput="if(value.length > 6)value = value.slice(0, 6)" placeholder="请输入支付密码" v-model="password" maxlength="6" autofocus>
     </div>
     <div class="forget_password"><span v-on:click="$router.push('/code')">忘记支付密码？</span></div>
     <orangeBtn v-bind:name="btnName" v-on:clickEvent="handleClick"></orangeBtn>
