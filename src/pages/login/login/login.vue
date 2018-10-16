@@ -77,7 +77,7 @@
 
       this.code = str.split('?')[1].split('&')[0].split('=')[1]
 
-      alert(this.code)
+      //alert(this.code)
 
     },
     methods:{
