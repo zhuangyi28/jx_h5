@@ -22,11 +22,20 @@
       return {
 
 
-
       }
     },
 
     mounted () {
+
+
+        console.log('链接='+window.location.href);
+
+        var str = window.location.href;
+
+        console.log(str.split('?')[1].split('&')[0].split('=')[1]);
+
+        var code = str.split('?')[1].split('&')[0].split('=')[1];
+        this.setStorage('userCode',code)
 
 
         if(this.getStorage('loadingShow')!=1){
@@ -39,7 +48,9 @@
 
         }
 
-      this.init();
+       this.init();
+
+
 
     },
 
@@ -52,6 +63,8 @@
     methods: {
 
       init: function () {
+
+
 
         /**
          * 接口：用户中心

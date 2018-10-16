@@ -64,6 +64,7 @@
 
     },
 
+
     created() {
       this.bubbles.length = 5;
     },
@@ -157,6 +158,8 @@
 
                 this.Authorization = res.data.token.access_token;
 
+
+
                 this.openId = res.data.data.openId;
 
                  this.$indicator.close();
@@ -181,17 +184,17 @@
 
             //获取UnionID
 
-/*            this.$http({
+            this.$http({
 
-              method: 'get',
+              method: 'post',
 
-              url: 'https://api.weixin.qq.com/cgi-bin/user/info',
+              url: process.env.API_ROOT+'jx-user/jx/action/togetunionid',
 
               params: {
 
-                access_token:this.Authorization,
+                userId:this.setStorage('userId'),
 
-                openid:this.openId,
+                code:this.getStorage('userCode'),
 
               }
 
@@ -202,7 +205,7 @@
                 console.log(res.data)
 
 
-            }).catch((res)=>{})*/
+            }).catch((res)=>{})
 
 
 
