@@ -49,7 +49,7 @@ router.beforeEach((to,from,next)=>{
 
   } else {
 
-    console.log(to.path)
+    //console.log(to.path)
 
     if(to.path=='/login'||to.path=='/Register'|| to.path=='/loadingPage'|| to.path=='/forgetPsw'||to.path=='/Agreement'||to.path=='/openPage'){
 

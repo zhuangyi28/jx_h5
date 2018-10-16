@@ -20,28 +20,20 @@
 
     mounted () {
 
-        this.init()
+
+      var APPID = 'wxee620089167335f6';//开发者ID
+
+      var REDIRECT_URI = 'http://jxtest.99payroll.cn/jxpf-h5/#/loadingPage';//测试回调的URL
+
+      //var REDIRECT_URI = 'https://user.99payroll.cn/jx-user/#/loadingPage';//生产回调的URL
+
+
+      //alert(thisUrl)
+
+      window.location.href = thisUrl
 
     },
 
-    methods: {
-
-      init: function () {
-
-
-        var APPID = 'wxee620089167335f6';
-
-        var REDIRECT_URI = 'http://jxtest.99payroll.cn/jxpf-h5/#/loadingPage';
-
-        var thisUrl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+APPID+'&redirect_uri='+encodeURIComponent(REDIRECT_URI)+'&response_type=code&scope=snsapi_userinfo#wechat_redirect'
-
-        window.location.href = thisUrl
-
-
-
-      }
-
-    }
 
   }
 

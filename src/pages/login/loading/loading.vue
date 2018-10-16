@@ -32,10 +32,9 @@
 
         var str = window.location.href;
 
-        console.log(str.split('?')[1].split('&')[0].split('=')[1]);
+        this.setStorage('userCode',str.split('?')[1].split('&')[0].split('=')[1])
 
-        var code = str.split('?')[1].split('&')[0].split('=')[1];
-        this.setStorage('userCode',code)
+         console.log(this.getStorage('userCode'))
 
 
         if(this.getStorage('loadingShow')!=1){

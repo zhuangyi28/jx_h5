@@ -169,7 +169,42 @@
 
                 this.setStorage('userId',res.data.data.userId);
 
+               alert('答應'+this.getStorage('userCode'))
+
+                var thisUserId = res.data.data.userId
+
+                var thisUserCode = this.getStorage('userCode')
+
+
+                //获取UnionID
+
+                this.$http({
+
+                  method: 'post',
+
+                  url: process.env.API_ROOT+'jx/action/togetunionid',
+
+                  params: {
+
+                    userId:thisUserId,
+
+                    code:thisUserCode
+
+                  }
+
+
+
+                }).then((res) => {
+
+                  console.log(res.data)
+
+
+                }).catch((res)=>{})
+
                 _this.$router.push('/workDesk/homepage')
+
+
+
 
               }
 
@@ -182,30 +217,7 @@
 
             })
 
-            //获取UnionID
 
-            this.$http({
-
-              method: 'post',
-
-              url: process.env.API_ROOT+'jx-user/jx/action/togetunionid',
-
-              params: {
-
-                userId:this.setStorage('userId'),
-
-                code:this.getStorage('userCode'),
-
-              }
-
-
-
-            }).then((res) => {
-
-                console.log(res.data)
-
-
-            }).catch((res)=>{})
 
 
 
