@@ -18,9 +18,12 @@
   .mine_content{
 
     width: 94%;
-    padding: 15px 4%;
+    padding: 15px 0;
     box-sizing: border-box;
-    background-color: #ffffff;
+    background: url("../../../static/images/main_bg.png") ,-webkit-linear-gradient(180deg,#f99060,#ff6855);
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: cover;
     border-radius: 8px;
     margin: 15px auto;
     box-shadow: 0 0 8px #e8e8e8;
@@ -35,10 +38,11 @@
       line-height: 1;
       min-height: inherit;
       overflow: hidden;
-      padding:15px 0 0 0;;
+      padding:15px 4% 0;;
       width: 100%;
       .title {
         flex: 1;
+        color: #ffffff;
         img {
           width: 24px;
           height: 24px;
@@ -48,7 +52,7 @@
       }
       .cell_value {
 
-        color: #888;
+        color: #fff;
         display: flex;
         align-items: center;
         font-size: 14px;
@@ -67,7 +71,7 @@
         position: relative;
         &:after {
 
-          border: solid 2px #ddd;
+          border: solid 1px #fff;
           border-bottom-width: 0;
           border-left-width: 0;
           content: " ";
@@ -80,17 +84,6 @@
         }
 
       }
-      &:after{
-        content: '';
-        position: absolute;
-        top:0;
-        left: 0;
-        width: 100%;
-        border-bottom: 1px solid #ddd;
-        height: 1px;
-        transform:scaleY(.4);
-
-      }
     }
 
   }
@@ -99,7 +92,22 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 15px;
+    padding: 0 4% 15px;
+    position: relative;
+    overflow: hidden;
+
+
+    &:after{
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      box-shadow:  0 2.7px 20px 1.1px  black;
+      opacity: 0.25;
+      height: 1px;
+
+    }
 
     .user_box{
       display: flex;
@@ -123,29 +131,31 @@
     .user_information {
       text-align: left;
       .user_tel {
-        color: #4a4a4a;
+        color: #fff;
         font-size: 18px;
       }
       .user_auth {
         font-size: 12px;
-        padding: 2px 10px;
-        border: 1px solid #ff7d37;
-        background-color: #ff7d37;
+        padding: 4px 10px;
+        border: 1px solid #fff;
+        background-color: #fff;
         border-radius: 12px;
         color: #fff;
-        display: inline-block;
+        display: inline-flex;
+        align-items: center;
         margin-top: 10px;
         span {
 
-          vertical-align: top;
-          color: white;
+          vertical-align: center;
+          color: #ff7d37;
+          line-height: 14px;
 
         }
         img {
-          width: 18px;
-          height: 18px;
-          vertical-align: top;
-
+          width: 14px;
+          height: 14px;
+          vertical-align: center;
+          margin-right: 4px;
 
         }
 
@@ -157,7 +167,7 @@
       position: relative;
       &:after {
 
-        border: solid 2px #ddd;
+        border: solid 1px #fff;
         border-bottom-width: 0;
         border-left-width: 0;
         content: " ";
@@ -193,8 +203,8 @@
       .title {
         flex: 1;
         img {
-          width: 26px;
-          height: 26px;
+          width: 22px;
+          height: 22px;
           margin-right: 10px;
           vertical-align: middle;
         }

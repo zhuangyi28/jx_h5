@@ -7,13 +7,19 @@
       <div class="content">
         <!-- 惠购商城 -->
         <div v-on:click="urlFn" v-bind:data-url="jdUrl">
-          <p><img src="../../../static/images/icon_jd.png"/></p>
-          <p>惠购商城</p>
+          <div class="btn_icon"><img src="../../../static/images/icon_jd_1.png"/></div>
+          <div class="btn_information">
+            <span class="btn_name">惠购商城</span>
+            <span class="btn_slogen">综合商品中心</span>
+          </div>
         </div>
         <!-- 美团点评 -->
         <div v-on:click="urlFn" v-bind:data-url="mtUrl">
-          <p><img src="../../../static/images/icon_mt.png"/></p>
-          <p>美团点评</p>
+          <div class="btn_icon"><img src="../../../static/images/icon_mt_1.png"/></div>
+          <div class="btn_information">
+            <span class="btn_name">美团点评</span>
+            <span class="btn_slogen">点评餐饮服务</span>
+          </div>
         </div>
       </div>
     </div>
@@ -23,8 +29,11 @@
       <div class="content">
         <!-- 嘉白条 -->
         <div v-on:click="urlFn" v-bind:data-url="jbtUrl">
-          <p><img src="../../../static/images/icon_jbt.png"/></p>
-          <p>嘉白条</p>
+          <div class="btn_icon"><img src="../../../static/images/icon_jbt_1.png"/></div>
+          <div class="btn_information">
+            <span class="btn_name">嘉白条</span>
+            <span class="btn_slogen">薪资预支费用低</span>
+          </div>
         </div>
       </div>
     </div>
@@ -180,7 +189,9 @@
             confirmButtonClass: 'confirm_btn_orange',
           }).then((action) =>{
             console.log(action);
-            this.$router.push('/certification')
+            if(action == 'confirm'){
+              this.$router.push('/certification');
+            }
           }).catch((res)=>{
             console.log(res);
           });
