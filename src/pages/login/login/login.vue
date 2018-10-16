@@ -58,7 +58,9 @@
 
           Authorization:'',
 
-          openId:''
+          openId:'',
+
+          code:''
 
         }
 
@@ -69,6 +71,15 @@
       this.bubbles.length = 5;
     },
 
+    mounted(){
+
+      var str = window.location.href;
+
+      this.code = str.split('?')[1].split('&')[0].split('=')[1]
+
+      alert(this.code)
+
+    },
     methods:{
 
         signin:function () {
@@ -169,11 +180,10 @@
 
                 this.setStorage('userId',res.data.data.userId);
 
-               alert('答應'+this.getStorage('userCode'))
+
 
                 var thisUserId = res.data.data.userId
 
-                var thisUserCode = this.getStorage('userCode')
 
 
                 //获取UnionID
@@ -188,7 +198,7 @@
 
                     userId:thisUserId,
 
-                    code:thisUserCode
+                    code:this.code
 
                   }
 

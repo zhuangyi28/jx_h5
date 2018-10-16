@@ -28,13 +28,15 @@
     mounted () {
 
 
-        console.log('链接='+window.location.href);
+        /*console.log('链接='+window.location.href);*/
 
-        var str = window.location.href;
+/*        var str = window.location.href;
 
         this.setStorage('userCode',str.split('?')[1].split('&')[0].split('=')[1])
 
-         console.log(this.getStorage('userCode'))
+         alert(str.split('?')[1].split('&')[0].split('=')[1])*/
+
+         /*console.log(this.getStorage('userCode'))*/
 
 
         if(this.getStorage('loadingShow')!=1){

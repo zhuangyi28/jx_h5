@@ -21,6 +21,9 @@
     mounted () {
 
 
+
+
+
       var APPID = 'wxee620089167335f6';//开发者ID
 
       var REDIRECT_URI = 'http://jxtest.99payroll.cn/jxpf-h5/#/loadingPage';//测试回调的URL
