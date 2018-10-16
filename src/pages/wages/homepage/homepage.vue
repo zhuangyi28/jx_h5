@@ -182,39 +182,6 @@
       onShow: function () {
 
 
-        var thisUserId = this.getStorage('userId');
-
-        /**
-         * 接口：用户静默授权
-         * 请求方式：POST
-         * 接口：user/callBack
-         * 入参：userId
-         **/
-        this.$http({
-
-          method: 'post',
-
-          url: process.env.API_ROOT + 'user/callBack',
-
-          params:{
-
-            userId:thisUserId
-          }
-
-        }).then((res)=>{
-
-          if(res.data.code == '0000'){
-
-            console.log(res);
-
-          }
-
-        }).catch((res)=>{
-
-          console.log(res);
-
-        });
-
         /**
          * 接口：工资提醒
          * 请求方式：GET
@@ -319,9 +286,6 @@
 
                 if (action == 'confirm') {
 
-                  console.log('确定');
-
-
                   lockstatus();
 
                   function lockstatus() {
@@ -375,38 +339,44 @@
                   console.log('取消');
                   //调用暂不查看工资条
 
-                  /**
-                   * 接口：暂不查看工资条
-                   * 请求方式：POST
-                   * 接口：/salary/home/updateselectsalary
-                   * 入参：salaryDetailId
-                   **/
+                  noLook();
 
-                  this.$http({
+                  function noLook() {
+                    /**
+                     * 接口：暂不查看工资条
+                     * 请求方式：POST
+                     * 接口：/salary/home/updateselectsalary
+                     * 入参：salaryDetailId
+                     **/
 
-                    method: 'post',
+                    _this.$http({
 
-                    url: process.env.API_ROOT + 'salary/home/updateselectsalary',
+                      method: 'post',
 
-
-                    params: {
-
-                      salaryDetailId: thisSalaryDetailId
-
-                    }
-                  }).then((res) => {
-
-                    console.log(res.data)
-
-                    _this.$toast({
-
-                      message: '必须加入企业才可查看工资条哦~关闭后可在“我的发薪企业”中继续加入',
-                      duration: 1500
-
-                    })
+                      url: process.env.API_ROOT + 'salary/home/updateselectsalary',
 
 
-                  }).catch((res) => {})
+                      params: {
+
+                        salaryDetailId: thisSalaryDetailId
+
+                      }
+                    }).then((res) => {
+
+                      console.log(res.data)
+
+                      _this.$toast({
+
+                        message: '必须加入企业才可查看工资条哦~关闭后可在“我的发薪企业”中继续加入',
+                        duration: 1500
+
+                      })
+
+
+                    }).catch((res) => {})
+                  }
+
+
 
                 }
               }).catch(err => {});
@@ -496,45 +466,55 @@
 
                   //调用暂不加入企业
 
-                  /**
-                   * 接口：暂不加入企业
-                   * 请求方式：POST
-                   * 接口：/salary/home/updatejoinentstatus
-                   * 入参：entId
-                   **/
-
-                  this.$http({
-
-                    method: 'post',
-
-                    url: process.env.API_ROOT + 'salary/home/updatejoinentstatus',
-
-                    params: {
-
-                      entId: thisEntId
-
-                    }
-                  }).then((res) => {
-
-                    console.log(res.data)
-
-                    setTimeout(function () {
-
-                      _this.$toast({
-
-                        message: '必须加入企业才可查看工资条哦~关闭后可在“我的工作单位”',
-                        duration: 1500
-
-                      })
+                  cancelJoin();
 
 
-
-                    },1000)
-
+                  function cancelJoin() {
 
 
+                    /**
+                     * 接口：暂不加入企业
+                     * 请求方式：POST
+                     * 接口：/salary/home/updatejoinentstatus
+                     * 入参：entId
+                     **/
 
-                  }).catch((res) => {})
+                    _this.$http({
+
+                      method: 'post',
+
+                      url: process.env.API_ROOT + 'salary/home/updatejoinentstatus',
+
+                      params: {
+
+                        entId: thisEntId
+
+                      }
+                    }).then((res) => {
+
+                      console.log(res.data)
+
+                      setTimeout(function () {
+
+                        _this.$toast({
+
+                          message: '必须加入企业才可查看工资条哦~关闭后可在“我的工作单位”',
+                          duration: 1500
+
+                        })
+
+
+
+                      },1000)
+
+
+
+
+                    }).catch((res) => {})
+
+                  }
+
+
 
 
 

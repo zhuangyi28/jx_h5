@@ -58,7 +58,9 @@
 
           Authorization:'',
 
-          openId:''
+          openId:'',
+
+          code:''
 
         }
 
@@ -69,6 +71,15 @@
       this.bubbles.length = 5;
     },
 
+    mounted(){
+
+      var str = window.location.href;
+
+      this.code = str.split('?')[1].split('&')[0].split('=')[1]
+
+      alert(this.code)
+
+    },
     methods:{
 
         signin:function () {
@@ -169,7 +180,41 @@
 
                 this.setStorage('userId',res.data.data.userId);
 
+
+
+                var thisUserId = res.data.data.userId
+
+
+
+                //获取UnionID
+
+                this.$http({
+
+                  method: 'post',
+
+                  url: process.env.API_ROOT+'jx/action/togetunionid',
+
+                  params: {
+
+                    userId:thisUserId,
+
+                    code:this.code
+
+                  }
+
+
+
+                }).then((res) => {
+
+                  console.log(res.data)
+
+
+                }).catch((res)=>{})
+
                 _this.$router.push('/workDesk/homepage')
+
+
+
 
               }
 
@@ -182,30 +227,7 @@
 
             })
 
-            //获取UnionID
 
-            this.$http({
-
-              method: 'post',
-
-              url: process.env.API_ROOT+'jx-user/jx/action/togetunionid',
-
-              params: {
-
-                userId:this.setStorage('userId'),
-
-                code:this.getStorage('userCode'),
-
-              }
-
-
-
-            }).then((res) => {
-
-                console.log(res.data)
-
-
-            }).catch((res)=>{})
 
 
 
