@@ -8,18 +8,59 @@
       padding: 15px;
       font-size: 16px;
       font-weight: 500;
+      position: relative;
+      line-height: 16px;
+      &:before{
+        content: '';
+        height: 16px;
+        width: 4px;
+        position: absolute;
+        bottom: 15px;
+        left: 0;
+        background-color: #fe4e52;
+        z-index: 2;
+      }
+      &:after{
+        content: '';
+        height: 13px;
+        width: 4px;
+        position: absolute;
+        bottom: 15px;
+        left: 2px;
+        background-color: #ffd3d4;
+        z-index: 1;
+      }
 
     }
     .content{
       &>div{
-        display:inline-block;
+        display:inline-flex;
+        align-items: center;
         float:left;
-        width:25%;
+        width:50%;
         text-align:center;
         margin-bottom:10px;
-        img{
-          width: 50px;
-          height: 50px;
+        .btn_icon{
+          width: 36px;
+          height: 36px;
+          padding: 15px;
+          img{
+            width: 100%;
+            height: 100%;
+          }
+        }
+        .btn_information{
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          .btn_name{
+            font-size: 16px;
+            color: #4a4a4a;
+          }
+          .btn_slogen{
+            font-size: 12px;
+            color: #ababab;
+          }
         }
       }
     }
