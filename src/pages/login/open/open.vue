@@ -27,6 +27,7 @@
 
       //var REDIRECT_URI = 'https://user.99payroll.cn/jx-user/#/loadingPage';//生产回调的URL
 
+      var thisUrl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+APPID+'&redirect_uri='+encodeURIComponent(REDIRECT_URI)+'&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect'
 
       //alert(thisUrl)
 
