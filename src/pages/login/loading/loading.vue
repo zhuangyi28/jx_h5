@@ -30,13 +30,49 @@
 
         /*console.log('链接='+window.location.href);*/
 
-/*        var str = window.location.href;
+         var str = window.location.href;
 
-        this.setStorage('userCode',str.split('?')[1].split('&')[0].split('=')[1])
 
-         alert(str.split('?')[1].split('&')[0].split('=')[1])*/
+        var  thisUserCode = str.split('?')[1].split('&')[0].split('=')[1]
+
+        console.log(thisUserCode)
+
+        //是否跳转发现页面 1为跳转到发现 0为正常
+        this.setStorage('discoveryHref','1')
+
+        this.setStorage('ajaxHomepage','0')
+
+         //alert(str.split('?')[1].split('&')[0].split('=')[1])
 
          /*console.log(this.getStorage('userCode'))*/
+
+
+      //获取UnionID
+
+    this.$http({
+
+        method: 'post',
+
+        url: process.env.API_ROOT+'jx/action/togetunionid',
+
+        params: {
+
+          code:thisUserCode
+
+        }
+
+
+
+      }).then((res) => {
+
+        console.log(res.data)
+
+        console.log('获取的值'+res.data.data)
+
+        this.setStorage('thisKey',res.data.data)
+
+
+      }).catch((res)=>{})
 
 
         if(this.getStorage('loadingShow')!=1){

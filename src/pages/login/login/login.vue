@@ -30,7 +30,7 @@
     <div class="login_button">
       <div class="another_page">
         <div @click="$router.push('/forgetPsw')">忘记密码?</div>
-        <div @click="$router.push('/Register')">免费注册</div>
+        <div @click="$router.push('/Register')">注册</div>
       </div>
     </div>
 
@@ -73,11 +73,11 @@
 
     mounted(){
 
-      var str = window.location.href;
+ /*     var str = window.location.href;
 
-      this.code = str.split('?')[1].split('&')[0].split('=')[1]
+      this.code = str.split('?')[1].split('&')[0].split('=')[1]*/
 
-      //alert(this.code)
+      //alert('key的值='+this.getStorage('thisKey'))
 
     },
     methods:{
@@ -181,38 +181,25 @@
                 this.setStorage('userId',res.data.data.userId);
 
 
+                //是否跳转发现页面 1为跳转到发现 0为正常
+                this.setStorage('discoveryHref','1')
 
-                var thisUserId = res.data.data.userId
-
-
-
-                //获取UnionID
-
-                this.$http({
-
-                  method: 'post',
-
-                  url: process.env.API_ROOT+'jx/action/togetunionid',
-
-                  params: {
-
-                    userId:thisUserId,
-
-                    code:this.code
-
-                  }
+                var discoveryHref = this.getStorage('discoveryHref')
 
 
+                console.log('应该是1='+discoveryHref)
 
-                }).then((res) => {
+                if(discoveryHref=='1'){
 
-                  console.log(res.data)
+                  setTimeout(function () {
 
+                    _this.setStorage('discoveryHref','0');
 
-                }).catch((res)=>{})
+                    _this.$router.push('/workDesk/discovery')
 
-                _this.$router.push('/workDesk/homepage')
+                  },1)
 
+                }
 
 
 
