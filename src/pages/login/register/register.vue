@@ -194,6 +194,11 @@
 
               });
 
+
+
+
+
+
               setTimeout(function () {
 
                 _this.signin()
@@ -385,8 +390,52 @@
             //存取token
             this.setStorage('Authorization',Authorization);
 
+            //获取UnionID
+
+            this.$http({
+
+              method: 'post',
+
+              url: process.env.API_ROOT+'jx/action/toaddunionid',
+
+              params: {
+
+
+                key:this.getStorage('thisKey')
+
+              }
+
+
+
+            }).then((res) => {
+
+              console.log(res.data)
+
+
+            }).catch((res)=>{});
+
+
+            //是否跳转发现页面 1为跳转到发现 0为正常
+            this.setStorage('discoveryHref','1')
+
+            var discoveryHref = this.getStorage('discoveryHref')
+
+
+            if(discoveryHref=='1'){
+
+              setTimeout(function () {
+
+                _this.setStorage('discoveryHref','0');
+
+                _this.$router.push('/workDesk/discovery')
+
+              },1)
+
+            }
+
+
             //跳转
-            _this.$router.push('/workDesk/homepage');
+            //_this.$router.push('/workDesk/homepage');
 
           }
 

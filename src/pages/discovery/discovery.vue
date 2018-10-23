@@ -3,6 +3,20 @@
   <div class="discovery">
 
     <div class="box">
+      <div class="title">金融服务</div>
+      <div class="content">
+        <!-- 嘉白条 -->
+        <div v-on:click="urlFn" v-bind:data-url="jbtUrl">
+          <div class="btn_icon"><img src="../../../static/images/icon_jbt_1.png"/></div>
+          <div class="btn_information">
+            <span class="btn_name">嘉白条</span>
+            <span class="btn_slogen">工资不够花?到这借!</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="box">
       <div class="title">购物</div>
       <div class="content">
         <!-- 惠购商城 -->
@@ -24,19 +38,7 @@
       </div>
     </div>
 
-    <div class="box">
-      <div class="title">金融服务</div>
-      <div class="content">
-        <!-- 嘉白条 -->
-        <div v-on:click="urlFn" v-bind:data-url="jbtUrl">
-          <div class="btn_icon"><img src="../../../static/images/icon_jbt_1.png"/></div>
-          <div class="btn_information">
-            <span class="btn_name">嘉白条</span>
-            <span class="btn_slogen">薪资预支费用低</span>
-          </div>
-        </div>
-      </div>
-    </div>
+
 
   </div>
 
@@ -73,6 +75,9 @@
     },
 
     mounted () {
+
+
+        this.setStorage('ajaxHomepage','1')
 
 
       /**
@@ -223,10 +228,10 @@
         else {
 
 
-          this.$indicator.open({
+/*          this.$indicator.open({
             text: '跳转中...',
             spinnerType: 'fading-circle'
-          });
+          });*/
 
           window.location.href = e.currentTarget.dataset.url
 

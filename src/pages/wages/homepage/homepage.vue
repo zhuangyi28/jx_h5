@@ -158,10 +158,58 @@
 
       var _this = this
 
+      //获取UnionID
+
+    this.$http({
+
+        method: 'post',
+
+        url: process.env.API_ROOT+'jx/action/toaddunionid',
+
+        params: {
+
+
+          key:this.getStorage('thisKey')
+
+        }
+
+
+
+      }).then((res) => {
+
+        console.log(res.data)
+
+
+      }).catch((res)=>{});
+
       //重新调用data方法
       Object.assign(_this.$data, _this.$options.data());
 
-      _this.onShow();
+      var ajax = this.getStorage('ajaxHomepage')
+
+      if(ajax=='1'){
+
+        _this.onShow();
+
+      }
+
+      var discoveryHref = this.getStorage('discoveryHref')
+
+      if(discoveryHref=='1'){
+
+        setTimeout(function () {
+
+          _this.setStorage('discoveryHref','0');
+
+          _this.$router.push('/workDesk/discovery')
+
+        },1)
+
+      }
+
+
+
+
 
       //window.addEventListener('scroll', _this.scrollBottom)
 
@@ -198,7 +246,7 @@
 
           if(res.data.code == '0000'){
 
-            console.log(res);
+            console.log(res.data);
 
             this.lookWages = res.data.data;
           }

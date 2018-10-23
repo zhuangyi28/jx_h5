@@ -34,7 +34,7 @@
 
       <div class="loadmore" v-show="!noData">
         <div class="bill_nodata_img" v-if="billList.length == 0">
-          <img src="/static/images/nodetail_img.png">
+          <img src="../../../../static/images/nodetail_img.png">
           <div>暂无相关账单</div>
         </div>
         <div class="loadmore_tips" v-else><span class="data">{{moreText}}</span></div>

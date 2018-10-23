@@ -65,7 +65,6 @@ export default new Router({
       },
       component: openPage,
     },
-
     {
       path: '/loadingPage',
       name: 'loadingPage',
