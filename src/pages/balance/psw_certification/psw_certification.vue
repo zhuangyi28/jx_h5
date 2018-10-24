@@ -71,25 +71,29 @@
                   message: res.data.msg,
                   showConfirmButton: true,
                   showCancelButton: true,
-                  confirmButtonText: '忘记密码',
-                  cancelButtonText: '重新输入',
+                  confirmButtonText: '重新输入',
+                  cancelButtonText: '忘记密码',
                   cancelButtonClass:'cancel_btn',
                   confirmButtonClass:'confirm_btn_orange',
                 }).then((res)=>{
                   if(res == 'confirm'){
-                    this.$router.push('/code');
-                    return;
-                  }else if(res == 'cancel'){
                     this.password = '';
                     return;
+                   ;
+                  }else if(res == 'cancel'){
+                    this.$router.push('/code');
+                    return
                   }
                 })
               }
-              var toast = this.$toast({
+              else if(res.data.code == -3){
+
+              }
+            /*  var toast = this.$toast({
                 message: res.data.msg,
                 position: 'bottom',
                 duration: 1500
-              });
+              });*/
               if(res.data.code == '0000'){
                 setTimeout(()=>{
                   toast.close();
@@ -117,17 +121,18 @@
                   message: res.data.msg,
                   showConfirmButton: true,
                   showCancelButton: true,
-                  confirmButtonText: '忘记密码',
-                  cancelButtonText: '重新输入',
+                  confirmButtonText: '重新输入',
+                  cancelButtonText: '我知道了',
                   cancelButtonClass:'cancel_btn',
                   confirmButtonClass:'confirm_btn_orange',
                 }).then((res)=>{
                   if(res == 'confirm'){
-                    this.$router.push('/code');
-                    return;
-                  }else if(res == 'cancel'){
                     this.password = '';
                     return;
+                  }else if(res == 'cancel'){
+                    this.$router.push('/code');
+                    return;
+
                   }
                 })
               }

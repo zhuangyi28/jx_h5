@@ -428,4 +428,7 @@
   .toggle-enter-to, .toggle-leave{
     transform: none;
   }
+  .picker-slot{
+    width:100%;
+  }
 </style>
