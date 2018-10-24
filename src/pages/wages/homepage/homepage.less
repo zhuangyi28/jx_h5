@@ -167,6 +167,20 @@
               position: relative;
               font-size: 16px;
 
+              span{
+
+                line-height: 22px;
+                max-height: 44px;
+                width: calc(~'100% - 50px');
+                overflow: hidden;
+                display: inline-block;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                text-overflow: ellipsis;
+
+              }
+
 
               &:after{
                 content:'';
@@ -280,6 +294,14 @@
             span{
               color: rgb(109,107,102);
               display: inline-block;
+              line-height: 22px;
+              max-height: 44px;
+              width: calc(~'100% - 50px');
+              overflow: hidden;
+              display: -webkit-box;
+              -webkit-line-clamp: 2;
+              -webkit-box-orient: vertical;
+              text-overflow: ellipsis;
 
 
             }

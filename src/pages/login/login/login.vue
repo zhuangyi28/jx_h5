@@ -169,9 +169,11 @@
 
                 this.Authorization = res.data.token.access_token;
 
-
-
                 this.openId = res.data.data.openId;
+
+                this.setCookie('ZUHANGYI',res.data.token.access_token,60)
+
+                console.log('获取饼干'+this.getCookie('ZUHANGYI'));
 
                  this.$indicator.close();
 

@@ -75,6 +75,35 @@ exports.install = function (Vue, options) {
 
   };
 
+  Vue.prototype.setCookie = function(key,val,time){//设置cookie方法
+
+    console.log(key)
+
+    console.log(val)
+
+             var date=new Date(); //获取当前时间
+
+             var expiresDays=time;  //将date设置为n天以后的时间
+
+            date.setTime(date.getTime()+expiresDays*24*3600*1000); //格式化为cookie识别的时间
+
+             document.cookie=key + "=" + val +";expires="+date.toGMTString();  //设置cookie
+
+            console.log(document.cookie)
+
+
+
+         };
+
+  Vue.prototype.getCookie = function (cname) {
+    var arr, reg = new RegExp("(^| )" + cname + "=([^;]*)(;|$)");
+    if (arr = document.cookie.match(reg))
+      return (arr[2]);
+    else
+      return null;
+
+  };
+
 };
 
 

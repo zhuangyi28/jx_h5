@@ -79,6 +79,30 @@
 
         this.setStorage('ajaxHomepage','1')
 
+      //获取UnionID
+
+      this.$http({
+
+        method: 'post',
+
+        url: process.env.API_ROOT+'jx/action/toaddunionid',
+
+        params: {
+
+
+          key:this.getStorage('thisKey')
+
+        }
+
+
+
+      }).then((res) => {
+
+        console.log(res.data)
+
+
+      }).catch((res)=>{});
+
 
       /**
        * 接口：用户中心

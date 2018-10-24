@@ -35,6 +35,7 @@ Vue.use(axios)
 //Vue.use(BasicJs)
 Vue.config.productionTip = false;
 
+
 //判断用户是否处于登录状态，访问权限验证
 let token ;
 
