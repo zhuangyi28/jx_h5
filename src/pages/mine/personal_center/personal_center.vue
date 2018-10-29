@@ -110,6 +110,7 @@
               if(res.data.code == '0000'){
                 //清除token
                 this.removeStorage('Authorization');
+                this.removeStorage('jxsid');
                 this.$router.push('/login');
               }else{
                 console.log(res.data);

@@ -73,7 +73,8 @@
 
     mounted(){
 
- /*     var str = window.location.href;
+
+ /*  var str = window.location.href;
 
       this.code = str.split('?')[1].split('&')[0].split('=')[1]*/
 
@@ -149,6 +150,8 @@
 
               console.log(res.data);
 
+              console.log(res)
+
 
               if(res.data.code=='-1'){
 
@@ -171,27 +174,24 @@
 
                 this.openId = res.data.data.openId;
 
-                this.setCookie('ZUHANGYI',res.data.token.access_token,60)
-
-                console.log('获取饼干'+this.getCookie('ZUHANGYI'));
-
                  this.$indicator.close();
 
                 //存取token
                 this.setStorage('Authorization',Authorization);
 
-                this.setStorage('userId',res.data.data.userId);
+                this.setStorage('jxsid',res.data.jxsid);
 
+                this.setStorage('userId',res.data.data.userId);
 
                 //是否跳转发现页面 1为跳转到发现 0为正常
                 this.setStorage('discoveryHref','1')
 
+
                 var discoveryHref = this.getStorage('discoveryHref')
 
+                //console.log('应该是1='+discoveryHref)
 
-                console.log('应该是1='+discoveryHref)
-
-                if(discoveryHref=='1'){
+/*                if(discoveryHref=='1'){
 
                   setTimeout(function () {
 
@@ -201,8 +201,11 @@
 
                   },1)
 
-                }
+                }*/
 
+
+                //跳转
+                _this.$router.push('/workDesk/homepage');
 
 
               }

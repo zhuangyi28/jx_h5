@@ -390,6 +390,8 @@
             //存取token
             this.setStorage('Authorization',Authorization);
 
+            this.setStorage('jxsid',res.data.jxsid);
+
             //获取UnionID
 
             this.$http({
@@ -416,7 +418,7 @@
 
 
             //是否跳转发现页面 1为跳转到发现 0为正常
-            this.setStorage('discoveryHref','1')
+/*            this.setStorage('discoveryHref','1')
 
             var discoveryHref = this.getStorage('discoveryHref')
 
@@ -431,11 +433,11 @@
 
               },1)
 
-            }
+            }*/
 
 
             //跳转
-            //_this.$router.push('/workDesk/homepage');
+            _this.$router.push('/workDesk/homepage');
 
           }
 

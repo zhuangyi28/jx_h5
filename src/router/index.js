@@ -51,6 +51,9 @@ import certificationSuccess from '@/pages/mine/certification_success/certificati
 import certificationFail from '@/pages/mine/certification_fail/certification_fail'
 import share from '@/pages/balance/share/share'
 import openPage from '@/pages/login/open/open'
+import taskDetail from '@/pages/task/task_detail/task_details'
+import taskFeedback from '@/pages/task/task_detail_feedback/task_feedback'
+import lookTask from '@/pages/task/look_task/look_task'
 Vue.use(Router)
 
 export default new Router({
@@ -73,7 +76,6 @@ export default new Router({
       },
       component: loadingPage,
     },
-
     {
       path: '/login',
       name: 'Login',
@@ -91,7 +93,6 @@ export default new Router({
       },
       component: register
     },
-
     {
       path: '/agreement',
       name: 'Agreement',
@@ -102,7 +103,6 @@ export default new Router({
 
 
     },
-
     {
       path: '/forgetPsw',
       name: 'forgetPsw',
@@ -113,7 +113,6 @@ export default new Router({
 
 
     },
-
     {
 
       path: '/payroll',
@@ -125,7 +124,6 @@ export default new Router({
 
 
     },
-
     {
       path: '/company',
 
@@ -136,7 +134,6 @@ export default new Router({
       component: company,
 
     },
-
     {
       path: '/locked',
 
@@ -147,7 +144,6 @@ export default new Router({
       component: locked,
 
     },
-
     {
       path: '/authentication',
       name: 'authentication',
@@ -157,7 +153,6 @@ export default new Router({
       component: CoAuthentication,
 
     },
-
     {
       path: '/personalCenter',
       name: 'personalCenter',
@@ -255,8 +250,6 @@ export default new Router({
       component: code,
 
     },
-
-
     {
       path: '/setPayPassword',
       name: 'setPayPassword',
@@ -331,7 +324,6 @@ export default new Router({
       },
       component: detailBill
     },
-
     {
       path: '/withdraw',
       name: 'withdraw',
@@ -340,7 +332,6 @@ export default new Router({
       },
       component: withdraw
       },
-
     {
       path: '/helpCenter',
       name: 'helpCenter',
@@ -349,7 +340,6 @@ export default new Router({
       },
       component: helpCenter
     },
-
     {
       path: '/helpDetail',
       name: 'helpDetail',
@@ -464,6 +454,39 @@ export default new Router({
         title: '实名认证'
       },
       component: certificationFail
+    },
+    {
+      path: '/certificationFail',
+      name: 'certificationFail',
+      meta: {
+        title: '实名认证'
+      },
+      component: certificationFail
+    },
+    {
+      path: '/taskDetail',
+      name: 'taskDetail',
+      meta:{
+        title: '任务详情'
+      },
+      component: taskDetail
+    },
+    {
+      path: '/taskFeedback',
+      name: 'taskFeedback',
+      meta:{
+        title: '任务反馈'
+      },
+      component: taskFeedback
+    },
+
+    {
+      path: '/lookTask',
+      name: 'lookTask',
+      meta:{
+        title: '查看任务'
+      },
+      component: lookTask
     },
     {
       path: '/workDesk',

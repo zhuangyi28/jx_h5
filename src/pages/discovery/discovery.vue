@@ -27,18 +27,68 @@
             <span class="btn_slogen">综合商品中心</span>
           </div>
         </div>
-        <!-- 美团点评 -->
-        <div v-on:click="urlFn" v-bind:data-url="mtUrl">
-          <div class="btn_icon"><img src="../../../static/images/icon_mt_1.png"/></div>
+        <!-- 卡券商城 -->
+        <div v-on:click="urlFn" v-bind:data-url="cardUrl">
+          <div class="btn_icon"><img src="../../../static/images/icon_card_1.png"/></div>
           <div class="btn_information">
-            <span class="btn_name">美团点评</span>
-            <span class="btn_slogen">点评餐饮服务</span>
+            <span class="btn_name">卡券商城</span>
+            <span class="btn_slogen">卡券商城中心</span>
           </div>
         </div>
       </div>
     </div>
 
 
+    <div class="box">
+      <div class="title">便民生活</div>
+      <div class="content">
+        <!-- 美团点评 -->
+        <div v-on:click="urlFn" v-bind:data-url="mtUrl">
+          <div class="btn_icon"><img src="../../../static/images/icon_mt_1.png"/></div>
+          <div class="btn_information">
+            <span class="btn_name">美团外卖</span>
+            <span class="btn_slogen">美团餐饮服务</span>
+          </div>
+        </div>
+
+        <!-- 餐饮美食 -->
+        <div v-on:click="urlFn" v-bind:data-url="dpUrl">
+          <div class="btn_icon"><img src="../../../static/images/icon_dp_1.png"/></div>
+          <div class="btn_information">
+            <span class="btn_name">餐饮美食</span>
+            <span class="btn_slogen">点评餐饮服务</span>
+          </div>
+        </div>
+
+        <!-- 丽人 -->
+        <div v-on:click="urlFn" v-bind:data-url="beautyUrl">
+          <div class="btn_icon"><img src="../../../static/images/icon_beauty_1.png"/></div>
+          <div class="btn_information">
+            <span class="btn_name">丽人</span>
+            <span class="btn_slogen">都市美容美发系列</span>
+          </div>
+        </div>
+
+        <!-- 生活服务 -->
+        <div v-on:click="urlFn" v-bind:data-url="lifeUrl">
+          <div class="btn_icon"><img src="../../../static/images/icon_life_1.png"/></div>
+          <div class="btn_information">
+            <span class="btn_name">生活服务</span>
+            <span class="btn_slogen">日常生活开支缴费</span>
+          </div>
+        </div>
+
+        <!-- 休闲娱乐 -->
+        <div v-on:click="urlFn" v-bind:data-url="playUrl">
+          <div class="btn_icon"><img src="../../../static/images/icon_play_1.png"/></div>
+          <div class="btn_information">
+            <span class="btn_name">休闲娱乐</span>
+            <span class="btn_slogen">最前沿的娱乐导向</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
 
   </div>
 
@@ -52,13 +102,15 @@
 
       return {
 
-        //jykUrl:'',//加油卡URL
+        cardUrl:'',//电子卡券
 
-        //trainUrl:'',//高铁管家URL
+        dpUrl:'',//点评餐饮
 
-        //codeUrl:'',//二维码URL
+        beautyUrl:'',//丽人消费
 
-        //didiUrl:'',//滴滴
+        lifeUrl:'',//生活服务
+
+        playUrl:'',//休闲娱乐
 
         mtUrl:'',//美团
 
@@ -68,7 +120,7 @@
 
         isOpen:'',//是否在
 
-        isVerify:''
+        isVerify:''//时候认证
 
       }
 
@@ -129,6 +181,114 @@
 
 
       }).catch((res)=>{})
+
+
+
+      /**
+       * 接口：消费场景-丽人消费
+       * 请求方式：GET
+       * 接口：open/beauty/redirect
+       * 入参：null
+       **/
+      this.$http({
+
+        method: 'get',
+
+        url: process.env.API_ROOT + 'open/beauty/redirect',
+
+      }).then((res) => {
+
+        console.log(res.data);
+
+        this.beautyUrl = res.data.data
+
+      }).catch((res)=>{})
+
+
+      /**
+       * 接口：消费场景-电子卡券
+       * 请求方式：GET
+       * 接口：open/card/redirect
+       * 入参：null
+       **/
+      this.$http({
+
+        method: 'get',
+
+        url: process.env.API_ROOT + 'open/card/redirect',
+
+      }).then((res) => {
+
+        console.log(res.data);
+
+        this.cardUrl = res.data.data
+
+      }).catch((res)=>{})
+
+
+
+      /**
+       * 接口：消费场景-点评餐饮
+       * 请求方式：GET
+       * 接口：open/catering/redirect
+       * 入参：null
+       **/
+      this.$http({
+
+        method: 'get',
+
+        url: process.env.API_ROOT + 'open/catering/redirect',
+
+      }).then((res) => {
+
+        console.log(res.data);
+
+        this.dpUrl = res.data.data
+
+      }).catch((res)=>{})
+
+
+      /**
+       * 接口：消费场景-休闲娱乐
+       * 请求方式：GET
+       * 接口：open/entertainment/redirect
+       * 入参：null
+       **/
+      this.$http({
+
+        method: 'get',
+
+        url: process.env.API_ROOT + 'open/entertainment/redirect',
+
+      }).then((res) => {
+
+        console.log(res.data);
+
+        this.playUrl = res.data.data
+
+      }).catch((res)=>{})
+
+
+      /**
+       * 接口：消费场景-生活服务
+       * 请求方式：GET
+       * 接口：open/life/redirect
+       * 入参：null
+       **/
+      this.$http({
+
+        method: 'get',
+
+        url: process.env.API_ROOT + 'open/life/redirect',
+
+      }).then((res) => {
+
+        console.log(res.data);
+
+        this.lifeUrl = res.data.data
+
+      }).catch((res)=>{})
+
 
 
 

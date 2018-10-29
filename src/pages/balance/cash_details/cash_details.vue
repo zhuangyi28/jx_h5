@@ -18,7 +18,7 @@
         </div>
         <div class="step" v-bind:class="orderState=='4'||orderState=='1'? 'selected':''">
           <p><img src="../../../../static/images/cash_detail3.png"></p>
-          <p v-if="orderState=='4'">提现金额</p>
+          <p v-if="orderState=='4'">已退款</p>
           <p v-else>完成</p>
         </div>
       </div>
