@@ -23,7 +23,7 @@ a img {
   border: 0;
 }
 
-a,ul,li,button,span,div {
+a,ul,li,button,span,div,p {
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
   -webkit-appearance: none;

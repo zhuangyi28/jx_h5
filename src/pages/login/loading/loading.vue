@@ -35,16 +35,12 @@
 
         var  thisUserCode = str.split('?')[1].split('&')[0].split('=')[1]
 
-        console.log(thisUserCode)
-
         //是否跳转发现页面 1为跳转到发现 0为正常
         this.setStorage('discoveryHref','1')
 
         this.setStorage('ajaxHomepage','0')
 
-         //alert(str.split('?')[1].split('&')[0].split('=')[1])
-
-         /*console.log(this.getStorage('userCode'))*/
+        this.init();
 
 
       //获取UnionID
@@ -67,25 +63,22 @@
 
         console.log(res.data)
 
-        console.log('获取的值'+res.data.data)
-
         this.setStorage('thisKey',res.data.data)
-
 
       }).catch((res)=>{})
 
 
         if(this.getStorage('loadingShow')!=1){
 
-          this.$indicator.open({
+         this.$indicator.open({
             text: '加载中...',
             spinnerType: 'fading-circle'
           });
 
 
-        }
+       }
 
-       this.init();
+
 
 
 
@@ -100,6 +93,8 @@
     methods: {
 
       init: function () {
+
+        let _this=this;
 
 
 
@@ -122,8 +117,9 @@
 
             console.log(res.data)
 
-
           if(res.data.code=='0000'){
+
+
 
                 setTimeout(()=> {
 

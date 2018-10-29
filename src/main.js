@@ -44,9 +44,20 @@ router.beforeEach((to,from,next)=>{
 
   var Authorization = window.localStorage.getItem('Authorization');//Authorization数据
 
+
   if(Authorization){
 
-    next();
+    if(to.path!=='/login'){
+
+      next();
+
+    }
+    else {
+
+      next({path: '/loadingPage'})
+
+    }
+
 
   } else {
 
@@ -57,7 +68,7 @@ router.beforeEach((to,from,next)=>{
       next();
 
     }
-    else  if((from.path === '/workDesk/homepage' && to.path === '/login')||(from.path === '/workDesk/homepage' && to.path === '/Register')){
+    else  if((from.path === '/workDesk/homepage' && to.path === '/login')||(from.path === '/workDesk/homepage' && to.path === '/Register')||(from.path === '/workDesk/discovery' && to.path === '/login')||(from.path === '/workDesk/discovery' && to.path === '/Register')){
 
 
          next({path: '/workDesk/homepage'})
@@ -138,8 +149,6 @@ $(function () {
     if(backNum-1>0){
 
       localStorage.setItem('backing',1);//backing为1时，正在退回，0是没有退回
-
-
 
       localStorage.setItem('backNum',backNum);
 
