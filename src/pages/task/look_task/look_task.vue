@@ -49,7 +49,7 @@
     </div>
     <div class="task_btn_area">
       <!-- 按钮-->
-      <orange-btn :name="btnName"></orange-btn>
+      <orange-btn :name="btnName" v-on:clickEvent="cancelRegistrationFn"></orange-btn>
     </div>
 
 
@@ -67,13 +67,33 @@
     },
     data () {
       return{
-        btnName: '已报名'
+        btnName: '取消报名'
       }
     },
     mounted () {
 
     },
     methods:{
+
+      cancelRegistrationFn:function () {
+
+
+        this.$messagebox({
+          title: '提示',
+          message: '确定取消报名？',
+          showCancelButton: true,
+          showConfirmButton: true,
+          confirmButtonText: '查看',
+          cancelButtonText: '暂不查看',
+          closeOnClickModal: false,
+          cancelButtonClass: 'cancel_btn',
+          confirmButtonClass: 'confirm_btn_orange',
+        }).then(action => {
+
+
+      })
+
+      }
 
     }
 

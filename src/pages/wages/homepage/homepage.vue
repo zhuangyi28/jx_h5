@@ -66,7 +66,7 @@
               <div class="title">
                 <span>{{item.salaryMonth}}工资</span>
               </div>
-              <div class="confirm"><span>{{item.state}}</span></div>
+              <div class="confirm"><img src="../../../../static/images/jx_homepage_icon.png"/><span>{{item.state}}</span></div>
             </div>
           </div>
         </div>
