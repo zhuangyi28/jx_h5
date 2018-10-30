@@ -52,8 +52,15 @@ import certificationFail from '@/pages/mine/certification_fail/certification_fai
 import share from '@/pages/balance/share/share'
 import openPage from '@/pages/login/open/open'
 import taskDetail from '@/pages/task/task_detail/task_details'
-import taskFeedback from '@/pages/task/task_detail_feedback/task_feedback'
 import lookTask from '@/pages/task/look_task/look_task'
+import protocol from '@/pages/task/protocol/protocol'
+import taskSquare from '@/pages/task/task_square/task_square'
+import find from '@/pages/task/find/find'
+import personInformation from '@/pages/task/person_information/person_information'
+import taskFeedback from '@/pages/task/task_feedback/task_feedback'
+import myTask from '@/pages/task/my_task/my_task'
+import submitSuccess from '@/pages/task/submit_success/submit_success'
+
 Vue.use(Router)
 
 export default new Router({
@@ -470,16 +477,62 @@ export default new Router({
         title: '任务详情'
       },
       component: taskDetail
+    },{
+      path: '/protocol',
+      name: 'protocol',
+      meta: {
+        title: '任务广场'
+      },
+      component: protocol
+    },
+    {
+      path: '/taskSquare',
+      name: 'taskSquare',
+      meta: {
+        title: '任务广场'
+      },
+      component: taskSquare
+    },
+    {
+      path: '/find',
+      name: 'find',
+      meta:{
+        title: '搜索'
+      },
+      component: find
+    },
+    {
+      path: '/personInformation',
+      name: 'personInformation',
+      meta: {
+        title: '个人履历'
+      },
+      component: personInformation
     },
     {
       path: '/taskFeedback',
       name: 'taskFeedback',
-      meta:{
+      meta: {
         title: '任务反馈'
       },
       component: taskFeedback
     },
-
+    {
+      path: '/myTask',
+      name: 'myTask',
+      meta: {
+        title: '我的众包任务'
+      },
+      component: myTask
+    },
+    {
+      path: '/submitSuccess',
+      name: '/submitSuccess',
+      meta: {
+        title: '提交成功'
+      },
+      component: submitSuccess
+    },
     {
       path: '/lookTask',
       name: 'lookTask',

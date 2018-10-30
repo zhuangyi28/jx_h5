@@ -1,0 +1,95 @@
+.find{
+  .find_input{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 10px;
+    .input_place{
+      flex: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: white;
+      border-radius: 15px;
+      padding: 3px 5px;
+      margin-right: 10px;
+      img{
+        width: 14px;
+        height: 14px;
+        margin: 0 8px;
+      }
+      input{
+        flex: 1;
+        border: none;
+        outline: none;
+        font-size: 14px;
+        padding: 2px 5px;
+        color: #4a4a4a;
+        &::placeholder{
+          color: #ababab;
+        }
+      }
+    }
+    .cancel{
+      font-size: 14px;
+      color: #4a4a4a;
+    }
+  }
+  .find_history{
+    padding: 10px;
+    .title{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #4a4a4a;
+      font-size: 14px;
+      padding: 10px 0;
+      img{
+        width: 12px;
+        height: 15px;
+      }
+    }
+    .history{
+      &>div{
+        background-color: white;
+        display: inline-block;
+        padding: 3px 8px;
+        border-radius: 16px;
+        margin: 5px 10px 5px 0;
+        span{
+          color: #4a4a4a;
+          font-size: 14px;
+          line-height: 22px;
+        }
+        .delete_btn{
+          display: inline-flex;
+          position: relative;
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background-color: #e8e8e8;
+          justify-content: center;
+          align-items: center;
+          &:before{
+            content: '';
+            width: 10px;
+            height: 1px;
+            background-color: white;
+            display: inline-block;
+            position: absolute;
+            transform: rotate(45deg);
+          }
+          &:after{
+            content: '';
+            width: 10px;
+            height: 1px;
+            background-color: white;
+            display: inline-block;
+            position: absolute;
+            transform: rotate(-45deg);
+          }
+        }
+      }
+    }
+  }
+}
