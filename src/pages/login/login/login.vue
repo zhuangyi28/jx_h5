@@ -191,7 +191,7 @@
 
                 //console.log('应该是1='+discoveryHref)
 
-/*                if(discoveryHref=='1'){
+              if(discoveryHref=='1'){
 
                   setTimeout(function () {
 
@@ -201,11 +201,11 @@
 
                   },1)
 
-                }*/
+                }
 
 
                 //跳转
-                _this.$router.push('/workDesk/homepage');
+                //_this.$router.push('/workDesk/homepage');
 
 
               }

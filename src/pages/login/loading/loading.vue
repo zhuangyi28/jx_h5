@@ -123,9 +123,11 @@
 
                 setTimeout(()=> {
 
-                  this.$router.push('/workDesk/homepage')
+                  this.setStorage('discoveryHref','0');
 
-                },1500)
+                  this.$router.push('/workDesk/discovery')
+
+                },1000)
 
 
 
