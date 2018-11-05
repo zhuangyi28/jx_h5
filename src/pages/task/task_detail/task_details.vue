@@ -39,7 +39,7 @@
 
         <div class="state_box">
           <p><img src="../../../../static/images/jx_task_sign_3.png"/></p>
-          <p>提交结果</p>
+          <p>提交验收</p>
           <p class="border"></p>
         </div>
 
