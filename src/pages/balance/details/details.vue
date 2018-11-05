@@ -21,7 +21,7 @@
 
     <div class="loadmore" v-show="!noData">
       <div class="details_nodetail_img" v-if="balanceList.length == 0">
-        <img src="/static/images/nodetail_img.png">
+        <img src="../../../../static/images/nodetail_img.png">
         <div>暂无相关明细</div>
       </div>
       <div class="loadmore_tips" v-else><span class="data">{{moreText}}</span></div>

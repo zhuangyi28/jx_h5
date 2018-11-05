@@ -124,20 +124,21 @@
     }
     .content{
       padding: 0 15px;
+      font-size: 16px;
     }
     .file{
       position: relative;
-      padding: 15px 5px 0;
+      padding: 15px 5px 15px;
 
      >div{
-       width: 25%;
+       width: 22%;
        float: left;
        flex: 1;
-       margin-bottom: 8px;
-
+       margin: 8px 5px;
+       box-sizing: border-box;
+       border: 1px dashed #ddd;
        p{
-         max-width: 80px;
-         min-height: 34px;
+         min-height: 36px;
          text-overflow: ellipsis;
          display: -webkit-box;
          overflow: hidden;
@@ -145,17 +146,17 @@
          -webkit-line-clamp: 2;
          font-size: 12px;
          line-height: 16px;
-         margin: 8px auto;
+         padding: 2px;
+         background: #f7f7f7;
+         color: #ababab;
+         text-align: center;
        }
        img{
          display: block;
-         width: 26px;
-         height: 26px;
+         width: 32px;
+         height: 32px;
          vertical-align: middle;
-         border: 1px dashed #ddd;
-         padding: 4px;
-         margin: 0 auto;
-
+         margin: 2px auto;
        }
      }
       &:after{
@@ -165,6 +166,40 @@
         overflow:hidden;
         font-size:0;
         height:0
+      }
+
+
+    }
+    @media screen  and (max-width: 320px){
+
+      .file{
+        padding: 15px 11px 15px;
+        >div{
+          width: 20%;
+          margin: 8px 7px;
+
+          p{
+            min-height:30px;
+
+          }
+          img{
+            display: block;
+            width: 32px;
+            height: 32px;
+            vertical-align: middle;
+            margin: 2px auto;
+          }
+        }
+        &:after{
+          content:".";
+          clear:both;
+          display:block;
+          overflow:hidden;
+          font-size:0;
+          height:0
+        }
+
+
       }
 
     }
