@@ -9,17 +9,15 @@
     <div class="upload_file">
       <div class="upload_file_title">上传凭证<span>（最多上传6张）</span></div>
       <div class="upload_file_input">
-        <div class="input_file">
-          <span class="delete_btn"></span>
+        <div class="input_file" v-for="file in files">
+          <div class="file_img">
+            <img src="../../../../static/images/jx_file.png">
+          </div>
+          <div class="file_name">{{file.name}}</div>
+          <span class="delete_btn" v-on:click="deleteFile" v-bind:data-fileName="file.name"></span>
         </div>
-        <div class="input_file">
-          <span class="delete_btn"></span>
-        </div>
-        <div class="input_file">
-          <span class="delete_btn"></span>
-        </div>
-        <div class="input_add">
-          <input type="file">
+        <div class="input_add" v-if="files.length < 6">
+          <input type="file" v-on:change="addFile">
         </div>
       </div>
       <div class="position">
@@ -32,7 +30,26 @@
 </template>
 <script>
   export default {
-    name: 'taskFeedback'
+    name: 'taskFeedback',
+    data () {
+      return {
+        files: [],
+        inputFile: ''
+      }
+    },
+    methods: {
+      addFile: function (event) {
+        var thisFile = event.currentTarget.value.split('\\')[2];
+        debugger;
+        for(var file of this.files){
+          console.log(file);
+        }
+        this.files.push(event.currentTarget.files[0]);
+      },
+      deleteFile: function () {
+        debugger;
+      }
+    }
   }
 </script>
 <style lang="less" scoped>
