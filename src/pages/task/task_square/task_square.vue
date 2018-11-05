@@ -5,7 +5,6 @@
         <img src="../../../../static/images/jx_find.png">
         <input type="text" placeholder="搜索公司职位">
       </div>
-      <div class="cancel">取消</div>
     </div>
     <div class="select_btn">
       <div class="select" v-on:click="selectDropDown">
@@ -31,11 +30,11 @@
             <div>广告/传媒/文化/体育</div>
             <div>金融</div>
             <div>教育培训</div>
-            <div>服务业</div>
-            <div>消费品</div>
             <div>交通/物流/贸易/零售</div>
+            <div>服务业</div>
             <div>房地产/建筑</div>
             <div>汽车/机械/制造业</div>
+            <div>消费品</div>
             <div>其他</div>
           </div>
         </div>
