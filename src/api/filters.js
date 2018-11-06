@@ -55,7 +55,7 @@ Vue.filter('plusXing', (str, frontLen, endLen) => {
 
 /**
  * 时间过滤
- * date:'yyyy-MM-dd'
+ * date:'yyyy-MM-dd hh:mm:ss'
  */
 Vue.filter('fmtDateStr', (value) => {
 
@@ -87,7 +87,39 @@ Vue.filter('fmtDateStr', (value) => {
 
 
 
+  });
+
+/**
+ * 时间过滤
+ * date:'yyyy-MM-dd'
+ */
+Vue.filter('fmtDateStr2', (value) => {
+
+  if(value){
+
+    let cc = new Date(value);
+    Date.prototype.toLocaleString = function () {
+
+      //补0操作
+      function getzf(num) {
+        if (parseInt(num) < 10) {
+          num = '0' + num;
+        }
+        return num;
+      };
+
+      var oYear = this.getFullYear(),
+        oMonth = this.getMonth() + 1,
+        oDay = this.getDate(),
+        oTime = oYear + '-' + getzf(oMonth) + '-' + getzf(oDay);//最后拼接时间
+
+      return oTime;
+    };
+    return cc.toLocaleString();
   }
 
-);
+
+
+});
+
 

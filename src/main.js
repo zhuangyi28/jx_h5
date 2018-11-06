@@ -18,7 +18,12 @@ import MD5 from '../static/js/MD5.min'
 //导入 mint-ui
 import MintUI from 'mint-ui'
 
+/*
+console.log('-----------------------------------------------------------------------------------'+process.env.NODE_ENV+'--------------------------------------------------------------------');
+*/
 
+//导入 vconsole模块
+import vconsole from './api/vconsole'
 
 //import BasicJs from './js/basic'
 import VueWechatTitle from 'vue-wechat-title';
