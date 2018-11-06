@@ -6,12 +6,21 @@
     background-color: white;
     color: #4a4a4a;
     font-size: 14px;
-    box-shadow: 0 0 8px #ddd;;
-    div{
-      padding: 13px 0;
-      position: relative;
+    box-shadow: 0 0 8px #ddd;
+    position: relative;
+    width: 100%;
+    overflow: hidden;/*把处理到元素外面的滚动条隐藏*/
+    .tab_box{
+      display: -webkit-box;
+      overflow-x: scroll;
+      -webkit-overflow-scrolling:touch;
+      >div{
+        display: block;
+        padding: 15px 8px;
+        position: relative;
+      }
     }
-    .selected{
+      .selected{
       color: #ff7a3c;
       &:after{
         content: '';
@@ -30,14 +39,14 @@
     .my_task_one{
       margin: 10px 0;
       background-color: white;
-      padding: 5px 0;
       border-radius: 8px;
+      box-shadow: 0 0 8px #ddd;
       .my_task_information{
         display: flex;
         align-items: center;
         justify-content: space-between;
         position: relative;
-        padding: 0 4%;
+        padding: 12px 4%;
         &:after{
           content: '';
           display: block;
@@ -47,19 +56,28 @@
           position: absolute;
           bottom: 0;
           left: 0;
+          transform:scaleY(.6);
         }
         .task_title{
           display: flex;
           align-items: center;
-          padding: 10px 0 15px;
+          justify-content: flex-start;
+          width: 78%;
           img{
             height: 20px;
             width: 20px;
+            display: inline-block;
             margin-right: 5px;
           }
           span{
             color: #4a4a4a;
-            font-size: 14px;
+            font-size: 16px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            line-height:18px;
           }
         }
         .task_status{
@@ -97,6 +115,7 @@
         .task_money{
           &>span{
             color: #ff7a3c;
+           font-size: 16px;
           }
         }
         .task_time{
@@ -128,5 +147,22 @@
         }
       }
     }
+    .bill_nodata_img{
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      img{
+        width: 110px;
+        height: 110px;
+      }
+      div{
+        padding-top: 20px;
+        color: #ababab;
+        font-size: 14px;
+      }
+    }
+
   }
 }

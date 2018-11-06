@@ -60,7 +60,7 @@
 
         orderId: '',
 
-        pageNum: 1,//初始值为2
+        pageNum: 1,//
 
         pageSize: 10,//一页的数量
 

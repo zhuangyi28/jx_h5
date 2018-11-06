@@ -47,9 +47,7 @@
   </div>
 
     <!-- 列表1 -->
-
     <div class="list">
-
       <!--我的账单 -->
       <div class="cell" v-on:click="billFn">
         <div class="title">
@@ -71,9 +69,30 @@
     </div>
 
     <!-- 列表2 -->
-
     <div class="list">
+      <!--我的账单 -->
+      <div class="cell" v-on:click="$router.push('/myTask')">
+        <div class="title">
+          <img src="../../../static/images/jx_task_1.png"><span class="cell_text">我的众包任务</span>
+        </div>
+        <div class="cell_value"></div>
+        <i class="allow_right"></i>
+      </div>
+      <!--银行卡 -->
+      <div class="cell">
+        <div class="title">
+          <img src="../../../static/images/jx_resume_1.png"><span class="cell_text">个人履历</span>
+        </div>
+        <div class="cell_value"></div>
+        <i class="allow_right"></i>
+      </div>
 
+
+    </div>
+
+
+    <!-- 列表3 -->
+    <div class="list">
       <!--我的发薪企业 -->
       <div class="cell" v-on:click="$router.push('/company')">
         <div class="title">
@@ -82,6 +101,19 @@
         <div v-show="hasJoinEnt" class="cell_value"><span class="orange">您有新的企业邀请</span></div>
         <i class="allow_right"></i>
       </div>
+      <!--我的发薪企业 -->
+      <div class="cell" v-on:click="$router.push('/company')">
+        <div class="title">
+          <img src="../../../static/images/jx_payroll_1.png"><span class="cell_text">工资条</span>
+        </div>
+        <div class="cell_value"></div>
+        <i class="allow_right"></i>
+      </div>
+
+    </div>
+
+    <!-- 列表4 -->
+    <div class="list">
       <!--消息 -->
       <div class="cell" v-on:click="$router.push('/feedbackList')">
         <div class="title">
@@ -90,14 +122,6 @@
         <div v-show="hasNewMsg" class="cell_value"><span class="red">您有新消息</span></div>
         <i class="allow_right"></i>
       </div>
-
-
-
-    </div>
-
-    <!-- 列表3 -->
-
-    <div class="list">
       <!--设置 -->
       <div class="cell" v-on:click="$router.push('/setHomepage')">
         <div class="title">
