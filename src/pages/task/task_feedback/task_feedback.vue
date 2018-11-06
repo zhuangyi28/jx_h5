@@ -31,26 +31,47 @@
 <script>
   export default {
     name: 'taskFeedback',
+
     data () {
+
       return {
+
         files: [],
+
         inputFile: ''
+
       }
+
     },
+
     methods: {
+
       addFile: function (event) {
+
         var thisFile = event.currentTarget.value.split('\\')[2];
+
         debugger;
+
         for(var file of this.files){
+
           console.log(file);
+
         }
+
         this.files.push(event.currentTarget.files[0]);
+
       },
+
       deleteFile: function () {
+
         debugger;
+
       }
+
     }
+
   }
+
 </script>
 <style lang="less" scoped>
   @import "task_feedback.less";

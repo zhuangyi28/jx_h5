@@ -65,13 +65,56 @@
               method: 'get',
               url: process.env.API_ROOT + 'user/withdraw/dowithdraw?bankCardId='+this.bankCardId+'&balance='+this.withdrawMoney+'&payPassword='+hexMD5(this.password)
             }).then((res)=>{
+              console.log(res);
               if(res.data.code == -4){
+                if(res.data.msg.indexOf('输入错误3次') != -1){
+                  this.$messagebox({
+                    title: '提示',
+                    message: res.data.msg,
+                    showConfirmButton: true,
+                    showCancelButton: true,
+                    confirmButtonText: '我知道了',
+                    cancelButtonText: '忘记密码',
+                    cancelButtonClass:'cancel_btn',
+                    confirmButtonClass:'confirm_btn_orange',
+                  }).then((res)=>{
+                    if(res == 'confirm'){
+                      this.password = '';
+                      return;
+                    }else if(res == 'cancel'){
+                      this.$router.push('/code');
+                      return;
+                    }
+                  })
+                }
+                else{
+                  this.$messagebox({
+                    title: '提示',
+                    message: res.data.msg,
+                    showConfirmButton: true,
+                    showCancelButton: true,
+                    confirmButtonText: '重新输入',
+                    cancelButtonText: '忘记密码',
+                    cancelButtonClass:'cancel_btn',
+                    confirmButtonClass:'confirm_btn_orange',
+                  }).then((res)=>{
+                    if(res == 'confirm'){
+                      this.password = '';
+                      return;
+                    }else if(res == 'cancel'){
+                      this.$router.push('/code');
+                      return;
+                    }
+                  })
+                }
+              }
+              else if(res.data.code == -3){
                 this.$messagebox({
                   title: '提示',
                   message: res.data.msg,
                   showConfirmButton: true,
                   showCancelButton: true,
-                  confirmButtonText: '重新输入',
+                  confirmButtonText: '我知道了',
                   cancelButtonText: '忘记密码',
                   cancelButtonClass:'cancel_btn',
                   confirmButtonClass:'confirm_btn_orange',
@@ -79,15 +122,11 @@
                   if(res == 'confirm'){
                     this.password = '';
                     return;
-                   ;
                   }else if(res == 'cancel'){
                     this.$router.push('/code');
-                    return
+                    return;
                   }
                 })
-              }
-              else if(res.data.code == -3){
-
               }
             /*  var toast = this.$toast({
                 message: res.data.msg,
@@ -115,14 +154,57 @@
               method: 'get',
               url: process.env.API_ROOT + 'user/transfer/dotransfer?mobile='+this.transferMobile+'&balance='+this.transferMoney+'&payPassword='+hexMD5(this.password)
             }).then((res)=>{
+              console.log(res);
               if(res.data.code == -4){
+                if(res.data.msg.indexOf('输入错误3次') != -1){
+                  this.$messagebox({
+                    title: '提示',
+                    message: res.data.msg,
+                    showConfirmButton: true,
+                    showCancelButton: true,
+                    confirmButtonText: '我知道了',
+                    cancelButtonText: '忘记密码',
+                    cancelButtonClass:'cancel_btn',
+                    confirmButtonClass:'confirm_btn_orange',
+                  }).then((res)=>{
+                    if(res == 'confirm'){
+                      this.password = '';
+                      return;
+                    }else if(res == 'cancel'){
+                      this.$router.push('/code');
+                      return;
+                    }
+                  })
+                }
+                else{
+                  this.$messagebox({
+                    title: '提示',
+                    message: res.data.msg,
+                    showConfirmButton: true,
+                    showCancelButton: true,
+                    confirmButtonText: '重新输入',
+                    cancelButtonText: '忘记密码',
+                    cancelButtonClass:'cancel_btn',
+                    confirmButtonClass:'confirm_btn_orange',
+                  }).then((res)=>{
+                    if(res == 'confirm'){
+                      this.password = '';
+                      return;
+                    }else if(res == 'cancel'){
+                      this.$router.push('/code');
+                      return;
+                    }
+                  })
+                }
+              }
+              else if(res.data.code == -3){
                 this.$messagebox({
                   title: '提示',
                   message: res.data.msg,
                   showConfirmButton: true,
                   showCancelButton: true,
-                  confirmButtonText: '重新输入',
-                  cancelButtonText: '我知道了',
+                  confirmButtonText: '我知道了',
+                  cancelButtonText: '忘记密码',
                   cancelButtonClass:'cancel_btn',
                   confirmButtonClass:'confirm_btn_orange',
                 }).then((res)=>{
@@ -132,15 +214,9 @@
                   }else if(res == 'cancel'){
                     this.$router.push('/code');
                     return;
-
                   }
                 })
               }
-              this.$toast({
-                message: res.data.msg,
-                position: 'bottom',
-                duration: 1500
-              });
               if(res.data.code == '0000'){
                 setTimeout(()=>{
                   this.setStorage('transferOrderId',res.data.data);
