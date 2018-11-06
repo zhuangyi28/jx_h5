@@ -29,33 +29,29 @@
       <div class="title">需求描述</div>
       <div class="content">{{taskDetail.taskDetails}}</div>
       <!-- 文件下载 -->
-      <div class="file">
+      <div class="file" v-if="url">
         <a v-bind:href="url" v-bind:download="taskDetail.originalFileNames">
           <img src="../../../../static/images/jx_task_files.png">
           <p>{{taskDetail.originalFileNames}}</p>
         </a>
       </div>
       <!-- 补充内容-->
-      <div class="tips_title">补充内容</div>
-      <div class="tips_content">补充什么内容呢补充什么内容呢补充什么内容呢补充什么内容呢补充什么内容呢补充什么内容呢补充什么内容呢补充什么内容呢</div>
+      <div class="tips_title" v-if="taskDetail.taskAddtionDetail">补充内容</div>
+      <div class="tips_content" v-if="taskDetail.taskAddtionDetail">{{taskDetail.taskAddtionDetail}}</div>
     </div>
 
     <!-- 名称-->
     <div class="name">
       <div class="icon"><img src="../../../../static/images/jx_mine_image.png"/></div>
       <div class="people">
-        <div>{{userName}}</div>
+        <div>{{entName}}</div>
         <div><span><img src="../../../../static/images/jx_people_authentication.png"/>已认证</span></div>
       </div>
     </div>
     <div class="task_btn_area">
       <!-- 按钮-->
-      <orange-btn :name="btnName" v-on:clickEvent="cancelRegistrationFn"></orange-btn>
+      <orange-btn :name="btnName" v-on:clickEvent="handleClick"></orange-btn>
     </div>
-
-
-
-
 
   </div>
 </template>
@@ -70,21 +66,19 @@
 
       return{
 
-        btnName: '取消报名',
+        btnName: '',//按钮名称
 
-        taskId: '',
+        taskId: '',//任务编号
 
-        taskDetail: '',
+        taskDetail: '',//任务详情
 
-        url: '',
+        url: '',//文件链接
 
-        userName: ''
+        entName: ''//企业名称
 
       }
     },
     mounted () {
-
-      this.userName = localStorage.getItem('userName');
 
       this.taskId = localStorage.getItem('taskId');
 
@@ -93,6 +87,7 @@
     },
     methods:{
 
+      //取消报名
       cancelRegistrationFn:function () {
 
 
@@ -115,6 +110,7 @@
 
 
 
+      //获取任务详情
       getData: function () {
 
         this.$http({
@@ -149,6 +145,16 @@
 
           this.url = this.taskDetail.taskFile;
 
+          this.entName = this.taskDetail.entName;
+
+          if(!this.taskDetail.nicknameHide){
+
+            this.entName = '******';
+
+          }
+
+          this.btnName = this.btnNameChange(+this.taskDetail.buttonState);
+
         }.bind(this)).catch((res)=>{
 
           console.log(res);
@@ -159,6 +165,7 @@
 
 
 
+      //更改时间格式
       timeChange: function (time) {
 
         if(time == 0){
@@ -193,6 +200,7 @@
 
 
 
+      //获取任务分类
       typeChange: function (type) {
 
         /*"1",  "技术服务"),
@@ -233,6 +241,7 @@
       },
 
 
+      //获取任务行业
       industryChange: function (industry) {
 
         /*"1",  "互联网IT/电子/通信"
@@ -287,6 +296,116 @@
           case 10:
 
             return '其他';
+
+        }
+
+      },
+
+
+
+      //报名
+      signUp: function () {
+
+        /**
+         * 接口：用户报名
+         * 请求方式：POST
+         * 接口：/user/task/add/taskuserrel
+         * 入参：taskId
+         **/
+
+        this.$http({
+
+          method: 'post',
+
+          url: process.env.API_ROOT + 'user/task/add/taskuserrel',
+
+          header: {
+
+            'content-type': 'application/x-www-form-urlencoded'
+
+          },
+
+          params: {
+
+            taskId: localStorage.getItem('taskId')
+
+          }
+
+        }).then(function (res) {
+
+          if(res.data.code == '-1'){
+
+            this.$messagebox({
+              message: res.data.msg,
+              showCancelButton: true,
+              showConfirmButton: true,
+              confirmButtonText: '去认证',
+              cancelButtonText: '取消',
+              cancelButtonClass: 'cancel_btn',
+              confirmButtonClass: 'confirm_btn_orange'
+            }).then(function (res) {
+
+              if(res == 'confirm'){
+
+                this.$router.push('/personInformation');
+
+              }
+
+            }.bind(this));
+
+          }
+
+        }.bind(this));
+
+      },
+
+
+
+      //获取按键状态
+      btnNameChange: function (name) {
+
+        switch (name) {
+
+          case 1:
+
+            return '已关闭';
+
+          case 2:
+
+            return '已结束';
+
+          case 3:
+
+            return '取消报名';
+
+          case 4:
+
+            return '已被录用';
+
+          case 5:
+
+            return '未被录用';
+
+          case 6:
+
+            return '报名';
+
+        }
+
+      },
+
+
+
+      //按键点击事件
+      handleClick: function () {
+
+        if(this.taskDetail.buttonState == 6){
+
+          this.signUp();
+
+        }else if(this.taskDetail.buttonState == 3){
+
+          this.cancelRegistrationFn();
 
         }
 

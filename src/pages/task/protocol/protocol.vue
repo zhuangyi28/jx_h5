@@ -64,7 +64,7 @@
       <div class="content">(一)本协议的任何一方未能及时行使本协议项下的权利不应被视为放弃该权利。</div>
       <div class="content">(二)如果本协议中的任何条款无论因何种原因完全或部分无效或不具有执行力，或违反任何适用的法律，则该条款被视为删除，但本协议的其余条款仍应有效并且有约束力。</div>
     </div>
-    <orangeBtn v-bind:name="btnName"></orangeBtn>
+    <orangeBtn v-bind:name="btnName" v-on:clickEvent="protocolAgree"></orangeBtn>
   </div>
 </template>
 <script>
@@ -74,11 +74,15 @@
 
     name: 'protocol',
 
+
+
     components: {
 
       orangeBtn: orangeBtn
 
     },
+
+
 
     data () {
 
@@ -90,7 +94,84 @@
 
     },
 
+
+
     mounted () {
+
+      /**
+       * 接口：用户中心
+       * 请求方式：POST
+       * 接口：/user/center/usercenter
+       * 入参：null
+       **/
+
+      this.$http({
+
+        method: 'post',
+
+        url: process.env.API_ROOT + 'user/center/usercenter',
+
+      }).then(function (res) {
+
+        if(res.data.data.isCommitAuthorize == 1){
+
+          this.$router.push('/taskSquare');
+
+        }
+
+      }.bind(this)).catch((res)=>{
+
+        console.log(res);
+
+      });
+
+    },
+
+
+
+    methods: {
+
+      //同意协议
+      protocolAgree: function () {
+
+        /**
+         * 接口：用户同意广场授权
+         * 请求方式：POST
+         * 接口：/user/task/commit/usertaskaggree
+         * 入参：isCommitAuthorize
+         **/
+
+        this.$http({
+
+          method: 'post',
+
+          url: process.env.API_ROOT + 'user/task/commit/usertaskaggree',
+
+          params: {
+
+            isCommitAuthorize: 1
+
+          }
+
+        }).then(function (res) {
+
+          if(res.data.code == '0000'){
+
+            this.$router.push('/taskSquare');
+
+          }else{
+
+            console.log(res);
+
+          }
+
+        }.bind(this)).catch((res)=>{
+
+          console.log(res);
+
+        });
+
+      }
 
 
 

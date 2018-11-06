@@ -2,7 +2,7 @@
 
   <div class="task_square">
 
-    <div class="find_input" v-on:click="orderShow = false; selectShow = false">
+    <div class="find_input" v-on:click="orderShow = false ; selectShow = false">
 
       <div class="input_place" v-on:click="$router.push('/find')">
 
@@ -42,10 +42,12 @@
 
     </div>
 
+    <!--下拉框-->
     <div class="popup" v-if="orderShow || selectShow">
 
-      <div class="order_bg" v-on:click="orderShow = false;selectShow = false"></div>
+      <div class="order_bg" v-on:click="orderShow = false ; selectShow = false"></div>
 
+      <!--筛选下拉框-->
       <div class="order" v-if="orderShow">
 
         <div class="ability_tags">
@@ -102,11 +104,11 @@
 
           <div class="money_select">
 
-            <div v-on:click="taskMaxUnit = 999; taskMinUnit = 1">1-999</div>
+            <div v-on:click="(taskMaxUnit = 999)&& (taskMinUnit = 1)">1-999</div>
 
-            <div v-on:click="taskMaxUnit = 20000; taskMinUnit = 10000">10k-20k</div>
+            <div v-on:click="(taskMaxUnit = 20000)&& (taskMinUnit = 10000)">10k-20k</div>
 
-            <div v-on:click="taskMinUnit = 20000; taskMaxUnit = ''">20k以上</div>
+            <div v-on:click="(taskMinUnit = 20000)&& (taskMaxUnit = '')">20k以上</div>
 
           </div>
 
@@ -122,6 +124,7 @@
 
       </div>
 
+      <!--分类下拉框-->
       <div class="select_content" v-else-if="selectShow">
 
         <div class="select_list">
@@ -146,6 +149,7 @@
 
     </div>
 
+    <!--任务列表-->
     <div class="task_list">
 
       <div class="list_one" v-for="taskList in taskLists" v-bind:data-taskId="taskList.taskId" v-on:click="jumpTo">
@@ -204,25 +208,25 @@
 
       return {
 
-        orderShow: false,
+        orderShow: false,//筛选下拉框显示
 
-        selectShow: false,
+        selectShow: false,//分类下拉框显示
 
-        timeShow: 'none',
+        timeShow: 'none',//时间排序显示
 
-        industry: '',
+        industry: '',//所属行业
 
-        type: '',
+        type: '',//分类
 
-        sort: '',
+        sort: '',//截止时间排序
 
-        taskMinUnit: '',
+        taskMinUnit: '',//任务单价最小值
 
-        taskMaxUnit: '',
+        taskMaxUnit: '',//任务单价最大值
 
-        taskLists: [],
+        taskLists: [],//任务列表
 
-        selectLists: {}
+        selectLists: {}//筛选排序列表
 
       }
 
@@ -240,6 +244,7 @@
 
     methods: {
 
+      //分类下拉框弹出
       selectDropDown: function () {
 
         this.orderShow = false;
@@ -250,6 +255,7 @@
 
 
 
+      //筛选下拉框弹出
       orderDropDown: function () {
 
         this.selectShow = false;
@@ -260,6 +266,7 @@
 
 
 
+      //时间排序图标控制
       timeDropDown: function () {
 
         this.orderShow = false;
@@ -278,6 +285,7 @@
 
 
 
+      //转换时间格式
       timeChange: function (arr) {
 
         for(var taskList of arr){
@@ -316,9 +324,17 @@
 
 
 
+      //获取任务列表明细
       getData: function () {
 
         var _this = this;
+
+        /**
+         * 接口：任务广场列表
+         * 请求方式：POST
+         * 接口：/task/home/gettasklist
+         * 入参：null
+         **/
 
         this.$http({
 
@@ -352,6 +368,7 @@
 
 
 
+      //筛选排序
       changeType: function () {
 
         this.type = event.currentTarget.dataset.type;
@@ -387,6 +404,7 @@
 
 
 
+      //重置按钮
       resetAll: function () {
 
         this.taskMaxUnit = '';
@@ -399,6 +417,7 @@
 
 
 
+      //筛选提交按钮
       confirmClick: function () {
 
         this.taskMaxUnit ? (this.selectLists.taskMaxUnit = this.taskMaxUnit) : (this.selectLists.taskMaxUnit && (delete this.selectLists.taskMaxUnit));
@@ -417,6 +436,7 @@
 
 
 
+      //点击进入任务详情
       jumpTo: function () {
 
         var taskId = event.currentTarget.dataset.taskid;
