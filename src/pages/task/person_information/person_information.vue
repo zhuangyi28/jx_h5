@@ -6,7 +6,7 @@
       <div class="skill_tags">
         <div><span>设计</span><span class="delete_btn"></span></div>
         <div><span>APP开发</span><span class="delete_btn"></span></div>
-        <div><span>添加</span><span class="delete_btn"></span></div>
+        <div v-on:click="tagsAdd"><span>添加</span><span class="delete_btn"></span></div>
       </div>
       <div class="skill_ps">注：最多添加5个标签，每个标签最多6个字</div>
     </div>
@@ -39,18 +39,68 @@
   </div>
 </template>
 <script>
+
   import orangeBtn from '../../../components/orange_btn/orange_btn'
+
   export default {
+
     name: 'person_information',
+
     components: {
+
       orangeBtn: orangeBtn
+
     },
+
     data () {
+
       return {
-        btnName: '保存'
+
+        btnName: '保存',
+
+        popupShow: false,
+
+        tags: []
+
       }
+
+    },
+
+    methods: {
+
+      tagsAdd: function () {
+
+        this.$messagebox({
+
+          title: '请输入标签',
+          showInput: true,
+          inputType: 'text',
+          inputPlaceholder: '请输入您的标签(最多6个字)',
+          showCancelButton: true,
+          showConfirmButton: true,
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          cancelButtonClass: 'cancel_btn',
+          confirmButtonClass: 'confirm_btn_orange',
+
+        }).then(function (res) {
+
+          debugger;
+
+        }.bind(this));
+
+        /*this.$messagebox.prompt('请输入姓名','').then(function ({value,action}){
+
+          debugger;
+
+        })*/
+
+      }
+
     }
+
   }
+
 </script>
 <style lang="less" scoped>
   @import "person_information.less";
