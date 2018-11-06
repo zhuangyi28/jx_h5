@@ -69,17 +69,35 @@
 </template>
 <script>
   import orangeBtn from '../../../components/orange_btn/orange_btn'
+
   export default {
+
     name: 'protocol',
+
     components: {
+
       orangeBtn: orangeBtn
+
     },
+
     data () {
+
       return {
+
         btnName: '同意协议并开通嘉薪众包'
+
       }
+
+    },
+
+    mounted () {
+
+
+
     }
+
   }
+
 </script>
 <style lang="less" scoped>
   @import "protocol.less";
