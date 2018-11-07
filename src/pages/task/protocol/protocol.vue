@@ -115,7 +115,7 @@
 
         if(res.data.data.isCommitAuthorize == 1){
 
-          this.$router.push('/taskSquare');
+          this.$router.replace('/taskSquare');
 
         }
 
