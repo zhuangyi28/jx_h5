@@ -74,7 +74,9 @@
 
         url: '',//文件链接
 
-        entName: ''//企业名称
+        entName: '',//企业名称
+
+        relId: ''//任务用户关联Id
 
       }
     },
@@ -101,10 +103,51 @@
           closeOnClickModal: false,
           cancelButtonClass: 'cancel_btn',
           confirmButtonClass: 'confirm_btn_orange',
-        }).then(action => {
+        }).then(function (res) {
 
+          if(res == 'confirm'){
 
-      })
+            this.$http({
+
+              method: 'post',
+
+              url: process.env.API_ROOT + 'user/task/cancel/enroll',
+
+              header: {
+
+                'content-type': 'application/x-www-form-urlencoded'
+
+              },
+
+              params: {
+
+                relId: this.relId
+
+              }
+
+            }).then(function (res) {
+
+              if(res.data.code == '0000'){
+
+                this.$toast({
+
+                  message: res.data.msg,
+
+                  position: 'bottom',
+
+                  duration: 1500
+
+                });
+
+                this.btnName = '报名';
+
+              }
+
+            }.bind(this));
+
+          }
+
+        }.bind(this))
 
       },
 
@@ -154,6 +197,8 @@
           }
 
           this.btnName = this.btnNameChange(+this.taskDetail.buttonState);
+
+          this.relId = this.taskDetail.relId;
 
         }.bind(this)).catch((res)=>{
 
@@ -335,23 +380,13 @@
 
           if(res.data.code == '-1'){
 
-            this.$messagebox({
-              message: res.data.msg,
-              showCancelButton: true,
-              showConfirmButton: true,
-              confirmButtonText: '去认证',
-              cancelButtonText: '取消',
-              cancelButtonClass: 'cancel_btn',
-              confirmButtonClass: 'confirm_btn_orange'
-            }).then(function (res) {
+            localStorage.setItem('lookTaskToPersonInformation','true');
 
-              if(res == 'confirm'){
+            this.$router.push('/personInformation');
 
-                this.$router.push('/personInformation');
+          }else if(res.data.code == '0000'){
 
-              }
-
-            }.bind(this));
+            this.$router.push('submitSuccess');
 
           }
 
@@ -401,7 +436,84 @@
 
         if(this.taskDetail.buttonState == 6){
 
-          this.signUp();
+          /**
+           * 接口：用户中心
+           * 请求方式：POST
+           * 接口：/user/center/usercenter
+           * 入参：null
+           **/
+
+          this.$http({
+
+            method: 'post',
+
+            url: process.env.API_ROOT + 'user/center/usercenter',
+
+          }).then((res)=>{
+
+            if(res.data.data.isVerify == 0){
+
+              this.$messagebox({
+                message: '当前账户尚未进行实名认证，请先前往完成实名认证',
+                showCancelButton: true,
+                showConfirmButton: true,
+                confirmButtonText: '去认证',
+                cancelButtonText: '取消',
+                cancelButtonClass: 'cancel_btn',
+                confirmButtonClass: 'confirm_btn_orange'
+              }).then(function (res) {
+
+                if(res == 'confirm'){
+
+                  this.$router.push('/certification');
+
+                  return;
+
+                }
+
+              }.bind(this))
+
+            }else if(res.data.data.code == 2){
+
+              this.$toast({
+
+                message: '实名认证审核中',
+
+                position: 'bottom',
+
+                duration: 1500
+
+              });
+
+            }else if(res.data.data.code == 3){
+
+              this.$messagebox({
+                message: '实名认证审核不通过，请重新提交实名认证',
+                showCancelButton: true,
+                showConfirmButton: true,
+                confirmButtonText: '去认证',
+                cancelButtonText: '取消',
+                cancelButtonClass: 'cancel_btn',
+                confirmButtonClass: 'confirm_btn_orange'
+              }).then(function (res) {
+
+                if(res == 'confirm'){
+
+                  this.$router.push('/certification');
+
+                  return;
+
+                }
+
+              }.bind(this))
+
+            }else{
+
+              this.signUp();
+
+            }
+
+          });
 
         }else if(this.taskDetail.buttonState == 3){
 

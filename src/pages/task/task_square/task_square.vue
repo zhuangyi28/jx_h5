@@ -212,7 +212,7 @@
 
         selectShow: false,//分类下拉框显示
 
-        timeShow: 'none',//时间排序显示
+        timeShow: false,//时间排序显示
 
         industry: '',//所属行业
 
@@ -273,9 +273,9 @@
 
         this.selectShow = false;
 
-        (this.timeShow == 'none') ? (this.timeShow = true) : (this.timeShow = !this.timeShow);
+        this.timeShow = !this.timeShow;
 
-        this.timeShow ? (this.sort = 1) : (this.sort = 2);
+        this.timeShow ? (this.sort = 2) : (this.sort = 1);
 
         this.selectLists.sort = this.sort;
 

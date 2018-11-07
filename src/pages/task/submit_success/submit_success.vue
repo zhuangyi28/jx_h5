@@ -7,7 +7,7 @@
       <div class="title">您已报名成功</div>
       <div class="success_ps">企业将审核您的履历信息，请耐心等待</div>
     </div>
-    <div class="jump_btn">查看报名详情</div>
+    <div class="jump_btn" v-on:click="$router.push('taskDetail')">查看报名详情</div>
   </div>
 </template>
 <script>
