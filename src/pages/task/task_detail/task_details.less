@@ -106,7 +106,7 @@
 
     }
     .state_time{
-      padding: 15px 15px 0 15px;
+      padding: 15px;
       .time_box{
         position: relative;
         display: flex;
@@ -118,6 +118,7 @@
 
         &:last-child{
           color: #4a4a4a;
+          margin-bottom: 0;
           .circle{
             position: relative;
             border: 1px solid #ff7d37;
@@ -179,7 +180,7 @@
         border-left: 1px solid #d5d5d5;
     }
       .state{
-        width: calc(~'100vw - 180px');
+        width: calc(~'100vw - 170px');
         span{
           display: inline-block;
           margin-left: 10px;
@@ -211,22 +212,44 @@
   }
   .task_feedback{
     background-color: #fff;
-    padding: 15px 0;
+    padding: 15px 0 0;
 
     .title{
       font-size: 16px;
       border-left: 5px solid #ff7d37;
       padding: 0 15px;
+      margin-bottom: 10px;
     }
     .feedback_content{
-      padding: 15px;
+      position: relative;
+      padding: 10px 15px;
+      &:last-of-type{
+        &:after{
+          content: '';
+          position: absolute;
+          bottom:0;
+          border-bottom: none;
+        }
+      }
+      &:after{
+        content: '';
+        position: absolute;
+        bottom:0;
+        left: 15px;
+        width: 96%;
+        border-bottom: 1px solid #e9e9e9;
+        height: 1px;
+        transform:scaleY(.6);
+
+      }
       .feedback_box{
         display: flex;
         align-items: center;
         justify-content: space-between;
 
         .feedback_details{
-          span{
+          margin-bottom: 10px;
+          span:first-child{
             display: inline-block;
             background-color: #ff7d37;
             color: #ffffff;
@@ -244,7 +267,7 @@
     }
     .add_feedback{
       position: relative;
-      padding: 15px 15px 0 15px;
+      padding: 15px;
       text-align: center;
       color: #ababab;
       span{

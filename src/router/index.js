@@ -60,6 +60,8 @@ import personInformation from '@/pages/task/person_information/person_informatio
 import taskFeedback from '@/pages/task/task_feedback/task_feedback'
 import myTask from '@/pages/task/my_task/my_task'
 import submitSuccess from '@/pages/task/submit_success/submit_success'
+import taskFeedbackContent from '@/pages/task/task_feedback_content/task_feedback'
+import salary from '@/pages/salary/salary'
 
 Vue.use(Router)
 
@@ -517,6 +519,15 @@ export default new Router({
       },
       component: taskFeedback
     },
+
+    {
+      path: '/taskFeedbackContent',
+      name: 'taskFeedbackContent',
+      meta: {
+        title: '任务反馈'
+      },
+      component: taskFeedbackContent
+    },
     {
       path: '/myTask',
       name: 'myTask',
@@ -541,6 +552,15 @@ export default new Router({
       },
       component: lookTask
     },
+    {
+      path: '/salary',
+      name: 'salary',
+      meta:{
+        title: '工资条'
+      },
+      component: salary
+    },
+
     {
       path: '/workDesk',
       name: 'workDesk',

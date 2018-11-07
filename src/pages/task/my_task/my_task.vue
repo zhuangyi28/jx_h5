@@ -12,15 +12,24 @@
       <!-- list -->
       <div class="my_task_one" v-for="item in taskList" v-bind:data-id="item.taskId" @click="lookTaskDetailFn">
         <div class="my_task_information">
-          <div class="task_title">
-            <img src="../../../../static/images/jx_bag.png">
-            <span>{{item.taskName}}</span>
+          <div class="task_left">
+            <div class="task_title">
+              <img src="../../../../static/images/jx_bag.png">
+            </div>
+            <div class="task_content">
+              <div>{{item.taskName}}</div>
+              <div class="task_money">
+                <span v-if="item.taskMaxUnit==item.taskMinUnit">￥{{item.taskMaxUnit}}</span>
+                <span v-else>￥{{item.taskMinUnit}}-￥{{item.taskMaxUnit}}</span>
+              </div>
+            </div>
           </div>
+
           <div class="task_status">
-            <span v-if="item.taskState=='1'">已报名</span>
-            <span v-else-if="item.taskState=='2'">工作中</span>
-            <span v-else-if="item.taskState=='3'">待验收</span>
-            <span v-else-if="item.taskState=='4'">待收款</span>
+            <span class="orange" v-if="item.taskState=='1'">已报名</span>
+            <span class="orange" v-else-if="item.taskState=='2'">工作中</span>
+            <span class="orange" v-else-if="item.taskState=='3'">待验收</span>
+            <span class="orange" v-else-if="item.taskState=='4'">待收款</span>
             <span v-else-if="item.taskState=='5'">已收款</span>
             <span v-else-if="item.taskState=='6'">已取消</span>
             <span v-else-if="item.taskState=='7'">未被录用</span>
@@ -28,12 +37,9 @@
             <span class="next_btn"></span>
           </div>
         </div>
-        <div class="task_money_time">
-          <div class="task_money">
-            <span v-if="item.taskMaxUnit==item.taskMinUnit">￥{{item.taskMaxUnit}}</span>
-            <span v-else>￥{{item.taskMinUnit}}-￥{{item.taskMaxUnit}}</span>
-          </div>
-        </div>
+
+
+
       </div>
       <div class="loadmore" v-show="!noData">
         <!-- 暂无账单 -->
