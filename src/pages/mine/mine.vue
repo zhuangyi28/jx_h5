@@ -102,7 +102,7 @@
         <i class="allow_right"></i>
       </div>
       <!--我的发薪企业 -->
-      <div class="cell" v-on:click="$router.push('/company')">
+      <div class="cell" v-on:click="$router.push('/salary')">
         <div class="title">
           <img src="../../../static/images/jx_payroll_1.png"><span class="cell_text">工资条</span>
         </div>
@@ -122,18 +122,18 @@
         <div v-show="hasNewMsg" class="cell_value"><span class="red">您有新消息</span></div>
         <i class="allow_right"></i>
       </div>
-      <!--设置 -->
-      <div class="cell" v-on:click="$router.push('/setHomepage')">
+      <!--帮助与客服 -->
+      <div class="cell" v-on:click="$router.push('/helpCenter')">
         <div class="title">
-          <img src="../../../static/images/jx_set_1.png"><span class="cell_text">设置</span>
+          <img src="../../../static/images/jx_ask_1.png"><span class="cell_text">帮助与客服</span>
         </div>
         <div class="cell_value"></div>
         <i class="allow_right"></i>
       </div>
-      <!--消息 -->
-      <div class="cell" v-on:click="$router.push('/helpCenter')">
+      <!--设置 -->
+      <div class="cell" v-on:click="$router.push('/setHomepage')">
         <div class="title">
-          <img src="../../../static/images/jx_ask_1.png"><span class="cell_text">帮助与客服</span>
+          <img src="../../../static/images/jx_set_1.png"><span class="cell_text">设置</span>
         </div>
         <div class="cell_value"></div>
         <i class="allow_right"></i>

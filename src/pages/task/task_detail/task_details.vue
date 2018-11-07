@@ -15,7 +15,9 @@
           <div>
             <p v-if="signupState==2">{{signUpTotal}}个人已报名</p>
             <p v-else-if="signupState==3">报名已结束</p>
-          <p>截止时间:{{abortDate| fmtDateStr2}}</p>
+
+            <p v-if="abortDate==0">截止时间：不限</p>
+            <p v-else>截止时间：{{abortDate| fmtDateStr2}}</p>
         </div>
 
       </div>
@@ -27,25 +29,25 @@
 
       <div class="title">任务状态</div>
       <div class="state_content">
-        <div class="state_box">
+        <div class="state_box" v-bind:class="brightState=='1'? 'selected':''">
           <p><img src="../../../../static/images/jx_task_sign_1.png"/></p>
           <p>已报名</p>
           <p class="border"></p>
         </div>
 
-        <div class="state_box selected">
+        <div class="state_box" v-bind:class="brightState=='2'? 'selected':''">
           <p><img src="../../../../static/images/jx_task_sign_2.png"/></p>
           <p>被录用</p>
           <p class="border"></p>
         </div>
 
-        <div class="state_box">
+        <div class="state_box" v-bind:class="brightState=='3'? 'selected':''">
           <p><img src="../../../../static/images/jx_task_sign_3.png"/></p>
           <p>提交验收</p>
           <p class="border"></p>
         </div>
 
-        <div class="state_box">
+        <div class="state_box" v-bind:class="brightState=='4'? 'selected':''">
           <p><img src="../../../../static/images/jx_task_sign_4.png"/></p>
           <p>验收通过</p>
         </div>
@@ -53,50 +55,21 @@
       </div>
       <div class="state_time">
         <!-- 1 -->
-        <div class="time_box">
+        <div class="time_box" v-for="item in taskTimeArea">
           <div class="date">
-            <p>2018-09-30</p>
-            <p>10:20:10</p>
+            <p>{{item.data|fmtDateStr}}</p>
           </div>
           <div class="circle"></div>
-          <div class="state">已报名，等待企业审核</div>
-
-        </div>
-
-        <!-- 2 -->
-        <div class="time_box">
-          <div class="date">
-            <p>2018-09-30</p>
-            <p>10:20:10</p>
-          </div>
-          <div class="circle"></div>
-          <div class="state">您已被录用，等待企业联系您</div>
-
-        </div>
-
-        <!-- 3 -->
-        <div class="time_box">
-          <div class="date">
-            <p>2018-09-30</p>
-            <p>10:20:10</p>
-          </div>
-          <div class="circle"></div>
-          <div class="state">提交验收成功，请耐心等待企业验收</div>
-
-        </div>
-
-        <!-- 4 -->
-        <div class="time_box">
-          <div class="date">
-            <p>2018-09-30</p>
-            <p>10:20:10</p>
-          </div>
-          <div class="circle"></div>
-          <div class="state">任务验收通过<span class="green">验</span></div>
+          <div v-if="item.type=='1'" class="state">已报名，等待企业审核</div>
+          <div v-else-if="item.type=='2'" class="state">您已被录用，等待企业联系您哦</div>
+          <div v-else-if="item.type=='3'" class="state">提交验收成功，请耐心等待企业验收</div>
+          <div v-else-if="item.type=='4'" class="state">任务验收通过<span class="green">验</span></div>
+          <div v-else-if="item.type=='5'" class="state">很遗憾，您未被录用</div>
+          <div v-else-if="item.type=='6'" class="state">企业已关闭改任务</div>
         </div>
 
       </div>
-      <div class="show_more" v-on:click="changeFoldState">
+      <div class="show_more" v-if="taskTimeArea.length > 4" v-on:click="changeFoldState">
         <span>{{brandMore?'展开∨':'收起∧'}}</span>
       </div>
 
@@ -104,27 +77,34 @@
     </div>
 
     <!-- 任务状态 -->
-    <div class="task_feedback" v-on:click="$router.push('/taskFeedback')">
+    <div class="task_feedback" v-if="selectState">
 
-      <div class="title">任务反馈</div>
-      <div class="feedback_content">
-        <div class="feedback_box">
-          <div>
-            <div class="feedback_details"><span>反馈</span>{{taskDetails}}</div>
-            <div class="time">2019-09-20 10:00:00</div>
+      <div class="task_feedback_list">
+        <div class="title">任务反馈</div>
+        <div class="feedback_content" v-for="item in feedbackList" v-bind:data-id="item.pFeedbackId" v-on:click="lookFeedBackDetailFn">
+          <div class="feedback_box">
+            <div>
+              <div class="feedback_details"><span>反馈</span><span>{{item.pContent}}</span></div>
+              <div class="time">{{item.pCreateDate|fmtDateStr}}</div>
+            </div>
           </div>
-
-
         </div>
+
       </div>
-
       <!-- 添加反馈 -->
-      <div class="add_feedback"><span>+</span>添加任务反馈</div>
-
+      <div v-if="canSubmit=='1'" class="add_feedback" v-on:click="$router.push('/taskFeedback')"><span>+</span>添加任务反馈</div>
 
     </div>
 
-    <orangeBtn v-on:clickEvent="taskBtn" :name="taskBtnName"></orangeBtn>
+    <!-- 提交验收 -->
+    <div v-if="canSubmit=='1'">
+      <orangeBtn v-on:clickEvent="taskBtn" :name="taskBtnName1"></orangeBtn>
+    </div>
+    <!-- 取消报名 -->
+    <div v-if="selectState=='1'">
+      <orangeBtn v-on:clickEvent="cancelTaskBtn" :name="taskBtnName2"></orangeBtn>
+    </div>
+
 
 
   </div>
@@ -155,14 +135,27 @@
 
         taskDetails:'',//任务详情
 
-        taskBtnName:'提交验收',//按钮名称
+        taskBtnName1:'提交验收',//按钮名称
+
+        taskBtnName2:'取消报名',//按钮名称
+
+        brightState:'',//任务状态 返回几代表第几个高亮
+
+        canSubmit:'',//canSubmit=1 显示申请验收按钮 canSubmit=0 不显示申请验收按钮
+
+        selectState:'',//selectState=1 的时候会出现取消报名按钮
+
+        feedbackList:[],//反馈列表
+
+        taskTimeArea:[],//任务反馈时间详情
 
         brandMore: true//显示展开收回
       }
     },
     mounted () {
 
-      this.taskId = this.getStorage('taskId')
+      this.taskId = this.getStorage('taskId');
+
 
       /**
        * 接口：获取任务详情
@@ -189,9 +182,10 @@
         console.log(res.data);
 
         let taskInfo = res.data.data.taskInfo;
-
+        //任务状态高亮 第几个显示第几个状态
+        this.brightState = res.data.data.brightState;
+        //任务详情
         this.taskInfo = res.data.data.taskInfo;
-
         //任务名称
         this.taskName =taskInfo.taskName;
         //任务时间
@@ -204,7 +198,18 @@
         //报名状态 2-报名中 3-报名结束
         this.signupState = taskInfo.signupState;
         //反馈详情
-        this.taskDetails = taskInfo.taskDetails
+        this.taskDetails = taskInfo.taskDetails;
+        //按钮状态
+        this.canSubmit = res.data.data.canSubmit;
+        //反馈列表
+        this.feedbackList = res.data.data.feedbacks;
+        //是否显示取消报名
+        this.selectState = res.data.data.selectState;
+        //任务详情时间及状态
+        this.taskTimeArea = res.data.data.taskTimeArea;
+        //任务用户关联id-添加反馈中获取
+        this.setStorage('recordId',res.data.data.recordId)
+        this.setStorage('relId',res.data.data.relId)
 
 
 
@@ -221,7 +226,45 @@
       },
       taskBtn:function () {
 
+        /**
+         * 接口：提交验收
+         * 请求方式：POST
+         * 接口：user/task/submitcheck
+         * 入参：relId，pRecordId
+         **/
+
+        this.$http({
+
+          method: 'get',
+
+          url: process.env.API_ROOT + 'user/task/submitcheck',
+
+          params: {
+
+            relId:this.relId,
+
+            pRecordId:this.pRecordId,
+
+          },
+
+        }).then((res) => {
+
+            console.log(res.data)
+
+        }).catch((res)=>{})
+
+
+      },
+
+      cancelTaskBtn:function () {
+//$router.push('/taskFeedbackContent')
+      },
+      lookFeedBackDetailFn:function (e) {
+        console.log('详情id'+e.currentTarget.dataset.id)
+        this.setStorage('pFeedbackId',e.currentTarget.dataset.id)
+        this.$router.push('/taskFeedbackContent')
       }
+
     }
 
 
