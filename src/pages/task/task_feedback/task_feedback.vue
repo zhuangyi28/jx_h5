@@ -3,7 +3,8 @@
     <div class="feedback_content">
       <div class="feedback_content_title">反馈内容</div>
       <div class="feedback_content_input">
-        <textarea name="" id="" cols="30" rows="6" placeholder="请填写反馈内容（200字以内）" maxlength="200" v-model="feedBackContent"></textarea>
+        <textarea name="" id="" cols="30" rows="6" placeholder="请填写反馈内容（200字以内）" maxlength="200"
+                  v-model="feedBackContent"></textarea>
       </div>
     </div>
     <div class="upload_file">
@@ -22,7 +23,7 @@
       </div>
       <div class="position">
         <img src="../../../../static/images/jx_position.png">
-        <span>所在位置</span>
+        <span v-if="place">{{place}}</span>
       </div>
     </div>
     <div class="save_btn" v-on:click="keepTaskDetailFn">提交</div>
@@ -41,21 +42,24 @@
 
         inputFile: '',
 
-        resultUpload:'',//最终图片上传结果
+        resultUpload: '',//最终图片上传结果
 
-        resultUploadList:[],//图片上传数组
+        resultUploadList: [],//图片上传数组
 
-        originalFileName:'',//最终名称上传结果
+        originalFileName: '',//最终名称上传结果
 
-        originalFileNameList:[],//名字上传数组
+        originalFileNameList: [],//名字上传数组
 
-        feedBackContent:'',//反馈内容
+        feedBackContent: '',//反馈内容
 
-        longitude:'',//经度
+        longitude: '',//经度
 
-        latitude:'',//纬度
+        latitude: '',//纬度
 
-        place:'',//位置
+        place: '',//位置
+
+        gpsLocation:''//转高德坐标
+
 
       }
 
@@ -64,19 +68,170 @@
 
     mounted(){
 
-      this.wx.config({
-        debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-        appId: 'wxee620089167335f6', // 必填，公众号的唯一标识 - 测试版本
-        //appId: 'wxee620089167335f6', // 必填，公众号的唯一标识 - 生产版本
-        timestamp:'' , // 必填，生成签名的时间戳
-        nonceStr: '', // 必填，生成签名的随机串
-        signature: '',// 必填，签名
-        jsApiList: ['openLocation','getLocation'] // 必填，需要使用的JS接口列表
-      });
 
-      this.wx.error(function (res) {
-        alert(res);
-      });
+      var self = this;
+
+      /**
+       * 接口：获取微信签名
+       * 请求方式：POST
+       * 接口：user/task/get/weixinsign
+       * 入参：url
+       **/
+
+      console.log(window.location.href);
+
+      this.$http({
+
+        method: 'post',
+
+        url: process.env.API_ROOT + 'user/task/get/weixinsign',
+
+        params: {
+
+          url: window.location.href
+
+        },
+
+      }).then((res) => {
+
+        console.log(res.data)
+
+        console.log('获取签名')
+
+
+
+
+        self.wx.ready(function () {
+
+          console.log('获得地址详细')
+
+          self.wx.getLocation({
+
+            type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+
+            success: function (res) {
+
+              this.latitude = res.latitude;// 纬度，浮点数，范围为90 ~ -90
+
+              this.longitude = res.longitude// 经度，浮点数，范围为180 ~ -180
+
+              console.log('纬度' + this.latitude)
+
+              console.log('经度' + this.longitude)
+
+              //转gps
+              self.$http({
+
+                method: 'get',
+
+                url: 'https://restapi.amap.com/v3/assistant/coordinate/convert',
+
+                params: {
+
+                  key: '91346f1a20ac9f3db7691f94b8547873',//key值
+
+                  locations: this.longitude + ',' + this.latitude,//key值
+
+                  coordsys:'gps',
+
+                }
+
+              }).then((res)=>{
+
+                console.log(res.data)
+
+                this.gpsLocation = res.data.locations
+
+                if(res.data.info=='ok') {
+
+
+                  //逆编译
+                  self.$http({
+
+                    method: 'get',
+
+                    url: 'https://restapi.amap.com/v3/geocode/regeo',
+
+                    params: {
+
+                      key: '91346f1a20ac9f3db7691f94b8547873',//key值
+
+                      location: this.gpsLocation
+
+                    }
+
+                  }).then(function (res) {
+
+                    console.log(res.data);
+
+
+                    console.log(res.data.regeocode.formatted_address)
+
+                    self.place = res.data.regeocode.formatted_address
+
+
+                  }.bind(this)).catch((res) => {
+
+                    console.log(res);
+
+                  });
+
+                }
+
+              }).catch((res)=>{})
+
+
+
+
+            },
+            cancel: function () {
+              // 用户取消后执行的回调函数
+            }
+          });
+
+
+        });
+
+        self.wx.config({
+          debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+          appId: 'wxee620089167335f6', // 必填，公众号的唯一标识 - 测试版本
+          //appId: 'wxee620089167335f6', // 必填，公众号的唯一标识 - 生产版本
+          timestamp: res.data.data.timestamp, // 必填，生成签名的时间戳
+          nonceStr: res.data.data.nonceStr, // 必填，生成签名的随机串
+          signature: res.data.data.signature,// 必填，签名
+          jsApiList: ['checkJsApi', 'openLocation', 'getLocation'], // 必填，需要使用的JS接口列表
+        });
+
+
+        /*self.wx.checkJsApi({
+          jsApiList: ['getLocation'],
+          success: function (res) {
+            if (res.checkResult.getLocation == false) {
+
+              this.$messagebox({
+                title: '提示',
+                message: '你的微信版本太低，不支持微信JS接口，请升级到最新的微信版本！',
+                showCancelButton: false,
+                confirmButtonText: '我知道了',
+                confirmButtonClass: 'confirm_btn_orange',
+              }).then((action) => {
+              }).catch((res) => {
+              })
+              return;
+            }
+          }
+        });*/
+
+
+
+
+      }).catch((res) => {
+      })
+
+
+
+
+
 
     },
     methods: {
@@ -85,31 +240,50 @@
 
         var thisFile = event.currentTarget.value.split('\\')[2];
 
-        for(var file of this.files){
+        for (var file of this.files) {
 
           console.log(file);
 
-          console.log(file.name)
-
         }
 
-
+        //拼接文件
         this.files.push(event.currentTarget.files[0]);
 
+        //拼接文件名称
+        this.originalFileNameList.push(event.currentTarget.files[0].name);
+
+        this.originalFileName = this.originalFileNameList.join(",");
+
+        /*        var str = '';
+
+         for(var j = 0;j<this.originalFileNameList.length;j++) {
+
+         str += this.originalFileNameList[j] + ",";
+
+         }
+
+         if (str.length > 0) {
+         str = str.substr(0, str.length - 1);
+         }
+
+         */
+
+
+        //上传图片
         var selfFile = event.target.files[0];
 
         var param = new FormData(); //创建form对象
 
-        param.append('File',selfFile);//通过append向form对象添加数据
+        param.append('File', selfFile);//通过append向form对象添加数据
 
-        this.$http.post(process.env.API_ROOT + 'jx/uploadimg/oss',param,{
-          headers:{'Content-Type':'multipart/form-data'}
+        this.$http.post(process.env.API_ROOT + 'jx/uploadimg/oss', param, {
+          headers: {'Content-Type': 'multipart/form-data'}
 
-        }).then((res)=>{
+        }).then((res) => {
 
-            console.log(res.data)
+          console.log(res.data)
 
-          if(res.data.code=='0000'){
+          if (res.data.code == '0000') {
 
             this.$toast({
 
@@ -118,23 +292,20 @@
               duration: 1500
             })
 
-            //吧url拼起来
+            //拼接文件url名称
             this.resultUploadList.push(res.data.data.url);
 
-            var list = this.resultUploadList.join(",");
-
-            this.resultUpload = list;
-
-            //console.log(this.resultUpload)
+            this.resultUpload = this.resultUploadList.join(",");
 
 
           }
 
-        }).catch((res)=>{})
+        }).catch((res) => {
+          }
+        )
 
 
-
-        console.log(this.files)
+        // console.log(this.files)
 
 
       },
@@ -149,7 +320,7 @@
           confirmButtonText: '删除',
           cancelButtonClass: 'cancel_btn',
           confirmButtonClass: 'confirm_btn_orange',
-        }).then((action) =>{
+        }).then((action) => {
 
           if (action == 'confirm') {
 
@@ -157,18 +328,18 @@
 
             this.resultUploadList.splice(index, 1);
 
-            var list = this.resultUploadList.join(",");
+            this.resultUpload = this.resultUploadList.join(",");
 
-            this.resultUpload = list;
-            
 
           }
-        }).catch((res)=>{})
+        }).catch
+        ((res) => {
+        })
 
 
       },
 
-      keepTaskDetailFn:function () {
+      keepTaskDetailFn: function () {
 
         //判断输入内容
         if (!this.feedBackContent) {
@@ -181,8 +352,6 @@
 
 
           })
-
-
 
         }
         else {
@@ -202,30 +371,29 @@
 
             params: {
 
-              taskId:this.getStorage('taskId'),
+              taskId: this.getStorage('taskId'),
 
-              relId:this.getStorage('relId'),
+              relId: this.getStorage('relId'), pContent: this.feedBackContent,
 
-              pContent:this.feedBackContent,
+              originalFileName: this.originalFileName,
 
-              pFiles:this.resultUpload,//附件
+              pFiles: this.resultUpload,//附件
 
-              pLongitude:this.longitude,//经度
+              pLongitude: this.longitude,//经度
 
-              pLatitude:this.latitude,//纬度
+              pLatitude: this.latitude,//纬度
 
-              pPlace:this.place,//位置
+              pPlace: this.place,//位置
             },
 
           }).then((res) => {
 
-              console.log(res.data)
-
-            if(res.data.code=='0000'){
+            console.log(res.data)
+            if (res.data.code == '0000') {
 
               this.$toast({
 
-                message:  res.data.msg,
+                message: res.data.msg,
                 duration: 1500,
                 position: 'bottom',
 
@@ -237,18 +405,17 @@
 
             }
 
-          }).catch((res)=>{})
-
+          }).catch((res) => {
+          })
 
 
         }
 
 
-      }
+      },
 
 
-
-    },
+    }
 
   }
 

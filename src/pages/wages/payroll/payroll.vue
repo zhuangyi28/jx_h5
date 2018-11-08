@@ -198,6 +198,8 @@
 
         var _salaryDetails = JSON.parse(res.data.data.salaryDetails)
 
+        //console.log(_salaryDetails)
+
         var _salaryDetailsArray = [], x
 
         for(x in _salaryDetails){
