@@ -98,8 +98,8 @@
           message: '确定取消报名？',
           showCancelButton: true,
           showConfirmButton: true,
-          confirmButtonText: '查看',
-          cancelButtonText: '暂不查看',
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
           closeOnClickModal: false,
           cancelButtonClass: 'cancel_btn',
           confirmButtonClass: 'confirm_btn_orange',
@@ -140,6 +140,8 @@
                 });
 
                 this.btnName = '报名';
+
+                this.taskDetail.buttonState = 6;
 
               }
 
@@ -192,7 +194,7 @@
 
           if(!this.taskDetail.nicknameHide){
 
-            this.entName = '******';
+            this.entName = this.hiddenName(this.entName);
 
           }
 
@@ -378,7 +380,9 @@
 
         }).then(function (res) {
 
-          if(res.data.code == '-1'){
+          console.log(res);
+
+          if(res.data.code == '-1' && res.data.msg != '请勿重复报名！'){
 
             localStorage.setItem('lookTaskToPersonInformation','true');
 
@@ -387,6 +391,16 @@
           }else if(res.data.code == '0000'){
 
             this.$router.push('submitSuccess');
+
+          }else{
+
+            this.$toast({
+
+              message: res.data.msg,
+              position: 'bottom',
+              duration: 1500
+
+            })
 
           }
 
@@ -428,6 +442,30 @@
         }
 
       },
+
+
+
+      //隐藏企业名称
+      hiddenName: function (name) {
+
+        var entName = name;
+
+        if(entName.length > 2){
+
+          entName = entName.split('');
+
+          entName = entName[0] + '****' + entName[entName.length-1];
+
+          return entName;
+
+        }else{
+
+          return '******';
+
+        }
+
+      },
+
 
 
 
