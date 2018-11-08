@@ -2,7 +2,7 @@
 
   <div class="task_square">
 
-    <div class="find_input" v-on:click="orderShow = false; selectShow = false">
+    <div class="find_input" v-on:click="orderShow = false ; selectShow = false">
 
       <div class="input_place" v-on:click="$router.push('/find')">
 
@@ -16,7 +16,7 @@
 
     <div class="select_btn">
 
-      <div class="select" v-on:click="selectDropDown">
+      <div class="select" v-on:click="selectDropDown" v-bind:class="{orangeText: selectShow}">
 
         <span>分类</span>
 
@@ -28,11 +28,11 @@
 
         <span>截止时间</span>
 
-        <span v-bind:class="timeShow?'up':'down'" v-if="timeShow != 'none'"></span>
+        <span v-bind:class="timeShow?'up':'down'"></span>
 
       </div>
 
-      <div class="select" v-on:click="orderDropDown">
+      <div class="select" v-on:click="orderDropDown" v-bind:class="{orangeText: orderShow}">
 
         <span>筛选</span>
 
@@ -42,110 +42,129 @@
 
     </div>
 
-    <div class="popup" v-if="orderShow || selectShow">
+    <!--下拉框-->
+    <div class="popup">
 
-      <div class="order_bg" v-on:click="orderShow = false;selectShow = false"></div>
+      <transition name="fade">
 
-      <div class="order" v-if="orderShow">
+        <div class="order_bg" v-if="orderShow || selectShow" v-on:click="orderShow = false ; selectShow = false"></div>
 
-        <div class="ability_tags">
+      </transition>
 
-          <div class="title">技能标签</div>
+      <transition name="toggle">
 
-          <div class="tags_list">
+        <!--筛选下拉框-->
+        <div class="order" v-if="orderShow">
 
-            <div v-on:click="industry = ''" v-bind:class="{selected: industry == ''}">不限</div>
+          <div class="ability_tags">
 
-            <div v-on:click="industry = 1" v-bind:class="{selected: industry == 1}">互联网/IT/电子/通信</div>
+            <div class="title">技能标签</div>
 
-            <div v-on:click="industry = 2" v-bind:class="{selected: industry == 2}">广告/传媒/文化/体育</div>
+            <div class="tags_list">
 
-            <div v-on:click="industry = 3" v-bind:class="{selected: industry == 3}">金融</div>
+              <div v-on:click="industry = ''" v-bind:class="{selected: industry == ''}">不限</div>
 
-            <div v-on:click="industry = 9" v-bind:class="{selected: industry == 9}">教育培训</div>
+              <div v-on:click="industry = 1" v-bind:class="{selected: industry == 1}">互联网/IT/电子/通信</div>
 
-            <div v-on:click="industry = 8" v-bind:class="{selected: industry == 8}">交通/物流/贸易/零售</div>
+              <div v-on:click="industry = 2" v-bind:class="{selected: industry == 2}">广告/传媒/文化/体育</div>
 
-            <div v-on:click="industry = 7" v-bind:class="{selected: industry == 7}">服务业</div>
+              <div v-on:click="industry = 3" v-bind:class="{selected: industry == 3}">金融</div>
 
-            <div v-on:click="industry = 4" v-bind:class="{selected: industry == 4}">房地产/建筑</div>
+              <div v-on:click="industry = 9" v-bind:class="{selected: industry == 9}">教育培训</div>
 
-            <div v-on:click="industry = 6" v-bind:class="{selected: industry == 6}">汽车/机械/制造业</div>
+              <div v-on:click="industry = 8" v-bind:class="{selected: industry == 8}">交通/物流/贸易/零售</div>
 
-            <div v-on:click="industry = 5" v-bind:class="{selected: industry == 5}">消费品</div>
+              <div v-on:click="industry = 7" v-bind:class="{selected: industry == 7}">服务业</div>
 
-            <div v-on:click="industry = 10" v-bind:class="{selected: industry == 10}">其他</div>
+              <div v-on:click="industry = 4" v-bind:class="{selected: industry == 4}">房地产/建筑</div>
 
-          </div>
+              <div v-on:click="industry = 6" v-bind:class="{selected: industry == 6}">汽车/机械/制造业</div>
 
-        </div>
+              <div v-on:click="industry = 5" v-bind:class="{selected: industry == 5}">消费品</div>
 
-        <div class="money">
-
-          <div class="title">任务金额（元）</div>
-
-          <div class="money_input">
-
-            <span>区间</span>
-
-            <div class="input">
-
-              <input type="number" placeholder="最低价" v-model="taskMinUnit">
-
-              <span></span>
-
-              <input type="number" placeholder="最高价" v-model="taskMaxUnit">
+              <div v-on:click="industry = 10" v-bind:class="{selected: industry == 10}">其他</div>
 
             </div>
 
           </div>
 
-          <div class="money_select">
+          <div class="money">
 
-            <div v-on:click="taskMaxUnit = 999; taskMinUnit = 1">1-999</div>
+            <div class="title">任务金额（元）</div>
 
-            <div v-on:click="taskMaxUnit = 20000; taskMinUnit = 10000">10k-20k</div>
+            <div class="money_input">
 
-            <div v-on:click="taskMinUnit = 20000; taskMaxUnit = ''">20k以上</div>
+              <span>区间</span>
+
+              <div class="input">
+
+                <input type="number" placeholder="最低价" v-model="taskMinUnit">
+
+                <span></span>
+
+                <input type="number" placeholder="最高价" v-model="taskMaxUnit">
+
+              </div>
+
+            </div>
+
+            <div class="money_select">
+
+              <div v-on:click="(taskMaxUnit = 999)&& (taskMinUnit = 1)">1-999</div>
+
+              <div v-on:click="(taskMaxUnit = 20000)&& (taskMinUnit = 10000)">10k-20k</div>
+
+              <div v-on:click="(taskMinUnit = 20000)&& (taskMaxUnit = '')">20k以上</div>
+
+            </div>
+
+          </div>
+
+          <div class="clickBtn">
+
+            <div class="cancel" v-on:click="resetAll">重置</div>
+
+            <div class="confirm" v-on:click="confirmClick">确定</div>
 
           </div>
 
         </div>
 
-        <div class="clickBtn">
+      </transition>
 
-          <div class="cancel" v-on:click="resetAll">重置</div>
+      <transition name="toggle">
 
-          <div class="confirm" v-on:click="confirmClick">确定</div>
 
-        </div>
+        <!--分类下拉框-->
+        <div class="select_content" v-if="selectShow">
 
-      </div>
+          <div class="select_list">
 
-      <div class="select_content" v-else-if="selectShow">
+            <div v-on:click="changeType" v-bind:class="{'selected': (type == '')}" v-bind:data-type="''">全部</div>
 
-        <div class="select_list">
+            <div v-on:click="changeType" v-bind:class="{'selected': (type == 1)}" v-bind:data-type="1">技术服务</div>
 
-          <div v-on:click="changeType" v-bind:class="{'selected': (type == '')}" v-bind:data-type="''">全部</div>
+            <div v-on:click="changeType" v-bind:class="{'selected': (type == 2)}" v-bind:data-type="2">设计服务</div>
 
-          <div v-on:click="changeType" v-bind:class="{'selected': (type == 1)}" v-bind:data-type="1">技术服务</div>
+            <div v-on:click="changeType" v-bind:class="{'selected': (type == 3)}" v-bind:data-type="3">营销/策划服务</div>
 
-          <div v-on:click="changeType" v-bind:class="{'selected': (type == 2)}" v-bind:data-type="2">设计服务</div>
+            <div v-on:click="changeType" v-bind:class="{'selected': (type == 4)}" v-bind:data-type="4">咨询服务</div>
 
-          <div v-on:click="changeType" v-bind:class="{'selected': (type == 3)}" v-bind:data-type="3">营销/策划服务</div>
+            <div v-on:click="changeType" v-bind:class="{'selected': (type == 5)}" v-bind:data-type="5">电商服务</div>
 
-          <div v-on:click="changeType" v-bind:class="{'selected': (type == 4)}" v-bind:data-type="4">咨询服务</div>
+            <div v-on:click="changeType" v-bind:class="{'selected': (type == 6)}" v-bind:data-type="6">其他</div>
 
-          <div v-on:click="changeType" v-bind:class="{'selected': (type == 5)}" v-bind:data-type="5">电商服务</div>
-
-          <div v-on:click="changeType" v-bind:class="{'selected': (type == 6)}" v-bind:data-type="6">其他</div>
+          </div>
 
         </div>
 
-      </div>
+      </transition>
 
     </div>
 
+
+
+    <!--任务列表-->
     <div class="task_list">
 
       <div class="list_one" v-for="taskList in taskLists" v-bind:data-taskId="taskList.taskId" v-on:click="jumpTo">
@@ -162,7 +181,7 @@
 
           <div class="task_pay">
 
-            <span>{{taskList.taskMinUnit}}</span><span v-if="taskList.taskMaxUnit != taskList.taskMinUnit">-{{taskList.taskMaxUnit}}</span>
+            <span>￥{{taskList.taskMinUnit}}</span><span v-if="taskList.taskMaxUnit != taskList.taskMinUnit">-{{taskList.taskMaxUnit}}</span>
 
           </div>
 
@@ -204,25 +223,25 @@
 
       return {
 
-        orderShow: false,
+        orderShow: false,//筛选下拉框显示
 
-        selectShow: false,
+        selectShow: false,//分类下拉框显示
 
-        timeShow: 'none',
+        timeShow: false,//时间排序显示
 
-        industry: '',
+        industry: '',//所属行业
 
-        type: '',
+        type: '',//分类
 
-        sort: '',
+        sort: '',//截止时间排序
 
-        taskMinUnit: '',
+        taskMinUnit: '',//任务单价最小值
 
-        taskMaxUnit: '',
+        taskMaxUnit: '',//任务单价最大值
 
-        taskLists: [],
+        taskLists: [],//任务列表
 
-        selectLists: {}
+        selectLists: {},//筛选排序列表
 
       }
 
@@ -240,6 +259,7 @@
 
     methods: {
 
+      //分类下拉框弹出
       selectDropDown: function () {
 
         this.orderShow = false;
@@ -250,6 +270,7 @@
 
 
 
+      //筛选下拉框弹出
       orderDropDown: function () {
 
         this.selectShow = false;
@@ -260,15 +281,16 @@
 
 
 
+      //时间排序图标控制
       timeDropDown: function () {
 
         this.orderShow = false;
 
         this.selectShow = false;
 
-        (this.timeShow == 'none') ? (this.timeShow = true) : (this.timeShow = !this.timeShow);
+        this.timeShow = !this.timeShow;
 
-        this.timeShow ? (this.sort = 1) : (this.sort = 2);
+        this.timeShow ? (this.sort = 2) : (this.sort = 1);
 
         this.selectLists.sort = this.sort;
 
@@ -278,6 +300,7 @@
 
 
 
+      //转换时间格式
       timeChange: function (arr) {
 
         for(var taskList of arr){
@@ -286,29 +309,31 @@
 
             taskList.abortDate = '不限时间';
 
+          }else{
+
+            var datetime = new Date(taskList.abortDate);
+
+            var year = datetime.getFullYear();
+
+            var month = datetime.getMonth() + 1;
+
+            var day = datetime.getDate();
+
+            if(month<10){
+
+              month = '0' + month;
+
+            }
+
+            if(day<10){
+
+              day = '0' + day;
+
+            }
+
+            taskList.abortDate = year + '-' + month + '-' + day;
+
           }
-
-          var datetime = new Date(taskList.abortDate);
-
-          var year = datetime.getFullYear();
-
-          var month = datetime.getMonth() + 1;
-
-          var day = datetime.getDate();
-
-          if(month<10){
-
-            month = '0' + month;
-
-          }
-
-          if(day<10){
-
-            day = '0' + day;
-
-          }
-
-          taskList.abortDate = year + '-' + month + '-' + day;
 
         }
 
@@ -316,9 +341,17 @@
 
 
 
+      //获取任务列表明细
       getData: function () {
 
         var _this = this;
+
+        /**
+         * 接口：任务广场列表
+         * 请求方式：POST
+         * 接口：/task/home/gettasklist
+         * 入参：null
+         **/
 
         this.$http({
 
@@ -352,6 +385,7 @@
 
 
 
+      //筛选排序
       changeType: function () {
 
         this.type = event.currentTarget.dataset.type;
@@ -387,6 +421,7 @@
 
 
 
+      //重置按钮
       resetAll: function () {
 
         this.taskMaxUnit = '';
@@ -399,6 +434,7 @@
 
 
 
+      //筛选提交按钮
       confirmClick: function () {
 
         this.taskMaxUnit ? (this.selectLists.taskMaxUnit = this.taskMaxUnit) : (this.selectLists.taskMaxUnit && (delete this.selectLists.taskMaxUnit));
@@ -417,6 +453,7 @@
 
 
 
+      //点击进入任务详情
       jumpTo: function () {
 
         var taskId = event.currentTarget.dataset.taskid;
@@ -440,4 +477,20 @@
   @import "task_square.less";
 
 </style>
-
+<style>
+  .toggle-enter-active, .toggle-leave-active{
+    transition: all 0.5s;
+  }
+  .toggle-enter, .toggle-leave-to{
+    transform: translateY(-100vh);
+  }
+  .toggle-enter-to, .toggle-leave{
+    transform: none;
+  }
+  .fade-enter-active, .fade-leave-active{
+    transition: all 0.5s;
+  }
+  .fade-enter, .fade-leave-to{
+    opacity: 0;
+  }
+</style>

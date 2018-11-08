@@ -4,27 +4,32 @@
     <div class="skill_part">
       <div class="skill_title">技能标签</div>
       <div class="skill_tags">
-        <div><span>设计</span><span class="delete_btn"></span></div>
-        <div><span>APP开发</span><span class="delete_btn"></span></div>
-        <div><span>添加</span><span class="delete_btn"></span></div>
+        <div v-for="tag in tags">
+          <span>{{tag}}</span>
+          <span class="delete_btn" v-bind:data-tag="tag" v-on:click="tagsDel"></span>
+        </div>
+        <div v-on:click="tagsAdd" v-if="tags.length < 5" class="add_btn">
+          <span>添加</span>
+          <span class="delete_btn"></span>
+        </div>
       </div>
       <div class="skill_ps">注：最多添加5个标签，每个标签最多6个字</div>
     </div>
-    <div class="supply_part">
+    <div class="supply_part" v-if="idType == 1">
       <div class="supply_title">
         <span>补充信息</span>
         <span>（身份证照片）</span>
       </div>
       <div class="upload">
-        <div class="upload_title">请上传（证件号：<span>4564612341654</span>）对应的证件照片</div>
+        <div class="upload_title">请上传（证件号：<span>{{idNumber}}</span>）对应的证件照片</div>
         <div class="upload_face">
-          <img src="../../../../static/images/jx_idcard_face.png">
-          <input type="file">
+          <img v-bind:src="faceUrl">
+          <input type="file" v-on:change="inputImg" imgType="face" accept="image/png,image/gif,image/jpeg">
         </div>
         <div class="upload_name">上传身份证正面<span>示例</span></div>
         <div class="upload_back">
-          <img src="../../../../static/images/jx_idcard_back.png">
-          <input type="file">
+          <img v-bind:src="backUrl">
+          <input type="file" v-on:change="inputImg" imgType="back" accept="image/png,image/gif,image/jpeg">
         </div>
         <div class="upload_name">上传身份证反面<span>示例</span></div>
       </div>
@@ -32,25 +37,346 @@
     <div class="introduce_yourself">
       <div class="introduce_title">自我介绍</div>
       <div class="introduce_input">
-        <textarea cols="30" rows="6" placeholder="详细描述下你自己，字数控制在200字以内"></textarea>
+        <textarea cols="30" rows="6" placeholder="详细描述下你自己，字数控制在200字以内" v-model="introduceYourself" maxlength="200"></textarea>
       </div>
     </div>
-    <orangeBtn v-bind:name="btnName"></orangeBtn>
+    <orangeBtn v-bind:name="btnName" v-on:clickEvent="saveInformation"></orangeBtn>
   </div>
 </template>
 <script>
+
   import orangeBtn from '../../../components/orange_btn/orange_btn'
+
   export default {
+
     name: 'person_information',
+
     components: {
+
       orangeBtn: orangeBtn
+
     },
+
     data () {
+
       return {
-        btnName: '保存'
+
+        btnName: '保存',
+
+        popupShow: false,
+
+        tags: [],
+
+        faceUrl: '../../../../static/images/jx_idcard_face.png',
+
+        backUrl: '../../../../static/images/jx_idcard_back.png',
+
+        introduceYourself: '',
+
+        idType: '',
+
+        idNumber: ''
+
       }
+
+    },
+
+
+
+    mounted () {
+
+      this.getUserCenter();
+
+      this.getPersonInformation();
+
+    },
+
+
+
+
+    methods: {
+
+      tagsAdd: function () {
+
+        /*this.$messagebox({
+
+          title: '请输入标签',
+          showInput: true,
+          inputType: 'text',
+          inputPlaceholder: '请输入您的标签(最多6个字)',
+          showCancelButton: true,
+          showConfirmButton: true,
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          cancelButtonClass: 'cancel_btn',
+          confirmButtonClass: 'confirm_btn_orange',
+
+        }).then(function (res) {
+
+          debugger;
+
+        }.bind(this));*/
+
+        this.$messagebox.prompt('请输入姓名','').then(function ({value,action}){
+
+          if(value.length > 6){
+
+            this.$toast({
+
+              message: '每个标签最多6个字',
+
+              position: 'bottom',
+
+              duration: 1500
+
+            });
+
+          }else if (this.tags.indexOf(value) != -1) {
+
+            this.$toast({
+
+              message: '请不要添加重复的标签',
+
+              position: 'bottom',
+
+              duration: 1500
+
+            })
+
+          }else{
+
+            this.tags.push(value);
+
+          }
+
+        }.bind(this));
+
+      },
+
+
+
+
+      tagsDel: function () {
+
+        var tag = event.currentTarget.dataset.tag;
+
+        this.tags.splice(this.tags.indexOf(tag),1);
+
+      },
+
+
+      inputImg: function () {
+
+        var imgType = event.currentTarget.getAttribute('imgType');
+
+        var file = event.currentTarget.files[0];
+
+        var param = new FormData(); //创建form对象
+
+        param.append('File',file);//通过append向form对象添加数据
+
+
+        /*
+         * 接口：图片上传
+         * 请求方式：POST
+         * 接口：/jx/uploadimg/oss
+         * 入参：File
+         * */
+        this.$http.post(process.env.API_ROOT + 'jx/uploadimg/oss',param,{
+          headers:{'Content-Type':'multipart/form-data'}
+
+        }).then(function (res) {
+
+          console.log(res.data);
+
+          if(res.data.code=='0000'){
+
+            this.$toast({
+
+              message: '上传成功',
+              position: 'middle',
+              duration: 1500
+            });
+
+            if (imgType == 'face'){
+
+              this.faceUrl = res.data.data.url;
+
+            }
+
+            else if(imgType == 'back'){
+
+
+              this.backUrl = res.data.data.url;
+
+            }
+          }
+
+        }.bind(this)).catch((res)=>{
+          console.log(res);
+        })
+
+      },
+
+      saveInformation: function () {
+
+        if(this.tags.length == 0){
+
+          this.$toast({
+
+            message: '至少添加一个技能标签',
+
+            position: 'bottom',
+
+            duration: 1500
+
+          });
+
+        }else if(this.faceUrl == '../../../../static/images/jx_idcard_face.png' || this.backUrl == '../../../../static/images/jx_idcard_back.png'){
+
+          this.$toast({
+
+            message: '请先上传身份证正面/反面照片',
+
+            position: 'bottom',
+
+            duration: 1500
+
+          });
+
+        }else{
+
+          /*
+         * 接口：用户填写履历
+         * 请求方式：POST
+         * 接口：/user/task/add/userresume
+         * 入参：label,introduce,pictureFrontUrl,pictureBinhendUrl
+         * */
+          this.$http({
+
+            method: 'post',
+
+            url: process.env.API_ROOT + 'user/task/add/userresume',
+
+            header: {
+
+              'content-type': 'application/x-www-form-urlencoded'
+
+            },
+
+            params: {
+
+              label: this.tags.join(','),
+
+              introduce: this.introduceYourself,
+
+              pictureFrontUrl: this.faceUrl,
+
+              pictureBinhendUrl: this.backUrl
+
+            }
+
+          }).then(function (res) {
+
+            if(res.data.code == '0000'){
+
+              if(localStorage.getItem('lookTaskToPersonInformation')){
+
+                localStorage.removeItem('lookTaskToPersonInformation');
+
+                this.$router.push('/lookTask');
+
+              }else{
+
+                this.$router.push('/workDesk/mine');
+
+              }
+
+            }
+
+          }.bind(this)).catch((res)=>{
+
+            console.log(res);
+
+          })
+
+        }
+
+      },
+
+      getUserCenter: function () {
+
+        /**
+         * 接口：用户中心
+         * 请求方式：POST
+         * 接口：/user/center/usercenter
+         * 入参：null
+         **/
+
+        this.$http({
+
+          method: 'post',
+
+          url: process.env.API_ROOT + 'user/center/usercenter',
+
+        }).then(function (res) {
+
+          if(res.data.code == '0000'){
+
+            this.idType = res.data.data.idType;
+
+            this.idNumber = res.data.data.idNumber;
+
+          }
+
+        }.bind(this)).catch((res)=>{
+
+          console.log(res);
+
+        });
+
+      },
+
+      getPersonInformation: function () {
+
+        /**
+         * 接口：查看用户履历信息
+         * 请求方式：POST
+         * 接口：/user/task/get/userresume
+         * 入参：null
+         **/
+
+        this.$http({
+
+          method: 'post',
+
+          url: process.env.API_ROOT + 'user/task/get/userresume',
+
+        }).then(function (res) {
+
+          this.tags = res.data.data.label.split(',');
+
+          this.faceUrl = res.data.data.pictureFrontUrl;
+
+          this.backUrl = res.data.data.pictureBinhendUrl;
+
+          this.introduceYourself = res.data.data.introduce;
+
+        }.bind(this)).catch((res)=>{
+
+          console.log(res);
+
+        });
+
+      }
+
+
+
+
     }
+
   }
+
 </script>
 <style lang="less" scoped>
   @import "person_information.less";
