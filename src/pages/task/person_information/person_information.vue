@@ -15,31 +15,47 @@
       </div>
       <div class="skill_ps">注：最多添加5个标签，每个标签最多6个字</div>
     </div>
-    <div class="supply_part" v-if="idType == 1">
-      <div class="supply_title">
-        <span>补充信息</span>
-        <span>（身份证照片）</span>
-      </div>
-      <div class="upload">
-        <div class="upload_title">请上传（证件号：<span>{{idNumber}}</span>）对应的证件照片</div>
-        <div class="upload_face">
-          <img v-bind:src="faceUrl">
-          <input type="file" v-on:change="inputImg" imgType="face" accept="image/png,image/gif,image/jpeg">
-        </div>
-        <div class="upload_name">上传身份证正面<span>示例</span></div>
-        <div class="upload_back">
-          <img v-bind:src="backUrl">
-          <input type="file" v-on:change="inputImg" imgType="back" accept="image/png,image/gif,image/jpeg">
-        </div>
-        <div class="upload_name">上传身份证反面<span>示例</span></div>
-      </div>
-    </div>
     <div class="introduce_yourself">
       <div class="introduce_title">自我介绍</div>
       <div class="introduce_input">
         <textarea cols="30" rows="6" placeholder="详细描述下你自己，字数控制在200字以内" v-model="introduceYourself" maxlength="200"></textarea>
       </div>
     </div>
+    <div class="supply_part" v-if="idType == 1">
+      <div class="supply_title">
+        <div>
+          <span>补充信息</span>
+          <span>（身份证照片）</span>
+        </div>
+        <div v-bind:class="supplyShow ? 'supply_part_show' : 'supply_part_hidden'" v-on:click="supplyShow = !supplyShow"></div>
+      </div>
+      <div class="upload" v-if="supplyShow || lookTaskToPersonInformation">
+        <div class="upload_title">请上传（证件号：<span>{{idNumber}}</span>）对应的证件照片</div>
+        <div class="upload_face">
+          <img v-bind:src="faceUrl">
+          <input type="file" v-on:change="inputImg" imgType="face" accept="image/png,image/gif,image/jpeg">
+        </div>
+        <div class="upload_name">上传身份证正面<span v-on:click="exampleImg" class="face">示例</span></div>
+        <div class="upload_back">
+          <img v-bind:src="backUrl">
+          <input type="file" v-on:change="inputImg" imgType="back" accept="image/png,image/gif,image/jpeg">
+        </div>
+        <div class="upload_name">上传身份证反面<span v-on:click="exampleImg" class="back">示例</span></div>
+      </div>
+    </div>
+    <mt-popup v-model="popupExample">
+      <div class="example">
+        <div class="example_title">
+          证件示例
+        </div>
+        <div class="example_img">
+          <img v-bind:src="exampleUrl">
+        </div>
+        <div class="example_button">
+          <button v-on:click="popupExample = false">确定</button>
+        </div>
+      </div>
+    </mt-popup>
     <orangeBtn v-bind:name="btnName" v-on:clickEvent="saveInformation"></orangeBtn>
   </div>
 </template>
@@ -61,7 +77,7 @@
 
       return {
 
-        btnName: '保存',
+        btnName: '提交',
 
         popupShow: false,
 
@@ -75,7 +91,15 @@
 
         idType: '',
 
-        idNumber: ''
+        idNumber: '',
+
+        supplyShow: false,
+
+        lookTaskToPersonInformation: '',
+
+        exampleUrl: '',
+
+        popupExample: false
 
       }
 
@@ -84,6 +108,8 @@
 
 
     mounted () {
+
+      this.lookTaskToPersonInformation = localStorage.getItem('lookTaskToPersonInformation');
 
       this.getUserCenter();
 
@@ -280,7 +306,7 @@
 
             if(res.data.code == '0000'){
 
-              if(localStorage.getItem('lookTaskToPersonInformation')){
+              if(this.lookTaskToPersonInformation){
 
                 localStorage.removeItem('lookTaskToPersonInformation');
 
@@ -367,6 +393,16 @@
           console.log(res);
 
         });
+
+      },
+
+      exampleImg: function () {
+
+        var type = event.currentTarget.getAttribute('class');
+
+        this.exampleUrl = '../../../../static/images/jx_idCard_' + type + '_example.png';
+
+        this.popupExample = true;
 
       }
 

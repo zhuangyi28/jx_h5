@@ -176,7 +176,7 @@
 
         },
 
-      }).then((res) => {
+      }).then(function (res) {
 
         console.log(res.data);
 
@@ -210,7 +210,7 @@
 
 
 
-      }).catch((res)=>{})
+      }.bind(this)).catch((res)=>{})
 
 
     },
@@ -246,11 +246,9 @@
             this.$http({
 
               method: 'get',
-
-              url: process.env.API_ROOT + 'user/task/submitcheck',
-
+              
               params: {
-
+              
                 relId:this.getStorage('relId'),
 
                 pRecordId:this.getStorage('recordId'),

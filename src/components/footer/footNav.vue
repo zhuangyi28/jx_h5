@@ -10,7 +10,7 @@
           <div>
             <i class="iconfont icon-bottom-wages1"></i>
           </div>
-          <div>工资条</div>
+          <div>任务广场</div>
         </router-link>
         <router-link :to="{name:'discovery'}" tag="li">
           <div>

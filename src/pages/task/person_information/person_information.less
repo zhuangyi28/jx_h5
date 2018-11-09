@@ -118,17 +118,44 @@
         top: 0;
         left: -20px;
       }
-      span:first-child{
-        color: #4a4a4a;
+      div{
+        span:first-child{
+          color: #4a4a4a;
+        }
+        span:last-child{
+          color: #ababab;
+        }
       }
-      span:last-child{
-        color: #ababab;
+      .supply_part_show{
+        border: solid 2px #ddd;
+        border-bottom-width: 0;
+        border-left-width: 0;
+        content: " ";
+        top: 50%;
+        right: 0;
+        position: absolute;
+        width: 10px;
+        height:10px;
+        transform:rotate(-45deg) translateY(-50%);
+      }
+      .supply_part_hidden{
+        border: solid 2px #ddd;
+        border-bottom-width: 0;
+        border-left-width: 0;
+        content: " ";
+        top: 0;
+        right: 0;
+        position: absolute;
+        width: 10px;
+        height:10px;
+        transform:rotate(135deg) translateY(50%);
       }
     }
     .upload{
       padding: 5px 0;
       text-align: center;
       position: relative;
+      overflow: hidden;
       &:after{
         content: '';
         display: block;
@@ -219,6 +246,49 @@
         resize: none;
         &::placeholder{
           color: #ababab;
+        }
+      }
+    }
+  }
+  .mint-popup{
+    border-radius: 5px;
+    overflow: hidden;
+    .example{
+      padding: 15px 0 0;
+      .example_title{
+        font-size: 16px;
+        text-align: center;
+      }
+      .example_img{
+        width: 228px;
+        height: 153px;
+        margin: auto;
+        padding: 10px 20px;
+        img{
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .example_button{
+        text-align: center;
+        position: relative;
+
+        &:before{
+          content: '';
+          display: block;
+          width: 100%;
+          height: 1px;
+          position: absolute;
+          top: 0;
+          left: 0;
+          border-top: 1px solid #eeeeee;
+        }
+        button{
+          padding: 8px 0 15px;
+          width: 100%;
+          background-color: transparent;
+          color: #ff7d37;
+          font-size: 18px;
         }
       }
     }

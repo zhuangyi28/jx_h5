@@ -6,7 +6,7 @@
 
       <div class="money">
         <p>{{totalSalary| thousandBitSeparator}}</p>
-        <p>工资余额（元）</p>
+        <p>收入余额（元）</p>
       </div>
 
       <div class="special_money">
