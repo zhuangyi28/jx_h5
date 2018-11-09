@@ -71,6 +71,18 @@
 
       var self = this;
 
+      var lactionReload = self.getStorage('lactionReload')
+
+      if(lactionReload=='1'){
+
+        window.location.reload()
+
+        self.setStorage('lactionReload',0)
+
+      }
+
+
+
       /**
        * 接口：获取微信签名
        * 请求方式：POST
