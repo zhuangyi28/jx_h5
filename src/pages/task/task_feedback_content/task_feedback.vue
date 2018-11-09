@@ -9,12 +9,20 @@
     <div class="upload_file">
       <div class="upload_file_title">上传凭证</div>
       <div class="upload_file_input">
-        <div class="input_file">
+        <div v-if="pList.length<0" class="input_file">
+          <div class="file_img">
+            <img src="../../../../static/images/jx_file_no.png">
+          </div>
+          <div class="file_name">暂无凭证</div>
+        </div>
+
+        <div class="input_file" v-else  v-for="item in pList">
           <div class="file_img">
             <img src="../../../../static/images/jx_file.png">
           </div>
-          <div class="file_name"></div>
+          <div class="file_name">{{item.name}}</div>
         </div>
+
       </div>
       <div class="position">
         <img src="../../../../static/images/jx_position.png">
@@ -32,9 +40,11 @@
 
       return {
 
-        pContent:'',//反馈内容
+        pContent: '',//反馈内容
 
-        pPlace:'',//所在位置
+        pPlace: '',//所在位置
+
+        pList: [],
       }
 
     },
@@ -58,25 +68,43 @@
 
         params: {
 
-          pFeedbackId:this.getStorage('pFeedbackId'),
+          pFeedbackId: this.getStorage('pFeedbackId'),
 
         },
 
 
       }).then((res) => {
 
-          console.log(res.data);
+        console.log(res.data);
 
-          let thisData = res.data.data;
+        let thisData = res.data.data;
 
-         this.pContent = thisData.pContent;//反馈内容
+        this.pContent = thisData.pContent;//反馈内容
 
-          this.pPlace = thisData.pPlace;//地理位置
+        this.pPlace = thisData.pPlace;//地理位置
+
+        this.originalFileName = thisData.originalFileName;//文件名称
+
+        let pArray = this.originalFileName.split(",");//转为数组
+
+        let _Array = [], x;
+
+        for(x in pArray){
+
+          _Array.push({
+
+            name: pArray[x]
+
+          })
+
+        }
+
+        this.pList = _Array
 
 
 
-      }).catch((res)=>{})
-
+      }).catch((res) => {
+      })
 
 
     },

@@ -92,16 +92,17 @@
 
       </div>
       <!-- 添加反馈 -->
-      <div v-if="canSubmit=='1'" class="add_feedback" v-on:click="$router.push('/taskFeedback')"><span>+</span>添加任务反馈</div>
+      <div v-if="canSubmit=='1'||brightState=='2'" class="add_feedback" v-on:click="$router.push('/taskFeedback')"><span>+</span>添加任务反馈</div>
 
     </div>
 
     <!-- 提交验收 -->
-    <div v-if="canSubmit=='1'">
+    <div v-if="canSubmit=='1'||brightState=='2'">
       <orangeBtn v-on:clickEvent="taskBtn" :name="taskBtnName1"></orangeBtn>
     </div>
+
     <!-- 取消报名 -->
-    <div v-if="selectState=='1'">
+    <div v-if="selectState=='1'&&brightState=='1'">
       <orangeBtn v-on:clickEvent="cancelTaskBtn" :name="taskBtnName2"></orangeBtn>
     </div>
 
@@ -133,15 +134,13 @@
 
         signupState:'',//报名状态
 
-        taskDetails:'',//任务详情
-
         taskBtnName1:'提交验收',//按钮名称
 
         taskBtnName2:'取消报名',//按钮名称
 
         brightState:'',//任务状态 返回几代表第几个高亮
 
-        canSubmit:'',//canSubmit=1 显示申请验收按钮 canSubmit=0 不显示申请验收按钮
+        canSubmit:'',//canSubmit=1 显示申请验收按钮高亮 canSubmit=0 不显示申请验收按钮置灰
 
         selectState:'',//selectState=1 的时候会出现取消报名按钮
 
@@ -197,8 +196,6 @@
         this.signUpTotal = taskInfo.signUpTotal;
         //报名状态 2-报名中 3-报名结束
         this.signupState = taskInfo.signupState;
-        //反馈详情
-        this.taskDetails = taskInfo.taskDetails;
         //按钮状态
         this.canSubmit = res.data.data.canSubmit;
         //反馈列表
@@ -226,38 +223,107 @@
       },
       taskBtn:function () {
 
-        /**
-         * 接口：提交验收
-         * 请求方式：POST
-         * 接口：user/task/submitcheck
-         * 入参：relId，pRecordId
-         **/
+          if(!this.feedbackList){
 
-        this.$http({
+            this.$toast({
 
-          method: 'get',
+              message: '请先提交任务反馈',
+              duration: 1500,
+              position: 'bottom',
 
-          url: process.env.API_ROOT + 'user/task/submitcheck',
+            })
 
-          params: {
+          }
+          else {
 
-            relId:this.relId,
+            /**
+             * 接口：提交验收
+             * 请求方式：POST
+             * 接口：user/task/submitcheck
+             * 入参：relId，pRecordId
+             **/
 
-            pRecordId:this.pRecordId,
+            this.$http({
 
-          },
+              method: 'get',
+              
+              params: {
+              
+                relId:this.getStorage('relId'),
 
-        }).then(function (res) {
+                pRecordId:this.getStorage('recordId'),
 
-            console.log(res.data)
+              },
 
-        }.bind(this)).catch((res)=>{})
+            }).then((res) => {
+
+              console.log(res.data)
+
+              if(res.data.code=='0000'){
+
+
+                this.$toast({
+
+                  message: res.data.msg,
+                  duration: 1500,
+                  position: 'bottom',
+
+                })
+
+                window.location.reload();
+
+              }
+
+
+            }).catch((res)=>{})
+
+          }
 
 
       },
-
       cancelTaskBtn:function () {
-//$router.push('/taskFeedbackContent')
+        this.$messagebox({
+          title: '提示',
+          message: '确定取消报名？',
+          showCancelButton: true,
+          cancelButtonText: '取消',
+          confirmButtonText: '确认',
+          cancelButtonClass: 'cancel_btn',
+          confirmButtonClass: 'confirm_btn_orange',
+        }).then((action) =>{
+
+          if (action == 'confirm') {
+
+            /**
+             * 接口：取消报名
+             * 请求方式：GET
+             * 接口：user/task/cancel/enroll
+             * 入参：relId
+             **/
+
+            this.$http({
+
+              method: 'get',
+
+              url: process.env.API_ROOT + 'user/task/cancel/enroll',
+
+              params: {
+
+                relId:this.relId,
+
+              },
+
+            }).then((res) => {
+
+              console.log(res.data)
+
+              window.location.reload();
+
+            }).catch((res)=>{})
+
+
+          }
+        }).catch((res)=>{})
       },
       lookFeedBackDetailFn:function (e) {
         console.log('详情id'+e.currentTarget.dataset.id)

@@ -166,7 +166,7 @@
     mounted () {
 
 
-        this.setStorage('ajaxHomepage','1')
+        //this.setStorage('ajaxHomepage','1')
 
       //获取UnionID
 

@@ -163,30 +163,7 @@
       //重新调用data方法
       Object.assign(_this.$data, _this.$options.data());
 
-      var ajax = this.getStorage('ajaxHomepage')
-
-      if(ajax=='1'){
-
-        _this.onShow();
-
-      }
-
-      var discoveryHref = this.getStorage('discoveryHref')
-
-      if(discoveryHref=='1'){
-
-        setTimeout(function () {
-
-          _this.setStorage('discoveryHref','0');
-
-          _this.$router.push('/workDesk/discovery')
-
-        },1)
-
-      }
-
-
-
+      _this.onShow();
 
 
       //window.addEventListener('scroll', _this.scrollBottom)

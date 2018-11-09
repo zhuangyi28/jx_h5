@@ -183,25 +183,28 @@
 
                 this.setStorage('userId',res.data.data.userId);
 
+
+                this.$router.push('/workDesk/homepage')
+
                 //是否跳转发现页面 1为跳转到发现 0为正常
-                this.setStorage('discoveryHref','1')
+                //this.setStorage('discoveryHref','1')
 
 
-                var discoveryHref = this.getStorage('discoveryHref')
+                //var discoveryHref = this.getStorage('discoveryHref')
 
                 //console.log('应该是1='+discoveryHref)
 
-              if(discoveryHref=='1'){
+              //if(discoveryHref=='1'){
 
-                  setTimeout(function () {
+                  //setTimeout(function () {
 
-                    _this.setStorage('discoveryHref','0');
+                    //_this.setStorage('discoveryHref','0');
 
-                    _this.$router.push('/workDesk/discovery')
 
-                  },1)
 
-                }
+                 // },1)
+
+               // }
 
 
                 //跳转

@@ -18,18 +18,21 @@ import MD5 from '../static/js/MD5.min'
 //导入 mint-ui
 import MintUI from 'mint-ui'
 
-/*
-console.log('-----------------------------------------------------------------------------------'+process.env.NODE_ENV+'--------------------------------------------------------------------');
-*/
-
-//导入 vconsole模块
 import vconsole from './api/vconsole'
+
+import wx from 'weixin-js-sdk';
 
 //import BasicJs from './js/basic'
 import VueWechatTitle from 'vue-wechat-title';
 /*import VueResource from 'vue-resource'*/
 import Filters from './api/filters'
 
+import AMap from 'vue-amap'
+
+//!!!!!_____!!!!!!!!!!-------------控制台---------------!!!!!!!!!!!!!!!!!!!
+
+
+Vue.use(AMap);
 //Vue.use(VueResource);
 Vue.use(api);
 Vue.use(json2Form);
@@ -37,8 +40,9 @@ Vue.use(MD5);
 Vue.use(VueWechatTitle);
 Vue.use(MintUI);
 Vue.use(axios)
+Vue.prototype.wx = wx
 //Vue.use(BasicJs)
-Vue.config.productionTip = false;
+Vue.config.productionTip = false
 
 
 //判断用户是否处于登录状态，访问权限验证
@@ -86,6 +90,7 @@ router.beforeEach((to,from,next)=>{
 
   }
 })
+
 
 
 
