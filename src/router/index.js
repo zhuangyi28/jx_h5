@@ -488,14 +488,6 @@ export default new Router({
       component: protocol
     },
     {
-      path: '/taskSquare',
-      name: 'taskSquare',
-      meta: {
-        title: '任务广场'
-      },
-      component: taskSquare
-    },
-    {
       path: '/find',
       name: 'find',
       meta:{

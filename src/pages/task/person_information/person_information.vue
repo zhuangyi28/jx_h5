@@ -143,7 +143,7 @@
 
         }.bind(this));*/
 
-        this.$messagebox.prompt('请输入姓名','').then(function ({value,action}){
+        this.$messagebox.prompt('请输入标签','').then(function ({value,action}){
 
           if(value.length > 6){
 
@@ -380,13 +380,19 @@
 
         }).then(function (res) {
 
-          this.tags = res.data.data.label.split(',');
+          if(res.data.data){
 
-          this.faceUrl = res.data.data.pictureFrontUrl;
+            console.log(res);
 
-          this.backUrl = res.data.data.pictureBinhendUrl;
+            this.tags = res.data.data.label.split(',');
 
-          this.introduceYourself = res.data.data.introduce;
+            this.faceUrl = res.data.data.pictureFrontUrl;
+
+            this.backUrl = res.data.data.pictureBinhendUrl;
+
+            this.introduceYourself = res.data.data.introduce;
+
+          }
 
         }.bind(this)).catch((res)=>{
 
@@ -416,4 +422,12 @@
 </script>
 <style lang="less" scoped>
   @import "person_information.less";
+</style>
+<style>
+  .mint-msgbox-btns> .mint-msgbox-confirm{
+    color: #ff7a3b;
+  }
+  .mint-msgbox-input>input{
+    box-sizing: border-box;
+  }
 </style>
