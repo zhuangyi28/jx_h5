@@ -67,7 +67,6 @@
           <div v-else-if="item.type=='5'" class="state">很遗憾，您未被录用</div>
           <div v-else-if="item.type=='6'" class="state">企业已关闭改任务</div>
         </div>
-
       </div>
       <div class="show_more" v-if="taskTimeArea.length > 4" v-on:click="changeFoldState">
         <span>{{brandMore?'展开∨':'收起∧'}}</span>
@@ -77,7 +76,7 @@
     </div>
 
     <!-- 任务状态 -->
-    <div class="task_feedback" v-if="selectState!='1'">
+    <div class="task_feedback" v-if="brightState!='1'">
 
       <div class="task_feedback_list">
         <div class="title">任务反馈</div>
@@ -142,7 +141,7 @@
 
         canSubmit:'',//canSubmit=1 显示申请验收按钮高亮 canSubmit=0 不显示申请验收按钮置灰
 
-        selectState:'',//selectState=1 的时候会出现取消报名按钮
+        selectState:'',//selectState=1 显示取消报名按钮  selectState=0 不显示取消报名按钮
 
         feedbackList:[],//反馈列表
 
@@ -166,8 +165,16 @@
           this.taskId = this.getStorage('taskId');
 
 
+        /**
+         * 接口：获取任务详情
+         * 请求方式：GET
+         * 接口：user/task/getapplyinfo
+         * 入参：taskId
+         **/
 
+        this.$http({
 
+            method: 'get',
 
             url: process.env.API_ROOT + 'user/task/getapplyinfo',
 
@@ -246,9 +253,9 @@
             this.$http({
 
               method: 'get',
-              
+
               params: {
-              
+
                 relId:this.getStorage('relId'),
 
                 pRecordId:this.getStorage('recordId'),
@@ -309,7 +316,7 @@
 
               params: {
 
-                taskId:this.taskId,
+                relId:this.getStorage('relId'),
 
               },
 
@@ -317,9 +324,33 @@
 
               console.log(res.data)
 
+              if(res.data.code=='0000'){
+
+                this.$toast({
+
+                  message: res.data.msg,
+                  duration: 1500,
+                  position: 'bottom',
+
+                })
+
+                this.init()
+
+              }
+
+              else if(res.data.code=='-1'){
+
+                this.$toast({
+
+                  message: res.data.msg,
+                  duration: 1500,
+                  position: 'bottom',
+
+                })
 
 
-              this.init()
+
+              }
 
             }).catch((res)=>{})
 
@@ -328,8 +359,8 @@
         }).catch((res)=>{})
       },
       lookFeedBackDetailFn:function (e) {
-        console.log('详情id'+e.currentTarget.dataset.id)
-        this.setStorage('pFeedbackId',e.currentTarget.dataset.id)
+        console.log('详情id'+e.currentTarget.dataset.id);
+        this.setStorage('pFeedbackId',e.currentTarget.dataset.id);
         this.$router.push('/taskFeedbackContent')
       }
 

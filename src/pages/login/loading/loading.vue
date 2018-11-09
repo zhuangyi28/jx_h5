@@ -30,7 +30,7 @@
 
         /*console.log('链接='+window.location.href);*/
 
-         var str = window.location.href;
+      var str = window.location.href;
 
 
       this.setStorage('lactionReload','1')
