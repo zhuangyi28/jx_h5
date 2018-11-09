@@ -64,7 +64,10 @@
       <div class="content">(一)本协议的任何一方未能及时行使本协议项下的权利不应被视为放弃该权利。</div>
       <div class="content">(二)如果本协议中的任何条款无论因何种原因完全或部分无效或不具有执行力，或违反任何适用的法律，则该条款被视为删除，但本协议的其余条款仍应有效并且有约束力。</div>
     </div>
-    <orangeBtn v-bind:name="btnName" v-on:clickEvent="protocolAgree"></orangeBtn>
+    <div class="btn_box">
+      <orangeBtn v-bind:name="btnName" v-on:clickEvent="protocolAgree"></orangeBtn>
+    </div>
+
   </div>
 </template>
 <script>

@@ -170,27 +170,27 @@
 
       //获取UnionID
 
-      this.$http({
-
-        method: 'post',
-
-        url: process.env.API_ROOT+'jx/action/toaddunionid',
-
-        params: {
-
-
-          key:this.getStorage('thisKey')
-
-        }
-
-
-
-      }).then((res) => {
-
-        console.log(res.data)
-
-
-      }).catch((res)=>{});
+//      this.$http({
+//
+//        method: 'post',
+//
+//        url: process.env.API_ROOT+'jx/action/toaddunionid',
+//
+//        params: {
+//
+//
+//          key:this.getStorage('thisKey')
+//
+//        }
+//
+//
+//
+//      }).then((res) => {
+//
+//        console.log(res.data)
+//
+//
+//      }).catch((res)=>{});
 
 
       /**
