@@ -18,8 +18,6 @@
 
       localStorage.getItem('taskId');
 
-      this.getData();
-
     },
   }
 </script>
