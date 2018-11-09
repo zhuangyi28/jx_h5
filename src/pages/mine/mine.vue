@@ -79,7 +79,7 @@
         <i class="allow_right"></i>
       </div>
       <!--银行卡 -->
-      <div class="cell">
+      <div class="cell" v-on:click="$router.push('/personInformation')">
         <div class="title">
           <img src="../../../static/images/jx_resume_1.png"><span class="cell_text">个人履历</span>
         </div>

@@ -177,7 +177,7 @@
 
         },
 
-      }).then((res) => {
+      }).then(function (res) {
 
         console.log(res.data);
 
@@ -213,7 +213,7 @@
 
 
 
-      }).catch((res)=>{})
+      }.bind(this)).catch((res)=>{})
 
 
     },
@@ -247,11 +247,11 @@
 
           },
 
-        }).then((res) => {
+        }).then(function (res) {
 
             console.log(res.data)
 
-        }).catch((res)=>{})
+        }.bind(this)).catch((res)=>{})
 
 
       },
