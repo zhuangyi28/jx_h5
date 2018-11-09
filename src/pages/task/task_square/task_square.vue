@@ -243,6 +243,8 @@
 
         selectLists: {},//筛选排序列表
 
+        userMobile: ''
+
       }
 
     },
@@ -250,6 +252,8 @@
 
 
     mounted () {
+
+      this.userMobile = localStorage.getItem('mobile');
 
       this.getData();
 
@@ -379,6 +383,12 @@
 
           }
 
+          if(localStorage.getItem(_this.userMobile + 'findWord')){
+
+            _this.taskLists = _this.findTask(_this.taskLists);
+
+          }
+
         })
 
       },
@@ -461,6 +471,31 @@
         localStorage.setItem('taskId', taskId);
 
         this.$router.push('/lookTask');
+
+      },
+
+
+
+
+      findTask: function (tasklists) {
+
+        console.log('findTask');
+
+        for(var task of tasklists){
+
+          var findWord = localStorage.getItem(this.userMobile + 'findWord');
+
+          if(task.taskName.indexOf(findWord) == -1 && task.taskId.indexOf(findWord) == -1){
+
+            tasklists.splice(tasklists.indexOf(task),1);
+
+          }
+
+        }
+
+        localStorage.removeItem(this.userMobile + 'findWord');
+
+        return tasklists;
 
       }
 

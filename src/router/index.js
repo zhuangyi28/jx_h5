@@ -570,10 +570,20 @@ export default new Router({
           path: 'homepage',
           name: 'homepage',
           meta: {
-            title: '工资条',
+            title: '众包平台',
             auth: true,
           },
-          component: homepage,
+          component: protocol,
+
+        },{
+          path: 'taskSquare',
+          name: 'taskSquare',
+          meta: {
+            title: '任务广场',
+            auth: true
+          },
+          component: taskSquare
+
 
         },
         {

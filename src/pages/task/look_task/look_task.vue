@@ -30,10 +30,10 @@
       <div class="content">{{taskDetail.taskDetails}}</div>
       <!-- 文件下载 -->
       <div class="file" v-if="url">
-        <a v-bind:href="url" v-bind:download="taskDetail.originalFileNames">
+        <div v-on:click="downloadFile">
           <img src="../../../../static/images/jx_task_files.png">
           <p>{{taskDetail.originalFileNames}}</p>
-        </a>
+        </div>
       </div>
       <!-- 补充内容-->
       <div class="tips_title" v-if="taskDetail.taskAddtionDetail">补充内容</div>
@@ -433,6 +433,7 @@
 
           case 5:
 
+
             return '未被录用';
 
           case 6:
@@ -558,6 +559,24 @@
           this.cancelRegistrationFn();
 
         }
+
+      },
+
+
+      downloadFile: function () {
+
+        // 创建隐藏的可下载链接
+        var eleLink = document.createElement('a');
+        eleLink.download = this.url;
+        eleLink.style.display = 'none';
+        // 字符内容转变成blob地址
+        var blob = new Blob();
+        eleLink.href = URL.createObjectURL(blob);
+        // 触发点击
+        document.body.appendChild(eleLink);
+        eleLink.click();
+        // 然后移除
+        document.body.removeChild(eleLink);
 
       }
 
