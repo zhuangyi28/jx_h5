@@ -119,27 +119,27 @@
       //重新调用data方法
       Object.assign(_this.$data, _this.$options.data());
 
-      var ajax = this.getStorage('ajaxHomepage')
+   /*   var ajax = this.getStorage('ajaxHomepage')
 
       if(ajax=='1'){
 
         _this.onShow();
 
-      }
+      }*/
 
-      var discoveryHref = this.getStorage('discoveryHref')
+      //var discoveryHref = this.getStorage('discoveryHref')
 
-      if(discoveryHref=='1'){
+     // if(discoveryHref=='1'){
 
-        setTimeout(function () {
+       //setTimeout(function () {
 
-          _this.setStorage('discoveryHref','0');
+          //_this.setStorage('discoveryHref','0');
 
-          _this.$router.push('/workDesk/discovery')
+          _this.$router.push('/workDesk/homepage')
 
-        },1)
+        //},1)
 
-      }
+      //}
 
 
 

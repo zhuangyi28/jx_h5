@@ -251,9 +251,9 @@
 
               params: {
 
-                relId:this.relId,
+                relId:this.getStorage('relId'),
 
-                pRecordId:this.pRecordId,
+                pRecordId:this.getStorage('recordId'),
 
               },
 
@@ -261,8 +261,20 @@
 
               console.log(res.data)
 
-              window.location.reload();
+              if(res.data.code=='0000'){
 
+
+                this.$toast({
+
+                  message: res.data.msg,
+                  duration: 1500,
+                  position: 'bottom',
+
+                })
+
+                window.location.reload();
+
+              }
 
 
             }).catch((res)=>{})

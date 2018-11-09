@@ -9,12 +9,20 @@
     <div class="upload_file">
       <div class="upload_file_title">上传凭证</div>
       <div class="upload_file_input">
-        <div class="input_file" v-for="item in pList">
+        <div v-if="pList.length<0" class="input_file">
+          <div class="file_img">
+            <img src="../../../../static/images/jx_file_no.png">
+          </div>
+          <div class="file_name">暂无凭证</div>
+        </div>
+
+        <div class="input_file" v-else  v-for="item in pList">
           <div class="file_img">
             <img src="../../../../static/images/jx_file.png">
           </div>
           <div class="file_name">{{item.name}}</div>
         </div>
+
       </div>
       <div class="position">
         <img src="../../../../static/images/jx_position.png">

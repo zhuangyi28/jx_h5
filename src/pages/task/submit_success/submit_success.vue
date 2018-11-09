@@ -12,7 +12,15 @@
 </template>
 <script>
   export default {
-    name: 'submitSuccess'
+    name: 'submitSuccess',
+
+    mounted () {
+
+      localStorage.getItem('taskId');
+
+      this.getData();
+
+    },
   }
 </script>
 <style lang="less" scoped>
