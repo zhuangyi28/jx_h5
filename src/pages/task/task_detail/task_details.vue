@@ -166,16 +166,8 @@
           this.taskId = this.getStorage('taskId');
 
 
-          /**
-           * 接口：获取任务详情
-           * 请求方式：GET
-           * 接口：user/task/getapplyinfo
-           * 入参：taskId
-           **/
 
-          this.$http({
 
-            method: 'get',
 
             url: process.env.API_ROOT + 'user/task/getapplyinfo',
 
@@ -254,11 +246,9 @@
             this.$http({
 
               method: 'get',
-
-              url: process.env.API_ROOT + 'user/task/submitcheck',
-
+              
               params: {
-
+              
                 relId:this.getStorage('relId'),
 
                 pRecordId:this.getStorage('recordId'),
