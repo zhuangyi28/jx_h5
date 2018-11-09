@@ -77,7 +77,7 @@
     </div>
 
     <!-- 任务状态 -->
-    <div class="task_feedback" v-if="selectState">
+    <div class="task_feedback" v-if="selectState!='1'">
 
       <div class="task_feedback_list">
         <div class="title">任务反馈</div>
@@ -153,68 +153,76 @@
     },
     mounted () {
 
-      this.taskId = this.getStorage('taskId');
 
-
-      /**
-       * 接口：获取任务详情
-       * 请求方式：GET
-       * 接口：user/task/getapplyinfo
-       * 入参：taskId
-       **/
-
-      this.$http({
-
-        method: 'get',
-
-        url: process.env.API_ROOT + 'user/task/getapplyinfo',
-
-        params: {
-
-          taskId:this.taskId
-
-
-        },
-
-      }).then((res) => {
-
-        console.log(res.data);
-
-        let taskInfo = res.data.data.taskInfo;
-        //任务状态高亮 第几个显示第几个状态
-        this.brightState = res.data.data.brightState;
-        //任务详情
-        this.taskInfo = res.data.data.taskInfo;
-        //任务名称
-        this.taskName =taskInfo.taskName;
-        //任务时间
-        this.abortDate =taskInfo.abortDate;
-        //任务金额
-        this.taskMaxUnit =taskInfo.taskMaxUnit;
-        this.taskMinUnit =taskInfo.taskMinUnit;
-        //任务人数
-        this.signUpTotal = taskInfo.signUpTotal;
-        //报名状态 2-报名中 3-报名结束
-        this.signupState = taskInfo.signupState;
-        //按钮状态
-        this.canSubmit = res.data.data.canSubmit;
-        //反馈列表
-        this.feedbackList = res.data.data.feedbacks;
-        //是否显示取消报名
-        this.selectState = res.data.data.selectState;
-        //任务详情时间及状态
-        this.taskTimeArea = res.data.data.taskTimeArea;
-        //任务用户关联id-添加反馈中获取
-        this.setStorage('recordId',res.data.data.recordId)
-        this.setStorage('relId',res.data.data.relId)
-
-
-
-      }).catch((res)=>{})
+        this.init()
 
 
     },
     methods:{
+
+      init:function () {
+
+
+          this.taskId = this.getStorage('taskId');
+
+
+          /**
+           * 接口：获取任务详情
+           * 请求方式：GET
+           * 接口：user/task/getapplyinfo
+           * 入参：taskId
+           **/
+
+          this.$http({
+
+            method: 'get',
+
+            url: process.env.API_ROOT + 'user/task/getapplyinfo',
+
+            params: {
+
+              taskId:this.taskId
+
+
+            },
+
+          }).then((res) => {
+
+            console.log(res.data);
+
+            let taskInfo = res.data.data.taskInfo;
+            //任务状态高亮 第几个显示第几个状态
+            this.brightState = res.data.data.brightState;
+            //任务详情
+            this.taskInfo = res.data.data.taskInfo;
+            //任务名称
+            this.taskName =taskInfo.taskName;
+            //任务时间
+            this.abortDate =taskInfo.abortDate;
+            //任务金额
+            this.taskMaxUnit =taskInfo.taskMaxUnit;
+            this.taskMinUnit =taskInfo.taskMinUnit;
+            //任务人数
+            this.signUpTotal = taskInfo.signUpTotal;
+            //报名状态 2-报名中 3-报名结束
+            this.signupState = taskInfo.signupState;
+            //按钮状态
+            this.canSubmit = res.data.data.canSubmit;
+            //反馈列表
+            this.feedbackList = res.data.data.feedbacks;
+            //是否显示取消报名
+            this.selectState = res.data.data.selectState;
+            //任务详情时间及状态
+            this.taskTimeArea = res.data.data.taskTimeArea;
+            //任务用户关联id-添加反馈中获取
+            this.setStorage('recordId',res.data.data.recordId)
+            this.setStorage('relId',res.data.data.relId)
+
+
+
+          }).catch((res)=>{})
+
+        },
 
       changeFoldState:function() {
 
@@ -272,7 +280,7 @@
 
                 })
 
-                window.location.reload();
+                this.init()
 
               }
 
@@ -311,7 +319,7 @@
 
               params: {
 
-                relId:this.relId,
+                taskId:this.taskId,
 
               },
 
@@ -319,7 +327,9 @@
 
               console.log(res.data)
 
-              window.location.reload();
+
+
+              this.init()
 
             }).catch((res)=>{})
 
