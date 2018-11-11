@@ -53,9 +53,28 @@
         </div>
 
       </div>
+      <!-- 显示部分-->
       <div class="state_time">
         <!-- 1 -->
-        <div class="time_box" v-for="item in taskTimeArea">
+        <div class="time_box" v-for="item in showTaskTimeArea" v-bind:class="taskTimeArea.length>4 ? '' : 'last_part_show'">
+          <div class="date">
+            <p>{{item.data|fmtDateStr}}</p>
+          </div>
+          <div class="circle"></div>
+          <div v-if="item.type=='1'" class="state">已报名，等待企业审核</div>
+          <div v-else-if="item.type=='2'" class="state">您已被录用，等待企业联系您哦</div>
+          <div v-else-if="item.type=='3'" class="state">提交验收成功，请耐心等待企业验收</div>
+          <div v-else-if="item.type=='4'" class="state">任务验收通过<span class="green">验</span></div>
+          <div v-else-if="item.type=='5'" class="state">很遗憾，您未被录用</div>
+          <div v-else-if="item.type=='6'" class="state">企业已关闭改任务</div>
+          <div v-else-if="item.type=='7'" class="state">您已取消报名</div>
+        </div>
+
+      </div>
+      <!-- 隐藏部分-->
+      <div class="state_time"  v-bind:class="brandMore ? 'area_part_hidden' : 'area_part_show'">
+
+        <div class="time_box" v-for="item in hideTaskTimeArea" v-if="taskTimeArea.length>4">
           <div class="date">
             <p>{{item.data|fmtDateStr}}</p>
           </div>
@@ -69,7 +88,8 @@
           <div v-else-if="item.type=='7'" class="state">您已取消报名</div>
         </div>
       </div>
-      <div class="show_more" v-if="taskTimeArea.length > 4" v-on:click="changeFoldState">
+      <!-- 赞开关闭-->
+      <div class="show_more" v-if="taskTimeArea.length>4" v-on:click="changeFoldState">
         <span>{{brandMore?'展开∨':'收起∧'}}</span>
       </div>
 
@@ -148,6 +168,10 @@
 
         taskTimeArea:[],//任务反馈时间详情
 
+        showTaskTimeArea:[],//显示部分
+
+        hideTaskTimeArea:[],//隐藏部分
+
         brandMore: true//显示展开收回
       }
     },
@@ -158,6 +182,7 @@
 
 
     },
+
     methods:{
 
       init:function () {
@@ -213,18 +238,30 @@
             //是否显示取消报名
             this.selectState = res.data.data.selectState;
             //任务详情时间及状态
-            this.taskTimeArea = res.data.data.taskTimeArea;
+            this.taskTimeArea = res.data.data.taskTimeArea
+
+          if(this.taskTimeArea<=4){
+
+            this.showTaskTimeArea = this.taskTimeArea;
+          }
+          else {
+
+            this.showTaskTimeArea = this.taskTimeArea.slice(0,4);
+
+            this.hideTaskTimeArea  =this.taskTimeArea.slice(4)
+
+          }
+
             //任务用户关联id-添加反馈中获取
             this.setStorage('recordId',res.data.data.recordId)
             this.setStorage('relId',res.data.data.relId)
-
 
 
           }).catch((res)=>{})
 
         },
 
-      changeFoldState:function() {
+  changeFoldState:function() {
 
         this.brandMore = !this.brandMore
 
@@ -365,7 +402,28 @@
         this.$router.push('/taskFeedbackContent')
       }
 
-    }
+    },
+/*    computed: {
+      showTaskTimeArea: {
+        get: function () {
+          if (this.brandMore) {
+            if (this.taskTimeArea.length < 5) {
+              return this.taskTimeArea
+            }
+            let newArr = []
+            for (var i = 0; i < 4; i++) {
+              let item = this.taskTimeArea[i]
+              newArr.push(item)
+            }
+            return newArr
+          }
+          return this.taskTimeArea
+        },
+        set: function (val) {
+          this.showTaskTimeArea = val
+        }
+      }
+    },*/
 
 
   }

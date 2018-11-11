@@ -68,13 +68,13 @@
 
     mounted(){
 
-      var lactionReload = self.getStorage('lactionReload')
+      var lactionReload = this.getStorage('lactionReload')
 
       if (lactionReload == '1') {
 
         this.init()
 
-        this.setStorage('lactionReload', 0)
+        this.setStorage('lactionReload', '0')
 
       }
 

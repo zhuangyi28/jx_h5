@@ -134,6 +134,9 @@
     },
     mounted(){
 
+      //重新调用data方法
+      //Object.assign(this.$data, this.$options.data());
+
       this.paging();
 
     },
@@ -153,6 +156,14 @@
         //存储此时状态
         this.thisState = item.state;
 
+        this.pageNum = 1;//初始值为2
+
+        this.hasMoreData = true;//是否可以加载更多
+
+        this.noData = true;//是否显示暂无数据 true为隐藏 false为显示
+
+        this.taskList = [];//发薪企业列表
+
         console.log('此时的状态'+this.thisState);
 
         this.paging();
@@ -163,18 +174,24 @@
 
       paging:function () {
 
-        //如果值为空 选择全部
-        if(!this.thisState){
+        console.log('嫩否加载'+this.hasMoreData)
 
-          //全部不需要传
-          this.loadList()
+        if (this.hasMoreData) {
+
+          this.hasMoreData = false;
+
+          //如果值为空 选择全部
+          if (!this.thisState) {
+
+            //全部不需要传
+            this.loadList()
+          }
+          else {
+
+            //传入对应的状态
+            this.loadList(this.thisState)
+          }
         }
-        else {
-
-          //传入对应的状态
-          this.loadList(this.thisState)
-        }
-
 
 
       },
@@ -183,7 +200,8 @@
 
         let thisData = {};
 
-        let self = this
+        let _this= this
+
 
         if (num) {
 
@@ -232,11 +250,97 @@
 
           console.log(res.data)
 
-          if(res.data.data.list){
 
-            let thisList = res.data.data.list
+          let thisList = res.data.data.list;
 
-            if(thisList.length<10){
+
+            if(thisList){
+
+
+              if (thisList.length < 10) {
+
+                if(this.pageNum=='1'){
+
+                  this.taskList = res.data.data.list;
+
+                }
+
+
+                else {
+
+
+                  let lastList = this.taskList;
+
+                  //把获取到的list合并成一个数组
+                  let nowList = lastList.concat(thisList);
+
+                  this.taskList = nowList;
+
+                }
+
+
+                //不加载并且显示没有更多数据
+
+                this.hasMoreData = false;
+
+                this.noData = false
+
+
+              }
+
+              else {
+
+                console.log('有分页')
+
+                let lastList = this.taskList;
+
+                //把获取到的list合并成一个数组
+                let nowList = lastList.concat(thisList);
+
+                this.taskList = nowList;
+
+                //页数加1
+
+                this.pageNum = this.pageNum + 1;
+                //可以加载
+                setTimeout(function () {
+
+                  _this.hasMoreData = true
+
+                }, 500)
+
+
+              }
+
+
+
+            }
+
+            else if(!thisList&&this.pageNum==1){
+
+              console.log('没有数据')
+
+              this.taskList = []
+
+              this.hasMoreData = false;
+
+              this.noData = false;
+
+
+            }
+
+
+
+  /*        if(res.data.data.list){
+
+            for(var i=0; i<res.data.data.list.length;i++){
+
+              this.taskList.push(res.data.data.list[i])
+
+            }
+
+
+            /!*f(thisList.length<this.pageSize){
 
                 //如果是第一页的话，直接显示list，否则拼接list
 
@@ -263,40 +367,27 @@
 
                 this.hasMoreData = false;
 
-                 this.noData = false
+                this.noData = false
 
 
+            }*!/
+            if(res.data.list.length<10){
+
+              this.hasMoreData = false;
+
+              this.noData = false
+
+            }else {
+
+              this.hasMoreData = false;
+
+              this.noData = true;
             }
-
-            else {
-
-              //上一次获取到的list
-
-              let lastList = this.taskList;
-
-              //把获取到的list合并成一个数组
-              let nowList = lastList.concat(thisList);
-
-              this.taskList = nowList;
-
-              //添加分页
-              this.pageNum = this.pageNum + 1;
-
-              //可以加载
-              setTimeout(function () {
-
-                self.hasMoreData = true
-
-              }, 500)
-
-
-            }
-
-
 
 
           }
           else {
+
 
             this.taskList = [];
 
@@ -304,7 +395,7 @@
 
             this.noData = false;
 
-          }
+          }*/
 
 
         }).catch((res) => {})
@@ -317,8 +408,7 @@
 
         console.log('加载更多');
 
-        this.paging();
-
+        this.paging()
 
       },
 
