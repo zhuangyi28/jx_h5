@@ -261,7 +261,7 @@
 
         },
 
-  changeFoldState:function() {
+       changeFoldState:function() {
 
         this.brandMore = !this.brandMore
 
@@ -290,7 +290,9 @@
 
             this.$http({
 
-              method: 'get',
+              method: 'post',
+
+              url: process.env.API_ROOT + 'user/task/submitcheck',
 
               params: {
 
