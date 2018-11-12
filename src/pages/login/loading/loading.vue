@@ -33,10 +33,10 @@
       var str = window.location.href;
 
 
-      this.setStorage('lactionReload','1')
+      this.setStorage('lactionReload','1');
 
 
-        var  thisUserCode = str.split('?')[1].split('&')[0].split('=')[1]
+        var  thisUserCode = str.split('?')[1].split('&')[0].split('=')[1];
 
         //是否跳转发现页面 1为跳转到发现 0为正常
         //this.setStorage('discoveryHref','1')
@@ -115,13 +115,19 @@
 
         }).then((res) => {
 
-            console.log(res.data)
+            console.log(res.data);
 
           if(res.data.code=='0000'){
 
+            if(res.data.data.isCommitAuthorize == 0){
 
-            this.$router.push('/workDesk/homepage')
+              this.$router.push('/workDesk/homepage')
 
+            }else if(res.data.data.isCommitAuthorize == 1){
+
+              this.$router.push('/workDesk/taskSquare');
+
+            }
 
           }
 

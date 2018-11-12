@@ -109,6 +109,64 @@
 
     mounted () {
 
+      /**
+       * 接口：用户中心
+       * 请求方式：POST
+       * 接口：/user/center/usercenter
+       * 入参：null
+       **/
+
+      this.$http({
+
+        method: 'post',
+
+        url: process.env.API_ROOT + 'user/center/usercenter',
+
+      }).then(function (res) {
+
+        if(res.data.data.isVerify == 0 || res.data.data.isVerify == 3){
+
+          this.$messagebox({
+            title: '提示',
+            message: '未实名认证用户，需先完成实名认证才填写个人履历',
+            showCancelButton: true,
+            showConfirmButton: true,
+            confirmButtonText: '去认证',
+            cancelButtonText: '取消',
+            closeOnClickModal: false,
+            cancelButtonClass: 'cancel_btn',
+            confirmButtonClass: 'confirm_btn_orange',
+          }).then((res)=>{
+
+            if(res == 'confirm'){
+
+              this.setStorage('hrefId','4');
+
+              this.$router.push('/certification');
+
+            }else if(res == 'cancel'){
+
+              window.history.go(-1);
+
+            }
+
+          })
+
+        }else if(res.data.data.isVerify == 2){
+
+          this.$messagebox({
+            title: '提示',
+            message: '实名认证审核中，审核通过后即可填写个人履历',
+            confirmButtonText: '确认',
+            confirmButtonClass: 'confirm_btn_orange',
+          }).then((res)=>{
+            window.history.go(-1);
+          })
+
+        }
+
+      }.bind(this));
+
       this.lookTaskToPersonInformation = localStorage.getItem('lookTaskToPersonInformation');
 
       this.getUserCenter();
