@@ -83,6 +83,12 @@ router.beforeEach((to,from,next)=>{
          next({path: '/workDesk/homepage'})
 
      }
+
+     else if ((from.path == '/workDesk/taskSquare' && to.path == '/login') || (from.path == '/workDesk/homepage' && to.path == 'Register')) {
+
+      next({path: '/workDesk/homepage'})
+
+    }
     else {
 
       next('/login');
