@@ -45,7 +45,7 @@
         <!-- 暂无账单 -->
         <div class="bill_nodata_img" v-if="taskList.length == 0">
           <img src="../../../../static/images/nodetail_img.png">
-          <div>暂无相关账单</div>
+          <div>暂无相关任务</div>
         </div>
         <!-- 加载完毕-->
         <div class="loadmore_tips" v-else><span class="data">没有更多数据啦~</span></div>
