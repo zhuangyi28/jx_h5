@@ -163,6 +163,12 @@
 
                 this.longitude = res.longitude// 经度，浮点数，范围为180 ~ -180
 
+
+                self.setStorage('pLatitude',res.latitude)
+
+                self.setStorage('pLongitude',res.longitude)
+
+
                 console.log('纬度' + this.latitude)
 
                 console.log('经度' + this.longitude)
@@ -355,8 +361,11 @@
 
       keepTaskDetailFn: function () {
 
+
+        var reg = new RegExp(/\s+/g)
+
         //判断输入内容
-        if (!this.feedBackContent) {
+        if (!this.feedBackContent||reg.test(this.feedBackContent)) {
 
           this.$toast({
 
@@ -393,9 +402,9 @@
 
               pFiles: this.resultUpload,//附件
 
-              pLongitude: this.longitude,//经度
+              pLongitude: this.getStorage('pLongitude'),//经度
 
-              pLatitude: this.latitude,//纬度
+              pLatitude: this.getStorage('pLatitude'),//纬度
 
               pPlace: this.place,//位置
             },
