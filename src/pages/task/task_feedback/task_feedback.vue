@@ -72,7 +72,9 @@
 
       if (lactionReload == '1') {
 
-        this.init()
+          console.log('刷新')
+
+        window.location.reload();
 
         this.setStorage('lactionReload', '0')
 
@@ -117,7 +119,7 @@
           console.log('获取签名')
 
           self.wx.config({
-            debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
             appId: 'wxee620089167335f6', // 必填，公众号的唯一标识 - 测试版本
             //appId: 'wxee620089167335f6', // 必填，公众号的唯一标识 - 生产版本
             timestamp: res.data.data.timestamp, // 必填，生成签名的时间戳
@@ -229,6 +231,10 @@
 
               },
               cancel: function () {
+
+                  console.log('不允许')
+
+                  this.place = '暂无位置'
                 // 用户取消后执行的回调函数
               }
             });
