@@ -12,6 +12,7 @@
         <p v-else-if="item.transType==2">转账-转出</p>
         <p v-else-if="item.transType==4">消费</p>
         <p v-else-if="item.transType==10">充值</p>
+        <p v-else-if="item.transType==14">个人综合所得</p>
         <p>{{item.clearingDate|fmtDateStr}}</p>
       </div>
 
