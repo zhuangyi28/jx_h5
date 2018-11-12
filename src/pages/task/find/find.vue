@@ -3,9 +3,9 @@
     <div class="find_input">
       <div class="input_place">
         <img src="../../../../static/images/jx_find.png" v-on:click="submit">
-        <input type="text" placeholder="请输入公司、任务名称或者任务编号" v-on:keyup.enter="submit" v-model="findWord">
+        <input type="text" placeholder="请输入任务名称或者任务编号" v-on:keyup.enter="submit" v-model="findWord">
       </div>
-      <div class="cancel" v-on:click="$router.replace('/taskSquare')">取消</div>
+      <div class="cancel" v-on:click="$router.replace('/workDesk/taskSquare')">取消</div>
     </div>
     <div class="find_history">
       <div class="title">
@@ -66,7 +66,7 @@
 
         localStorage.setItem(this.userMobile + 'findWord',this.findWord);
 
-        this.$router.push('/taskSquare');
+        this.$router.push('/workDesk/taskSquare');
 
       },
 
@@ -99,7 +99,11 @@
 
       findThisWord: function () {
 
-        var findWrod = event.currentTarget.innerText;
+        var findWord = event.currentTarget.innerText;
+
+        localStorage.setItem(this.userMobile+'findWord',findWord);
+
+        this.$router.push('/workDesk/taskSquare');
 
       }
 

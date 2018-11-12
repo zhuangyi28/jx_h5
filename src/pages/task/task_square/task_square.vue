@@ -164,8 +164,16 @@
 
 
 
+    <div class="task_list_none" v-if="taskLists.length == 0">
+
+      <img src="../../../../static/images/nodetail_img.png">
+
+      <div>暂无相关账单</div>
+
+    </div>
+
     <!--任务列表-->
-    <div class="task_list">
+    <div class="task_list" v-else>
 
       <div class="list_one" v-for="taskList in taskLists" v-bind:data-taskId="taskList.taskId" v-on:click="jumpTo">
 
@@ -243,7 +251,11 @@
 
         selectLists: {},//筛选排序列表
 
-        userMobile: ''
+        userMobile: '',//用户账号
+
+        findWord: '',//搜索关键字
+
+        pageNum: 1
 
       }
 
@@ -256,6 +268,10 @@
       this.userMobile = localStorage.getItem('mobile');
 
       this.getData();
+
+      this.findWord = localStorage.getItem(this.userMobile + 'findWord');
+
+      localStorage.removeItem(this.userMobile + 'findWord');
 
     },
 
@@ -381,11 +397,11 @@
 
             _this.timeChange(_this.taskLists);
 
-          }
+            if(_this.findWord != '' && _this.findWord != null){
 
-          if(localStorage.getItem(_this.userMobile + 'findWord')){
+              _this.taskLists = _this.findTask(_this.taskLists);
 
-            _this.taskLists = _this.findTask(_this.taskLists);
+            }
 
           }
 
@@ -479,23 +495,21 @@
 
       findTask: function (tasklists) {
 
-        console.log('findTask');
+        var findWord = this.findWord;
+
+        var _tasklists = [];
 
         for(var task of tasklists){
 
-          var findWord = localStorage.getItem(this.userMobile + 'findWord');
+          if(task.taskName.indexOf(findWord) != -1 || task.taskId.indexOf(findWord) != -1){
 
-          if(task.taskName.indexOf(findWord) == -1 && task.taskId.indexOf(findWord) == -1){
-
-            tasklists.splice(tasklists.indexOf(task),1);
+            _tasklists.push(task);
 
           }
 
         }
 
-        localStorage.removeItem(this.userMobile + 'findWord');
-
-        return tasklists;
+        return _tasklists;
 
       }
 

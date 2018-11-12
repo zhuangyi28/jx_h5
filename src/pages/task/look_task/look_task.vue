@@ -127,6 +127,8 @@
 
             }).then(function (res) {
 
+              console.log(res);
+
               if(res.data.code == '0000'){
 
                 this.$toast({
