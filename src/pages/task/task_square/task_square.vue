@@ -346,9 +346,7 @@
 
           console.log(res.data);
 
-          console.log('工资提醒')
-
-          var _this = this
+          var _this = this;
 
           var thisType = res.data.data[0].type;
 
@@ -377,7 +375,7 @@
 
 
           //是否查看工资条
-          if (thisType == 3) {
+          if (thisType == 1) {
 
 
             var thisEnName = res.data.data[0].entName;
@@ -640,6 +638,136 @@
 
 
 
+
+
+
+                }
+              }).catch(err => {});
+
+
+            }, 1000)
+
+
+          }
+
+          else if(thisType == 3){
+
+
+            var thisEnName = res.data.data[0].entName;
+
+            var thisSalaryMonth = res.data.data[0].salaryMonth;
+
+            var thisSalaryDetailId = res.data.data[0].salaryDetailId
+
+            /*console.log('发薪企业id'+that.data.salaryDetailId);*/
+
+
+            setTimeout(function () {
+
+
+              _this.$messagebox({
+                title: '提示',
+                message: '请查看【' + thisEnName + '】众包任务' + thisSalaryMonth + '个体综合所得',
+                showCancelButton: true,
+                showConfirmButton: true,
+                confirmButtonText: '查看',
+                cancelButtonText: '暂不查看',
+                closeOnClickModal: false,
+                cancelButtonClass: 'cancel_btn',
+                confirmButtonClass: 'confirm_btn_orange',
+              }).then(action => {
+
+                if (action == 'confirm') {
+
+                  lockstatus();
+
+                  function lockstatus() {
+
+
+                    /**
+                     * 接口：锁定状态查询
+                     * 请求方式：GET
+                     * 接口：/salary/home/selectlockstatus
+                     * 入参：null
+                     **/
+
+                    _this.$http({
+
+                      method: 'get',
+
+                      url: process.env.API_ROOT + 'salary/home/selectlockstatus',
+
+
+                    }).then((res) => {
+
+                      console.log(res.data);
+
+
+                      if (res.data.data.type == '1') {
+
+
+                        _this.$router.push('/authentication')
+
+
+                      }
+
+                      else if (res.data.data.type == '0') {
+
+                        _this.$router.push('/locked')
+
+                      }
+
+
+                    }).catch((res) => {})
+
+
+                  }
+
+
+
+                }
+
+                else {
+
+                  console.log('取消');
+                  //调用暂不查看工资条
+
+                  noLook();
+
+                  function noLook() {
+                    /**
+                     * 接口：暂不查看工资条
+                     * 请求方式：POST
+                     * 接口：/salary/home/updateselectsalary
+                     * 入参：salaryDetailId
+                     **/
+
+                    _this.$http({
+
+                      method: 'post',
+
+                      url: process.env.API_ROOT + 'salary/home/updateselectsalary',
+
+
+                      params: {
+
+                        salaryDetailId: thisSalaryDetailId
+
+                      }
+                    }).then((res) => {
+
+                      console.log(res.data)
+
+                      _this.$toast({
+
+                        message: '必须加入企业才可查看工资条哦~关闭后可在“我的发薪企业”中继续加入',
+                        duration: 1500
+
+                      })
+
+
+                    }).catch((res) => {})
+                  }
 
 
 
