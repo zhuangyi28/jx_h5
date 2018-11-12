@@ -2,7 +2,7 @@
   <div class="payroll">
     <div class="company_and_money">
       <div class="money">
-        <div>{{salaryMonth}}工资（元）</div>
+        <div>{{salaryMonth}}<span v-if="salaryType=='3'">个人综合所得</span><span v-else>工资（元）</span></div>
         <div class="wages">{{realAmount|thousandBitSeparator}}</div>
         <div>{{entName}}</div>
       </div>
@@ -160,6 +160,8 @@
 
       var thisSalaryDetailId = this.getStorage('salaryDetailId');
 
+
+
       /**
        * 接口：工资发放明细
        * 请求方式：GET
@@ -274,6 +276,16 @@
           //this.subtractAmount= _subtractAmountArray,//代扣明细
 
           this.realAmount= res.data.data.realAmount//实发金额
+
+        if(this.salaryType=='3'){
+
+          document.title="个人综合所得明细"
+        }
+        else {
+
+          document.title="工资条明细"
+        }
+
 
 
         //判断是否有新消息

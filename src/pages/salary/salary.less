@@ -158,6 +158,7 @@
       .already_confirm{
 
         .money_detail_content{
+          position: relative;
           width: 100%;
           box-sizing: border-box;
 
@@ -170,15 +171,15 @@
               span{
 
                 line-height: 22px;
-                max-height: 44px;
-                width: calc(~'100% - 50px');
-                overflow: hidden;
+             /*   max-height: 44px;
+                width: calc(~'100% - 50px');*/
+              /*  overflow: hidden;
                 display: inline-block;
                 display: -webkit-box;
                 -webkit-line-clamp: 2;
                 -webkit-box-orient: vertical;
                 text-overflow: ellipsis;
-
+*/
               }
 
 
@@ -243,24 +244,22 @@
         display: flex;
         align-items: center;
         //position: relative;
-        &:after{
-          content: '';
-          display: block;
-          width: 97%;
-          height: 1px;
-          border-top: 1px solid #e9e9e9;
-          position: absolute;
-          transform:scaleY(0.6);
-          bottom: 38px;
-          left: 10px;
 
-        }
         .title{
-          display: flex;
-          align-items: center;
+          position: relative;
+          text-align: left;
           margin-right: auto;
-          margin-top: 15px;
+          margin-top: 10px;
+          width: 100%;
           color: #ababab;
+            line-height: 22px;
+            max-height: 44px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            text-overflow: ellipsis;
+
         }
         .confirm{
           position: absolute;
@@ -297,8 +296,22 @@
 
       }
       .money_detail_content{
+        position: relative;
         width: 100%;
         box-sizing: border-box;
+        &:after{
+          content: '';
+          display: block;
+          width: 105%;
+          height: 1px;
+          border-top: 1px solid #e9e9e9;
+          position: absolute;
+          -webkit-transform: scaleY(0.6);
+          transform: scaleY(0.6);
+          bottom: -5px;
+          left: -4px;
+        }
+
 
         p{
           color: #ff7d37;
@@ -309,14 +322,14 @@
             span{
               color: rgb(109,107,102);
               display: inline-block;
-              line-height: 22px;
-              max-height: 44px;
+            line-height: 22px;
+              /*  max-height: 44px;
               width: calc(~'100% - 50px');
               overflow: hidden;
               display: -webkit-box;
               -webkit-line-clamp: 2;
               -webkit-box-orient: vertical;
-              text-overflow: ellipsis;
+              text-overflow: ellipsis;*/
 
 
             }

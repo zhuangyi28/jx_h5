@@ -127,7 +127,7 @@ export default new Router({
       path: '/payroll',
       name: 'payroll',
       meta: {
-        title: '工资条明细'
+        title: ''
       },
       component: payroll,
 
