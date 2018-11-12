@@ -415,6 +415,17 @@
 
 
 
+    },
+
+
+    destroyed () {
+
+      if(localStorage.getItem('lookTaskToPersonInformation')){
+
+        localStorage.removeItem('lookTaskToPersonInformation');
+
+      }
+
     }
 
   }
