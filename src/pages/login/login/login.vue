@@ -58,8 +58,6 @@
 
           Authorization:'',
 
-          openId:'',
-
           code:''
 
         }
@@ -146,11 +144,11 @@
               }
 
 
-            }).then((res)=>{
+            }).then(function (res) {
 
               console.log(res.data);
 
-              console.log(res)
+              console.log(res);
 
 
               if(res.data.code=='-1'){
@@ -172,8 +170,6 @@
 
                 this.Authorization = res.data.token.access_token;
 
-                this.openId = res.data.data.openId;
-
                  this.$indicator.close();
 
                 //存取token
@@ -183,8 +179,17 @@
 
                 this.setStorage('userId',res.data.data.userId);
 
+                this.setStorage('isCommitAuthorize',res.data.data.isCommitAuthorize);
 
-                this.$router.push('/workDesk/homepage')
+                if(res.data.data.isCommitAuthorize == 0){
+
+                  this.$router.push('/workDesk/homepage');
+
+                }else if(res.data.data.isCommitAuthorize == 1){
+
+                  this.$router.push('/workDesk/taskSquare');
+
+                }
 
                 //是否跳转发现页面 1为跳转到发现 0为正常
                 //this.setStorage('discoveryHref','1')
@@ -215,7 +220,7 @@
 
 
 
-            }).catch((res)=>{
+            }.bind(this)).catch((res)=>{
 
               //console.log(res.data);
 
