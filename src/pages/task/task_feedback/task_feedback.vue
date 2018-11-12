@@ -24,6 +24,7 @@
       <div class="position">
         <img src="../../../../static/images/jx_position.png">
         <span v-if="place">{{place}}</span>
+        <span v-else>所在位置</span>
       </div>
     </div>
     <div class="save_btn" v-on:click="keepTaskDetailFn">提交</div>
