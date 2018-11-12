@@ -54,7 +54,7 @@
 
   export default {
 
-    name: 'homepage',
+    name: 'salary',
 
     data () {
 
@@ -135,13 +135,14 @@
 
           //_this.setStorage('discoveryHref','0');
 
-          _this.$router.push('/workDesk/homepage')
+          //_this.$router.push('/workDesk/homepage')
 
         //},1)
 
       //}
 
 
+      this.onShow();
 
 
 

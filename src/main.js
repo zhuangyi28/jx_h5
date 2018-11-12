@@ -77,7 +77,7 @@ router.beforeEach((to,from,next)=>{
       next();
 
     }
-    else  if((from.path === '/workDesk/homepage' && to.path === '/login')||(from.path === '/workDesk/homepage' && to.path === '/Register')||(from.path === '/workDesk/discovery' && to.path === '/login')||(from.path === '/workDesk/discovery' && to.path === '/Register')){
+    else  if((from.path === '/workDesk/homepage' && to.path === '/login')||(from.path === '/workDesk/homepage' && to.path === '/Register')){
 
 
          next({path: '/workDesk/homepage'})

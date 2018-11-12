@@ -38,7 +38,7 @@
     <!--工资余额 -->
     <div class="balance" v-on:click="$router.push('/balance')">
       <div class="title">
-       <span class="cell_text">工资余额</span>
+       <span class="cell_text">收入余额</span>
       </div>
       <div class="cell_value"><span>{{totalSalary | thousandBitSeparator}}</span></div>
       <i class="allow_right"></i>
@@ -51,7 +51,7 @@
       <!--我的账单 -->
       <div class="cell" v-on:click="billFn">
         <div class="title">
-          <img src="../../../static/images/jx_bill_1.png"><span class="cell_text">我的账单</span>
+          <img src="../../../static/images/jx_bill_1.png"><span class="cell_text">我的订单</span>
         </div>
         <div class="cell_value"></div>
         <i class="allow_right"></i>
@@ -73,7 +73,7 @@
       <!--我的账单 -->
       <div class="cell" v-on:click="$router.push('/myTask')">
         <div class="title">
-          <img src="../../../static/images/jx_task_1.png"><span class="cell_text">我的众包任务</span>
+          <img src="../../../static/images/jx_task_1.png"><span class="cell_text">众包任务</span>
         </div>
         <div class="cell_value"></div>
         <i class="allow_right"></i>
@@ -96,7 +96,7 @@
       <!--我的发薪企业 -->
       <div class="cell" v-on:click="$router.push('/company')">
         <div class="title">
-          <img src="../../../static/images/jx_unit_1.png"><span class="cell_text">我的发薪企业</span>
+          <img src="../../../static/images/jx_unit_1.png"><span class="cell_text">发薪企业</span>
         </div>
         <div v-show="hasJoinEnt" class="cell_value"><span class="orange">您有新的企业邀请</span></div>
         <i class="allow_right"></i>

@@ -1,17 +1,26 @@
 <template>
 <div class="feedbackList" v-infinite-scroll="loadMore" infinite-scroll-disabled="moreLoading" infinite-scroll-distance="20" infinite-scroll-immediate-check="false">
 
-  <div class="list_box" v-for="item in feedBackList" v-bind:data-detail="item.salaryDetailId"  v-bind:data-id="item.salaryId" v-on:click="feedBackUrlFn">
+  <div class="list_box" v-for="item in feedBackList" v-bind:data-detail="item.salaryDetailId"  v-bind:data-id="item.salaryId" v-bind:data-click="item.isClick" v-on:click="feedBackUrlFn">
 
     <div class="icon_orange" v-if="item.isUserHaveNew=='1'"><img src="../../../../static/images/feedback_unlook.png"/></div>
-    <div class="icon_blue" v-else><img src="../../../../static/images/feedback_look.png"/></div>
-    <div class="content">
-      <div>反馈处理结果<span v-if="item.isUserHaveNew=='1'">new</span></div>
-      <div>{{item.contentTitle}}</div>
-      <div><p>{{item.salaryMonth}}工资</p><p>{{item.sendDate|fmtDateStr}}</p></div>
+    <div class="icon_blue" v-else>
+      <img src="../../../../static/images/company_look.png" v-if="item.salaryType=='9'"/>
+      <img src="../../../../static/images/feedback_look.png" v-else/>
     </div>
-  </div>
+    <div class="content">
+      <div>
+         <p v-if="item.salaryType=='9'">企业消息</p>
+         <p v-else>反馈处理结果</p>
+         <span v-if="item.isUserHaveNew=='1'">new</span>
+      </div>
+      <div>{{item.contentTitle}}</div>
+      <div v-if="item.salaryType=='9'"><p>{{item.taskName}}</p><p>{{item.createDate|fmtDateStr}}</p></div>
+      <div v-if="item.salaryType=='8'"><p>{{item.salaryMonth}}个体综合所得</p><p>{{item.sendDate|fmtDateStr}}</p></div>
+      <div v-else-if="item.salaryType=='3'"><p>{{item.salaryMonth}}工资</p><p>{{item.sendDate|fmtDateStr}}</p></div>
+    </div>
 
+  </div>
 
 
   <div class="loadmore" v-show="!noData">
@@ -194,15 +203,21 @@
 
         this.loadList()
 
-
       },
       feedBackUrlFn:function (e) {
 
-        this.setStorage('salaryDetailId',e.currentTarget.dataset.detail);
 
-        this.setStorage('salaryId',e.currentTarget.dataset.id);
+          if(e.currentTarget.dataset.click=='0'){
 
-        this.$router.push('/feedback')
+            this.setStorage('salaryDetailId',e.currentTarget.dataset.detail);
+
+            this.setStorage('salaryId',e.currentTarget.dataset.id);
+
+            this.$router.push('/feedback')
+
+
+          }
+
 
       },
 
