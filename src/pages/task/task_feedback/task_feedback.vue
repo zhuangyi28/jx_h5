@@ -3,8 +3,7 @@
     <div class="feedback_content">
       <div class="feedback_content_title">反馈内容</div>
       <div class="feedback_content_input">
-        <textarea name="" id="" cols="30" rows="6" placeholder="请填写反馈内容（200字以内）" maxlength="200"
-                  v-model="feedBackContent"></textarea>
+        <textarea name="" id="" cols="30" rows="6" placeholder="请填写反馈内容（200字以内）" maxlength="200" v-model="feedBackContent"></textarea>
       </div>
     </div>
     <div class="upload_file">

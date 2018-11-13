@@ -2,7 +2,7 @@
   <div class="task_details">
 
     <!-- 任务详情 -->
-    <div class="task_title" v-on:click="$router.push('/taskFeedback')">
+    <div class="task_title" v-on:click="$router.push('/lookTask')">
 
       <div><img src="../../../../static/images/jx_task_icon.png"/></div>
       <div class="content">
@@ -260,8 +260,7 @@
           }).catch((res)=>{})
 
         },
-
-       changeFoldState:function() {
+      changeFoldState:function() {
 
         this.brandMore = !this.brandMore
 
@@ -402,8 +401,7 @@
         console.log('详情id'+e.currentTarget.dataset.id);
         this.setStorage('pFeedbackId',e.currentTarget.dataset.id);
         this.$router.push('/taskFeedbackContent')
-      }
-
+      },
     },
 /*    computed: {
       showTaskTimeArea: {
