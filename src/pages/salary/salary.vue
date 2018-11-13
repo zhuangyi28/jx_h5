@@ -13,13 +13,13 @@
           <div :class="item.state == '已确认'? '':'already_confirm'" v-on:click="clickSeeList" v-bind:data-detail="item.salaryDetailId">
 
             <div class="money_detail_content">
-              <p class="company"><span>{{item.salaryMonth}}</span><span v-if="item.salaryType=='3'">个人综合所得</span><span v-else>工资</span></p>
+              <p class="company"><span>{{item.salaryMonth}}</span><span v-if="item.salaryType=='8'">个人综合所得</span><span v-else>工资</span></p>
               <p class="money">实发工资：<span v-if="lookWages"><span>{{item.realAmount | thousandBitSeparator}}</span><span>元</span></span><span
                 v-else><span class="star">******</span><span>元</span></span>
               </p>
             </div>
             <div class="money_detail_title">
-              <div class="title"><span v-if="item.salaryType=='3'">任务名称：</span><span v-else>发薪企业：</span>{{item.entName}}</div>
+              <div class="title"><span v-if="item.salaryType=='8'">任务名称：</span><span v-else>发薪企业：</span>{{item.entName}}</div>
               <div class="confirm"><img src="../../../static/images/jx_homepage_icon.png"/><span>{{item.state}}</span></div>
             </div>
           </div>
@@ -237,7 +237,7 @@
           //console.log('发薪'+wx.getStorageSync('salaryDetailId'))
 
 
-          //是否查看工资条
+/*          //是否查看工资条
           if (thisType == 1) {
 
 
@@ -247,7 +247,7 @@
 
             var thisSalaryDetailId = res.data.data[0].salaryDetailId
 
-            /*console.log('发薪企业id'+that.data.salaryDetailId);*/
+            /!*console.log('发薪企业id'+that.data.salaryDetailId);*!/
 
 
             setTimeout(function () {
@@ -272,12 +272,12 @@
                   function lockstatus() {
 
 
-                    /**
+                    /!**
                      * 接口：锁定状态查询
                      * 请求方式：GET
                      * 接口：/salary/home/selectlockstatus
                      * 入参：null
-                     **/
+                     **!/
 
                     _this.$http({
 
@@ -323,12 +323,12 @@
                   noLook();
 
                   function noLook() {
-                    /**
+                    /!**
                      * 接口：暂不查看工资条
                      * 请求方式：POST
                      * 接口：/salary/home/updateselectsalary
                      * 入参：salaryDetailId
-                     **/
+                     **!/
 
                     _this.$http({
 
@@ -399,12 +399,12 @@
                   function lockstatus() {
 
 
-                    /**
+                    /!**
                      * 接口：锁定状态查询
                      * 请求方式：GET
                      * 接口：/salary/home/selectlockstatus
                      * 入参：null
-                     **/
+                     **!/
 
                     _this.$http({
 
@@ -453,12 +453,12 @@
                   function cancelJoin() {
 
 
-                    /**
+                    /!**
                      * 接口：暂不加入企业
                      * 请求方式：POST
                      * 接口：/salary/home/updatejoinentstatus
                      * 入参：entId
-                     **/
+                     **!/
 
                     _this.$http({
 
@@ -514,7 +514,7 @@
           }
 
           //未收到任何邀请
-          else if (thisType == 0) {}
+          else if (thisType == 0) {}*/
 
 
         }).catch((res) => {

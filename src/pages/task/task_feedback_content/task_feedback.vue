@@ -9,19 +9,21 @@
     <div class="upload_file">
       <div class="upload_file_title">上传凭证</div>
       <div class="upload_file_input">
-        <div v-if="pList.length<0" class="input_file">
+
+
+        <div class="input_file" v-if="pFiles"  v-for="item in pList" v-on:click="downloadFileFn">
+          <div class="file_img">
+            <img src="../../../../static/images/jx_file.png">
+          </div>
+          <div class="file_name">{{item.name}}</div>
+        </div>
+        <div class="input_file" v-else>
           <div class="file_img">
             <img src="../../../../static/images/jx_file_no.png">
           </div>
           <div class="file_name">暂无凭证</div>
         </div>
 
-        <div class="input_file" v-else  v-for="item in pList">
-          <div class="file_img">
-            <img src="../../../../static/images/jx_file.png">
-          </div>
-          <div class="file_name">{{item.name}}</div>
-        </div>
 
       </div>
       <div class="position">
@@ -45,6 +47,8 @@
         pPlace: '',//所在位置
 
         pList: [],
+
+        pFiles:''//文件
       }
 
     },
@@ -52,62 +56,76 @@
 
     mounted(){
 
+      this.init()
+    },
 
-      /**
-       * 接口：获取反馈详情
-       * 请求方式：POST
-       * 接口：user/task/getfeedbackdetail
-       * 入参：pFeedbackId
-       **/
+    methods: {
 
-      this.$http({
+      init:function () {
 
-        method: 'post',
+          /**
+           * 接口：获取反馈详情
+           * 请求方式：POST
+           * 接口：user/task/getfeedbackdetail
+           * 入参：pFeedbackId
+           **/
 
-        url: process.env.API_ROOT + 'user/task/getfeedbackdetail',
+          this.$http({
 
-        params: {
+            method: 'post',
 
-          pFeedbackId: this.getStorage('pFeedbackId'),
+            url: process.env.API_ROOT + 'user/task/getfeedbackdetail',
+
+            params: {
+
+              pFeedbackId: this.getStorage('pFeedbackId'),
+
+            },
+
+
+          }).then((res) => {
+
+            console.log(res.data);
+
+            let thisData = res.data.data;
+
+            this.pContent = thisData.pContent;//反馈内容
+
+            this.pPlace = thisData.pPlace;//地理位置
+
+            this.pFiles = thisData.pFiles;//文件名称
+
+            this.originalFileName = thisData.originalFileName;//文件名称
+
+            let pArray = this.originalFileName.split(",");//转为数组
+
+            let _Array = [], x;
+
+            for (x in pArray) {
+
+              _Array.push({
+
+                name: pArray[x]
+
+              })
+
+            }
+
+            this.pList = _Array
+
+
+          }).catch((res) => {
+          })
+
 
         },
 
+      downloadFileFn:function () {
 
-      }).then((res) => {
-
-        console.log(res.data);
-
-        let thisData = res.data.data;
-
-        this.pContent = thisData.pContent;//反馈内容
-
-        this.pPlace = thisData.pPlace;//地理位置
-
-        this.originalFileName = thisData.originalFileName;//文件名称
-
-        let pArray = this.originalFileName.split(",");//转为数组
-
-        let _Array = [], x;
-
-        for(x in pArray){
-
-          _Array.push({
-
-            name: pArray[x]
-
-          })
-
-        }
-
-        this.pList = _Array
+      }
 
 
-
-      }).catch((res) => {
-      })
-
-
-    },
+    }
 
   }
 

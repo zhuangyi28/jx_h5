@@ -2,7 +2,7 @@
   <div class="payroll">
     <div class="company_and_money">
       <div class="money">
-        <div>{{salaryMonth}}<span v-if="salaryType=='3'">个人综合所得</span><span v-else>工资（元）</span></div>
+        <div>{{salaryMonth}}<span v-if="salaryType=='8'">个人综合所得</span><span v-else>工资（元）</span></div>
         <div class="wages">{{realAmount|thousandBitSeparator}}</div>
         <div>{{entName}}</div>
       </div>
@@ -277,7 +277,7 @@
 
           this.realAmount= res.data.data.realAmount//实发金额
 
-        if(this.salaryType=='3'){
+        if(this.salaryType=='8'){
 
           document.title="个人综合所得明细"
         }
