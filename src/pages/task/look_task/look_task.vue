@@ -15,7 +15,7 @@
           <p>预算</p>
         </div>
         <div>
-          <p>{{taskDetail.peopleCount}}人</p>
+          <p>{{taskDetail.peopleCount}}<span v-if="taskDetail.peopleCount != '不限'">人</span></p>
           <p>需要人数</p>
         </div>
         <div>
@@ -27,24 +27,28 @@
     <!-- 需求描述 -->
     <div class="task_describe">
       <div class="title">需求描述</div>
-      <div class="content">{{taskDetail.taskDetails}}</div>
+      <div class="content" v-for="detail in taskDetail.taskDetails">{{detail}}</div>
       <!-- 文件下载 -->
-      <div class="file" v-if="url">
-        <div v-on:click="downloadFile">
+      <div class="file" v-if="filesList">
+        <a :href ="item.downLoadUrl" v-for="item in filesList">
           <img src="../../../../static/images/jx_task_files.png">
-          <p>{{taskDetail.originalFileNames}}</p>
-        </div>
+          <p>{{item.name}}</p>
+        </a>
       </div>
       <!-- 补充内容-->
-      <div class="tips_title" v-if="taskDetail.taskAddtionDetail">补充内容</div>
-      <div class="tips_content" v-if="taskDetail.taskAddtionDetail">{{taskDetail.taskAddtionDetail}}</div>
+      <div class="tips_title" v-if="taskDetail.entTaskAddList">补充内容</div>
+      <div class="tips_content" v-for="taskAddtionDetail in taskDetail.entTaskAddList">{{taskAddtionDetail.taskAddtionDetail}}</div>
+      <a class="tips_files" v-for="taskAddtionDetail in taskDetail.entTaskAddList" v-bind:href="taskAddtionDetail.taskAddtionFile" v-if="taskAddtionDetail.taskAddtionFile">
+        <img src="../../../../static/images/jx_task_files.png">
+        <p>{{taskAddtionDetail.originalFileNamesAdd}}</p>
+      </a>
     </div>
 
     <!-- 名称-->
     <div class="name">
       <div class="icon"><img src="../../../../static/images/jx_mine_image.png"/></div>
       <div class="people">
-        <div>{{entName}}</div>
+        <div>{{nickName}}</div>
         <div><span><img src="../../../../static/images/jx_people_authentication.png"/>已认证</span></div>
       </div>
     </div>
@@ -74,9 +78,11 @@
 
         url: '',//文件链接
 
-        entName: '',//企业名称
+        nickName: '',//企业名称
 
-        relId: ''//任务用户关联Id
+        relId: '',//任务用户关联Id
+
+        filesList:[],//文件列表
 
       }
     },
@@ -87,8 +93,11 @@
       this.getData();
 
     },
-    methods:{
+    destroyed(){
 
+        this.$messagebox.close();
+    },
+    methods:{
       //取消报名
       cancelRegistrationFn:function () {
 
@@ -154,9 +163,6 @@
         }.bind(this))
 
       },
-
-
-
       //获取任务详情
       getData: function () {
 
@@ -190,19 +196,53 @@
 
           this.taskDetail.industry = this.industryChange(+this.taskDetail.industry);
 
-          this.url = this.taskDetail.taskFile;
+          this.nickName = this.taskDetail.nickname;
 
-          this.entName = this.taskDetail.entName;
+          let pArray = res.data.data.list[0].originalFileNames.split(",");//文件名转为数组
+
+          let urlArray = res.data.data.list[0].taskFile.split(",");//文件url转为数组
+
+
+          let _Array = [], x,y;
+
+          //循环文件名字
+          for (x in pArray) {
+
+            for(y in urlArray){
+
+              if(x==y){
+
+                _Array.push({
+
+                  name: pArray[x],
+
+                  downLoadUrl:urlArray[y]
+
+                })
+
+              }
+            }
+
+
+          }
+
+          this.filesList = _Array;
+
+          console.log(this.filesList)
 
           if(!this.taskDetail.nicknameHide){
 
-            this.entName = this.hiddenName(this.entName);
+            this.nickName = this.hiddenName(this.nickName);
 
           }
 
           this.btnName = this.btnNameChange(+this.taskDetail.buttonState);
 
           this.relId = this.taskDetail.relId;
+
+          if(this.taskDetail.taskDetails){
+            this.taskDetail.taskDetails = this.taskDetail.taskDetails.split('\n');
+          }
 
         }.bind(this)).catch((res)=>{
 
@@ -211,15 +251,12 @@
         });
 
       },
-
-
-
       //更改时间格式
       timeChange: function (time) {
 
         if(time == 0){
 
-          return '不限时间';
+          return '不限';
 
         }
 
@@ -246,9 +283,6 @@
         return time = year + '-' + month + '-' + day;
 
       },
-
-
-
       //获取任务分类
       typeChange: function (type) {
 
@@ -288,8 +322,6 @@
         }
 
       },
-
-
       //获取任务行业
       industryChange: function (industry) {
 
@@ -349,9 +381,6 @@
         }
 
       },
-
-
-
       //报名
       signUp: function () {
 
@@ -409,9 +438,6 @@
         }.bind(this));
 
       },
-
-
-
       //获取按键状态
       btnNameChange: function (name) {
 
@@ -445,9 +471,6 @@
         }
 
       },
-
-
-
       //隐藏企业名称
       hiddenName: function (name) {
 
@@ -468,10 +491,6 @@
         }
 
       },
-
-
-
-
       //按键点击事件
       handleClick: function () {
 
@@ -492,10 +511,10 @@
 
           }).then((res)=>{
 
-            if(res.data.data.isVerify == 0){
+            if(res.data.data.isVerify == 0 || res.data.data.isVerify == 3){
 
               this.$messagebox({
-                message: '当前账户尚未进行实名认证，请先前往完成实名认证',
+                message: '未实名认证用户，需先完成实名认证才可报名',
                 showCancelButton: true,
                 showConfirmButton: true,
                 confirmButtonText: '去认证',
@@ -526,28 +545,6 @@
 
               });
 
-            }else if(res.data.data.code == 3){
-
-              this.$messagebox({
-                message: '实名认证审核不通过，请重新提交实名认证',
-                showCancelButton: true,
-                showConfirmButton: true,
-                confirmButtonText: '去认证',
-                cancelButtonText: '取消',
-                cancelButtonClass: 'cancel_btn',
-                confirmButtonClass: 'confirm_btn_orange'
-              }).then(function (res) {
-
-                if(res == 'confirm'){
-
-                  this.$router.push('/certification');
-
-                  return;
-
-                }
-
-              }.bind(this))
-
             }else{
 
               this.signUp();
@@ -564,12 +561,11 @@
 
       },
 
-
-      downloadFile: function () {
+      /*downloadFile: function () {
 
         // 创建隐藏的可下载链接
         var eleLink = document.createElement('a');
-        eleLink.download = this.url;
+        eleLink.download = event.currentTarget.dataset.url;
         eleLink.style.display = 'none';
         // 字符内容转变成blob地址
         var blob = new Blob();
@@ -580,7 +576,7 @@
         // 然后移除
         document.body.removeChild(eleLink);
 
-      }
+      }*/
 
 
 

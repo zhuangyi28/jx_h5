@@ -1,14 +1,14 @@
 <template>
   <div class="person_information">
-    <div class="person_information_ps">添加标签能让企业在搜索相应人才时，优先看到您</div>
+    <div class="person_information_ps">技能标签能让企业在搜索相应人才时，优先看到您。</div>
     <div class="skill_part">
-      <div class="skill_title">技能标签</div>
+      <div class="skill_title"><span>*</span>技能标签</div>
       <div class="skill_tags">
         <div v-for="tag in tags">
           <span>{{tag}}</span>
           <span class="delete_btn" v-bind:data-tag="tag" v-on:click="tagsDel"></span>
         </div>
-        <div v-on:click="tagsAdd" v-if="tags.length < 5" class="add_btn">
+        <div v-on:click="tagsAdd" v-if="tags.length < 6" class="add_btn">
           <span>添加</span>
           <span class="delete_btn"></span>
         </div>
@@ -24,7 +24,7 @@
     <div class="supply_part" v-if="idType == 1">
       <div class="supply_title">
         <div>
-          <span>补充信息</span>
+          <span><span>*</span>补充信息</span>
           <span>（身份证照片）</span>
         </div>
         <div v-bind:class="supplyShow ? 'supply_part_show' : 'supply_part_hidden'" v-on:click="supplyShow = !supplyShow"></div>
@@ -83,9 +83,9 @@
 
         tags: [],
 
-        faceUrl: '../../../../static/images/jx_idcard_face.png',
+        faceUrl: './static/images/jx_idcard_face.png',
 
-        backUrl: '../../../../static/images/jx_idcard_back.png',
+        backUrl: './static/images/jx_idcard_back.png',
 
         introduceYourself: '',
 
@@ -259,6 +259,11 @@
 
         param.append('File',file);//通过append向form对象添加数据
 
+        this.$indicator.open({
+          text: '上传中',
+          spinnerType: 'triple-bounce'
+        });
+
 
         /*
          * 接口：图片上传
@@ -273,7 +278,10 @@
 
           console.log(res.data);
 
+          this.$indicator.close();
+
           if(res.data.code=='0000'){
+
 
             this.$toast({
 
@@ -316,7 +324,7 @@
 
           });
 
-        }else if(this.faceUrl == '../../../../static/images/jx_idcard_face.png' || this.backUrl == '../../../../static/images/jx_idcard_back.png'){
+        }else if((this.faceUrl == './static/images/jx_idcard_face.png' || this.backUrl == './static/images/jx_idcard_back.png')&&this.idType=='1'){
 
           this.$toast({
 
@@ -409,7 +417,9 @@
 
             this.idType = res.data.data.idType;
 
-            this.idNumber = res.data.data.idNumber;
+            this.idNumber = res.data.data.idNumberAll ;
+
+
 
           }
 
@@ -464,7 +474,7 @@
 
         var type = event.currentTarget.getAttribute('class');
 
-        this.exampleUrl = '../../../../static/images/jx_idCard_' + type + '_example.png';
+        this.exampleUrl = './static/images/jx_idCard_' + type + '_example.png';
 
         this.popupExample = true;
 
@@ -477,6 +487,8 @@
 
 
     destroyed () {
+
+      this.$messagebox.close();
 
       if(localStorage.getItem('lookTaskToPersonInformation')){
 

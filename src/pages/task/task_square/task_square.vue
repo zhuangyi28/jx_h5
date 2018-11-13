@@ -58,7 +58,7 @@
 
           <div class="ability_tags">
 
-            <div class="title">技能标签</div>
+            <div class="title">行业选择</div>
 
             <div class="tags_list">
 
@@ -98,11 +98,11 @@
 
               <div class="input">
 
-                <input type="number" placeholder="最低价" v-model="taskMinUnit">
+                <input type="text" placeholder="最低价" v-model="taskMinUnit">
 
                 <span></span>
 
-                <input type="number" placeholder="最高价" v-model="taskMaxUnit">
+                <input type="text" placeholder="最高价" v-model="taskMaxUnit">
 
               </div>
 
@@ -142,17 +142,35 @@
 
             <div v-on:click="changeType" v-bind:class="{'selected': (type == '')}" v-bind:data-type="''">全部</div>
 
-            <div v-on:click="changeType" v-bind:class="{'selected': (type == 1)}" v-bind:data-type="1">技术服务</div>
+            <div v-on:click="changeType" v-bind:class="{'selected': (type == 1)}" v-bind:data-type="1">软件开发</div>
 
-            <div v-on:click="changeType" v-bind:class="{'selected': (type == 2)}" v-bind:data-type="2">设计服务</div>
+            <div v-on:click="changeType" v-bind:class="{'selected': (type == 2)}" v-bind:data-type="2">APP开发</div>
 
-            <div v-on:click="changeType" v-bind:class="{'selected': (type == 3)}" v-bind:data-type="3">营销/策划服务</div>
+            <div v-on:click="changeType" v-bind:class="{'selected': (type == 3)}" v-bind:data-type="3">小程序开发</div>
 
-            <div v-on:click="changeType" v-bind:class="{'selected': (type == 4)}" v-bind:data-type="4">咨询服务</div>
+            <div v-on:click="changeType" v-bind:class="{'selected': (type == 4)}" v-bind:data-type="4">UI设计</div>
 
-            <div v-on:click="changeType" v-bind:class="{'selected': (type == 5)}" v-bind:data-type="5">电商服务</div>
+            <div v-on:click="changeType" v-bind:class="{'selected': (type == 5)}" v-bind:data-type="5">技术咨询</div>
 
-            <div v-on:click="changeType" v-bind:class="{'selected': (type == 6)}" v-bind:data-type="6">其他</div>
+            <div v-on:click="changeType" v-bind:class="{'selected': (type == 6)}" v-bind:data-type="6">营销咨询</div>
+
+            <div v-on:click="changeType" v-bind:class="{'selected': (type == 7)}" v-bind:data-type="7">促销推广</div>
+
+            <div v-on:click="changeType" v-bind:class="{'selected': (type == 8)}" v-bind:data-type="8">代驾服务</div>
+
+            <div v-on:click="changeType" v-bind:class="{'selected': (type == 9)}" v-bind:data-type="9">影视剧务</div>
+
+            <div v-on:click="changeType" v-bind:class="{'selected': (type == 10)}" v-bind:data-type="10">临时演员</div>
+
+            <div v-on:click="changeType" v-bind:class="{'selected': (type == 11)}" v-bind:data-type="11">快递运输</div>
+
+            <div v-on:click="changeType" v-bind:class="{'selected': (type == 12)}" v-bind:data-type="12">保洁服务</div>
+
+            <div v-on:click="changeType" v-bind:class="{'selected': (type == 13)}" v-bind:data-type="13">维修服务</div>
+
+            <div v-on:click="changeType" v-bind:class="{'selected': (type == 14)}" v-bind:data-type="14">场馆活动服务</div>
+
+            <div v-on:click="changeType" v-bind:class="{'selected': (type == 15)}" v-bind:data-type="15">其他</div>
 
           </div>
 
@@ -908,9 +926,9 @@
 
         for(var taskList of arr){
 
-          if(taskList.abortDate == 0 || taskList.abortDate == '不限时间'){
+          if(taskList.abortDate == 0 || taskList.abortDate == '不限'){
 
-            taskList.abortDate = '不限时间';
+            taskList.abortDate = '不限';
 
           }else{
 
@@ -984,7 +1002,9 @@
 
             if(_this.findWord != '' && _this.findWord != null){
 
-              _this.taskLists = _this.findTask(_this.taskLists);
+              _this.findTask();
+
+              _this.findWord = '';
 
             }
 
@@ -1094,23 +1114,15 @@
 
 
 
-      findTask: function (tasklists) {
+      findTask: function () {
 
-        var findWord = this.findWord;
+        this.selectLists.searchCriteria = this.findWord;
 
-        var _tasklists = [];
+        this.pageNum = 1;
 
-        for(var task of tasklists){
+        this.taskLists = [];
 
-          if(task.taskName.indexOf(findWord) != -1 || task.taskId.indexOf(findWord) != -1){
-
-            _tasklists.push(task);
-
-          }
-
-        }
-
-        return _tasklists;
+        this.getData();
 
       },
 
@@ -1133,9 +1145,60 @@
 
        }
 
+      },
+
+
+
+    },
+
+
+
+    watch: {
+
+      taskMinUnit: function () {
+
+        if(this.taskMinUnit == '.'){
+          this.taskMinUnit = '0.';
+        }else if(isNaN(-this.taskMinUnit)){
+          this.taskMinUnit = this.taskMinUnit.slice(0,-1);
+        }else if(+this.taskMinUnit < 0){
+          this.taskMinUnit = 0;
+        }else if(this.taskMinUnit.length > 10){
+          this.taskMinUnit = this.taskMinUnit.slice(0,-1);
+        }else if(this.taskMinUnit.indexOf('.') != -1){
+          if(this.taskMinUnit.split('.')[1].length > 2){
+            this.taskMinUnit = this.taskMinUnit.slice(0,-1);
+          }
+        }else if(this.taskMinUnit.indexOf('00') == 0){
+          this.taskMinUnit = this.taskMinUnit.slice(0,-1);
+        }else if(+this.taskMinUnit > 0 && this.taskMinUnit.indexOf('0') == 0){
+          this.taskMinUnit = this.taskMinUnit.slice(1)
+        }
+
+      },
+
+
+      taskMaxUnit: function () {
+
+        if(this.taskMaxUnit == '.'){
+          this.taskMaxUnit = '0.';
+        }else if(isNaN(-this.taskMaxUnit)){
+          this.taskMaxUnit = this.taskMaxUnit.slice(0,-1);
+        }else if(+this.taskMaxUnit < 0){
+          this.taskMaxUnit = 0;
+        }else if(this.taskMaxUnit.length > 10){
+          this.taskMaxUnit = this.taskMaxUnit.slice(0,-1);
+        }else if(this.taskMaxUnit.indexOf('.') != -1){
+          if(this.taskMaxUnit.split('.')[1].length > 2){
+            this.taskMaxUnit = this.taskMaxUnit.slice(0,-1);
+          }
+        }else if(this.taskMaxUnit.indexOf('00') == 0){
+          this.taskMaxUnit = this.taskMaxUnit.slice(0,-1);
+        }else if(+this.taskMaxUnit > 0 && this.taskMaxUnit.indexOf('0') == 0){
+          this.taskMaxUnit = this.taskMaxUnit.slice(1)
+        }
+
       }
-
-
 
     }
 
