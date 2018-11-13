@@ -5,18 +5,18 @@
 
     <div class="icon_orange" v-if="item.isUserHaveNew=='1'"><img src="../../../../static/images/feedback_unlook.png"/></div>
     <div class="icon_blue" v-else>
-      <img src="../../../../static/images/company_look.png" v-if="item.salaryType=='9'"/>
+      <img src="../../../../static/images/company_look.png" v-if="item.salaryType=='X'"/>
       <img src="../../../../static/images/feedback_look.png" v-else/>
     </div>
     <div class="content">
       <div>
-         <p v-if="item.salaryType=='9'">企业消息</p>
+         <p v-if="item.salaryType=='X'">企业消息</p>
          <p v-else>反馈处理结果</p>
          <span v-if="item.isUserHaveNew=='1'">new</span>
       </div>
       <div>{{item.contentTitle}}</div>
-      <div v-if="item.salaryType=='9'"><p>{{item.taskName}}</p><p>{{item.createDate|fmtDateStr}}</p></div>
-      <div v-if="item.salaryType=='8'"><p>{{item.salaryMonth}}个体综合所得</p><p>{{item.sendDate|fmtDateStr}}</p></div>
+      <div v-if="item.salaryType=='X'"><p>{{item.taskName}}</p><p>{{item.createDate|fmtDateStr}}</p></div>
+      <div v-else-if="item.salaryType=='7'||item.salaryType=='8'"><p>{{item.salaryMonth}}个体综合所得</p><p>{{item.sendDate|fmtDateStr}}</p></div>
       <div v-else-if="item.salaryType=='3'"><p>{{item.salaryMonth}}工资</p><p>{{item.sendDate|fmtDateStr}}</p></div>
     </div>
 

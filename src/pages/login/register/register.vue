@@ -416,28 +416,8 @@
 
             }).catch((res)=>{});
 
-
-            //是否跳转发现页面 1为跳转到发现 0为正常
-           this.setStorage('discoveryHref','1')
-
-            var discoveryHref = this.getStorage('discoveryHref')
-
-
-            if(discoveryHref=='1'){
-
-              setTimeout(function () {
-
-                _this.setStorage('discoveryHref','0');
-
-                _this.$router.push('/workDesk/discovery')
-
-              },1)
-
-            }
-
-
             //跳转
-            //_this.$router.push('/workDesk/homepage');
+            _this.$router.push('/workDesk/homepage');
 
           }
 

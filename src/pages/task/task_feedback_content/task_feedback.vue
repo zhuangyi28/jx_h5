@@ -9,14 +9,12 @@
     <div class="upload_file">
       <div class="upload_file_title">上传凭证</div>
       <div class="upload_file_input">
-
-
-        <div class="input_file" v-if="pFiles"  v-for="item in pList" v-on:click="downloadFileFn">
+        <a class="input_file"  :href ="item.downLoadUrl" v-if="pFiles" v-for="item in pList" v-on:click="downloadFileFn">
           <div class="file_img">
             <img src="../../../../static/images/jx_file.png">
           </div>
           <div class="file_name">{{item.name}}</div>
-        </div>
+        </a>
         <div class="input_file" v-else>
           <div class="file_img">
             <img src="../../../../static/images/jx_file_no.png">
@@ -48,7 +46,7 @@
 
         pList: [],
 
-        pFiles:''//文件
+        pFiles:''//文件类型
       }
 
     },
@@ -93,25 +91,42 @@
 
             this.pPlace = thisData.pPlace;//地理位置
 
-            this.pFiles = thisData.pFiles;//文件名称
+            this.pFiles = thisData.pFiles;//文件链接
 
             this.originalFileName = thisData.originalFileName;//文件名称
 
             let pArray = this.originalFileName.split(",");//转为数组
 
-            let _Array = [], x;
+            let urlArray = this.pFiles.split(",");//转为数组
 
+            console.log(urlArray)
+
+            let _Array = [], x,y;
+
+            //循环文件名字
             for (x in pArray) {
 
-              _Array.push({
+                for(y in urlArray){
 
-                name: pArray[x]
+                    if(x==y){
 
-              })
+                      _Array.push({
+
+                        name: pArray[x],
+
+                        downLoadUrl:urlArray[y]
+
+                      })
+
+                    }
+                }
+
 
             }
 
             this.pList = _Array
+
+            console.log(this.pList)
 
 
           }).catch((res) => {
