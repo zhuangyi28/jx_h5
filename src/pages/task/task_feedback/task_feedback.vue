@@ -361,10 +361,8 @@
       keepTaskDetailFn: function () {
 
 
-        var reg = new RegExp(/\s+/g)
-
         //判断输入内容
-        if (!this.feedBackContent||reg.test(this.feedBackContent)) {
+        if (!this.feedBackContent) {
 
           this.$toast({
 
