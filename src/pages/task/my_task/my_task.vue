@@ -33,7 +33,7 @@
             <span v-else-if="item.taskState=='5'">已收款</span>
             <span v-else-if="item.taskState=='6'">已取消</span>
             <span v-else-if="item.taskState=='7'">未被录用</span>
-            <span v-else-if="item.taskState=='8'">已关闭</span>
+            <!--<span v-else-if="item.taskState=='8'">已关闭</span>-->
             <span class="next_btn"></span>
           </div>
         </div>
@@ -107,11 +107,11 @@
             show:false,
             state:'5'
           },
-          {
+     /*     {
             sort:'已关闭',
             show:false,
             state:'8'
-          },
+          },*/
         ],
 
         taskList:[],//任务列表
