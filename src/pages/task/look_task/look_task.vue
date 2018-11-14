@@ -23,6 +23,13 @@
           <p>截止时间</p>
         </div>
       </div>
+      <div class="buttonState">
+        <img src="../../../../static/images/已关闭.png" v-if="taskDetail.buttonState == 1">
+        <img src="../../../../static/images/已结束.png" v-if="taskDetail.buttonState == 2">
+        <img src="../../../../static/images/已报名.png" v-if="taskDetail.buttonState == 3">
+        <img src="../../../../static/images/已被录用.png" v-if="taskDetail.buttonState == 4">
+        <img src="../../../../static/images/未被录用.png" v-if="taskDetail.buttonState == 5">
+      </div>
     </div>
     <!-- 需求描述 -->
     <div class="task_describe">
@@ -47,14 +54,18 @@
     <!-- 名称-->
     <div class="name">
       <div class="icon"><img src="../../../../static/images/jx_mine_image.png"/></div>
-      <div class="people">
-        <div>{{nickName}}</div>
-        <div><span><img src="../../../../static/images/jx_people_authentication.png"/>已认证</span></div>
+      <div class="taskCreateInfo">
+        <div class="people">
+          <div>{{nickName}}</div>
+          <div><span><img src="../../../../static/images/jx_people_authentication.png"/>已认证</span></div>
+        </div>
+        <div class="createDate">发布时间：{{taskDetail.createDate}}</div>
       </div>
     </div>
     <div class="task_btn_area">
       <!-- 按钮-->
-      <orange-btn :name="btnName" v-on:clickEvent="handleClick"></orange-btn>
+      <orange-btn :name="btnName" v-on:clickEvent="handleClick" v-if="taskDetail.buttonState == 6"></orange-btn>
+      <div class="jump_to" v-else v-on:click="$router.push('/taskDetail')">查看任务详情</div>
     </div>
 
   </div>
@@ -70,7 +81,7 @@
 
       return{
 
-        btnName: '',//按钮名称
+        btnName: '报名',//按钮名称
 
         taskId: '',//任务编号
 
@@ -192,6 +203,8 @@
 
           this.taskDetail.abortDate = this.timeChange(this.taskDetail.abortDate);
 
+          this.taskDetail.createDate = this.timeChange(this.taskDetail.createDate);
+
           this.taskDetail.type = this.typeChange(+this.taskDetail.type);
 
           this.taskDetail.industry = this.industryChange(+this.taskDetail.industry);
@@ -203,8 +216,6 @@
             this.nickName = this.hiddenName(this.nickName);
 
           }
-
-          this.btnName = this.btnNameChange(+this.taskDetail.buttonState);
 
           this.relId = this.taskDetail.relId;
 
@@ -418,7 +429,7 @@
 
           console.log(res);
 
-          if(res.data.code == '-1' && res.data.msg != '请勿重复报名！'){
+          if(res.data.code == '-1' && res.data.msg == '您还未填写履历，请先填写履历！'){
 
             localStorage.setItem('lookTaskToPersonInformation','true');
 
@@ -426,7 +437,13 @@
 
           }else if(res.data.code == '0000'){
 
-            this.$router.push('submitSuccess');
+            this.$toast({
+              message: '报名成功',
+              position: 'bottom',
+              duration: 1500
+            });
+
+            this.taskDetail.buttonState = 3;
 
           }else{
 
@@ -444,38 +461,19 @@
 
       },
       //获取按键状态
-      btnNameChange: function (name) {
+     /* btnNameChange: function (name) {
 
-        switch (name) {
+        if(name == 6){
 
-          case 1:
+          return '报名';
 
-            return '已关闭';
+        }else{
 
-          case 2:
-
-            return '已结束';
-
-          case 3:
-
-            return '取消报名';
-
-          case 4:
-
-            return '已被录用';
-
-          case 5:
-
-
-            return '未被录用';
-
-          case 6:
-
-            return '报名';
+          return '查看任务详情';
 
         }
 
-      },
+      },*/
       //隐藏企业名称
       hiddenName: function (name) {
 
@@ -557,10 +555,6 @@
             }
 
           });
-
-        }else if(this.taskDetail.buttonState == 3){
-
-          this.cancelRegistrationFn();
 
         }
 
