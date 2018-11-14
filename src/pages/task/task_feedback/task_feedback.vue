@@ -305,18 +305,13 @@
           if (res.data.code == '0000') {
 
             this.$toast({
-
               message: '上传成功',
               position: 'middle',
               duration: 1500
-            })
-
+            });
             //拼接文件url名称
             this.resultUploadList.push(res.data.data.url);
-
             this.resultUpload = this.resultUploadList.join(",");
-
-
           }
 
         }).catch((res) => {
@@ -359,6 +354,7 @@
       },
 
       keepTaskDetailFn: function () {
+
 
 
         //判断输入内容

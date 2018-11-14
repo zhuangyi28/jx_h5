@@ -128,7 +128,7 @@
 
     <!-- 返回任务广场-->
 
-      <div class="button" v-if="selectState=='1'">
+      <div class="button" v-if="brightState=='1'">
         <button class="go_back" v-on:click="$router.push('/workDesk/taskSquare')">返回任务广场</button>
       </div>
 

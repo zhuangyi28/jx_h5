@@ -253,9 +253,6 @@
 
       },
 
-
-
-
       tagsDel: function () {
 
         var tag = event.currentTarget.dataset.tag;
@@ -271,16 +268,16 @@
 
         var file = event.currentTarget.files[0];
 
-        console.log(file);
+        //console.log(file);
 
         var param = new FormData(); //创建form对象
 
         param.append('File',file);//通过append向form对象添加数据
 
-        this.$indicator.open({
-          text: '上传中',
-          spinnerType: 'triple-bounce'
-        });
+          this.$indicator.open({
+            text: '上传中',
+            spinnerType: 'triple-bounce'
+          });
 
 
         /*
@@ -296,21 +293,23 @@
 
           console.log(res.data);
 
-          this.$indicator.close();
-
           if(res.data.code=='0000'){
 
+            this.$indicator.close();
 
-            this.$toast({
+              this.$toast({
 
-              message: '上传成功',
-              position: 'middle',
-              duration: 1500
-            });
+                message: '上传成功',
+                position: 'middle',
+                duration: 1500
+              });
+
+
 
             if (imgType == 'face'){
 
               this.faceUrl = res.data.data.url;
+
 
             }
 
