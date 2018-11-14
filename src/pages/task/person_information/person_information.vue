@@ -33,12 +33,12 @@
         <div class="upload_title">请上传（证件号：<span>{{idNumber}}</span>）对应的证件照片</div>
         <div class="upload_face">
           <img v-bind:src="faceUrl">
-          <input type="file" v-on:change="inputImg" imgType="face" accept="image/png,image/gif,image/jpeg">
+          <input type="file" v-on:change="inputImg" imgType="face" accept="image/*">
         </div>
         <div class="upload_name">上传身份证正面<span v-on:click="exampleImg" class="face">示例</span></div>
         <div class="upload_back">
           <img v-bind:src="backUrl">
-          <input type="file" v-on:change="inputImg" imgType="back" accept="image/png,image/gif,image/jpeg">
+          <input type="file" v-on:change="inputImg" imgType="back" accept="image/*">
         </div>
         <div class="upload_name">上传身份证反面<span v-on:click="exampleImg" class="back">示例</span></div>
       </div>
@@ -108,6 +108,22 @@
 
 
     mounted () {
+
+        //判断安卓
+        var u = navigator.userAgent
+
+        if(u.indexOf('Android') > -1){
+
+
+            let em = document.getElementsByTagName('input')
+
+          for(var i=0;i<em.length;i++){
+
+                em[i].style.multiple = 'multiple'
+
+          }
+
+        }
 
       /**
        * 接口：用户中心
@@ -254,6 +270,8 @@
         var imgType = event.currentTarget.getAttribute('imgType');
 
         var file = event.currentTarget.files[0];
+
+        console.log(file);
 
         var param = new FormData(); //创建form对象
 

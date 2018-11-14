@@ -26,7 +26,7 @@
 
       <div class="select" v-on:click="timeDropDown" v-bind:class="{orangeText: (timeShow != 'none')}">
 
-        <span>截止时间</span>
+        <span>发布时间</span>
 
         <span v-bind:class="timeShow?'down':'up'"></span>
 
@@ -195,10 +195,11 @@
             <span>{{taskList.taskName}}</span>
 
           </div>
+          <div class="line"><img src="../../../../static/images/jx_task_bg.png"/></div>
 
           <div class="task_pay">
 
-            <span>￥{{taskList.taskMinUnit}}</span><span v-if="taskList.taskMaxUnit != taskList.taskMinUnit">-{{taskList.taskMaxUnit}}</span>
+            <span><img src="../../../../static/images/jx_task_icon2.png"/>￥{{taskList.taskMinUnit}}</span><span v-if="taskList.taskMaxUnit != taskList.taskMinUnit">-{{taskList.taskMaxUnit}}</span>
 
           </div>
 
@@ -208,13 +209,13 @@
 
           <div class="need_person">
 
-            <span>报名人数：<span>{{taskList.signUpTotal}}个人已报名</span></span>
+            <span><img src="../../../../static/images/jx_task_icon3.png"/>报名人数:<span><span>{{taskList.signUpTotal}}</span>个人已报名</span></span>
 
           </div>
 
           <div class="need_time">
 
-            <span>截止时间：{{taskList.abortDate}}</span>
+            <span>截止时间:<span>{{taskList.abortDate}}</span></span>
 
           </div>
 
@@ -685,7 +686,7 @@
 
               _this.$messagebox({
                 title: '提示',
-                message: '请查看【' + thisEnName + '】众包任务' + thisSalaryMonth + '个体综合所得',
+                message: '请查看【' + thisEnName + '】众包任务' + thisSalaryMonth + '个体经营所得',
                 showCancelButton: true,
                 showConfirmButton: true,
                 confirmButtonText: '查看',

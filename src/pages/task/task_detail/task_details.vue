@@ -7,9 +7,9 @@
       <div><img src="../../../../static/images/jx_task_icon.png"/></div>
       <div class="content">
         <div>
-          <p>{{taskName}}</p>
-          <p v-if="taskMaxUnit==taskMinUnit">￥{{taskMaxUnit}}</p>
-          <p v-else>￥{{taskMinUnit}}-￥{{taskMaxUnit}}</p>
+          <p class="name">{{taskName}}</p>
+          <p class="pay" v-if="taskMaxUnit==taskMinUnit">￥{{taskMaxUnit}}</p>
+          <p class="pay" v-else>￥{{taskMinUnit}}-￥{{taskMaxUnit}}</p>
         </div>
 
           <div>
