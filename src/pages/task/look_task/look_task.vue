@@ -198,7 +198,7 @@
 
           this.nickName = this.taskDetail.nickname;
 
-          if(!this.taskDetail.nicknameHide){
+          if(this.taskDetail.nicknameHide=='0'){
 
             this.nickName = this.hiddenName(this.nickName);
 
@@ -418,7 +418,7 @@
 
           console.log(res);
 
-          if(res.data.code == '-1' && res.data.msg != '请勿重复报名！'){
+          if(res.data.code == '-1' && res.data.msg == '您还未填写履历，请先填写履历！'){
 
             localStorage.setItem('lookTaskToPersonInformation','true');
 

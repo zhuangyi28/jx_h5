@@ -64,6 +64,23 @@
       }
     },
     mounted () {
+      //判断安卓
+      var u = navigator.userAgent
+
+      if(u.indexOf('Android') > -1){
+
+
+        let em = document.getElementsByTagName('input')
+
+        for(var i=0;i<em.length;i++){
+
+          em[i].style.multiple = 'multiple'
+
+        }
+
+      }
+
+
       this.cardTypeId = this.getStorage('idType');
       this.idNumber = this.getStorage('idNumber');
       this.userName = this.getStorage('userName');

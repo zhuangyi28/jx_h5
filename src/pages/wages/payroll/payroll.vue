@@ -2,7 +2,7 @@
   <div class="payroll">
     <div class="company_and_money">
       <div class="money">
-        <div>{{salaryMonth}}<span v-if="salaryType=='8'">个人综合所得</span><span v-else>工资（元）</span></div>
+        <div>{{salaryMonth}}<span v-if="salaryType=='8'">个体经营所得</span><span v-else>工资（元）</span></div>
         <div class="wages">{{realAmount|thousandBitSeparator}}</div>
         <div>{{entName}}</div>
       </div>
@@ -279,7 +279,7 @@
 
         if(this.salaryType=='8'){
 
-          document.title="个人综合所得明细"
+          document.title="个体经营所得明细"
         }
         else {
 

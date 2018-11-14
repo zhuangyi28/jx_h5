@@ -16,7 +16,7 @@
       </div>
       <div>{{item.contentTitle}}</div>
       <div v-if="item.salaryType=='X'"><p>{{item.taskName}}</p><p>{{item.createDate|fmtDateStr}}</p></div>
-      <div v-else-if="item.salaryType=='7'||item.salaryType=='8'"><p>{{item.salaryMonth}}个体综合所得</p><p>{{item.sendDate|fmtDateStr}}</p></div>
+      <div v-else-if="item.salaryType=='7'||item.salaryType=='8'"><p>{{item.salaryMonth}}个体经营所得</p><p>{{item.sendDate|fmtDateStr}}</p></div>
       <div v-else-if="item.salaryType=='3'"><p>{{item.salaryMonth}}工资</p><p>{{item.sendDate|fmtDateStr}}</p></div>
     </div>
 
