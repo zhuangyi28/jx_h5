@@ -198,38 +198,6 @@
 
           this.nickName = this.taskDetail.nickname;
 
-          let pArray = res.data.data.list[0].originalFileNames.split(",");//文件名转为数组
-
-          let urlArray = res.data.data.list[0].taskFile.split(",");//文件url转为数组
-
-
-          let _Array = [], x,y;
-
-          //循环文件名字
-          for (x in pArray) {
-
-            for(y in urlArray){
-
-              if(x==y){
-
-                _Array.push({
-
-                  name: pArray[x],
-
-                  downLoadUrl:urlArray[y]
-
-                })
-
-              }
-            }
-
-
-          }
-
-          this.filesList = _Array;
-
-          console.log(this.filesList)
-
           if(!this.taskDetail.nicknameHide){
 
             this.nickName = this.hiddenName(this.nickName);
@@ -241,7 +209,44 @@
           this.relId = this.taskDetail.relId;
 
           if(this.taskDetail.taskDetails){
+
             this.taskDetail.taskDetails = this.taskDetail.taskDetails.split('\n');
+          }
+
+          if(this.taskDetail.originalFileNames||this.taskDetail.taskFile){
+
+            let pArray = res.data.data.list[0].originalFileNames.split(",");//文件名转为数组
+
+            let urlArray = res.data.data.list[0].taskFile.split(",");//文件url转为数组
+
+
+            let _Array = [], x,y;
+
+            //循环文件名字
+            for (x in pArray) {
+
+              for(y in urlArray){
+
+                if(x==y){
+
+                  _Array.push({
+
+                    name: pArray[x],
+
+                    downLoadUrl:urlArray[y]
+
+                  })
+
+                }
+              }
+
+
+            }
+
+            this.filesList = _Array;
+
+
+
           }
 
         }.bind(this)).catch((res)=>{

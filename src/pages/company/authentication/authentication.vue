@@ -212,7 +212,10 @@
           //验证成功后显示工资
           else if (thisCode == '0000') {
 
-            this.$router.go(-1)
+
+              this.$router.push('/salary')
+
+            //this.$router.go(-1)
 
 
 

@@ -126,6 +126,12 @@
       <orangeBtn v-on:clickEvent="cancelTaskBtn" :name="taskBtnName2"></orangeBtn>
     </div>
 
+    <!-- 返回任务广场-->
+
+      <div class="button" v-if="selectState=='1'">
+        <button class="go_back" v-on:click="$router.push('/workDesk/taskSquare')">返回任务广场</button>
+      </div>
+
 
 
   </div>
@@ -184,7 +190,7 @@
     },
 
     methods:{
-
+      //获取数据
       init:function () {
 
 
@@ -260,11 +266,13 @@
           }).catch((res)=>{})
 
         },
+      //展开收起
       changeFoldState:function() {
 
         this.brandMore = !this.brandMore
 
       },
+      //提交验收
       taskBtn:function () {
 
           if(!this.feedbackList){
@@ -327,6 +335,7 @@
 
 
       },
+      //取消报名
       cancelTaskBtn:function () {
         this.$messagebox({
           title: '提示',
@@ -397,13 +406,14 @@
           }
         }).catch((res)=>{})
       },
+      //查看反馈详情
       lookFeedBackDetailFn:function (e) {
         console.log('详情id'+e.currentTarget.dataset.id);
         this.setStorage('pFeedbackId',e.currentTarget.dataset.id);
         this.$router.push('/taskFeedbackContent')
       },
     },
-/*    computed: {
+    /*    computed: {
       showTaskTimeArea: {
         get: function () {
           if (this.brandMore) {
