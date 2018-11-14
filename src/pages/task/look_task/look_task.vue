@@ -431,9 +431,25 @@
 
           if(res.data.code == '-1' && res.data.msg == '您还未填写履历，请先填写履历！'){
 
-            localStorage.setItem('lookTaskToPersonInformation','true');
+            this.$messagebox({
+              message: '丰富的技能标签，精彩的个人介绍，可以增加企业录用的概率',
+              showCancelButton: true,
+              showConfirmButton: true,
+              confirmButtonText: '去完善',
+              cancelButtonText: '取消',
+              cancelButtonClass: 'cancel_btn',
+              confirmButtonClass: 'confirm_btn_orange'
+            }).then((res)=>{
 
-            this.$router.push('/personInformation');
+              if(res == 'confirm'){
+
+                localStorage.setItem('lookTaskToPersonInformation','true');
+
+                this.$router.push('/personInformation');
+
+              }
+
+            });
 
           }else if(res.data.code == '0000'){
 
@@ -550,7 +566,23 @@
 
             }else{
 
-              this.signUp();
+              this.$messagebox({
+                message: '确认报名参加该任务？',
+                showCancelButton: true,
+                showConfirmButton: true,
+                confirmButtonText: '确认',
+                cancelButtonText: '取消',
+                cancelButtonClass: 'cancel_btn',
+                confirmButtonClass: 'confirm_btn_orange'
+              }).then((res)=>{
+
+                if(res == 'confirm'){
+
+                  this.signUp();
+
+                }
+
+              });
 
             }
 
