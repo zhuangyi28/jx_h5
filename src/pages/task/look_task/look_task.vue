@@ -24,11 +24,11 @@
         </div>
       </div>
       <div class="buttonState">
-        <img src="../../../../static/images/已关闭.png" v-if="taskDetail.buttonState == 1">
-        <img src="../../../../static/images/已结束.png" v-if="taskDetail.buttonState == 2">
-        <img src="../../../../static/images/已报名.png" v-if="taskDetail.buttonState == 3">
-        <img src="../../../../static/images/已被录用.png" v-if="taskDetail.buttonState == 4">
-        <img src="../../../../static/images/未被录用.png" v-if="taskDetail.buttonState == 5">
+        <img src="../../../../static/images/jx_closed.png" v-if="taskDetail.buttonState == 1">
+        <img src="../../../../static/images/jx_finish.png" v-if="taskDetail.buttonState == 2">
+        <img src="../../../../static/images/jx_already_signup.png" v-if="taskDetail.buttonState == 3">
+        <img src="../../../../static/images/jx_been_hired.png" v-if="taskDetail.buttonState == 4">
+        <img src="../../../../static/images/jx_unemploy.png" v-if="taskDetail.buttonState == 5">
       </div>
     </div>
     <!-- 需求描述 -->
