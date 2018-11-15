@@ -46,7 +46,6 @@
       <div class="tips_title" v-if="taskDetail.entTaskAddList">补充内容</div>
       <div class="tips_content" v-for="taskAddtionDetail in taskDetail.entTaskAddList">{{taskAddtionDetail.taskAddtionDetail}}</div>
       <a class="tips_files" v-for="taskAddtionDetail in taskDetail.entTaskAddList" v-bind:href="taskAddtionDetail.taskAddtionFile" v-if="taskAddtionDetail.taskAddtionFile">
-        <img src="../../../../static/images/jx_task_files.png">
         <p>{{taskAddtionDetail.originalFileNamesAdd}}</p>
       </a>
     </div>
@@ -429,29 +428,7 @@
 
           console.log(res);
 
-          if(res.data.code == '-1' && res.data.msg == '您还未填写履历，请先填写履历！'){
-
-            this.$messagebox({
-              message: '丰富的技能标签，精彩的个人介绍，可以增加企业录用的概率',
-              showCancelButton: true,
-              showConfirmButton: true,
-              confirmButtonText: '去完善',
-              cancelButtonText: '取消',
-              cancelButtonClass: 'cancel_btn',
-              confirmButtonClass: 'confirm_btn_orange'
-            }).then((res)=>{
-
-              if(res == 'confirm'){
-
-                localStorage.setItem('lookTaskToPersonInformation','true');
-
-                this.$router.push('/personInformation');
-
-              }
-
-            });
-
-          }else if(res.data.code == '0000'){
+          if(res.data.code == '0000'){
 
             this.$toast({
               message: '报名成功',
@@ -566,23 +543,49 @@
 
             }else{
 
-              this.$messagebox({
-                message: '确认报名参加该任务？',
-                showCancelButton: true,
-                showConfirmButton: true,
-                confirmButtonText: '确认',
-                cancelButtonText: '取消',
-                cancelButtonClass: 'cancel_btn',
-                confirmButtonClass: 'confirm_btn_orange'
-              }).then((res)=>{
+              if(res.data.data.isHaveResume == 0){
 
-                if(res == 'confirm'){
+                this.$messagebox({
+                  message: '丰富的技能标签，精彩的个人介绍，可以增加企业录用的概率',
+                  showCancelButton: true,
+                  showConfirmButton: true,
+                  confirmButtonText: '去完善',
+                  cancelButtonText: '取消',
+                  cancelButtonClass: 'cancel_btn',
+                  confirmButtonClass: 'confirm_btn_orange'
+                }).then((res)=>{
 
-                  this.signUp();
+                  if(res == 'confirm'){
 
-                }
+                    localStorage.setItem('lookTaskToPersonInformation','true');
 
-              });
+                    this.$router.push('/personInformation');
+
+                  }
+
+                });
+
+              }else if(res.data.data.isHaveResume == 1){
+
+                this.$messagebox({
+                  message: '确认报名参加该任务？',
+                  showCancelButton: true,
+                  showConfirmButton: true,
+                  confirmButtonText: '确认',
+                  cancelButtonText: '取消',
+                  cancelButtonClass: 'cancel_btn',
+                  confirmButtonClass: 'confirm_btn_orange'
+                }).then((res)=>{
+
+                  if(res == 'confirm'){
+
+                    this.signUp();
+
+                  }
+
+                });
+
+              }
 
             }
 

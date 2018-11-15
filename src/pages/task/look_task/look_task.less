@@ -247,11 +247,9 @@
       padding: 5px 15px 0 15px;
     }
     .tips_files{
-      padding: 5px;
-      display: inline-block;
-      width: 25%;
-      box-sizing: border-box;
-
+      padding: 5px 15px;
+      display: block;
+      width: 80%;
       p{
         min-height: 20px;
         text-overflow: ellipsis;
@@ -262,10 +260,8 @@
         font-size: 12px;
         line-height: 14px;
         /* margin: 8px auto; */
-        padding: 0 2px;
-        background: #f7f7f7;
-        color: #ababab;
-        text-align: center;
+        color: rgb(41,142,168);
+        text-decoration: underline;
       }
       img{
         display: block;
@@ -298,7 +294,16 @@
 
       div:first-child{
         font-size: 16px;
-        margin-right: 10px;
+        margin-right: 10px;text-overflow: ellipsis;
+        display: -webkit-box;
+        overflow: hidden;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        max-height: 44px;
+        line-height: 22px;
+      }
+      div:last-child{
+        flex-shrink: 0;
       }
         span{
           background-color: #ff7a3c;
