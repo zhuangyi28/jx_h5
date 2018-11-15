@@ -137,6 +137,8 @@
       //重新调用data方法
       //Object.assign(this.$data, this.$options.data());
 
+
+
       this.paging();
 
     },
@@ -165,6 +167,8 @@
         this.taskList = [];//发薪企业列表
 
         console.log('此时的状态'+this.thisState);
+
+        this.setStorage('state',this.thisState)
 
         this.paging();
 

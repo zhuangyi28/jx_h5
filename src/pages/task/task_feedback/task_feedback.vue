@@ -255,6 +255,7 @@
 
       },
 
+      //添加文件
       addFile: function (event) {
 
         var thisFile = event.currentTarget.value.split('\\')[2];
@@ -324,6 +325,7 @@
 
       },
 
+      //删除文件
       deleteFile: function (index) {
 
         this.$messagebox({
@@ -353,6 +355,7 @@
 
       },
 
+      //提交任务
       keepTaskDetailFn: function () {
 
 
@@ -389,7 +392,9 @@
 
               taskId: this.getStorage('taskId'),
 
-              relId: this.getStorage('relId'), pContent: this.feedBackContent,
+              relId: this.getStorage('relId'),
+
+              pContent: this.feedBackContent,
 
               originalFileName: this.originalFileName,
 

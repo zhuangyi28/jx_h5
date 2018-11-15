@@ -18,17 +18,26 @@
         height: 14px;
         margin: 0 8px;
       }
-      input{
-        flex: 1;
-        border: none;
-        outline: none;
-        font-size: 14px;
-        padding: 2px 5px;
-        color: #4a4a4a;
-        &::placeholder{
-          color: #ababab;
+      form{
+        width: 100%;
+        input{
+          flex: 1;
+          border: none;
+          outline: none;
+          font-size: 14px;
+          padding: 2px 5px;
+          color: #4a4a4a;
+          -webkit-appearance: none;
+
+          &::placeholder{
+            color: #ababab;
+          }
+        }
+        input[type="search"]::-webkit-search-cancel-button{
+          display: none;
         }
       }
+
     }
     .cancel{
       font-size: 14px;

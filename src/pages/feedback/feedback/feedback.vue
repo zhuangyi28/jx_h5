@@ -3,7 +3,7 @@
 
     <div id="feedbackList">
 
-      <div class="list" v-for="item in feedBackList" >
+      <div class="list" v-for="item in feedBackList">
 
         <div class="people_list" v-bind:class="item.type=='1'? '':'sevice_left'">
 
@@ -36,7 +36,7 @@
     <div class="feedback_content">
       <div class="input_box"></div>
       <div class="feedback_input">
-        <input class="weui-input" v-model="contentTitle"  placeholder="如有疑问，请提交反馈给HR，200字以内" maxlength="200"/>
+        <input class="weui-input" v-model="contentTitle"  @focus="focusFn" placeholder="如有疑问，请提交反馈给HR，200字以内" maxlength="200"/>
         <button class="send" v-on:click.stop="sendMsgFn">发送</button>
       </div>
 
@@ -92,7 +92,7 @@
     methods: {
 
 
-        scrollBottom:function () {
+      scrollBottom:function () {
 
           this.$nextTick(() => {
 
@@ -103,7 +103,6 @@
 
           })
         },
-
 
       init:function () {
 
@@ -163,7 +162,7 @@
 
         },
 
-       sendMsgFn:function () {
+      sendMsgFn:function () {
 
          //判断输入内容
          if (!this.contentTitle) {
@@ -287,7 +286,12 @@
          }
 
 
-       }
+       },
+
+      focusFn:function () {
+
+        this.scrollBottom()
+      }
 
     }
   }
