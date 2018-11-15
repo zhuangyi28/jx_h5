@@ -8,7 +8,7 @@
 
         <img src="../../../../static/images/jx_find.png">
 
-        <input type="text" placeholder="搜索公司职位" disabled>
+        <input type="text" placeholder="搜索任务名称，任务编号" disabled>
 
       </div>
 
