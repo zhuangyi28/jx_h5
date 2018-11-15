@@ -112,12 +112,12 @@
 
       </div>
       <!-- 添加反馈 -->
-      <div v-if="canSubmit=='1'||brightState=='2'" class="add_feedback" v-on:click="$router.push('/taskFeedback')"><span>+</span>添加任务反馈</div>
+      <div v-if="canSubmit=='1'||brightState=='2'||brightState=='4'" class="add_feedback" v-on:click="$router.push('/taskFeedback')"><span>+</span>添加任务反馈</div>
 
     </div>
 
     <!-- 提交验收 -->
-    <div v-if="canSubmit=='1'||brightState=='2'">
+    <div v-if="canSubmit=='1'||brightState=='2'||brightState=='4'">
       <orangeBtn v-on:clickEvent="taskBtn" :name="taskBtnName1"></orangeBtn>
     </div>
 
@@ -128,7 +128,7 @@
 
     <!-- 返回任务广场-->
 
-      <div class="button" v-if="brightState=='1'">
+      <div class="button_box" v-if="brightState=='1'">
         <button class="go_back" v-on:click="$router.push('/workDesk/taskSquare')">返回任务广场</button>
       </div>
 

@@ -136,32 +136,7 @@
 
       if(this.getStorage(this.getStorage('mobile')+'myTaskItemState')){
 
-        var state = this.getStorage(this.getStorage('mobile')+'myTaskItemState');
 
-        var item = this.findItem(state);
-
-        this.removeStorage(this.getStorage('mobile')+'myTaskItemState');
-
-        this.selectSort(item);
-
-        for(var tab of this.tabList){
-
-          if(tab.state == state){
-
-            tab.show = true;
-
-          }
-
-        }
-
-      }else{
-
-        //重新调用data方法
-        //Object.assign(this.$data, this.$options.data());
-
-        this.paging();
-
-      }
 
     },
     methods:{
@@ -189,6 +164,8 @@
         this.taskList = [];//发薪企业列表
 
         console.log('此时的状态'+this.thisState);
+
+        this.setStorage('state',this.thisState)
 
         this.paging();
 
