@@ -8,7 +8,11 @@
 
         <img src="../../../../static/images/jx_find.png">
 
-        <input type="text" placeholder="搜索任务名称，任务编号" disabled>
+        <form action="">
+
+        <input type="text" placeholder="搜索任务名称、任务编号" disabled>
+
+        </form>
 
       </div>
 
