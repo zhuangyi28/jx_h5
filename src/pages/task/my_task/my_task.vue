@@ -134,10 +134,34 @@
     },
     mounted(){
 
-      //重新调用data方法
-      //Object.assign(this.$data, this.$options.data());
+      if(this.getStorage(this.getStorage('mobile')+'myTaskItemState')){
 
-      this.paging();
+        var state = this.getStorage(this.getStorage('mobile')+'myTaskItemState');
+
+        var item = this.findItem(state);
+
+        this.removeStorage(this.getStorage('mobile')+'myTaskItemState');
+
+        this.selectSort(item);
+
+        for(var tab of this.tabList){
+
+          if(tab.state == state){
+
+            tab.show = true;
+
+          }
+
+        }
+
+      }else{
+
+        //重新调用data方法
+        //Object.assign(this.$data, this.$options.data());
+
+        this.paging();
+
+      }
 
     },
     methods:{
@@ -417,11 +441,80 @@
           console.log(e.currentTarget.dataset.id)
 
           //存下任务id 在任务详情中取
-          this.setStorage('taskId',e.currentTarget.dataset.id)
+          this.setStorage('taskId',e.currentTarget.dataset.id);
 
-        this.$router.push('/taskDetail')
+          this.setStorage(this.getStorage('mobile')+'myTaskItemState',this.thisState);
+
+          this.$router.push('/taskDetail')
 
 
+
+      },
+
+
+
+
+      findItem: function (state) {
+
+        var item = {};
+
+        switch (state) {
+
+          case '':
+
+            item.sort = '全部';
+
+            break;
+
+          case '1':
+
+            item.sort = '已报名';
+
+            break;
+
+          case '2':
+
+            item.sort = '工作中';
+
+            break;
+
+          case '3':
+
+            item.sort = '待验收';
+
+            break;
+
+          case '4':
+
+            item.sort = '待收款';
+
+            break;
+
+          case '5':
+
+            item.sort = '已收款';
+
+            break;
+
+          case '6':
+
+            item.sort = '已取消';
+
+            break;
+
+          case '7':
+
+            item.sort = '未被录用';
+
+            break;
+
+        }
+
+        item.state = state;
+
+        item.show = false;
+
+        return item;
 
       }
 
