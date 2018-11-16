@@ -3,7 +3,9 @@
     <div class="find_input">
       <div class="input_place">
         <img src="../../../../static/images/jx_find.png" v-on:click="submit">
-        <input type="text" placeholder="搜索任务名称、任务编号" v-on:keyup.enter="submit" v-model="findWord">
+        <form action="">
+        <input type="search" placeholder="搜索任务名称、任务编号" v-on:keyup.enter="submit" v-model="findWord">
+        </form>
       </div>
       <div class="cancel" v-on:click="$router.replace('/workDesk/taskSquare')">取消</div>
     </div>

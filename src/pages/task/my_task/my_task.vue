@@ -134,10 +134,12 @@
     },
     mounted(){
 
+
+
       if(this.getStorage(this.getStorage('mobile')+'myTaskItemState')){
 
         var state = this.getStorage(this.getStorage('mobile')+'myTaskItemState');
-
+        
         var item = this.findItem(state);
 
         this.removeStorage(this.getStorage('mobile')+'myTaskItemState');
@@ -158,7 +160,7 @@
 
         //重新调用data方法
         //Object.assign(this.$data, this.$options.data());
-
+        
         this.paging();
 
       }
