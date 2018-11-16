@@ -38,16 +38,17 @@
       <!-- 文件下载 -->
       <div class="file" v-if="filesList">
         <a :href ="item.downLoadUrl" v-for="item in filesList">
-          <img src="../../../../static/images/jx_task_files.png">
           <p>{{item.name}}</p>
         </a>
       </div>
       <!-- 补充内容-->
       <div class="tips_title" v-if="taskDetail.entTaskAddList">补充内容</div>
       <div class="tips_content" v-for="taskAddtionDetail in taskDetail.entTaskAddList">{{taskAddtionDetail.taskAddtionDetail}}</div>
-      <a class="tips_files" v-for="taskAddtionDetail in taskDetail.entTaskAddList" v-bind:href="taskAddtionDetail.taskAddtionFile" v-if="taskAddtionDetail.taskAddtionFile">
-        <p>{{taskAddtionDetail.originalFileNamesAdd}}</p>
-      </a>
+      <div class="tips_files">
+        <a v-for="fileDetail in entTaskAddList" v-bind:href="fileDetail.file">
+          <p>{{fileDetail.fileName}}</p>
+        </a>
+      </div>
     </div>
 
     <!-- 名称-->
@@ -93,6 +94,8 @@
         relId: '',//任务用户关联Id
 
         filesList:[],//文件列表
+
+        entTaskAddList: [] //补充文件列表
 
       }
     },
@@ -267,6 +270,35 @@
 
             this.filesList = _Array;
 
+            if(res.data.data.list[0].entTaskAddList){
+
+              for(var entTask of res.data.data.list[0].entTaskAddList){
+
+                if(entTask.originalFileNamesAdd || entTask.taskAddtionFile){
+
+                  var fileNames = entTask.originalFileNamesAdd.split(',');
+
+                  var files = entTask.taskAddtionFile.split(',');
+
+                  var length = fileNames.length;
+
+                  while(length -- ){
+
+                    var obj = {};
+
+                    obj.fileName = fileNames[length];
+
+                    obj.file = files[length];
+
+                    this.entTaskAddList.push(obj);
+
+                  }
+
+                }
+
+              }
+
+            }
 
 
           }
