@@ -14,7 +14,7 @@
 
             <div class="money_detail_content">
               <p class="company"><span>{{item.salaryMonth}}</span><span v-if="item.salaryType!='8'">工资</span></p>
-              <p class="money">实发工资：<span v-if="lookWages"><span>{{item.realAmount | thousandBitSeparator}}</span><span>元</span></span><span
+              <p class="money">实发金额：<span v-if="lookWages"><span>{{item.realAmount | thousandBitSeparator}}</span><span>元</span></span><span
                 v-else><span class="star">******</span><span>元</span></span>
               </p>
             </div>
