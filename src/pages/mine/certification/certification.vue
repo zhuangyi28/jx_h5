@@ -101,11 +101,6 @@
       }
     },
     mounted () {
-      this.isVerify = this.getStorage('isVerify');
-      this.userName = this.getStorage('userName');
-      this.country = this.getStorage('nationality');
-      this.cardType = this.getStorage('idType');
-      this.IDNumber = this.getStorage('idNumber');
 
       /**
        * 接口：用户中心
@@ -129,7 +124,21 @@
 
         if(res.data.code=='0000'){
 
-            this.source=res.data.data.source
+          this.isVerify = res.data.data.isVerify;
+
+          res.data.data.userName ? (this.userName = res.data.data.userName) : (this.userName = '');
+
+          this.source=res.data.data.source;
+
+          if(res.data.data.isVerify != 0){
+
+            this.IDNumber = res.data.data.idNumber;
+
+            this.cardType = res.data.data.idType;
+
+            this.country = res.data.data.nationality;
+
+          }
 
         }
 

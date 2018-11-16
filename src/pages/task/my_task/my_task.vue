@@ -107,11 +107,11 @@
             show:false,
             state:'5'
           },
-     /*     {
-            sort:'已关闭',
-            show:false,
-            state:'8'
-          },*/
+          /*     {
+                 sort:'已关闭',
+                 show:false,
+                 state:'8'
+               },*/
         ],
 
         taskList:[],//任务列表
@@ -139,9 +139,7 @@
       if(this.getStorage(this.getStorage('mobile')+'myTaskItemState')){
 
         var state = this.getStorage(this.getStorage('mobile')+'myTaskItemState');
-
-
-
+        
         var item = this.findItem(state);
 
         this.removeStorage(this.getStorage('mobile')+'myTaskItemState');
@@ -162,7 +160,7 @@
 
         //重新调用data方法
         //Object.assign(this.$data, this.$options.data());
-
+        
         this.paging();
 
       }
@@ -282,43 +280,20 @@
           let thisList = res.data.data.list;
 
 
-            if(thisList){
+          if(thisList){
 
 
-              if (thisList.length < 10) {
+            if (thisList.length < 10) {
 
-                if(this.pageNum=='1'){
+              if(this.pageNum=='1'){
 
-                  this.taskList = res.data.data.list;
-
-                }
-
-
-                else {
-
-
-                  let lastList = this.taskList;
-
-                  //把获取到的list合并成一个数组
-                  let nowList = lastList.concat(thisList);
-
-                  this.taskList = nowList;
-
-                }
-
-
-                //不加载并且显示没有更多数据
-
-                this.hasMoreData = false;
-
-                this.noData = false
-
+                this.taskList = res.data.data.list;
 
               }
 
+
               else {
 
-                console.log('有分页')
 
                 let lastList = this.taskList;
 
@@ -327,103 +302,126 @@
 
                 this.taskList = nowList;
 
-                //页数加1
-
-                this.pageNum = this.pageNum + 1;
-                //可以加载
-                setTimeout(function () {
-
-                  _this.hasMoreData = true
-
-                }, 500)
-
-
               }
 
 
-
-            }
-
-            else if(!thisList&&this.pageNum==1){
-
-              console.log('没有数据')
-
-              this.taskList = []
-
-              this.hasMoreData = false;
-
-              this.noData = false;
-
-
-            }
-
-
-
-  /*        if(res.data.data.list){
-
-            for(var i=0; i<res.data.data.list.length;i++){
-
-              this.taskList.push(res.data.data.list[i])
-
-            }
-
-
-            /!*f(thisList.length<this.pageSize){
-
-                //如果是第一页的话，直接显示list，否则拼接list
-
-                if(this.pageNum==1){
-
-                  this.taskList = thisList;
-
-                }
-
-                else {
-
-
-                  //上一次获取到的list
-
-                  let lastList = this.taskList;
-
-                  //把获取到的list合并成一个数组
-                  let nowList = lastList.concat(thisList);
-
-                  this.taskList = nowList;
-
-
-                }
-
-                this.hasMoreData = false;
-
-                this.noData = false
-
-
-            }*!/
-            if(res.data.list.length<10){
+              //不加载并且显示没有更多数据
 
               this.hasMoreData = false;
 
               this.noData = false
 
-            }else {
 
-              this.hasMoreData = false;
+            }
 
-              this.noData = true;
+            else {
+
+              console.log('有分页')
+
+              let lastList = this.taskList;
+
+              //把获取到的list合并成一个数组
+              let nowList = lastList.concat(thisList);
+
+              this.taskList = nowList;
+
+              //页数加1
+
+              this.pageNum = this.pageNum + 1;
+              //可以加载
+              setTimeout(function () {
+
+                _this.hasMoreData = true
+
+              }, 500)
+
+
             }
 
 
+
           }
-          else {
 
+          else if(!thisList&&this.pageNum==1){
 
-            this.taskList = [];
+            console.log('没有数据')
+
+            this.taskList = []
 
             this.hasMoreData = false;
 
             this.noData = false;
 
-          }*/
+
+          }
+
+
+
+          /*        if(res.data.data.list){
+
+                    for(var i=0; i<res.data.data.list.length;i++){
+
+                      this.taskList.push(res.data.data.list[i])
+
+                    }
+
+
+                    /!*f(thisList.length<this.pageSize){
+
+                        //如果是第一页的话，直接显示list，否则拼接list
+
+                        if(this.pageNum==1){
+
+                          this.taskList = thisList;
+
+                        }
+
+                        else {
+
+
+                          //上一次获取到的list
+
+                          let lastList = this.taskList;
+
+                          //把获取到的list合并成一个数组
+                          let nowList = lastList.concat(thisList);
+
+                          this.taskList = nowList;
+
+
+                        }
+
+                        this.hasMoreData = false;
+
+                        this.noData = false
+
+
+                    }*!/
+                    if(res.data.list.length<10){
+
+                      this.hasMoreData = false;
+
+                      this.noData = false
+
+                    }else {
+
+                      this.hasMoreData = false;
+
+                      this.noData = true;
+                    }
+
+
+                  }
+                  else {
+
+
+                    this.taskList = [];
+
+                    this.hasMoreData = false;
+
+                    this.noData = false;
+
+                  }*/
 
 
         }).catch((res) => {})
@@ -442,14 +440,14 @@
 
       lookTaskDetailFn:function (e) {
 
-          console.log(e.currentTarget.dataset.id)
+        console.log(e.currentTarget.dataset.id)
 
-          //存下任务id 在任务详情中取
-          this.setStorage('taskId',e.currentTarget.dataset.id);
+        //存下任务id 在任务详情中取
+        this.setStorage('taskId',e.currentTarget.dataset.id);
 
-          this.setStorage(this.getStorage('mobile')+'myTaskItemState',this.thisState);
+        this.setStorage(this.getStorage('mobile')+'myTaskItemState',this.thisState);
 
-          this.$router.push('/taskDetail')
+        this.$router.push('/taskDetail')
 
 
 

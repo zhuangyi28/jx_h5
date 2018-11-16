@@ -393,6 +393,8 @@
 
                 localStorage.removeItem('lookTaskToPersonInformation');
 
+                localStorage.setItem('personalInformationAlready','true');
+
                 this.$router.push('/lookTask');
 
               }else{

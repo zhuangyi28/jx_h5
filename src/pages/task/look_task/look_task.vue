@@ -102,6 +102,18 @@
 
       this.getData();
 
+      if(this.getStorage('personalInformationAlready')){
+
+        this.$toast({
+          message: '个人履历已完善',
+          position: 'bottom',
+          duration: 1500,
+        });
+
+        this.removeStorage('personalInformationAlready');
+
+      }
+
     },
     destroyed(){
 
@@ -548,6 +560,8 @@
 
           }).then((res)=>{
 
+            console.log(res);
+
             if(res.data.data.isVerify == 0 || res.data.data.isVerify == 3){
 
               this.$messagebox({
@@ -570,23 +584,21 @@
 
               }.bind(this))
 
-            }else if(res.data.data.code == 2){
+            }else if(res.data.data.isVerify == 2){
 
-              this.$toast({
-
-                message: '实名认证审核中',
-
-                position: 'bottom',
-
-                duration: 1500
-
-              });
+              this.$messagebox({
+                message: '实名认证审核中，审核通过后即可报名',
+                showConfirmButton: true,
+                confirmButtonText: '确定',
+                cancelButtonClass: 'cancel_btn',
+              })
 
             }else{
 
               if(res.data.data.isHaveResume == 0){
 
                 this.$messagebox({
+                  title: '完善个人履历',
                   message: '丰富的技能标签，精彩的个人介绍，可以增加企业录用的概率',
                   showCancelButton: true,
                   showConfirmButton: true,
