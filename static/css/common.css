@@ -58,7 +58,7 @@ input,textarea,button{
 .loadmore {
   text-align: center;
   color: #8a8a8a;
-  margin: 10px 0 15px;
+  padding: 10px 0 15px;
 
 }
 .loadmore span,
