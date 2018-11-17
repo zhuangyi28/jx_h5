@@ -1,5 +1,5 @@
 <template>
-  <div class="person_information">
+  <div class="person_information" id="personInformation">
     <div class="person_information_ps">技能标签能让企业在搜索相应人才时，优先看到您。</div>
     <div class="skill_part">
       <div class="skill_title"><span>*</span>技能标签</div>
@@ -219,35 +219,52 @@
 
         this.$messagebox.prompt('请输入标签','').then(function ({value,action}){
 
-          if(value.length > 6){
+          if(value){
 
-            this.$toast({
+            if(value.length > 6){
 
-              message: '每个标签最多6个字',
+              this.$toast({
 
-              position: 'middle',
+                message: '每个标签最多6个字',
 
-              duration: 1500
+                position: 'middle',
 
-            });
+                duration: 1500
 
-          }else if (this.tags.indexOf(value) != -1) {
+              });
 
-            this.$toast({
+            }else if (this.tags.indexOf(value) != -1) {
 
-              message: '请不要添加重复的标签',
+              this.$toast({
 
-              position: 'bottom',
+                message: '请不要添加重复的标签',
 
-              duration: 1500
+                position: 'bottom',
 
-            })
+                duration: 1500
 
-          }else{
+              })
 
-            this.tags.push(value);
+            }else{
+
+              this.tags.push(value);
+
+            }
 
           }
+
+          if(document.body.scrollTop){
+
+              document.body.scrollTop = 0;
+
+          }else if(document.documentElement.scrollTop){
+
+
+            document.documentElement.scrollTop = 0;
+
+
+          }
+
 
         }.bind(this));
 
