@@ -65,14 +65,13 @@
             }
           }
           .task_content{
+            width: calc(~'100% - 50px');
             div:first-child{
               color: #4a4a4a;
               font-size: 16px;
               overflow: hidden;
-              text-overflow: ellipsis;
-              display: -webkit-box;
-              -webkit-line-clamp: 1;
-              -webkit-box-orient: vertical;
+              white-space: nowrap;
+              text-overflow:ellipsis;
               line-height:18px;
               margin-bottom: 5px;
             }

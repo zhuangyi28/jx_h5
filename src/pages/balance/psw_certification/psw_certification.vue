@@ -54,6 +54,12 @@
           });
           return;
         }else{
+
+          this.$indicator.open({
+            text: '加载中...',
+            spinnerType: 'fading-circle'
+          });
+
           if(this.withdraw == 1){
             /*
           * 接口： 用户发起提现操作
@@ -67,6 +73,7 @@
             }).then((res)=>{
               console.log(res);
               if(res.data.code == -4){
+                this.$indicator.close()
                 if(res.data.msg.indexOf('输入错误3次') != -1){
                   this.$messagebox({
                     title: '提示',
@@ -109,6 +116,8 @@
                 }
               }
               else if(res.data.code == -3){
+
+                this.$indicator.close()
                 this.$messagebox({
                   title: '提示',
                   message: res.data.msg,
@@ -155,6 +164,7 @@
             }).then((res)=>{
               console.log(res);
               if(res.data.code == -4){
+                this.$indicator.close()
                 if(res.data.msg.indexOf('输入错误3次') != -1){
                   this.$messagebox({
                     title: '提示',
@@ -197,6 +207,7 @@
                 }
               }
               else if(res.data.code == -3){
+                this.$indicator.close()
                 this.$messagebox({
                   title: '提示',
                   message: res.data.msg,
@@ -231,6 +242,7 @@
     },
     destroyed (){
       this.$messagebox.close();
+      this.$indicator.close()
     }
   }
 </script>

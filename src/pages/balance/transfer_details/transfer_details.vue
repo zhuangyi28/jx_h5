@@ -52,7 +52,7 @@
         <div>对方账号</div>
         <div>{{mobile}}</div>
       </div>
-      <div class="cell" v-show="remark?true:false">
+      <div class="cell" v-if="remark&&remark!='null'">
         <div>转账备注</div>
         <div>{{remark}}</div>
       </div>
@@ -115,9 +115,7 @@
          }
 
     },
-    destroyed(){
 
-    },
    mounted () {
 
 
@@ -183,14 +181,16 @@
          }).then((res)=>{
 
            console.log(res.data)
-
+/*
            if(res.data.data.remark){
 
 
                this.remark=res.data.data.remark
 
 
-           }
+           }*/
+
+           this.remark = res.data.data.remark
 
             this.orderAmount= res.data.data.orderAmount;
 
@@ -205,6 +205,8 @@
              this.mobile=res.data.data.mobile;
 
              this.createDate=res.data.data.createDate;
+
+
 
 
          }).catch((res)=>{})
@@ -243,13 +245,6 @@
 
            console.log(res.data)
 
-           if(res.data.data.remark){
-
-
-             this.remark=res.data.data.remark
-
-
-           }
 
            this.orderAmount= res.data.data.orderAmount;
 
@@ -264,6 +259,8 @@
            this.mobile=res.data.data.mobile;
 
            this.createDate=res.data.data.createDate;
+
+           this.remark = res.data.data.remark
 
 
          }).catch((res)=>{})

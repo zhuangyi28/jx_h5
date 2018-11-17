@@ -147,13 +147,10 @@
     }
     .file{
       position: relative;
-      padding: 10px;
-      display: flex;
-      flex-wrap: wrap;
+      padding: 10px 15px;
      >a{
-       flex-shrink: 0;
        display: block;
-       width: 50%;
+       width: 80%;
        color: #ffbe9b;
 
 
@@ -190,39 +187,6 @@
 
 
     }
-    @media screen  and (max-width: 320px){
-
-      .file{
-        padding: 15px 11px 15px;
-        >div{
-          width: 20%;
-          margin: 8px 7px;
-
-          p{
-            min-height:30px;
-
-          }
-          img{
-            display: block;
-            width: 32px;
-            height: 32px;
-            vertical-align: middle;
-            margin: 2px auto;
-          }
-        }
-        &:after{
-          content:".";
-          clear:both;
-          display:block;
-          overflow:hidden;
-          font-size:0;
-          height:0
-        }
-
-
-      }
-
-    }
     .tips_title{
       position: relative;
       padding: 10px 15px 0;
@@ -243,12 +207,11 @@
     }
     .tips_files{
       padding: 5px 15px;
-      display: flex;
-      flex-wrap: wrap;
       font-size: 14px;
       a{
-        width: 50%;
-        flex-shrink: 0;
+        width: 80%;
+        padding:5px 0;
+        display: block;
         p{
           white-space: nowrap;
           text-overflow: ellipsis;

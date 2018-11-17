@@ -10,7 +10,7 @@
 
         <form action="">
 
-        <input type="text" placeholder="搜索任务名称、任务编号" disabled>
+        <input type="text" placeholder="搜索任务名称、任务编号"  v-bind:value="findWordShow">
 
         </form>
 
@@ -136,7 +136,7 @@
 
       </transition>
 
-      <transition name="toggle">
+      <transition name="toggleTask">
 
 
         <!--分类下拉框-->
@@ -248,7 +248,7 @@
 
       <img src="../../../../static/images/nodetail_img.png">
 
-      <div>暂无相关账单</div>
+      <div>暂无相关任务</div>
 
     </div>
 
@@ -294,7 +294,9 @@
 
         pageNum: 1,
 
-        moreData: false
+        moreData: false,
+
+        findWordShow: ''
 
       }
 
@@ -305,6 +307,8 @@
     mounted () {
 
       this.userMobile = localStorage.getItem('mobile');
+
+      localStorage.getItem(this.userMobile + 'findWord') && (this.findWordShow = localStorage.getItem(this.userMobile + 'findWord'));
 
       this.getData();
 
@@ -1217,13 +1221,13 @@
 
 </style>
 <style>
-  .toggle-enter-active, .toggle-leave-active{
+  .toggleTask-enter-active, .toggleTask-leave-active{
     transition: all 0.5s;
   }
-  .toggle-enter, .toggle-leave-to{
+  .toggleTask-enter, .toggleTask-leave-to{
     transform: translateY(-100vh);
   }
-  .toggle-enter-to, .toggle-leave{
+  .toggleTask-enter-to, .toggleTask-leave{
     transform: none;
   }
   .fade-enter-active, .fade-leave-active{

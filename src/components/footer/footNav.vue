@@ -6,24 +6,24 @@
       <!--命名路由-->
       <ul>
         <!--this inspection reports XML/HTML tags with missing mandatory attrbutes ,you can specify attrbute name that should not  be reported-->
-        <router-link :to="{name: homepage}" tag="li" router-active-class>
+        <div v-on:click="jumpTo" v-bind:class='{"router-link-active":(btnLight == 1)}'>
           <div>
             <i class="iconfont icon-renwuguangchang"></i>
           </div>
           <div>任务广场</div>
-        </router-link>
-        <router-link :to="{name:'discovery'}" tag="li">
+        </div>
+        <div v-on:click="$router.push('/workDesk/discovery') ; (btnLight = 2)" v-bind:class='{"router-link-active": btnLight == 2}'>
           <div>
             <i class="iconfont icon-bottom-find"></i>
           </div>
           <div>发现</div>
-        </router-link>
-        <router-link :to="{name:'mine'}" tag="li">
+        </div>
+        <div v-on:click="$router.push('/workDesk/mine'); (btnLight = 3)" v-bind:class='{"router-link-active": btnLight == 3}'>
           <div>
             <i class="iconfont icon-bottom-main1"></i>
           </div>
           <div>我的</div>
-        </router-link>
+        </div>
       </ul>
     </div>
   </div>
@@ -37,13 +37,31 @@
 
       return {
 
-        homepage: ''
+        homepage: '',
+
+        btnLight: ''
 
       }
 
     },
 
     mounted () {
+
+      var locationHref = location.href;
+
+      if(locationHref.indexOf('homepage') != -1 || locationHref.indexOf('taskSquare') != -1){
+
+        this.btnLight = 1;
+
+      }else if(locationHref.indexOf('discovery') != -1){
+
+        this.btnLight = 2;
+
+      }else if(locationHref.indexOf('mine') != -1){
+
+        this.btnLight = 3;
+
+      }
 
       /**
        * 接口：用户中心
@@ -77,6 +95,20 @@
         console.log(res);
 
       });
+
+    },
+
+
+
+    methods: {
+
+      jumpTo: function () {
+
+        this.btnLight = 1;
+
+        this.$router.push('/workDesk/' + this.homepage);
+
+      }
 
     }
 
