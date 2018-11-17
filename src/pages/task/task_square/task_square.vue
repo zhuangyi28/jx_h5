@@ -55,7 +55,7 @@
 
       </transition>
 
-      <transition name="toggle">
+      <transition name="toggleTask">
 
         <!--筛选下拉框-->
         <div class="order" v-if="orderShow">
