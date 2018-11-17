@@ -45,8 +45,8 @@
       <!-- 补充内容-->
       <div class="tips_title" v-if="taskDetail.entTaskAddList">补充内容</div>
       <div class="tips_content" v-for="taskAddtionDetail in taskDetail.entTaskAddList">{{taskAddtionDetail.taskAddtionDetail}}</div>
-      <div class="tips_files" v-if="taskDetail.entTaskAddList">
-        <div>附件：</div>
+      <div class="tips_files">
+        <div v-if="addListFile">附件：</div>
         <a v-for="fileDetail in entTaskAddList" v-bind:href="fileDetail.file">
           <p>{{fileDetail.fileName}}</p>
         </a>
@@ -99,7 +99,9 @@
 
         entTaskAddList: [], //补充文件列表
 
-        originalFileNames:[]
+        originalFileNames:[],
+
+        addListFile:'',
 
       }
     },
@@ -276,29 +278,32 @@
 
             this.filesList = _Array;
 
-            if(res.data.data.list[0].entTaskAddList){
+          }
+          if(res.data.data.list[0].entTaskAddList){
 
-              for(var entTask of res.data.data.list[0].entTaskAddList){
+            for(var entTask of res.data.data.list[0].entTaskAddList){
 
-                if(entTask.originalFileNamesAdd || entTask.taskAddtionFile){
+              if(entTask.originalFileNamesAdd || entTask.taskAddtionFile){
 
-                  var fileNames = entTask.originalFileNamesAdd.split(',');
+                var fileNames = entTask.originalFileNamesAdd.split(',');
 
-                  var files = entTask.taskAddtionFile.split(',');
+                this.addListFile = fileNames
 
-                  var length = fileNames.length;
+                var files = entTask.taskAddtionFile.split(',');
 
-                  while(length -- ){
 
-                    var obj = {};
 
-                    obj.fileName = fileNames[length];
+                var length = fileNames.length;
 
-                    obj.file = files[length];
+                while(length -- ){
 
-                    this.entTaskAddList.push(obj);
+                  var obj = {};
 
-                  }
+                  obj.fileName = fileNames[length];
+
+                  obj.file = files[length];
+
+                  this.entTaskAddList.push(obj);
 
                 }
 
@@ -306,8 +311,8 @@
 
             }
 
-
           }
+          console.log('补充列表'+this.entTaskAddList)
 
         }.bind(this)).catch((res)=>{
 
