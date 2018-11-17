@@ -160,7 +160,7 @@
           * */
             this.$http({
               method: 'get',
-              url: process.env.API_ROOT + 'user/transfer/dotransfer?mobile='+this.transferMobile+'&balance='+this.transferMoney+'&payPassword='+hexMD5(this.password)
+              url: process.env.API_ROOT + 'user/transfer/dotransfer?mobile='+this.transferMobile+'&balance='+this.transferMoney+'&payPassword='+hexMD5(this.password)+'&remark='+this.transferTips
             }).then((res)=>{
               console.log(res);
               if(res.data.code == -4){
