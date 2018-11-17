@@ -1,6 +1,6 @@
 <template>
   <div class="protocol">
-    <div class="main_title">嘉薪平台自由职业者入住协议</div>
+    <div class="main_title">嘉薪平台自由职业者入驻协议</div>
     <div class="protocol_detail">
       <div class="content">本协议由同意并承诺遵守本协议规定且使用嘉薪平台服务的用户(下称“自由职业者”)、 嘉薪平台（运营主体为上海广略企业服务外包有限公司，下称“平台”）共同缔结，本协议具有合同效力。</div>
       <div class="content important">自由职业者在使用平台相关服务时，须自行阅读本协议，尤其是做出加黑、斜体、下划线处理的相关条款，可能会对自由职业者的相关权益造成重大影响，请谨慎阅读。</div>

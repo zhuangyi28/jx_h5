@@ -135,7 +135,6 @@
               });*/
               if(res.data.code == '0000'){
                 setTimeout(()=>{
-                  toast.close();
                   this.setStorage('orderId',res.data.data);
                   this.$router.push('/paySuccess')
                 },500);

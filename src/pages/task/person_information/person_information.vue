@@ -225,7 +225,7 @@
 
               message: '每个标签最多6个字',
 
-              position: 'bottom',
+              position: 'middle',
 
               duration: 1500
 

@@ -214,7 +214,7 @@ export default new Router({
       path: '/balance',
       name: 'balance',
       meta: {
-        title: '工资余额'
+        title: '收入余额'
       },
       component: balance
     },

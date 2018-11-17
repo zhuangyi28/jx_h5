@@ -114,11 +114,11 @@
 
             <div class="money_select">
 
-              <div v-on:click="(taskMaxUnit = 999)&& (taskMinUnit = 1)">1-999</div>
+              <div v-on:click="(taskMaxUnit = '999')&& (taskMinUnit = '1')">1-999</div>
 
-              <div v-on:click="(taskMaxUnit = 20000)&& (taskMinUnit = 10000)">10k-20k</div>
+              <div v-on:click="(taskMaxUnit = '20000')&& (taskMinUnit = '10000')">10k-20k</div>
 
-              <div v-on:click="(taskMinUnit = 20000)&& (taskMaxUnit = '')">20k以上</div>
+              <div v-on:click="(taskMinUnit = '20000')&& (taskMaxUnit = '')">20k以上</div>
 
             </div>
 
