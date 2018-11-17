@@ -36,7 +36,8 @@
       <div class="title">需求描述</div>
       <div class="content" v-for="detail in taskDetail.taskDetails">{{detail}}</div>
       <!-- 文件下载 -->
-      <div class="file" v-if="filesList">
+      <div class="file" v-if="originalFileNames">
+        <div>附件：</div>
         <a :href ="item.downLoadUrl" v-for="item in filesList">
           <p>{{item.name}}</p>
         </a>
@@ -44,7 +45,8 @@
       <!-- 补充内容-->
       <div class="tips_title" v-if="taskDetail.entTaskAddList">补充内容</div>
       <div class="tips_content" v-for="taskAddtionDetail in taskDetail.entTaskAddList">{{taskAddtionDetail.taskAddtionDetail}}</div>
-      <div class="tips_files">
+      <div class="tips_files" v-if="taskDetail.entTaskAddList">
+        <div>附件：</div>
         <a v-for="fileDetail in entTaskAddList" v-bind:href="fileDetail.file">
           <p>{{fileDetail.fileName}}</p>
         </a>
@@ -95,7 +97,9 @@
 
         filesList:[],//文件列表
 
-        entTaskAddList: [] //补充文件列表
+        entTaskAddList: [], //补充文件列表
+
+        originalFileNames:[]
 
       }
     },
@@ -224,6 +228,8 @@
           this.taskDetail.industry = this.industryChange(+this.taskDetail.industry);
 
           this.nickName = this.taskDetail.nickname;
+
+          this.originalFileNames = this.taskDetail.originalFileNames
 
           if(this.taskDetail.nicknameHide=='0'){
 

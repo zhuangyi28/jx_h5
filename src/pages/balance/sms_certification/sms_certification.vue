@@ -110,7 +110,15 @@
           });
           return;
         }
+
+        this.$indicator.open({
+          text: '加载中...',
+          spinnerType: 'fading-circle'
+        });
+
         if(this.withdraw == 1){
+
+
           /*
            * 接口： 用户发起提现操作
            * 请求方式： GET
@@ -141,6 +149,8 @@
                 },1500);
               }
               else {
+
+                  this.$indicator.close()
                 this.$toast({
                   message: res.data.msg,
                   position: 'bottom',
@@ -180,6 +190,7 @@
                 },1500);
               }
               else {
+                this.$indicator.close()
                 this.$toast({
                   message: res.data.msg,
                   position: 'bottom',
@@ -192,6 +203,9 @@
       }
 
 
+    },
+    destroyed (){
+      this.$indicator.close()
     },
     directives: {
       focus: {

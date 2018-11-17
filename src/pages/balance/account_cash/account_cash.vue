@@ -207,12 +207,12 @@
 </style>
 <style>
   .toggle-enter-active, .toggle-leave-active{
-    transition: all 1s;
+    transition: all 0.5s;
   }
   .toggle-enter, .toggle-leave-to{
-    transform: translateY(100vh);
+    transform: translateY(300px);
   }
   .toggle-enter-to, .toggle-leave{
-    transform: none;
+    transform: translateY(0);
   }
 </style>

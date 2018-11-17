@@ -112,12 +112,12 @@
 
       </div>
       <!-- 添加反馈 -->
-      <div v-if="canSubmit=='1'||brightState=='2'||brightState=='4'" class="add_feedback" v-on:click="$router.push('/taskFeedback')"><span>+</span>添加任务反馈</div>
+      <div v-if="canSubmit=='1'" class="add_feedback" v-on:click="$router.push('/taskFeedback')"><span>+</span>添加任务反馈</div>
 
     </div>
 
     <!-- 提交验收 -->
-    <div v-if="canSubmit=='1'||brightState=='2'||brightState=='4'">
+    <div v-if="canSubmit=='1'">
       <orangeBtn v-on:clickEvent="taskBtn" :name="taskBtnName1"></orangeBtn>
     </div>
 
@@ -326,6 +326,17 @@
 
                 this.init()
 
+              }
+
+              else if(res.data.msg=='pRecordId is null'){
+
+                this.$toast({
+
+                  message: '请再次添加任务反馈',
+                  duration: 1500,
+                  position: 'bottom',
+
+                })
               }
 
 
