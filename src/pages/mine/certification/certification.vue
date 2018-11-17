@@ -140,23 +140,25 @@
 
           }
 
+          if(this.cardType == 1){
+            this.cardType = '身份证'
+          }
+          if(this.cardType == 2){
+            this.cardType = '护照'
+          }
+          if(this.cardType == 3){
+            this.cardType = '港澳居民来往内地通行证'
+          }
+          if(this.cardType == 4){
+            this.cardType = '台湾居民来往内地通行证'
+          }
+
         }
 
 
       }).catch(function (error) {}.bind(this))
 
-      if(this.cardType == 1){
-        this.cardType = '身份证'
-      }
-      if(this.cardType == 2){
-        this.cardType = '护照'
-      }
-      if(this.cardType == 3){
-        this.cardType = '港澳居民来往内地通行证'
-      }
-      if(this.cardType == 4){
-        this.cardType = '台湾居民来往内地通行证'
-      }
+
       /*
       * 接口： 国籍查询
       * 访问方式： POST

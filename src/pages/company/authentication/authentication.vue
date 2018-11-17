@@ -205,7 +205,7 @@
 
           else if (thisCode == '-2') {
 
-            this.$router.push('/locked')
+            this.$router.replace('/locked')
 
           }
 
@@ -213,7 +213,7 @@
           else if (thisCode == '0000') {
 
 
-              this.$router.push('/salary')
+              this.$router.replace('/salary')
 
             //this.$router.go(-1)
 
