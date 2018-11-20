@@ -26,13 +26,10 @@
           </div>
 
           <div class="task_status">
-            <span class="orange" v-if="item.taskState=='1'">已报名</span>
-            <span class="orange" v-else-if="item.taskState=='2'">工作中</span>
-            <span class="orange" v-else-if="item.taskState=='3'">待验收</span>
-            <span class="orange" v-else-if="item.taskState=='4'">待收款</span>
-            <span v-else-if="item.taskState=='5'">已收款</span>
-            <span v-else-if="item.taskState=='6'">已取消</span>
-            <span v-else-if="item.taskState=='7'">未被录用</span>
+            <span v-if="item.taskState=='1'">未被录用</span>
+            <span v-else-if="item.taskState=='2'">已取消</span>
+            <span class="orange" v-else-if="item.taskState=='3'">进行中</span>
+            <span class="orange" v-else-if="item.taskState=='4'">已完成</span>
             <!--<span v-else-if="item.taskState=='8'">已关闭</span>-->
             <span class="next_btn"></span>
           </div>
@@ -75,43 +72,23 @@
           {
             sort: '未被录用',
             show: false,
-            state:'7'
+            state:'1'
           },
           {
             sort: '已取消',
             show: false,
-            state:'6'
-          },
-          {
-            sort: '已报名',
-            show: false,
-            state:'1'
-          },
-          {
-            sort:'工作中',
-            show:false,
             state:'2'
           },
           {
-            sort:'待验收',
-            show:false,
+            sort: '进行中',
+            show: false,
             state:'3'
           },
           {
-            sort:'待收款',
+            sort:'已完成',
             show:false,
             state:'4'
-          },
-          {
-            sort:'已收款',
-            show:false,
-            state:'5'
-          },
-          /*     {
-                 sort:'已关闭',
-                 show:false,
-                 state:'8'
-               },*/
+          }
         ],
 
         taskList:[],//任务列表
@@ -139,7 +116,7 @@
       if(this.getStorage(this.getStorage('mobile')+'myTaskItemState')){
 
         var state = this.getStorage(this.getStorage('mobile')+'myTaskItemState');
-        
+
         var item = this.findItem(state);
 
         this.removeStorage(this.getStorage('mobile')+'myTaskItemState');
@@ -160,7 +137,7 @@
 
         //重新调用data方法
         //Object.assign(this.$data, this.$options.data());
-        
+
         this.paging();
 
       }
