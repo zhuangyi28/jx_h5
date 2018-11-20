@@ -188,7 +188,9 @@
     <!--任务列表-->
     <div class="task_list" v-if="taskLists.length != 0">
 
-      <div class="list_one" v-for="taskList in taskLists" v-bind:data-taskId="taskList.taskId" v-on:click="jumpTo">
+      <div class="list_one"
+           v-for="taskList in taskLists" v-bind:data-taskId="taskList.taskId" v-on:click="jumpTo"
+           v-bind:class="{'gary_text': taskHistory.indexOf(taskList.taskId) != -1}">
 
         <div class="task_information">
 
@@ -296,7 +298,9 @@
 
         moreData: false,
 
-        findWordShow: ''
+        findWordShow: '',
+
+        taskHistory: ''
 
       }
 
@@ -305,6 +309,8 @@
 
 
     mounted () {
+
+      localStorage.getItem('taskHistory') && (this.taskHistory = localStorage.getItem('taskHistory').split(','));
 
       this.userMobile = localStorage.getItem('mobile');
 
@@ -1115,6 +1121,13 @@
         var taskId = event.currentTarget.dataset.taskid;
 
         localStorage.setItem('taskId', taskId);
+
+        if(localStorage.getItem('taskHistory')){
+          (localStorage.getItem('taskHistory').indexOf(taskId) == -1) &&
+          localStorage.setItem('taskHistory',localStorage.getItem('taskHistory') + ',' + taskId);
+        }else{
+          localStorage.setItem('taskHistory',taskId);
+        }
 
         this.$router.push('/lookTask');
 

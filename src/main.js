@@ -56,7 +56,11 @@ router.beforeEach((to,from,next)=>{
 
   if(Authorization){
 
-    if(to.path!=='/login'){
+    if((from.path == '/salary') && (to.path == '/company')){
+
+      next({path: '/workDesk/mine'})
+
+    } else if(to.path!=='/login'){
 
       next();
 
