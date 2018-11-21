@@ -456,6 +456,12 @@
       },
 
 
+    },
+
+    destroy(){
+
+      this.$indicator.close();
+
     }
 
   }

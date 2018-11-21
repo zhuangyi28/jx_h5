@@ -5,6 +5,7 @@
       <div class="tab_box">
         <div v-for="item in tabList" @click="selectSort(item)"  v-bind:data-num="item.state" v-bind:class="{'selected':item.show===true}">{{item.sort}}</div>
       </div>
+      <div class="tab_box_content"></div>
 
     </div>
     <!-- 列表 -->
@@ -26,10 +27,17 @@
           </div>
 
           <div class="task_status">
-            <span v-if="item.taskState=='1'">未被录用</span>
+            <span class="orange" v-if="item.taskState=='1'">已报名</span>
+            <span class="orange" v-else-if="item.taskState=='2'">工作中</span>
+            <span class="orange" v-else-if="item.taskState=='3'">待验收</span>
+            <span class="orange" v-else-if="item.taskState=='4'">待收款</span>
+            <span v-else-if="item.taskState=='5'">已收款</span>
+            <span v-else-if="item.taskState=='6'">已取消</span>
+            <span v-else-if="item.taskState=='7'">未被录用</span>
+          <!--  <span v-if="item.taskState=='1'">未被录用</span>
             <span v-else-if="item.taskState=='2'">已取消</span>
             <span class="orange" v-else-if="item.taskState=='3'">进行中</span>
-            <span class="orange" v-else-if="item.taskState=='4'">已完成</span>
+            <span class="orange" v-else-if="item.taskState=='4'">已完成</span>-->
             <!--<span v-else-if="item.taskState=='8'">已关闭</span>-->
             <span class="next_btn"></span>
           </div>
@@ -64,7 +72,7 @@
 
         //tab标签 sort-文案 show-是否高亮 state-任务状态
         tabList: [
-          {
+/*          {
             sort: '全部',
             show: true,
             state:''
@@ -72,22 +80,63 @@
           {
             sort: '未被录用',
             show: false,
-            state:'1'
+            state:'7'
           },
           {
             sort: '已取消',
             show: false,
+            state:'6'
+          },
+          {
+            sort: '已报名',
+            show: false,
+            state:'1'
+          },
+          {
+            sort:'工作中',
+            show:false,
             state:'2'
+          },
+          {
+            sort:'待验收',
+            show:false,
+            state:'3'
+          },
+          {
+            sort:'待收款',
+            show:false,
+            state:'4'
+          },
+          {
+            sort:'已收款',
+            show:false,
+            state:'5'
+          },*/
+
+       {
+            sort: '全部',
+            show: true,
+            state:''
+          },
+          {
+            sort: '未被录用',
+            show: false,
+            state:'7'
+          },
+          {
+            sort: '已取消',
+            show: false,
+            state:'6'
           },
           {
             sort: '进行中',
             show: false,
-            state:'3'
+            state:'4'
           },
           {
             sort:'已完成',
             show:false,
-            state:'4'
+            state:'5'
           }
         ],
 
@@ -104,6 +153,8 @@
         noData: true,//是否显示暂无数据 false为隐藏 true为显示
 
         moreLoading: false,//上拉加载
+
+        scrollTop:''
 
       }
 
@@ -430,9 +481,6 @@
 
       },
 
-
-
-
       findItem: function (state) {
 
         var item = {};
@@ -497,13 +545,9 @@
 
       }
 
+    },
 
 
-
-
-
-
-    }
   }
 </script>
 <style lang="less" scoped>
