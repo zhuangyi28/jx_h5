@@ -340,7 +340,15 @@
     },
     activated () {
 
-      document.body.scrollTop =document.documentElement.scrollTop = window.pageYOffset = this.getStorage('scrollTop')
+        if(this.getStorage('scrollTop')){
+
+          document.body.scrollTop =document.documentElement.scrollTop = window.pageYOffset = this.getStorage('scrollTop')
+
+          this.removeStorage('scrollTop')
+
+
+        }
+
 
     },
 
