@@ -300,7 +300,11 @@
 
         findWordShow: '',
 
-        taskHistory: ''
+        taskHistory: '',
+
+        scrollTop:''
+
+
 
       }
 
@@ -324,9 +328,21 @@
 
       this.onShow();
 
+      //监听滚动条事件
+      window.addEventListener('scroll', this.handelscroll);
+
+
     },
+    deactivated (){
 
+      this.setStorage('scrollTop',this.scrollTop)
 
+    },
+    activated () {
+
+      document.body.scrollTop =document.documentElement.scrollTop = window.pageYOffset = this.getStorage('scrollTop')
+
+    },
 
     methods: {
 
@@ -854,6 +870,15 @@
         })
 
 
+
+      },
+
+      handelscroll() {
+
+
+        this.scrollTop = document.body.scrollTop|| document.documentElement.scrollTop || window.pageYOffset
+
+        //console.log('当前数值'+this.scrollTop)
 
       },
 

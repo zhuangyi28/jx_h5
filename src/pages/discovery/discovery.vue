@@ -192,6 +192,7 @@
 //
 //      }).catch((res)=>{});
 
+      this.setStorage('otherTabPage',1)
 
       /**
        * 接口：用户中心

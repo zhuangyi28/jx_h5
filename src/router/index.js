@@ -572,7 +572,8 @@ export default new Router({
           name: 'taskSquare',
           meta: {
             title: '任务广场',
-            auth: true
+            auth: true,
+            keepAlive:true,
           },
           component: taskSquare
 
