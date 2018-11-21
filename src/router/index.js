@@ -479,7 +479,8 @@ export default new Router({
         title: '任务详情'
       },
       component: taskDetail
-    },{
+    },
+    {
       path: '/protocol',
       name: 'protocol',
       meta: {
@@ -537,14 +538,6 @@ export default new Router({
       component: submitSuccess
     },
     {
-      path: '/lookTask',
-      name: 'lookTask',
-      meta:{
-        title: '查看任务'
-      },
-      component: lookTask
-    },
-    {
       path: '/salary',
       name: 'salary',
       meta:{
@@ -597,6 +590,14 @@ export default new Router({
             title: '我的'
           },
           component: mine
+        },
+        {
+          path: '/lookTask',
+          name: 'lookTask',
+          meta:{
+            title: '查看任务'
+          },
+          component: lookTask
         }
       ]
     },

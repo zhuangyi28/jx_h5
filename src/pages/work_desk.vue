@@ -1,7 +1,10 @@
 <template>
   <div class="work_desk_all">
-      <router-view></router-view>
-      <Tabs></Tabs>
+    <keep-alive>
+      <router-view v-if="$route.meta.keepAlive"></router-view>
+    </keep-alive>
+    <router-view v-if="!$route.meta.keepAlive"></router-view>
+      <Tabs v-if="detailShow"></Tabs>
   </div>
 </template>
 <script>
@@ -12,6 +15,11 @@
     components: {
       Tabs,
   },
+    data () {
+      return {
+        detailShow: true
+      }
+    }
 
 }
 </script>
