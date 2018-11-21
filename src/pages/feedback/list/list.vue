@@ -59,6 +59,8 @@
 
         moreLoading: false,//上拉加载
 
+        loading: false
+
       }
 
     },
@@ -188,6 +190,7 @@
 
           }
 
+          this.loading = true;
 
 
 
@@ -201,7 +204,13 @@
       //上拉加载
       loadMore:function () {
 
-        this.loadList()
+        if(this.loading){
+          
+          this.loading = false;
+
+          this.loadList();
+
+        }
 
       },
       feedBackUrlFn:function (e) {
