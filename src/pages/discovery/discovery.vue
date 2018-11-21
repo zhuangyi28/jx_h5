@@ -166,6 +166,9 @@
     mounted () {
 
 
+      document.body.scrollTop =document.documentElement.scrollTop = window.pageYOffset = 0
+
+
         //this.setStorage('ajaxHomepage','1')
 
       //获取UnionID
@@ -192,7 +195,6 @@
 //
 //      }).catch((res)=>{});
 
-      this.setStorage('otherTabPage',1)
 
       /**
        * 接口：用户中心

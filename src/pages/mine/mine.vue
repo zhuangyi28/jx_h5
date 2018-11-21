@@ -171,7 +171,8 @@
 
       let _this = this
 
-      this.setStorage('otherTabPage',1)
+      document.body.scrollTop =document.documentElement.scrollTop = window.pageYOffset = 0
+
 
 
       /**

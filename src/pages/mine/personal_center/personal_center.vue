@@ -111,6 +111,7 @@
                 //清除token
                 this.removeStorage('Authorization');
                 this.removeStorage('jxsid');
+                this.removeStorage('taskHistory');
                 this.$router.push('/login');
               }else{
                 console.log(res.data);
