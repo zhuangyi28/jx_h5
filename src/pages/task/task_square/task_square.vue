@@ -1154,6 +1154,10 @@
           localStorage.setItem('taskHistory',taskId);
         }
 
+        this.taskHistory.indexOf(taskId) == -1 && this.taskHistory.push(taskId);
+
+        this.$parent.detailShow = false;
+
         this.$router.push('/lookTask');
 
       },

@@ -127,6 +127,8 @@
     destroyed(){
 
         this.$messagebox.close();
+
+        this.$parent.detailShow = true;
     },
     methods:{
       //取消报名
