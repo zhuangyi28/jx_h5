@@ -168,8 +168,18 @@
 
       document.body.scrollTop =document.documentElement.scrollTop = window.pageYOffset = 0
 
+      if(this.getStorage('taskSquare')=='1'){
 
-        //this.setStorage('ajaxHomepage','1')
+        window.location.reload();
+
+        this.setStorage('taskSquare','0')
+
+      }
+
+
+
+
+      //this.setStorage('ajaxHomepage','1')
 
       //获取UnionID
 

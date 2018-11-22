@@ -46,6 +46,8 @@
 
     </div>
 
+    <div style="height: 100px"></div>
+
     <!--下拉框-->
     <div class="popup">
 
@@ -334,6 +336,14 @@
 
       //监听滚动条事件
       window.addEventListener('scroll', this.handelscroll);
+
+      //刷新锁
+      if(this.getStorage('taskSquare')=='0'){
+
+        this.setStorage('taskSquare','1')
+
+      }
+
 
 
     },
