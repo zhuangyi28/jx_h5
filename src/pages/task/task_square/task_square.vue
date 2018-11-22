@@ -186,73 +186,77 @@
 
 
     <!--任务列表-->
-    <div class="task_list" v-if="taskLists.length != 0">
+    <mt-loadmore :top-method="loadTop" ref="loadmore">
 
-      <div class="list_one"
-           v-for="taskList in taskLists" v-bind:data-taskId="taskList.taskId" v-on:click="jumpTo"
-           v-bind:class="{'gary_text': taskHistory.indexOf(taskList.taskId) != -1}">
+      <div class="task_list" v-if="taskLists.length != 0">
 
-        <div class="task_information">
+        <div class="list_one"
+             v-for="taskList in taskLists" v-bind:data-taskId="taskList.taskId" v-on:click="jumpTo"
+             v-bind:class="{'gary_text': taskHistory.indexOf(taskList.taskId) != -1}">
 
-          <div class="task_title">
+          <div class="task_information">
 
-            <img src="../../../../static/images/jx_bag.png">
+            <div class="task_title">
 
-            <span>{{taskList.taskName}}</span>
+              <img src="../../../../static/images/jx_bag.png">
+
+              <span>{{taskList.taskName}}</span>
+
+            </div>
+            <div class="line"><img src="../../../../static/images/jx_task_bg.png"/></div>
+
+            <div class="task_pay">
+
+              <span><img src="../../../../static/images/jx_task_icon2.png"/>￥{{taskList.taskMinUnit}}</span><span v-if="taskList.taskMaxUnit != taskList.taskMinUnit">-{{taskList.taskMaxUnit}}</span>
+
+            </div>
 
           </div>
-          <div class="line"><img src="../../../../static/images/jx_task_bg.png"/></div>
 
-          <div class="task_pay">
+          <div class="task_need">
 
-            <span><img src="../../../../static/images/jx_task_icon2.png"/>￥{{taskList.taskMinUnit}}</span><span v-if="taskList.taskMaxUnit != taskList.taskMinUnit">-{{taskList.taskMaxUnit}}</span>
+            <div class="need_person">
+
+              <span><img src="../../../../static/images/jx_task_icon3.png"/>报名人数:<span><span>{{taskList.signUpTotal}}</span>个人已报名</span></span>
+
+            </div>
+
+            <div class="need_time">
+
+              <span>截止时间:<span>{{taskList.abortDate}}</span></span>
+
+            </div>
 
           </div>
 
         </div>
 
-        <div class="task_need">
-
-          <div class="need_person">
-
-            <span><img src="../../../../static/images/jx_task_icon3.png"/>报名人数:<span><span>{{taskList.signUpTotal}}</span>个人已报名</span></span>
-
+        <div class="loadmore" v-show="!moreData">
+          <!-- 暂无账单 -->
+          <div class="bill_nodata_img" v-if="taskLists.length == 0">
+            <img src="../../../../static/images/nodetail_img.png">
+            <div>暂无相关任务</div>
           </div>
-
-          <div class="need_time">
-
-            <span>截止时间:<span>{{taskList.abortDate}}</span></span>
-
-          </div>
-
+          <!-- 加载完毕-->
+          <div class="loadmore_tips" v-else><span class="data">没有更多数据啦~</span></div>
+        </div>
+        <!-- 显示加载中-->
+        <div class="loadmore" v-show="moreData">
+          <mt-spinner class="loadmore_icon" type="double-bounce" color="#ababab" :size="16"></mt-spinner>
+          <div class="loadmore_tips">正在加载</div>
         </div>
 
       </div>
 
-      <div class="loadmore" v-show="!moreData">
-        <!-- 暂无账单 -->
-        <div class="bill_nodata_img" v-if="taskLists.length == 0">
-          <img src="../../../../static/images/nodetail_img.png">
-          <div>暂无相关任务</div>
-        </div>
-        <!-- 加载完毕-->
-        <div class="loadmore_tips" v-else><span class="data">没有更多数据啦~</span></div>
-      </div>
-      <!-- 显示加载中-->
-      <div class="loadmore" v-show="moreData">
-        <mt-spinner class="loadmore_icon" type="double-bounce" color="#ababab" :size="16"></mt-spinner>
-        <div class="loadmore_tips">正在加载</div>
+      <div class="task_list_none" v-else>
+
+        <img src="../../../../static/images/nodetail_img.png">
+
+        <div>暂无相关任务</div>
+
       </div>
 
-    </div>
-
-    <div class="task_list_none" v-else>
-
-      <img src="../../../../static/images/nodetail_img.png">
-
-      <div>暂无相关任务</div>
-
-    </div>
+    </mt-loadmore>
 
   </div>
 
@@ -300,7 +304,6 @@
 
         findWordShow: '',
 
-        taskHistory:[],
 
         scrollTop:''
 
@@ -338,20 +341,8 @@
     },
     deactivated (){
 
-      this.setStorage('scrollTop',this.scrollTop)
-
     },
     activated () {
-
-        if(this.getStorage('scrollTop')){
-
-          document.body.scrollTop =document.documentElement.scrollTop = window.pageYOffset = this.getStorage('scrollTop')
-
-          this.removeStorage('scrollTop')
-
-
-        }
-
 
     },
 
@@ -887,7 +878,7 @@
       handelscroll() {
 
 
-        this.scrollTop = document.body.scrollTop|| document.documentElement.scrollTop || window.pageYOffset
+        this.scrollTop = document.getElementsByClassName('task_square')[0].scrollTop|| document.documentElement.getElementsByClassName('task_square')[0].scrollTop	 || window.pageYOffset
 
         //console.log('当前数值'+this.scrollTop)
 
@@ -1166,6 +1157,10 @@
           localStorage.setItem('taskHistory',taskId);
         }
 
+        this.scrollTop = document.getElementsByClassName('task_square')[0].scrollTop|| document.documentElement.getElementsByClassName('task_square')[0].scrollTop	 || window.pageYOffset
+
+        this.setStorage('scrollTop',this.scrollTop);
+
         this.taskHistory.indexOf(taskId) == -1 && this.taskHistory.push(taskId);
 
         this.$router.push('/lookTask');
@@ -1205,6 +1200,22 @@
          this.getData();
 
        }
+
+      },
+
+
+
+
+      //下拉刷新
+      loadTop: function () {
+
+        console.log('下拉刷新');
+        //重新调用data方法
+        Object.assign(this.$data, this.$options.data());
+        //重新加载
+        this.getData();
+        //固定方法，查询完要调用一次，用于重新定位
+        this.$refs.loadmore.onTopLoaded();
 
       },
 
