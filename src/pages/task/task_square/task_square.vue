@@ -300,7 +300,7 @@
 
         findWordShow: '',
 
-        taskHistory: '',
+        taskHistory:[],
 
         scrollTop:''
 
@@ -314,13 +314,16 @@
 
     mounted () {
 
+
+      this.getData();
+
       localStorage.getItem('taskHistory') && (this.taskHistory = localStorage.getItem('taskHistory').split(','));
 
       this.userMobile = localStorage.getItem('mobile');
 
       localStorage.getItem(this.userMobile + 'findWord') && (this.findWordShow = localStorage.getItem(this.userMobile + 'findWord'));
 
-      this.getData();
+
 
       this.findWord = localStorage.getItem(this.userMobile + 'findWord');
 
@@ -1013,6 +1016,7 @@
       //获取任务列表明细
       getData: function () {
 
+
         var _this = this;
 
         /**
@@ -1163,8 +1167,6 @@
         }
 
         this.taskHistory.indexOf(taskId) == -1 && this.taskHistory.push(taskId);
-
-        this.$parent.detailShow = false;
 
         this.$router.push('/lookTask');
 

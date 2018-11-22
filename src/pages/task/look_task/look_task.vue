@@ -107,6 +107,8 @@
     },
     mounted () {
 
+      this.$parent.detailShow = false;
+
       this.taskId = localStorage.getItem('taskId');
 
       this.getData();
