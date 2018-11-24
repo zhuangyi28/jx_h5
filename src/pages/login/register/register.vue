@@ -392,6 +392,8 @@
 
             this.setStorage('jxsid',res.data.jxsid);
 
+            this.setStorage('reloadtask','1')
+
             //获取UnionID
 
             this.$http({
