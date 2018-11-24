@@ -109,6 +109,8 @@
 
       this.taskId = localStorage.getItem('taskId');
 
+      this.$parent.detailShow = false;
+
       this.getData();
 
       if(this.getStorage('personalInformationAlready')){

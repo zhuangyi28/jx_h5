@@ -46,7 +46,7 @@
 
     </div>
 
-    <div style="height: 100px"></div>
+    <div class="box"></div>
 
     <!--下拉框-->
     <div class="popup">
@@ -320,6 +320,15 @@
 
     mounted () {
 
+      if(this.getStorage('reloadtask')=='1'){
+
+
+          window.location.reload();
+
+          this.setStorage('reloadtask','0')
+
+      }
+
       localStorage.getItem('taskHistory') && (this.taskHistory = localStorage.getItem('taskHistory').split(','));
 
       this.userMobile = localStorage.getItem('mobile');
@@ -352,7 +361,7 @@
     },
     activated () {
 
-      document.getElementsByClassName('task_square')[0].scrollTop= document.documentElement.getElementsByClassName('task_square')[0].scrollTop	 = window.pageYOffset = window.pageYOffset = this.getStorage('scrollTop')
+      document.getElementsByClassName('task_square')[0].scrollTop= document.documentElement.getElementsByClassName('task_square')[0].scrollTop = this.getStorage('scrollTop')
 
     },
 
@@ -888,7 +897,7 @@
       handelscroll() {
 
 
-        this.scrollTop = document.getElementsByClassName('task_square')[0].scrollTop|| document.documentElement.getElementsByClassName('task_square')[0].scrollTop	 || window.pageYOffset
+        this.scrollTop = document.getElementsByClassName('task_square')[0].scrollTop|| document.documentElement.getElementsByClassName('task_square')[0].scrollTop
 
         //console.log('当前数值'+this.scrollTop)
 
@@ -1166,7 +1175,7 @@
           localStorage.setItem('taskHistory',taskId);
         }
 
-        this.scrollTop = document.getElementsByClassName('task_square')[0].scrollTop|| document.documentElement.getElementsByClassName('task_square')[0].scrollTop	 || window.pageYOffset
+        this.scrollTop = document.getElementsByClassName('task_square')[0].scrollTop|| document.documentElement.getElementsByClassName('task_square')[0].scrollTop
 
         this.setStorage('scrollTop',this.scrollTop);
 
