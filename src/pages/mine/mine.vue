@@ -81,7 +81,7 @@
       <!--我的签约 -->
       <div class="cell" v-on:click="$router.push('/contractList')">
         <div class="title">
-          <img src="../../../static/images/jx_resume_1.png"><span class="cell_text">我的签约</span>
+          <img src="../../../static/images/jx_content_1.png"><span class="cell_text">我的签约</span>
         </div>
         <div class="cell_value"></div>
         <i class="allow_right"></i>

@@ -46,7 +46,7 @@
         <i class="allow_right"></i>
       </div>
       <!--设置 -->
-      <div class="cell" v-on:click="$router.push('/withdraw')">
+      <div class="cell" v-on:click="cashUrlFn">
         <div class="title">
           <span class="iconfont icon-wages_wallet"></span><span class="cell_text">提现</span>
         </div>
@@ -83,6 +83,8 @@
         totalSalary:'--.--',//工资余额
 
         isVerify:'',
+
+        mobile:'',
 
       }
 
@@ -149,6 +151,8 @@
           console.log(res.data);
 
           this.isVerify=res.data.data.isVerify
+
+          this.mobile =res.data.data.mobile
 
 
       }).catch((res)=>{})
@@ -265,36 +269,90 @@
         else{
 
           /**
-           * 接口：查询历史收款人
-           * 请求方式：post
-           * 接口：/record/selecthistoricalpayee
+           * 接口：用户发起转账操作
+           * 请求方式：get
+           * 接口：user/work/checktransfer
            * 入参：null
            **/
-
           this.$http({
 
-            method: 'post',
+            method: 'get',
 
-            url: process.env.API_ROOT + 'record/selecthistoricalpayee',
+            url: process.env.API_ROOT + 'user/work/checktransfer',
+
+            params:{
+
+              mobile:this.mobile
+            }
+
 
           }).then((res)=>{
 
-              console.log(res.data)
+            console.log(res.data)
 
-            if(res.data.data.length !=0){
+            if(res.data.code=='-10'){
 
-              console.log('有历史');
+              this.$messagebox({
+                title: '提示',
+                message: '您有文件待签署，请至 “ 我的签约”中完成签署后再转账',
+                showConfirmButton: true,
+                showCancelButton: true,
+                confirmButtonText: '去签约',
+                cancelButtonText: '取消',
+                cancelButtonClass:'cancel_btn',
+                confirmButtonClass:'confirm_btn_orange',
+              }).then((res)=>{
 
-              this.$router.push('/transferAccounts')
+                if(res == 'confirm'){
+
+                  this.$router.push('/contractList');
+
+                }
+
+
+              }).catch((res=>{}))
 
             }
 
             else {
 
-              //储存刚进来时候的状态 在转账成功的时候获取
+              /**
+               * 接口：查询历史收款人
+               * 请求方式：post
+               * 接口：/record/selecthistoricalpayee
+               * 入参：null
+               **/
 
-              this.$router.push('/transfer')
+              this.$http({
 
+                method: 'post',
+
+                url: process.env.API_ROOT + 'record/selecthistoricalpayee',
+
+              }).then((res)=>{
+
+                console.log(res.data)
+
+                if(res.data.data.length !=0){
+
+                  console.log('有历史');
+
+                  this.$router.push('/transferAccounts')
+
+                }
+
+                else {
+
+                  //储存刚进来时候的状态 在转账成功的时候获取
+
+                  this.$router.push('/transfer')
+
+
+
+                }
+
+
+              }).catch((res)=>{})
 
 
             }
@@ -305,6 +363,60 @@
 
         }
 
+
+      },
+
+      cashUrlFn:function () {
+
+        /**
+         * 接口：用户发起提现操作
+         * 请求方式：get
+         * 接口：user/work/checkwithdraw
+         * 入参：null
+         **/
+        this.$http({
+
+          method: 'get',
+
+          url: process.env.API_ROOT + 'user/work/checkwithdraw',
+
+        }).then((res)=>{
+
+          console.log(res.data)
+
+          if(res.data.code=='-10'){
+
+            this.$messagebox({
+              title: '提示',
+              message: '您有文件待签署，请至 “ 我的签约”中完成签署后再提现',
+              showConfirmButton: true,
+              showCancelButton: true,
+              confirmButtonText: '去签约',
+              cancelButtonText: '取消',
+              cancelButtonClass:'cancel_btn',
+              confirmButtonClass:'confirm_btn_orange',
+            }).then((res)=>{
+
+              if(res == 'confirm'){
+
+                this.$router.push('/contractList');
+
+              }
+
+
+            }).catch((res=>{}))
+
+          }
+
+          else {
+
+            this.$router.push('/withdraw')
+
+
+          }
+
+
+        }).catch((res)=>{})
 
       }
 

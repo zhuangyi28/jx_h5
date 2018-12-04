@@ -1,10 +1,11 @@
 .feedback{
-  //padding-bottom: 90px;
+  padding-bottom: 90px;
 
   #feedbackList{
 
-    height: calc(~'100vh - 62px');
-    overflow-y: scroll;
+    height: calc(~'100vh - 82px');
+    overflow: auto;/*让div存在滚动条*/
+    -webkit-overflow-scrolling: touch;
   }
   .list{
     padding: 10px 0;
