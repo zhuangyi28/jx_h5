@@ -62,6 +62,8 @@ import myTask from '@/pages/task/my_task/my_task'
 import submitSuccess from '@/pages/task/submit_success/submit_success'
 import taskFeedbackContent from '@/pages/task/task_feedback_content/task_feedback'
 import salary from '@/pages/salary/salary'
+import contractList from '@/pages/contract/contract_list/contract_list'
+import contractDetail from '@/pages/contract/contract_detail/contract_detail'
 
 Vue.use(Router)
 
@@ -608,6 +610,22 @@ export default new Router({
         title: '分享'
       },
       component: share
+    },
+    {
+      path: '/contractList',
+      name: 'contractList',
+      meta: {
+        title: '消息'
+      },
+      component: contractList
+    },
+    {
+      path: '/contractDetail',
+      name: 'contractDetail',
+      meta: {
+        title: '详情'
+      },
+      component: contractDetail
     }
 
 
