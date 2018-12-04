@@ -101,6 +101,8 @@
             container.scrollTop = container.scrollHeight;
 
 
+
+
           })
         },
 
@@ -291,6 +293,8 @@
       focusFn:function () {
 
         this.scrollBottom()
+
+
       }
 
     }
