@@ -12,40 +12,43 @@
       <div class="tab_box_content"></div>
 
     </div>
-    <!-- 列表 -->
-    <div class="contract_list_list">
-      <!-- list -->
-      <div class="contract_list_one" v-for="contractList in contractLists" v-bind:data-signId="contractList.signId" v-on:click="jumpTo">
-        <div class="contract_is_read" v-if="contractList.isRead == 0">
-          <div class="border">New!</div>
-          <div class="title">New!</div>
+
+    <div class="bill" v-infinite-scroll="loadMore" infinite-scroll-disabled="moreLoading" infinite-scroll-distance="20" infinite-scroll-immediate-check="false">
+      <!-- 列表 -->
+      <div class="contract_list_list">
+        <!-- list -->
+        <div class="contract_list_one" v-for="contractList in contractLists" v-bind:data-signId="contractList.signId" v-on:click="jumpTo">
+          <div class="contract_is_read" v-if="contractList.isRead == 0">
+            <div class="border">New!</div>
+            <div class="title">New!</div>
+          </div>
+          <div class="contract_is_read" v-else-if="contractList.flag != ''">
+            <div class="border">{{contractList.flag}}</div>
+            <div class="title">{{contractList.flag}}</div>
+          </div>
+          <div class="contract_information">
+            <div class="contract_name">{{contractList.contractName}}</div>
+            <div class="contract_state">{{contractList.signState}}</div>
+          </div>
+          <div class="contract_time">
+            <img src="../../../../static/images/jx_time.png">
+            <span>{{contractList.createDate}}</span>
+          </div>
         </div>
-        <div class="contract_is_read" v-else-if="contractList.flag != ''">
-          <div class="border">{{contractList.flag}}</div>
-          <div class="title">{{contractList.flag}}</div>
+        <div class="loadmore">
+          <!-- 暂无账单 -->
+          <div class="bill_nodata_img" v-if="contractLists.length == 0">
+            <img src="../../../../static/images/nodetail_img.png">
+            <div>暂无相关任务</div>
+          </div>
+          <!-- 加载完毕-->
+          <div class="loadmore_tips" v-if="contractLists.length != 0 && moreData == false"><span class="data">没有更多数据啦~</span></div>
         </div>
-        <div class="contract_information">
-          <div class="contract_name">{{contractList.contractName}}</div>
-          <div class="contract_state">{{contractList.signState}}</div>
+        <!-- 显示加载中-->
+        <div class="loadmore" v-if="contractLists.length != 0 && moreData == true">
+          <mt-spinner class="loadmore_icon" type="double-bounce" color="#ababab" :size="16"></mt-spinner>
+          <div class="loadmore_tips">正在加载</div>
         </div>
-        <div class="contract_time">
-          <img src="../../../../static/images/jx_time.png">
-          <span>{{contractList.createDate}}</span>
-        </div>
-      </div>
-      <div class="loadmore" v-if="contractLists.length == 0">
-        <!-- 暂无账单 -->
-        <div class="bill_nodata_img">
-          <img src="../../../../static/images/nodetail_img.png">
-          <div>暂无相关任务</div>
-        </div>
-        <!-- 加载完毕-->
-        <div class="loadmore_tips" v-if="false"><span class="data">没有更多数据啦~</span></div>
-      </div>
-      <!-- 显示加载中-->
-      <div class="loadmore" v-if="false">
-        <mt-spinner class="loadmore_icon" type="double-bounce" color="#ababab" :size="16"></mt-spinner>
-        <div class="loadmore_tips">正在加载</div>
       </div>
     </div>
   </div>
@@ -59,7 +62,11 @@
 
         limit: {},
 
-        contractLists: []
+        contractLists: [],
+
+        pageNum: 1,
+
+        moreData: true
 
       }
 
@@ -77,6 +84,12 @@
 
       getData: function () {
 
+        if(!this.moreData){
+
+          return;
+
+        }
+
         /**
          * 接口：我的签约列表
          * 请求方式：POST
@@ -93,21 +106,35 @@
           params: this.limit
 
 
-        }).then((res)=>{
+        }).then(function (res) {
 
           console.log(res);
 
-          res.data.data.list ? (this.contractLists = res.data.data.list) : (this.contractLists = []);
+          if(res.data.data.list){
 
-          for(var contractList of this.contractLists){
+            for(var contractList of res.data.data.list){
 
-            contractList.createDate = this.timeChange(contractList.createDate);
+              contractList.createDate = this.timeChange(contractList.createDate);
 
-            contractList.signState = this.signStateChange(contractList.signState);
+              contractList.signState = this.signStateChange(contractList.signState);
+
+            }
+
+            this.contractLists = this.contractLists.concat(res.data.data.list);
+
+            if(res.data.data.list.length < 10){
+
+              this.moreData = false;
+
+            }
+
+          }else{
+
+            this.moreData = false;
 
           }
 
-        }).catch((res)=>{
+        }.bind(this)).catch((res)=>{
 
           console.log(res);
 
@@ -193,6 +220,14 @@
 
       changeData: function (num) {
 
+        this.pageNum = 1;
+
+        this.limit.pageNum = this.pageNum;
+
+        this.moreData = true;
+
+        this.contractLists = [];
+
         if(!num){
 
           (this.limit.signState) && (delete this.limit.signState);
@@ -217,10 +252,23 @@
 
         this.$router.push('/contractDetail');
 
+      },
+
+
+
+      loadMore: function () {
+
+        if(this.moreData){
+
+          this.pageNum++;
+
+          this.limit.pageNum = this.pageNum;
+
+          this.getData();
+
+        }
+
       }
-
-
-
     }
 
 

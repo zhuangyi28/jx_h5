@@ -376,6 +376,16 @@
 
 
 
+                }else if(_hrefId == '7'){
+
+                  console.log('从签约合同详情');
+
+                  setTimeout(function () {
+
+                    _this.$router.push('/contractList');
+
+                  },1000)
+
                 }
 
 
