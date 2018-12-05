@@ -7,7 +7,6 @@
         <div v-bind:class="{selected : limit.signState == 2}" v-on:click="changeData(2)">待签</div>
         <div v-bind:class="{selected : limit.signState == 1}" v-on:click="changeData(1)">已签</div>
         <div v-bind:class="{selected : limit.signState == 5}" v-on:click="changeData(5)">失效</div>
-        <div v-bind:class="{selected : limit.signState == 6}" v-on:click="changeData(6)">其他</div>
       </div>
       <div class="tab_box_content"></div>
 

@@ -64,6 +64,7 @@ import taskFeedbackContent from '@/pages/task/task_feedback_content/task_feedbac
 import salary from '@/pages/salary/salary'
 import contractList from '@/pages/contract/contract_list/contract_list'
 import contractDetail from '@/pages/contract/contract_detail/contract_detail'
+import sign from '@/pages/contract/sign/sign'
 
 Vue.use(Router)
 
@@ -538,6 +539,14 @@ export default new Router({
         title: '提交成功'
       },
       component: submitSuccess
+    },
+    {
+      path: '/sign',
+      name: '/sign',
+      meta: {
+        title: ''
+      },
+      component: sign
     },
     {
       path: '/salary',

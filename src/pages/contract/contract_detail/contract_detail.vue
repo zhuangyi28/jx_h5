@@ -15,8 +15,8 @@
       <div class="information"><span>文件名称</span><span>{{contractName}}</span></div>
       <div class="information"><span>甲方</span><span>{{entSignName}}</span></div>
       <div class="information"><span>甲方签署时间</span><span>{{entSignDate}}</span></div>
-      <div class="information"><span>乙方</span><span>{{userName}}</span></div>
-      <div class="information" v-if="signStateNum == 1"><span>乙方签署时间</span><span>{{userSignDate}}</span></div>
+      <div class="information"><span>乙方</span><span v-show="signStateNum == 1">{{userName}}</span></div>
+      <div class="information"><span>乙方签署时间</span><span v-show="signStateNum == 1">{{userSignDate}}</span></div>
       <div class="information"><span>状态</span><span class="orange">{{signState}}</span></div>
       <div class="information"><span>截止签约时间</span><span>{{abortDate}}</span></div>
       <div class="contract_state_img" v-if="signStateNum == 1">

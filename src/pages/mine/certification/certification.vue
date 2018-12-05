@@ -117,9 +117,9 @@
 
 
 
-      }).then((res) => {
+      }).then(function(res) {
 
-        console.log(res.data)
+        console.log(res.data);
 
 
         if(res.data.code=='0000'){
@@ -130,15 +130,11 @@
 
           this.source=res.data.data.source;
 
-          if(res.data.data.isVerify != 0){
+          (res.data.data.idNumber) && (this.IDNumber = res.data.data.idNumber);
 
-            this.IDNumber = res.data.data.idNumber;
+          (res.data.data.idType) && (this.cardType = res.data.data.idType);
 
-            this.cardType = res.data.data.idType;
-
-            this.country = res.data.data.nationality;
-
-          }
+          (res.data.data.idType) && (this.country = res.data.data.nationality);
 
           if(this.cardType == 1){
             this.cardType = '身份证'
@@ -156,7 +152,7 @@
         }
 
 
-      }).catch(function (error) {}.bind(this))
+      }.bind(this)).catch(function (error) {}.bind(this))
 
 
       /*
