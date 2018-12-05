@@ -2,7 +2,7 @@
   <div class="contract_detail">
     <div class="contract_part_bg"></div>
     <div class="contract_part">
-      <div class="contract_file">
+      <div class="contract_file" v-on:click="popupShow = true">
         <object v-bind:data="contractUrl"></object>
       </div>
       <div class="cut_line" v-if="signStateNum == 1"></div>
@@ -20,10 +20,16 @@
       <div class="information"><span>状态</span><span class="orange">{{signState}}</span></div>
       <div class="information"><span>截止签约时间</span><span>{{abortDate}}</span></div>
       <div class="contract_state_img" v-if="signStateNum == 1">
-        <img src="../../../../static/images/jx_contract_state_sign.png">
+        <img src="../../../../static/images/jx_contract_sign_useful.png">
+      </div>
+      <div class="contract_state_img" v-if="signStateNum == 5">
+        <img src="../../../../static/images/jx_contract_sign_unuseful.png">
       </div>
     </div>
     <orangeBtn v-bind:name="btnName" v-on:clickEvent="signEvent" v-if="signStateNum == 2"></orangeBtn>
+    <mt-popup v-model="popupShow" popup-transition="popup-fade">
+      <object v-bind:data="contractUrl"></object>
+    </mt-popup>
   </div>
 </template>
 <script>
@@ -63,7 +69,9 @@
 
         btnName: '签约合同',
 
-        abortDate: ''
+        abortDate: '',
+
+        popupShow: false
 
       }
 
@@ -109,7 +117,7 @@
 
         this.entSignName = res.data.data.entSignName;
 
-        this.signUrl = res.data.data.signUrl;
+        (res.data.data.signUrl) && (this.signUrl = res.data.data.signUrl);
 
         this.abortDate = this.timeChange(res.data.data.abortDate);
 
@@ -291,9 +299,22 @@
 
           }else if(res.data.data.isVerify == 1){
 
-            window.location.href = this.signUrl;
+            if(!this.signUrl){
 
-          }
+              this.$messagebox({
+                message: '正在为您申请电子签名资质，申请成功后即可进行签署，请稍后再试',
+                showConfirmButton: true,
+                confirmButtonText: '确定',
+                confirmButtonClass:'confirm_btn_orange',
+              });
+
+            }else{
+
+              window.location.href = this.signUrl;
+
+              }
+
+            }
 
         })
 
@@ -305,4 +326,12 @@
 </script>
 <style lang="less" scoped>
   @import "contract_detail.less";
+</style>
+<style>
+  .mint-popup{
+    width: 80%;
+  }
+  .mint-popup>object{
+    width: 100%;
+  }
 </style>
