@@ -38,14 +38,9 @@
       this.setStorage('taskSquare','0')
 
 
-        var  thisUserCode = str.split('?')[1].split('&')[0].split('=')[1];
+      var  thisUserCode = str.split('?')[1].split('&')[0].split('=')[1];
 
-        //是否跳转发现页面 1为跳转到发现 0为正常
-        //this.setStorage('discoveryHref','1')
-
-        //this.setStorage('ajaxHomepage','0')
-
-        this.init();
+      this.init();
 
 
       //获取UnionID
@@ -62,13 +57,23 @@
 
         }
 
-
-
       }).then((res) => {
 
         console.log(res.data)
 
+      if(res.data.code=='-1'){
+
+        this.$router.push('/login');
+
+      }
+
+      if(res.data.data){
+
         this.setStorage('thisKey',res.data.data)
+
+      }
+
+
 
       }).catch((res)=>{})
 

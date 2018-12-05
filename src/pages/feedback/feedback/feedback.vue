@@ -36,7 +36,7 @@
     <div class="feedback_content">
       <div class="input_box"></div>
       <div class="feedback_input">
-        <input class="weui-input" v-model="contentTitle"  @focus="focusFn" placeholder="如有疑问，请提交反馈给HR，200字以内" maxlength="200"/>
+        <input class="weui-input" v-model="contentTitle"  @blur="lostPointFn" @focus="focusFn" placeholder="如有疑问，请提交反馈给HR，200字以内" maxlength="200"/>
         <button class="send" v-on:click.stop="sendMsgFn">发送</button>
       </div>
 
@@ -99,6 +99,8 @@
             var container = document.getElementById('feedbackList');
 
             container.scrollTop = container.scrollHeight;
+
+            document.body.scrollTop =document.documentElement.scrollTop = window.pageYOffset = container.scrollHeight;
 
 
 
@@ -295,6 +297,11 @@
         this.scrollBottom()
 
 
+      },
+
+      lostPointFn:function () {
+
+        this.scrollBottom()
       }
 
     }
