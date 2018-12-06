@@ -14,41 +14,43 @@
 
     <div class="bill" v-infinite-scroll="loadMore" infinite-scroll-disabled="moreLoading" infinite-scroll-distance="20" infinite-scroll-immediate-check="false">
       <!-- 列表 -->
-      <div class="contract_list_list">
-        <!-- list -->
-        <div class="contract_list_one" v-for="contractList in contractLists" v-bind:data-signId="contractList.signId" v-on:click="jumpTo">
-          <div class="contract_is_read" v-if="contractList.isRead == 0">
-            <div class="border">New!</div>
-            <div class="title">New!</div>
+      <mt-loadmore :top-method="loadTop" ref="loadmore">
+        <div class="contract_list_list">
+          <!-- list -->
+          <div class="contract_list_one" v-for="contractList in contractLists" v-bind:data-signId="contractList.signId" v-on:click="jumpTo">
+            <div class="contract_is_read" v-if="contractList.isRead == 0">
+              <div class="border">New!</div>
+              <div class="title">New!</div>
+            </div>
+            <div class="contract_is_read" v-else-if="contractList.flag != ''">
+              <div class="border">{{contractList.flag}}</div>
+              <div class="title">{{contractList.flag}}</div>
+            </div>
+            <div class="contract_information">
+              <div class="contract_name">{{contractList.contractName}}</div>
+              <div class="contract_state" v-bind:class="{'grey': contractList.signState == '失效'}">{{contractList.signState}}</div>
+            </div>
+            <div class="contract_time">
+              <img src="../../../../static/images/jx_time.png">
+              <span>{{contractList.createDate}}</span>
+            </div>
           </div>
-          <div class="contract_is_read" v-else-if="contractList.flag != ''">
-            <div class="border">{{contractList.flag}}</div>
-            <div class="title">{{contractList.flag}}</div>
+          <div class="loadmore">
+            <!-- 暂无账单 -->
+            <div class="bill_nodata_img" v-if="contractLists.length == 0">
+              <img src="../../../../static/images/nodetail_img.png">
+              <div>暂无相关任务</div>
+            </div>
+            <!-- 加载完毕-->
+            <div class="loadmore_tips" v-if="contractLists.length != 0 && moreData == false"><span class="data">没有更多数据啦~</span></div>
           </div>
-          <div class="contract_information">
-            <div class="contract_name">{{contractList.contractName}}</div>
-            <div class="contract_state" v-bind:class="{'grey': contractList.signState == '失效'}">{{contractList.signState}}</div>
-          </div>
-          <div class="contract_time">
-            <img src="../../../../static/images/jx_time.png">
-            <span>{{contractList.createDate}}</span>
+          <!-- 显示加载中-->
+          <div class="loadmore" v-if="contractLists.length != 0 && moreData == true">
+            <mt-spinner class="loadmore_icon" type="double-bounce" color="#ababab" :size="16"></mt-spinner>
+            <div class="loadmore_tips">正在加载</div>
           </div>
         </div>
-        <div class="loadmore">
-          <!-- 暂无账单 -->
-          <div class="bill_nodata_img" v-if="contractLists.length == 0">
-            <img src="../../../../static/images/nodetail_img.png">
-            <div>暂无相关任务</div>
-          </div>
-          <!-- 加载完毕-->
-          <div class="loadmore_tips" v-if="contractLists.length != 0 && moreData == false"><span class="data">没有更多数据啦~</span></div>
-        </div>
-        <!-- 显示加载中-->
-        <div class="loadmore" v-if="contractLists.length != 0 && moreData == true">
-          <mt-spinner class="loadmore_icon" type="double-bounce" color="#ababab" :size="16"></mt-spinner>
-          <div class="loadmore_tips">正在加载</div>
-        </div>
-      </div>
+      </mt-loadmore>
     </div>
   </div>
 </template>
@@ -72,6 +74,8 @@
     },
 
     mounted () {
+
+      (localStorage.getItem('signState')) && (this.limit.signState = localStorage.getItem('signState')) && localStorage.removeItem('signState');
 
       this.getData();
 
@@ -255,13 +259,17 @@
 
         localStorage.setItem('signId',event.currentTarget.dataset.signid);
 
+        localStorage.setItem('signState',this.limit.signState);
+
+        (!this.limit.signState) && localStorage.removeItem('signState');
+
         this.$router.push('/contractDetail');
 
       },
 
 
 
-      //下拉加载
+      //上拉加载
       loadMore: function () {
 
         if(this.moreData){
@@ -274,7 +282,29 @@
 
         }
 
+      },
+
+
+
+
+      //下拉刷新
+      loadTop: function () {
+
+        this.contractLists = [];
+
+        this.moreData = true;
+
+        this.pageNum = 1;
+
+        this.limit.pageNum = this.pageNum;
+
+        this.getData();
+        //固定方法，查询完要调用一次，用于重新定位
+        this.$refs.loadmore.onTopLoaded();
+
       }
+
+
     }
 
 
