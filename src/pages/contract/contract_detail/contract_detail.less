@@ -13,11 +13,13 @@
     overflow: hidden;
     background: white;
     .contract_file{
+      box-sizing: border-box;
       padding: 10px 15px;
       overflow: hidden;
+      width: 100%;
+      height: calc(~'(100vw - 50px) * 354 / 637');
       >*{
         width: 100%;
-        height: calc(~'(100vw - 50px) * 354 / 637');
       }
     }
     .cut_line{
@@ -80,6 +82,9 @@
       span.orange{
         color: #ff7a3c;
       }
+      span.grey{
+        color: grey;
+      }
     }
     .information+.information:before{
       content: '';
@@ -92,11 +97,12 @@
       position: absolute;
     }
     .contract_state_img{
-      width: 86px;
-      height: 76px;
+      width: 112px;
+      height: 100px;
       position: absolute;
       bottom: 6px;
       right: 60px;
+      transform: rotate(-30deg);
       img{
         width: 100%;
         height: 100%;

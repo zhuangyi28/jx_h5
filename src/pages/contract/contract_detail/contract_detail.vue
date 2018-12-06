@@ -2,8 +2,8 @@
   <div class="contract_detail">
     <div class="contract_part_bg"></div>
     <div class="contract_part">
-      <div class="contract_file">
-        <object v-bind:data="contractUrl"></object>
+      <div class="contract_file" v-on:click="popupShow = true">
+        <img v-bind:src="contractUrlImage">
       </div>
       <div class="cut_line" v-if="signStateNum == 1"></div>
       <a class="contract_down" v-bind:href="contractUrl" target="_blank" v-if="signStateNum == 1">
@@ -15,15 +15,23 @@
       <div class="information"><span>文件名称</span><span>{{contractName}}</span></div>
       <div class="information"><span>甲方</span><span>{{entSignName}}</span></div>
       <div class="information"><span>甲方签署时间</span><span>{{entSignDate}}</span></div>
-      <div class="information"><span>乙方</span><span v-show="signStateNum == 1">{{userName}}</span></div>
-      <div class="information"><span>乙方签署时间</span><span v-show="signStateNum == 1">{{userSignDate}}</span></div>
-      <div class="information"><span>状态</span><span class="orange">{{signState}}</span></div>
+      <div class="information"><span v-if="contractType == 2">乙方</span><span>{{entSignNamePartyB}}</span></div>
+      <div class="information"><span v-if="contractType == 2">乙方签署时间</span><span>{{entSignDate}}</span></div>
+      <div class="information"><span>丙方</span><span v-show="signStateNum == 1">{{userName}}</span></div>
+      <div class="information"><span>丙方签署时间</span><span v-show="signStateNum == 1">{{userSignDate}}</span></div>
+      <div class="information"><span>状态</span><span v-bind:class="(signState == '已过期') ? 'grey' : 'orange'">{{signState}}</span></div>
       <div class="information"><span>截止签约时间</span><span>{{abortDate}}</span></div>
       <div class="contract_state_img" v-if="signStateNum == 1">
-        <img src="../../../../static/images/jx_contract_state_sign.png">
+        <img src="../../../../static/images/jx_contract_sign_useful.png">
+      </div>
+      <div class="contract_state_img" v-if="signStateNum == 5">
+        <img src="../../../../static/images/jx_contract_sign_unuseful.png">
       </div>
     </div>
     <orangeBtn v-bind:name="btnName" v-on:clickEvent="signEvent" v-if="signStateNum == 2"></orangeBtn>
+    <mt-popup v-model="popupShow" popup-transition="popup-fade">
+      <img v-bind:src="contractUrlImage">
+    </mt-popup>
   </div>
 </template>
 <script>
@@ -43,27 +51,35 @@
 
       return {
 
-        contractName: '',
+        contractName: '',//文件名称
 
-        contractUrl: '',
+        contractUrl: '',//文件链接
 
-        entSignName: '',
+        entSignName: '',//甲方名称
 
-        entSignDate: '',
+        entSignDate: '',//甲方签署日期
 
-        signState: '',
+        signState: '',//签约状态
 
-        signUrl: '',
+        signUrl: '',//签署地址
 
-        userName: '',
+        userName: '',//用户姓名
 
-        userSignDate: '',
+        userSignDate: '',//用户签署时间
 
-        signStateNum: '',
+        signStateNum: '',//签约状态
 
-        btnName: '签约合同',
+        btnName: '签约合同',//按钮名称
 
-        abortDate: ''
+        abortDate: '',//签约截止日期
+
+        popupShow: false,//弹框显示
+
+        contractType: '',//合同类型 1 双方协议 2 三方协议
+
+        entSignNamePartyB: '',//乙方名称
+
+        contractUrlImage: ''//文件图片链接
 
       }
 
@@ -71,61 +87,77 @@
 
     mounted () {
 
-      /**
-       * 接口：合同详情
-       * 请求方式：POST
-       * 接口：/user/contract/getcontractdetail
-       * 入参：signId
-       **/
-
-      this.$http({
-
-        method: 'post',
-
-        url:process.env.API_ROOT+'user/contract/getcontractdetail',
-
-        params: {
-
-          signId: localStorage.getItem('signId')
-
-        }
-
-
-      }).then((res)=>{
-
-        console.log(res);
-
-        this.signStateNum = res.data.data.signState;
-
-        this.contractName = res.data.data.contractName;
-
-        this.contractUrl = res.data.data.contractUrl;
-
-        this.signState = this.signStateChange(res.data.data.signState);
-
-        this.userName = res.data.data.userName;
-
-        this.entSignDate = this.timeChange(res.data.data.entSignDate);
-
-        this.entSignName = res.data.data.entSignName;
-
-        this.signUrl = res.data.data.signUrl;
-
-        this.abortDate = this.timeChange(res.data.data.abortDate);
-
-        if(res.data.data.userSignDate){
-
-          this.userSignDate = this.timeChange(res.data.data.userSignDate)
-
-        }
-
-      })
+      this.getData();
 
 
     },
 
     methods: {
 
+
+      //获取数据
+      getData: function () {
+
+        /**
+         * 接口：合同详情
+         * 请求方式：POST
+         * 接口：/user/contract/getcontractdetail
+         * 入参：signId
+         **/
+
+        this.$http({
+
+          method: 'post',
+
+          url:process.env.API_ROOT+'user/contract/getcontractdetail',
+
+          params: {
+
+            signId: localStorage.getItem('signId')
+
+          }
+
+
+        }).then((res)=>{
+
+          console.log(res);
+
+          this.signStateNum = res.data.data.signState;
+
+          this.contractType = res.data.data.contractType;
+
+          this.contractName = res.data.data.contractName;
+
+          this.contractUrl = res.data.data.contractUrl;
+
+          this.contractUrlImage = res.data.data.contractUrlImage;
+
+          this.signState = this.signStateChange(res.data.data.signState);
+
+          this.userName = res.data.data.userName;
+
+          this.entSignDate = this.timeChange(res.data.data.entSignDate);
+
+          this.entSignName = res.data.data.entSignName;
+
+          (res.data.data.signUrl) && (this.signUrl = res.data.data.signUrl);
+
+          (res.data.data.entSignNamePartyB) && (this.entSignNamePartyB = res.data.data.entSignNamePartyB);
+
+          this.abortDate = this.timeChange(res.data.data.abortDate);
+
+          if(res.data.data.userSignDate){
+
+            this.userSignDate = this.timeChange(res.data.data.userSignDate)
+
+          }
+
+        })
+
+      },
+
+
+      //更改时间的显示模式
       timeChange: function (oldTime) {
 
         var datetime = new Date(oldTime);
@@ -160,6 +192,7 @@
 
 
 
+      //更改签约状态的显示模式
       signStateChange: function (signState) {
 
         /*
@@ -209,6 +242,7 @@
 
 
 
+      //签约事件
       signEvent: function () {
 
         /**
@@ -291,9 +325,22 @@
 
           }else if(res.data.data.isVerify == 1){
 
-            window.location.href = this.signUrl;
+            if(!this.signUrl){
 
-          }
+              this.$messagebox({
+                message: '正在为您申请电子签名资质，申请成功后即可进行签署，请稍后再试',
+                showConfirmButton: true,
+                confirmButtonText: '确定',
+                confirmButtonClass:'confirm_btn_orange',
+              });
+
+            }else{
+
+              window.location.href = this.signUrl;
+
+              }
+
+            }
 
         })
 
@@ -305,4 +352,14 @@
 </script>
 <style lang="less" scoped>
   @import "contract_detail.less";
+</style>
+<style>
+  .mint-popup{
+    height: 80%;
+    width: 80%;
+    overflow: auto;
+  }
+  .mint-popup>img{
+    width: 100%;
+  }
 </style>
