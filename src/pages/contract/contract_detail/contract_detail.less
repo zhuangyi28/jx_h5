@@ -13,11 +13,13 @@
     overflow: hidden;
     background: white;
     .contract_file{
+      box-sizing: border-box;
       padding: 10px 15px;
       overflow: hidden;
+      width: 100%;
+      height: calc(~'(100vw - 50px) * 354 / 637');
       >*{
         width: 100%;
-        height: calc(~'(100vw - 50px) * 354 / 637');
       }
     }
     .cut_line{
@@ -79,6 +81,9 @@
       }
       span.orange{
         color: #ff7a3c;
+      }
+      span.grey{
+        color: grey;
       }
     }
     .information+.information:before{

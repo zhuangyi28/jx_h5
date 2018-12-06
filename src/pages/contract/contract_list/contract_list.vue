@@ -27,7 +27,7 @@
           </div>
           <div class="contract_information">
             <div class="contract_name">{{contractList.contractName}}</div>
-            <div class="contract_state">{{contractList.signState}}</div>
+            <div class="contract_state" v-bind:class="{'grey': contractList.signState == '失效'}">{{contractList.signState}}</div>
           </div>
           <div class="contract_time">
             <img src="../../../../static/images/jx_time.png">
@@ -59,13 +59,13 @@
 
       return{
 
-        limit: {},
+        limit: {},//接口参数
 
-        contractLists: [],
+        contractLists: [],//接口获得的数组
 
-        pageNum: 1,
+        pageNum: 1,//接口数据页目录
 
-        moreData: true
+        moreData: true//是否还有更多数据
 
       }
 
@@ -81,6 +81,8 @@
 
     methods: {
 
+
+      //获取数据
       getData: function () {
 
         if(!this.moreData){
@@ -143,6 +145,7 @@
 
 
 
+      //更改时间显示模式
       timeChange: function (oldTime) {
 
         var datetime = new Date(oldTime);
@@ -173,6 +176,7 @@
 
 
 
+      //更改签署状态显示模式
       signStateChange: function (signState) {
 
         /*
@@ -217,6 +221,7 @@
 
 
 
+      //数据根据签署状态筛选
       changeData: function (num) {
 
         this.pageNum = 1;
@@ -245,6 +250,7 @@
 
 
 
+      //跳转到对应合同的页面
       jumpTo: function () {
 
         localStorage.setItem('signId',event.currentTarget.dataset.signid);
@@ -255,6 +261,7 @@
 
 
 
+      //下拉加载
       loadMore: function () {
 
         if(this.moreData){
