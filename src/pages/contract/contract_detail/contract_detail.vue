@@ -69,7 +69,7 @@
 
         signStateNum: '',//签约状态
 
-        btnName: '签约合同',//按钮名称
+        btnName: '签署',//按钮名称
 
         abortDate: '',//签约截止日期
 

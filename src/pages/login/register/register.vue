@@ -394,6 +394,14 @@
 
             this.setStorage('reloadtask','1')
 
+            /**
+             * 接口：保存用户UNIONID
+             * 请求方式：POST
+             * 接口：jx/action/toaddunionid
+             * 入参：key
+             **/
+
+
             //获取UnionID
 
             this.$http({
