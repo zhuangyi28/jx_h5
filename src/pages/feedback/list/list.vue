@@ -1,31 +1,33 @@
 <template>
 <div class="feedbackList" v-infinite-scroll="loadMore" infinite-scroll-disabled="moreLoading" infinite-scroll-distance="20" infinite-scroll-immediate-check="false">
 
-  <div class="list_box" v-for="item in feedBackList" v-bind:data-detail="item.salaryDetailId"  v-bind:data-id="item.salaryId" v-bind:data-click="item.isClick" v-on:click="feedBackUrlFn">
+  <mt-loadmore :top-method="loadTop" ref="loadmore">
+    <div class="list_box" v-for="item in feedBackList" v-bind:data-detail="item.salaryDetailId"  v-bind:data-id="item.salaryId" v-bind:data-click="item.isClick" v-on:click="feedBackUrlFn">
 
-    <div class="icon_orange" v-if="item.isUserHaveNew=='1'"><img src="../../../../static/images/feedback_unlook.png"/></div>
-    <div class="icon_blue" v-else>
-      <img src="../../../../static/images/company_look.png" v-if="item.salaryType=='X'"/>
-      <img src="../../../../static/images/feedback_look.png" v-else/>
-    </div>
-    <div class="content">
-      <div>
-         <p v-if="item.salaryType=='X'">企业消息</p>
-        <p v-else-if="item.salaryType=='Y'">签约提醒</p>
-         <p v-else>反馈处理结果</p>
-         <span v-if="item.isUserHaveNew=='1'">new</span>
+      <div class="icon_orange" v-if="item.isUserHaveNew=='1'"><img src="../../../../static/images/feedback_unlook.png"/></div>
+      <div class="icon_blue" v-else>
+        <img src="../../../../static/images/company_look.png" v-if="item.salaryType=='X'"/>
+        <img src="../../../../static/images/feedback_look.png" v-else/>
       </div>
-      <div>{{item.contentTitle}}<span class="click_class" v-on:click="$router.push('/contractList')" v-if="item.contentTitle=='您收到一份新合同,'">点击查看</span><span class="click_class" v-on:click="$router.push('/contractList')" v-else-if="item.contentTitle.indexOf('去签署')>-1">合同</span></div>
-      <div v-if="item.salaryType=='X'"><p>{{item.taskName}}</p><p>{{item.createDate|fmtDateStr}}</p></div>
-      <div v-else-if="item.salaryType=='Y'">
-        <p>{{item.contractName}}</p>
-        <p>{{item.createDate|fmtDateStr}}</p>
+      <div class="content">
+        <div>
+          <p v-if="item.salaryType=='X'">企业消息</p>
+          <p v-else-if="item.salaryType=='Y'">签约提醒</p>
+          <p v-else>反馈处理结果</p>
+          <span v-if="item.isUserHaveNew=='1'">new</span>
+        </div>
+        <div>{{item.contentTitle}}<span class="click_class" v-on:click="$router.push('/contractList')" v-if="item.contentTitle=='您收到一份新合同,'">点击查看</span><span class="click_class" v-on:click="$router.push('/contractList')" v-else-if="item.contentTitle.indexOf('去签署')>-1">合同</span></div>
+        <div v-if="item.salaryType=='X'"><p>{{item.taskName}}</p><p>{{item.createDate|fmtDateStr}}</p></div>
+        <div v-else-if="item.salaryType=='Y'">
+          <p>{{item.contractName}}</p>
+          <p>{{item.createDate|fmtDateStr}}</p>
+        </div>
+        <div v-else-if="item.salaryType=='7'||item.salaryType=='8'"><p>{{item.salaryMonth}}个体经营所得</p><p>{{item.sendDate|fmtDateStr}}</p></div>
+        <div v-else><p>{{item.salaryMonth}}工资</p><p>{{item.sendDate|fmtDateStr}}</p></div>
       </div>
-      <div v-else-if="item.salaryType=='7'||item.salaryType=='8'"><p>{{item.salaryMonth}}个体经营所得</p><p>{{item.sendDate|fmtDateStr}}</p></div>
-      <div v-else><p>{{item.salaryMonth}}工资</p><p>{{item.sendDate|fmtDateStr}}</p></div>
-    </div>
 
-  </div>
+    </div>
+  </mt-loadmore>
 
 
   <div class="loadmore" v-show="!noData">
@@ -232,6 +234,21 @@
 
           }
 
+
+      },
+
+
+
+      //下拉刷新
+      loadTop: function () {
+
+        console.log('下拉刷新');
+        //重新调用data方法
+        Object.assign(this.$data, this.$options.data());
+        //重新加载
+        this.init();
+        //固定方法，查询完要调用一次，用于重新定位
+        this.$refs.loadmore.onTopLoaded();
 
       },
 

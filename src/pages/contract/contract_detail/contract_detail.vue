@@ -184,7 +184,7 @@
 
         (sec < 10) && (sec = '0' + sec);
 
-        var newTime = '' + year + '-' + month + '-' + day + ' ' + hours + ':' + min + ':' + sec;
+        var newTime = '' + year + '-' + month + '-' + day /*+ ' ' + hours + ':' + min + ':' + sec*/;
 
         return newTime;
 
