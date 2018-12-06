@@ -83,7 +83,7 @@
         <div class="title">
           <img src="../../../static/images/jx_content_1.png"><span class="cell_text">我的签约</span>
         </div>
-        <div class="cell_value"></div>
+        <div class="cell_value" v-show="hasNewSign"><span class="orange">您有新的签约</span></div>
         <i class="allow_right"></i>
       </div>
       <!--银行卡 -->
@@ -171,6 +171,8 @@
 
         hasNewMsg: false,//默认不显示有新消息 true为不显示 false为显示
 
+        hasNewSign:false,//默认不显示有新签约 true为不显示 false为显示
+
       }
 
     },
@@ -213,6 +215,8 @@
 
 
           var ishasNewMsg = res.data.data.isHaveNewMsg;
+
+          var ishasNewSign = res.data.data.isNewSign
 
           _this.mobile = res.data.data.mobile;
 
@@ -261,6 +265,24 @@
 
 
           }
+
+          //判断是否有新签约
+
+          if (ishasNewSign == '1') {
+
+            _this.hasNewSign = true
+
+
+          }
+
+          else {
+
+            _this.hasNewSign = false
+
+
+          }
+
+
           //如果审核不通过的话 存储一下不通过的原因
           if (this.setStorage('isVerify') == '3') {
 

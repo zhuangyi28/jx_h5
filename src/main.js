@@ -67,6 +67,7 @@ router.beforeEach((to,from,next)=>{
     }
     else {
 
+
       next({path: '/loadingPage'})
 
     }

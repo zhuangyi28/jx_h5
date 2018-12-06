@@ -897,7 +897,12 @@
       handelscroll() {
 
 
-        this.scrollTop = document.getElementsByClassName('task_square')[0].scrollTop|| document.documentElement.getElementsByClassName('task_square')[0].scrollTop
+          if(this.scrollTop){
+
+
+            this.scrollTop = document.getElementsByClassName('task_square')[0].scrollTop|| document.documentElement.getElementsByClassName('task_square')[0].scrollTop
+          }
+
 
         //console.log('当前数值'+this.scrollTop)
 

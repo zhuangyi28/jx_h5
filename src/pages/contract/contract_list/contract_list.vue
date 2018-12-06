@@ -39,7 +39,7 @@
             <!-- 暂无账单 -->
             <div class="bill_nodata_img" v-if="contractLists.length == 0">
               <img src="../../../../static/images/nodetail_img.png">
-              <div>暂无相关任务</div>
+              <div>暂无相关签约</div>
             </div>
             <!-- 加载完毕-->
             <div class="loadmore_tips" v-if="contractLists.length != 0 && moreData == false"><span class="data">没有更多数据啦~</span></div>

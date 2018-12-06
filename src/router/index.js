@@ -624,7 +624,7 @@ export default new Router({
       path: '/contractList',
       name: 'contractList',
       meta: {
-        title: '消息'
+        title: '我的签约'
       },
       component: contractList
     },
