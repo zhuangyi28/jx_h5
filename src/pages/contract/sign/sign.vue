@@ -18,6 +18,18 @@
 
     mounted () {
 
+      var that = this
+
+      this.$indicator.open({
+        text: '跳转中...',
+        spinnerType: 'fading-circle'
+      });
+
+      setTimeout(function () {
+
+        that.$router.push('/contractDetail');
+
+      },100)
 
 
     },
@@ -27,7 +39,14 @@
     methods: {
 
 
-    }
+    },
+
+
+    destroyed(){
+
+      this.$indicator.close()
+
+    },
 
 
   }

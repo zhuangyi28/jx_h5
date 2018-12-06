@@ -42,7 +42,6 @@
 
       //this.init();
 
-
       //获取UnionID
 
     this.$http({
@@ -61,24 +60,7 @@
 
         console.log(res.data)
 
-      if(res.data.code=='-1'){
-
-        this.setStorage('thisKey',res.data.data)
-
-        console.log('111',res.data)
-
-        this.$router.push('/login');
-
-
-      }
-      else {
-
-          console.log('正常跳转')
-
-
         this.init();
-
-      }
 
 
 
