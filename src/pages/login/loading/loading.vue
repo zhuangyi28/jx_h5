@@ -38,9 +38,9 @@
       this.setStorage('taskSquare','0')
 
 
-      var  thisUserCode = str.split('?')[1].split('&')[0].split('=')[1];
+      var thisUserCode = str.split('?')[1].split('&')[0].split('=')[1];
 
-      this.init();
+      //this.init();
 
 
       //获取UnionID
@@ -63,13 +63,20 @@
 
       if(res.data.code=='-1'){
 
+        this.setStorage('thisKey',res.data.data)
+
+        console.log('111',res.data)
+
         this.$router.push('/login');
 
+
       }
+      else {
 
-      if(res.data.data){
+          console.log('正常跳转')
 
-        this.setStorage('thisKey',res.data.data)
+
+        this.init();
 
       }
 
@@ -87,8 +94,6 @@
 
 
        }
-
-
 
 
 

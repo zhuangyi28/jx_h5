@@ -76,7 +76,7 @@
 
       this.code = str.split('?')[1].split('&')[0].split('=')[1]*/
 
-      //alert('key的值='+this.getStorage('thisKey'))
+     console.log(this.getStorage('thisKey'))
 
     },
     methods:{
@@ -161,7 +161,6 @@
 
                 });
 
-
               }
 
               else if(res.data.code=='0000'){
@@ -181,7 +180,40 @@
 
                 this.setStorage('isCommitAuthorize',res.data.data.isCommitAuthorize);
 
-                if(res.data.data.isCommitAuthorize == 0){
+
+                /**
+                 * 接口：保存用户UNIONID
+                 * 请求方式：POST
+                 * 接口：jx/action/toaddunionid
+                 * 入参：key
+                 **/
+
+
+                //获取UnionID
+
+                this.$http({
+
+                  method: 'post',
+
+                  url: process.env.API_ROOT+'jx/action/toaddunionid',
+
+                  params: {
+
+                    key:this.getStorage('thisKey')
+
+                  }
+
+
+
+                }).then((res) => {
+
+                  console.log(res.data)
+
+
+                }).catch((res)=>{});
+
+
+              if(res.data.data.isCommitAuthorize == 0){
 
                   this.$router.push('/workDesk/homepage');
 
@@ -193,56 +225,16 @@
 
                 this.setStorage('reloadtask','1')
 
-                //是否跳转发现页面 1为跳转到发现 0为正常
-                //this.setStorage('discoveryHref','1')
-
-
-                //var discoveryHref = this.getStorage('discoveryHref')
-
-                //console.log('应该是1='+discoveryHref)
-
-              //if(discoveryHref=='1'){
-
-                  //setTimeout(function () {
-
-                    //_this.setStorage('discoveryHref','0');
-
-
-
-                 // },1)
-
-               // }
-
-
-                //跳转
-                //_this.$router.push('/workDesk/homepage');
-
 
               }
 
 
 
-            }.bind(this)).catch((res)=>{
-
-              //console.log(res.data);
-
-
-            })
-
-
-
-
-
+            }.bind(this)).catch((res)=>{})
 
           }
 
-
-
-
-
-
         }
-
 
     }
 
