@@ -18,23 +18,39 @@
         <div class="contract_list_list">
           <!-- list -->
           <div class="contract_list_one" v-for="contractList in contractLists" v-bind:data-signId="contractList.signId" v-on:click="jumpTo">
-            <div class="contract_is_read" v-if="contractList.isRead == 0">
-              <div class="border">New!</div>
-              <div class="title">New!</div>
-            </div>
-            <div class="contract_is_read" v-else-if="contractList.flag != ''">
-              <div class="border">{{contractList.flag}}</div>
-              <div class="title">{{contractList.flag}}</div>
-            </div>
-            <div class="contract_information">
-              <div class="contract_name">{{contractList.contractName}}</div>
+
+            <div class="content_img">
+
+              <div v-if="contractList.signState == '待签'"><img src="../../../../static/images/sign_wait.png"/></div>
+              <div v-else-if="contractList.signState == '已签'"><img src="../../../../static/images/sign_done.png"/></div>
+              <div v-else-if="contractList.signState == '失效'"><img src="../../../../static/images/sign_no.png"/></div>
+              <!-- 状态-->
               <div class="contract_state" v-bind:class="{'grey': contractList.signState == '失效'}">{{contractList.signState}}</div>
             </div>
-            <div class="contract_time">
-              <img src="../../../../static/images/jx_time.png">
-              <span>{{contractList.createDate}}</span>
+
+            <div class="content_line" v-bind:class="{'grey': contractList.signState == '失效'}"><img src="../../../../static/images/sign_line.png"/></div>
+
+            <div class="content">
+              <div class="contract_is_read" v-if="contractList.isRead == 0">
+                <div class="title">NEW!</div>
+              </div>
+              <!-- 标签-->
+              <div class="contract_is_read" v-else-if="contractList.flag != ''">
+                <div class="title">{{contractList.flag}}</div>
+              </div>
+              <!-- 名字 -->
+              <div class="contract_information">
+                <div class="contract_name">{{contractList.contractName}}</div>
+              </div>
+              <!-- 时间-->
+              <div class="contract_time">
+                <img src="../../../../static/images/jx_time.png">
+                <span>{{contractList.createDate}}</span>
+              </div>
             </div>
+
           </div>
+
           <div class="loadmore">
             <!-- 暂无账单 -->
             <div class="bill_nodata_img" v-if="contractLists.length == 0">

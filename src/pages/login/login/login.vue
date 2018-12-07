@@ -1,5 +1,5 @@
 <template>
-  <div class="login">
+  <div class="login" id="login">
 
     <div class="login_form">
 
@@ -10,11 +10,11 @@
       <div class="content_box">
         <div class="field">
           <i class="iconfont icon-sign_phone"></i>
-          <input type="number" pattern="\d*" v-model="mobile"  oninput="if(value.length > 11)value = value.slice(0, 11)" placeholder="请输入手机号" class="tel" >
+          <input type="number" pattern="\d*" @blur="lostPointFn" v-model="mobile" oninput="if(value.length > 11)value = value.slice(0, 11)" placeholder="请输入手机号" class="tel" >
         </div>
         <div class="field">
           <i class="iconfont icon-sign_password"></i>
-          <input type="password" v-model="password" placeholder="请输入密码" class="password" maxlength="20">
+          <input type="password" @blur="lostPointFn" v-model="password" placeholder="请输入密码" class="password" maxlength="20">
         </div>
 
       </div>
@@ -76,15 +76,14 @@
 
       this.code = str.split('?')[1].split('&')[0].split('=')[1]*/
 
-     console.log(this.getStorage('thisKey'))
+    // console.log(this.getStorage('thisKey'))
 
     },
     methods:{
 
-        signin:function () {
+      signin:function () {
 
             let _this=this;
-
 
 
           if(_this.mobile==''){
@@ -117,11 +116,11 @@
           else {
 
 
-            this.$indicator.open({
+      /*      this.$indicator.open({
               text: '加载中...',
               spinnerType: 'double-bounce'
             });
-
+*/
             /**
              * 接口：登录
              * 请求方式：POST
@@ -148,9 +147,6 @@
 
               console.log(res.data);
 
-              console.log(res);
-
-
               if(res.data.code=='-1'){
 
                 this.$toast({
@@ -169,7 +165,7 @@
 
                 this.Authorization = res.data.token.access_token;
 
-                 this.$indicator.close();
+                 //this.$indicator.close();
 
                 //存取token
                 this.setStorage('Authorization',Authorization);
@@ -234,7 +230,13 @@
 
           }
 
-        }
+        },
+
+      lostPointFn:function () {
+
+       document.body.scrollTop =document.documentElement.scrollTop = window.pageYOffset = 100;
+
+      }
 
     }
 
