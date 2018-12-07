@@ -25,7 +25,7 @@
               <div v-else-if="contractList.signState == '已签'"><img src="../../../../static/images/sign_done.png"/></div>
               <div v-else-if="contractList.signState == '失效'"><img src="../../../../static/images/sign_no.png"/></div>
               <!-- 状态-->
-              <div class="contract_state" v-bind:class="{'grey': contractList.signState == '失效'}">{{contractList.signState}}</div>
+              <div class="contract_state" v-bind:class="{'grey': contractList.signState == '失效','op': contractList.signState == '已签'}" >{{contractList.signState}}</div>
             </div>
 
             <div class="content_line" v-bind:class="{'grey': contractList.signState == '失效'}"><img src="../../../../static/images/sign_line.png"/></div>
