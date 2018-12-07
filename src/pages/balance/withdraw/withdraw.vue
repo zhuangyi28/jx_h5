@@ -210,7 +210,29 @@
               method: 'get',
               url: process.env.API_ROOT + 'user/work/checkwithdraw'
             }).then((res)=>{
-              if(res.data.code == -7){
+              if(res.data.code == -10){
+                this.$messagebox({
+                  title: '提示',
+                  message: '您有文件待签署，请至 “ 我的签约”中完成签署后再提现',
+                  showConfirmButton: true,
+                  showCancelButton: true,
+                  confirmButtonText: '去签约',
+                  cancelButtonText: '取消',
+                  cancelButtonClass:'cancel_btn',
+                  confirmButtonClass:'confirm_btn_orange',
+                }).then((res)=>{
+
+                  if(res == 'confirm'){
+
+                    this.$router.push('/contractList');
+
+                  }
+
+
+                }).catch((res=>{}))
+
+              }
+              else if(res.data.code == -7){
                 this.$messagebox({
                   title: '提示',
                   message: res.data.msg,

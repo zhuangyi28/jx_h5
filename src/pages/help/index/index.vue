@@ -39,7 +39,7 @@
 
       <div class="area_box"></div>
       <div class="footer">
-        <span v-on:click="customer"><i class="iconfont icon-withdraw_custom"></i>联系客服</span><a href="tel:4009217052"><i class="iconfont icon-phone_consult"></i>拨打电话</a>
+        <span v-on:click="customer"><i class="iconfont icon-withdraw_custom"></i>联系客服</span><a href="tel:4008216990"><i class="iconfont icon-phone_consult"></i>拨打电话</a>
       </div>
 
 

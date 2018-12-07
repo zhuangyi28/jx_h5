@@ -29,7 +29,7 @@
 
         that.$router.push('/contractDetail');
 
-      },100)
+      },2000)
 
 
     },
