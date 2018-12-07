@@ -72,7 +72,29 @@
               url: process.env.API_ROOT + 'user/withdraw/dowithdraw?bankCardId='+this.bankCardId+'&balance='+this.withdrawMoney+'&payPassword='+hexMD5(this.password)
             }).then((res)=>{
               console.log(res);
-              if(res.data.code == -4){
+              if(res.data.code == -10){
+
+                this.$messagebox({
+                  title: '提示',
+                  message: '您有文件待签署，请至 “ 我的签约”中完成签署后再提现',
+                  showConfirmButton: true,
+                  showCancelButton: true,
+                  confirmButtonText: '去签约',
+                  cancelButtonText: '取消',
+                  cancelButtonClass:'cancel_btn',
+                  confirmButtonClass:'confirm_btn_orange',
+                }).then((res)=>{
+
+                  if(res == 'confirm'){
+
+                    this.$router.push('/contractList');
+
+                  }
+
+
+                }).catch((res=>{}))
+              }
+              else if(res.data.code == -4){
                 this.$indicator.close()
                 if(res.data.msg.indexOf('输入错误3次') != -1){
                   this.$messagebox({
@@ -163,7 +185,29 @@
               url: process.env.API_ROOT + 'user/transfer/dotransfer?mobile='+this.transferMobile+'&balance='+this.transferMoney+'&payPassword='+hexMD5(this.password)+'&remark='+this.transferTips
             }).then((res)=>{
               console.log(res);
-              if(res.data.code == -4){
+              if(res.data.code == -10){
+
+                this.$messagebox({
+                  title: '提示',
+                  message: '您有文件待签署，请至 “ 我的签约”中完成签署后再转账',
+                  showConfirmButton: true,
+                  showCancelButton: true,
+                  confirmButtonText: '去签约',
+                  cancelButtonText: '取消',
+                  cancelButtonClass:'cancel_btn',
+                  confirmButtonClass:'confirm_btn_orange',
+                }).then((res)=>{
+
+                  if(res == 'confirm'){
+
+                    this.$router.push('/contractList');
+
+                  }
+
+
+                }).catch((res=>{}))
+              }
+              else if(res.data.code == -4){
                 this.$indicator.close()
                 if(res.data.msg.indexOf('输入错误3次') != -1){
                   this.$messagebox({

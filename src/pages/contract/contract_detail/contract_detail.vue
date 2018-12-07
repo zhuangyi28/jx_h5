@@ -1,5 +1,5 @@
 <template>
-  <div class="contract_detail">
+  <div class="contract_detail" v-bind:class="{'overFlow': popupShow}">
     <div class="contract_part_bg"></div>
     <div class="contract_part">
       <div class="contract_file" v-on:click="popupShow = true">

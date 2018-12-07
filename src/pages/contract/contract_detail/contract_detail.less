@@ -1,4 +1,9 @@
 .contract_detail{
+  &.overFlow{
+    height: 100%;
+    overflow-y: hidden;
+    position: fixed;
+  }
   .contract_part_bg{
     background: url("../../../../static/images/main_bg.png") ,-webkit-linear-gradient(180deg,#f99060,#ff6855);
     background-repeat: no-repeat;
@@ -75,6 +80,8 @@
       justify-content: space-between;
       span:first-child{
         color: #ababab;
+        white-space: nowrap;
+        margin-right: 10px;
       }
       span:last-child{
         color: #4a4a4a;
@@ -117,6 +124,7 @@
     position: absolute;
     top: 6px;
     right: 6px;
+    z-index: 999;
 
     img{
       width: 100%;
