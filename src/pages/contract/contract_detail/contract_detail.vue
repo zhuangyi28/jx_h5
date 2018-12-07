@@ -30,7 +30,12 @@
     </div>
     <orangeBtn v-bind:name="btnName" v-on:clickEvent="signEvent" v-if="signStateNum == 2"></orangeBtn>
     <mt-popup v-model="popupShow" popup-transition="popup-fade">
-      <img v-bind:src="contractUrlImage">
+      <div class="close" v-on:click="popupShow=false">
+        <img src="../../../../static/images/contract_close.png">
+      </div>
+      <div class="contract_img">
+        <img v-bind:src="contractUrlImage">
+      </div>
     </mt-popup>
   </div>
 </template>
@@ -357,9 +362,5 @@
   .mint-popup{
     height: 80%;
     width: 80%;
-    overflow: auto;
-  }
-  .mint-popup>img{
-    width: 100%;
   }
 </style>
