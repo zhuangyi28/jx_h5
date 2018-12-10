@@ -24,9 +24,9 @@
       <div class="contract_state_img" v-if="signStateNum == 1">
         <img src="../../../../static/images/jx_contract_sign_useful.png">
       </div>
-      <div class="contract_state_img" v-if="signStateNum == 5">
-        <img src="../../../../static/images/jx_contract_sign_unuseful.png">
-      </div>
+      <!--<div class="contract_state_img" v-if="signStateNum == 5">-->
+        <!--<img src="../../../../static/images/jx_contract_sign_unuseful.png">-->
+      <!--</div>-->
     </div>
     <orangeBtn v-bind:name="btnName" v-on:clickEvent="signEvent" v-if="signStateNum == 2"></orangeBtn>
     <mt-popup v-model="popupShow" popup-transition="popup-fade">
