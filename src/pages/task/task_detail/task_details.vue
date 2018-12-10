@@ -328,6 +328,18 @@
 
               }
 
+              else if(res.data.code=='-1'){
+
+                this.$toast({
+
+                  message: res.data.msg,
+                  duration: 1500,
+                  position: 'bottom',
+
+                })
+
+              }
+
               else if(res.data.msg=='pRecordId is null'){
 
                 this.$toast({

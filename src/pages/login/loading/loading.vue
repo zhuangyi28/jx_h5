@@ -35,7 +35,7 @@
 
       this.setStorage('lactionReload','1');
 
-      this.setStorage('taskSquare','0')
+      //this.setStorage('taskSquare','0')
 
 
       var thisUserCode = str.split('?')[1].split('&')[0].split('=')[1];
