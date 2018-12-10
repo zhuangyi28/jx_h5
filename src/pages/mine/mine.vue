@@ -179,6 +179,14 @@
 
     mounted(){
 
+      if(localStorage.getItem('contractDetailBack') == 1){
+
+        localStorage.removeItem('contractDetailBack');
+
+        this.$router.push('/contractList');
+
+      }
+
       let _this = this
 
       document.body.scrollTop =document.documentElement.scrollTop = window.pageYOffset = 0
