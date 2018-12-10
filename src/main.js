@@ -60,7 +60,23 @@ router.beforeEach((to,from,next)=>{
 
       next({path: '/workDesk/mine'})
 
-    } else if(to.path!=='/login'){
+    } else if(to.path == '/workDesk/taskSquare'){
+
+      if(from.path == '/lookTask'){
+
+        to.meta.keepAlive = true;
+
+        next();
+
+      }else{
+
+        to.meta.keepAlive = false;
+
+        next();
+
+      }
+
+    }else if(to.path!=='/login'){
 
       next();
 
