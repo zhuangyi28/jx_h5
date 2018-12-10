@@ -439,6 +439,18 @@
           return 4;
         }
       }
+    },
+    watch: {
+      //清楚证件号码中的空格
+      IDNumber: function (newValue, oldValue) {
+
+        if(newValue.indexOf(' ') != -1){
+
+          this.IDNumber = newValue.split(' ').join('');
+
+        }
+
+      }
     }
   }
 </script>

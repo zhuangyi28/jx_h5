@@ -95,6 +95,8 @@
 
       this.getData();
 
+      localStorage.getItem('contractDetailBack') && localStorage.removeItem('contractDetailBack');
+
     },
 
 
