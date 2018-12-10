@@ -94,6 +94,8 @@
 
       this.getData();
 
+      localStorage.getItem('contractDetailBack') || localStorage.setItem('contractDetailBack','1');
+
 
     },
 

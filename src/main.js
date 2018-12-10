@@ -60,7 +60,14 @@ router.beforeEach((to,from,next)=>{
 
       next({path: '/workDesk/mine'})
 
-    } else if(to.path == '/workDesk/taskSquare'){
+    }else if((from.path == 'contractDetail') && (to.path == 'sign')){
+
+      next({path: '/workDesk/mine'})
+
+    }
+
+
+    else if(to.path == '/workDesk/taskSquare'){
 
       if(from.path == '/lookTask'){
 
