@@ -8,7 +8,7 @@
           <span v-else>{{userName}}</span>
         </div>
       </div>
-      <div class="certification_name" onclick="if(!!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) ){setTimeout(function() {$('.mint-indexlist-content').css('height','auto') },200)}" v-on:click="indexShow = true" v-if="(isVerify == 0||isVerify == 3)&&source==1">
+      <div class="certification_name" onclick="if(!!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) ){setTimeout(function() {$('.mint-indexlist-content').css('height','auto') },200)}" v-on:click="indexShow = true" v-if="(isVerify == 0||isVerify == 3)">
         <span>国籍（地区）</span>
         <div class="information_btn">
           <span>{{country}}</span>
@@ -458,18 +458,18 @@
   @import 'certification.less';
 </style>
 <style>
-  .mint-indexlist-nav{
+  .certification .mint-indexlist-nav{
     display: none;
   }
-  .mint-indexlist{
+  .certification .mint-indexlist{
     background-color: white;
   }
-  .mint-indexlist{
+  .certification .mint-indexlist{
     overflow: scroll;
     height:auto;
     bottom: auto;
   }
-  .mint-indexlist-content{
+  .certification .mint-indexlist-content{
     overflow: scroll!important;
 
   }

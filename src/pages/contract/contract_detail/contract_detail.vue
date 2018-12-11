@@ -361,7 +361,7 @@
   @import "contract_detail.less";
 </style>
 <style>
-  .mint-popup{
+  .contract_detail .mint-popup{
     height: 80%;
     width: 80%;
   }

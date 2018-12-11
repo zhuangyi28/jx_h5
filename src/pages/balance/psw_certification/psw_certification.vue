@@ -24,7 +24,8 @@
         change: '',//转账识别
         withdraw: '',//提现识别
         transferMoney: '',//转账金额
-        transferMobile: ''//转账账号
+        transferMobile: '',//转账账号
+        transferTips:''//转账备注
       }
     },
     mounted () {
@@ -34,6 +35,7 @@
       this.withdraw = this.getStorage('withdraw');
       this.transferMoney = this.getStorage('transferMoney');
       this.transferMobile = this.getStorage('transferMobile');
+      this.transferTips = this.getStorage('transferTips')
       this.setStorage('forgetPsw','1');
       document.getElementsByTagName('input')[0].focus();
     },
