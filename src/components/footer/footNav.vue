@@ -6,7 +6,7 @@
       <!--命名路由-->
       <ul>
         <!--this inspection reports XML/HTML tags with missing mandatory attrbutes ,you can specify attrbute name that should not  be reported-->
-        <div v-on:click="jumpTo" v-bind:class='{"router-link-active":(btnLight == 1)}'>
+        <div v-on:click="$router.push('/workDesk/taskSquare') ; (btnLight = 1)" v-bind:class='{"router-link-active":(btnLight == 1)}'>
           <div>
             <i class="iconfont icon-renwuguangchang"></i>
           </div>
