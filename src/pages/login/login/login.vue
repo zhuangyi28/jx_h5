@@ -209,15 +209,7 @@
                 }).catch((res)=>{});
 
 
-              if(res.data.data.isCommitAuthorize == 0){
-
-                  this.$router.push('/workDesk/homepage');
-
-                }else if(res.data.data.isCommitAuthorize == 1){
-
-                  this.$router.push('/workDesk/taskSquare');
-
-                }
+                this.$router.push('/workDesk/taskSquare');
 
                 this.setStorage('reloadtask','1')
 

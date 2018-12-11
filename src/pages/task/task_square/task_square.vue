@@ -320,6 +320,8 @@
 
     mounted () {
 
+      this.$parent.$children[0].btnLight = 1;
+
       if(this.getStorage('reloadtask')=='1'){
 
 
