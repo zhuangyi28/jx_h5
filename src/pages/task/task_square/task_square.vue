@@ -1173,13 +1173,13 @@
 
         localStorage.setItem('taskId', taskId);
 
-        if(localStorage.getItem('taskHistory')){
+  /*      if(localStorage.getItem('taskHistory')){
           (localStorage.getItem('taskHistory').indexOf(taskId) == -1) &&
           localStorage.setItem('taskHistory',localStorage.getItem('taskHistory') + ',' + taskId);
         }else{
           localStorage.setItem('taskHistory',taskId);
         }
-
+*/
         this.scrollTop = document.getElementsByClassName('task_square')[0].scrollTop|| document.documentElement.getElementsByClassName('task_square')[0].scrollTop
 
         this.setStorage('scrollTop',this.scrollTop);
