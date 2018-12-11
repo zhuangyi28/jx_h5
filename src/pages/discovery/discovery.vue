@@ -165,6 +165,8 @@
 
     mounted () {
 
+      this.$parent.$children[0].btnLight = 2;
+
 
       document.body.scrollTop =document.documentElement.scrollTop = window.pageYOffset = 0
 

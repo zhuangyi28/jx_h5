@@ -179,6 +179,8 @@
 
     mounted(){
 
+      this.$parent.$children[0].btnLight = 3;
+
       if(localStorage.getItem('contractDetailBack') == 1){
 
         localStorage.removeItem('contractDetailBack');

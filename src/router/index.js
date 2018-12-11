@@ -563,15 +563,6 @@ export default new Router({
       component: workDesk,
       children: [
         {
-          path: 'homepage',
-          name: 'homepage',
-          meta: {
-            title: '众包平台',
-            auth: true,
-          },
-          component: protocol,
-
-        },{
           path: 'taskSquare',
           name: 'taskSquare',
           meta: {
@@ -579,7 +570,8 @@ export default new Router({
             auth: true,
             keepAlive:true,
           },
-          component: taskSquare
+          component: taskSquare,
+          alias: 'homepage'
 
 
         },
