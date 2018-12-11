@@ -13,7 +13,10 @@
       <div class="transfer_accounts_input_title">转账金额</div>
       <div class="money_input">
         <span>￥</span>
-        <input type="text" placeholder="请输入转账金额" v-model="money" v-on:focus="inputShow=true" v-on:click.stop onfocus="blur()">
+        <div v-on:click.stop v-on:click="inputShow=true">
+          {{money}}
+          <span v-if="money.length == 0">请输入转账金额</span>
+        </div>
       </div>
       <div class="transfer_accounts_input_ps">可转余额{{transferBalance}}
         <span v-on:click="money = transferBalance">全部</span>
