@@ -28,7 +28,8 @@
         <div class="withdraw_money_input">
           <span>￥</span>
           <div v-on:click="inputShow=true" v-on:click.stop>
-            {{withdrawMoney}}
+            <span class="money_show">{{withdrawMoney}}</span>
+            <span class="input_cursor" v-if="inputShow==true"></span>
             <span v-if="withdrawMoney.length == 0">请输入提现金额</span>
           </div>
         </div>
