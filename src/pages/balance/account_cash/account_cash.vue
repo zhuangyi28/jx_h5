@@ -14,7 +14,8 @@
       <div class="money_input">
         <span>￥</span>
         <div v-on:click.stop v-on:click="inputShow=true">
-          {{money}}
+          <span class="money_show">{{money}}</span>
+          <span class="input_cursor" v-if="inputShow == true"></span>
           <span v-if="money.length == 0">请输入转账金额</span>
         </div>
       </div>
