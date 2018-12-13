@@ -65,7 +65,11 @@ router.beforeEach((to,from,next)=>{
       next({path: '/workDesk/mine'})
 
     }
+    else if((from.path == '/workDesk/mine') && (to.path == '/sign')){
 
+      next(false)
+
+    }
 
     else if(to.path == '/workDesk/taskSquare'){
 

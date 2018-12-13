@@ -10,7 +10,7 @@
           <span>{{bank.bankName}}</span>
           <div v-if="bank.cardType == 1">储蓄卡</div>
           <div v-else-if="bank.cardType == 2">信用卡</div>
-          <div class="card_ID" v-bind:bankCardId="bank.bankCardId">{{bank.bankNo}}</div>
+          <div class="card_ID" v-bind:bankCardId="bank.bankCardId">{{bank.bankNo.replace(/(.{4})/g, "$1 ")}}</div>
         </div>
         <div class="delete_btn" v-bind:data-card="bank.bankCardId" v-bind:data-num="bank.bankNo" v-on:click="deleteCard">
           <img src="../../../../static/images/jx_delate.png">
