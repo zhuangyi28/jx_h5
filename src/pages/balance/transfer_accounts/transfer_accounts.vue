@@ -111,6 +111,27 @@
                 this.$router.push('/accountCash');
                 return;
               }
+              else if(res.data.code == '-10'){
+                this.$messagebox({
+                  title: '提示',
+                  message: '您有文件待签署，请至 “ 我的签约”中完成签署后再转账',
+                  showConfirmButton: true,
+                  showCancelButton: true,
+                  confirmButtonText: '去签约',
+                  cancelButtonText: '取消',
+                  cancelButtonClass:'cancel_btn',
+                  confirmButtonClass:'confirm_btn_orange',
+                }).then((res)=>{
+
+                  if(res == 'confirm'){
+
+                    this.$router.push('/contractList');
+
+                  }
+
+
+                }).catch((res=>{}))
+              }
               else{
                 console.log(res);
               }
