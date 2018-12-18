@@ -3,10 +3,10 @@
     <!-- 订单 -->
     <div class="contract_list_order">
       <div class="tab_box">
-        <div v-bind:class="{selected : !limit.signState}" v-on:click="changeData()">全部</div>
-        <div v-bind:class="{selected : limit.signState == 2}" v-on:click="changeData(2)">待签</div>
-        <div v-bind:class="{selected : limit.signState == 1}" v-on:click="changeData(1)">已签</div>
-        <div v-bind:class="{selected : limit.signState == 5}" v-on:click="changeData(5)">失效</div>
+        <div v-bind:class="{'selected orange_text' : !limit.signState}" v-on:click="changeData()">全部</div>
+        <div v-bind:class="{'selected orange_text' : limit.signState == 2}" v-on:click="changeData(2)">待签</div>
+        <div v-bind:class="{'selected orange_text' : limit.signState == 1}" v-on:click="changeData(1)">已签</div>
+        <div v-bind:class="{'selected orange_text' : limit.signState == 5}" v-on:click="changeData(5)">失效</div>
       </div>
       <div class="tab_box_content"></div>
 
@@ -25,18 +25,18 @@
               <div v-else-if="contractList.signState == '已签'"><img src="../../../../static/images/sign_done.png"/></div>
               <div v-else-if="contractList.signState == '失效'"><img src="../../../../static/images/sign_no.png"/></div>
               <!-- 状态-->
-              <div class="contract_state" v-bind:class="{'grey': contractList.signState == '失效','op': contractList.signState == '已签'}" >{{contractList.signState}}</div>
+              <div class="contract_state orange_text" v-bind:class="{'grey': contractList.signState == '失效','op': contractList.signState == '已签'}" >{{contractList.signState}}</div>
             </div>
 
             <div class="content_line" v-bind:class="{'grey': contractList.signState == '失效'}"><img src="../../../../static/images/sign_line.png"/></div>
 
             <div class="content">
               <div class="contract_is_read" v-if="contractList.isRead == 0">
-                <div class="title">NEW!</div>
+                <div class="title orange_text">NEW!</div>
               </div>
               <!-- 标签-->
               <div class="contract_is_read" v-else-if="contractList.flag != ''">
-                <div class="title">{{contractList.flag}}</div>
+                <div class="title orange_text">{{contractList.flag}}</div>
               </div>
               <!-- 名字 -->
               <div class="contract_information">

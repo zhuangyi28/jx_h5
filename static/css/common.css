@@ -103,4 +103,12 @@ input,textarea,button{
   height: 50px!important;
   line-height: 50px!important;
 }
-
+.orange_text{
+  color: #ff7a3c;
+}
+.orange_border{
+  border-color: #ff7a3c;
+}
+.orange_background{
+  background-color: #ff7a3c;
+}

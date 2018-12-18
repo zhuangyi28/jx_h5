@@ -16,14 +16,27 @@
           <p v-else>反馈处理结果</p>
           <span v-if="item.isUserHaveNew=='1'">new</span>
         </div>
-        <div>{{item.contentTitle}}<span class="click_class" v-on:click="$router.push('/contractList')" v-if="item.contentTitle=='您收到一份新合同,'">点击查看</span><span class="click_class" v-on:click="$router.push('/contractList')" v-else-if="item.contentTitle.indexOf('去签署')>-1">合同</span></div>
-        <div v-if="item.salaryType=='X'"><p>{{item.taskName}}</p><p>{{item.createDate|fmtDateStr}}</p></div>
-        <div v-else-if="item.salaryType=='Y'">
-          <p>{{item.contractName}}</p>
+        <div>
+          {{item.contentTitle}}
+          <span class="click_class orange_text" v-on:click="$router.push('/contractList')" v-if="item.contentTitle=='您收到一份新合同,'">点击查看</span>
+          <span class="click_class orange_text" v-on:click="$router.push('/contractList')" v-else-if="item.contentTitle.indexOf('去签署')>-1">合同</span>
+        </div>
+        <div v-if="item.salaryType=='X'">
+          <p class="orange_text">{{item.taskName}}</p>
           <p>{{item.createDate|fmtDateStr}}</p>
         </div>
-        <div v-else-if="item.salaryType=='7'||item.salaryType=='8'"><p>{{item.salaryMonth}}个体经营所得</p><p>{{item.sendDate|fmtDateStr}}</p></div>
-        <div v-else><p>{{item.salaryMonth}}工资</p><p>{{item.sendDate|fmtDateStr}}</p></div>
+        <div v-else-if="item.salaryType=='Y'">
+          <p class="orange_text">{{item.contractName}}</p>
+          <p>{{item.createDate|fmtDateStr}}</p>
+        </div>
+        <div v-else-if="item.salaryType=='7'||item.salaryType=='8'">
+          <p class="orange_text">{{item.salaryMonth}}个体经营所得</p>
+          <p>{{item.sendDate|fmtDateStr}}</p>
+        </div>
+        <div v-else>
+          <p class="orange_text">{{item.salaryMonth}}工资</p>
+          <p>{{item.sendDate|fmtDateStr}}</p>
+        </div>
       </div>
 
     </div>

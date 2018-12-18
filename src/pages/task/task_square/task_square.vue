@@ -20,7 +20,7 @@
 
     <div class="select_btn">
 
-      <div class="select" v-on:click="selectDropDown" v-bind:class="{orangeText: (type != '' || selectShow)}">
+      <div class="select" v-on:click="selectDropDown" v-bind:class="{'orangeText orange_text': (type != '' || selectShow)}">
 
         <span>分类</span>
 
@@ -28,7 +28,7 @@
 
       </div>
 
-      <div class="select" v-on:click="timeDropDown" v-bind:class="{orangeText: (timeShow != 'none')}">
+      <div class="select" v-on:click="timeDropDown" v-bind:class="{'orangeText orange_text': (timeShow != 'none')}">
 
         <span>发布时间</span>
 
@@ -36,7 +36,7 @@
 
       </div>
 
-      <div class="select" v-on:click="orderDropDown" v-bind:class="{orangeText: (industry != '' || taskMinUnit != '' || taskMaxUnit != '' || orderShow)}">
+      <div class="select" v-on:click="orderDropDown" v-bind:class="{'orangeText orange_text': (industry != '' || taskMinUnit != '' || taskMaxUnit != '' || orderShow)}">
 
         <span>筛选</span>
 
@@ -68,27 +68,27 @@
 
             <div class="tags_list">
 
-              <div v-on:click="industry = ''" v-bind:class="{selected: industry == ''}">不限</div>
+              <div v-on:click="industry = ''" v-bind:class="{'orange_text  selected': industry == ''}">不限</div>
 
-              <div v-on:click="industry = 1" v-bind:class="{selected: industry == 1}">互联网/IT/电子/通信</div>
+              <div v-on:click="industry = 1" v-bind:class="{'orange_text  selected': industry == 1}">互联网/IT/电子/通信</div>
 
-              <div v-on:click="industry = 2" v-bind:class="{selected: industry == 2}">广告/传媒/文化/体育</div>
+              <div v-on:click="industry = 2" v-bind:class="{'orange_text  selected': industry == 2}">广告/传媒/文化/体育</div>
 
-              <div v-on:click="industry = 3" v-bind:class="{selected: industry == 3}">金融</div>
+              <div v-on:click="industry = 3" v-bind:class="{'orange_text  selected': industry == 3}">金融</div>
 
-              <div v-on:click="industry = 9" v-bind:class="{selected: industry == 9}">教育培训</div>
+              <div v-on:click="industry = 9" v-bind:class="{'orange_text  selected': industry == 9}">教育培训</div>
 
-              <div v-on:click="industry = 8" v-bind:class="{selected: industry == 8}">交通/物流/贸易/零售</div>
+              <div v-on:click="industry = 8" v-bind:class="{'orange_text  selected': industry == 8}">交通/物流/贸易/零售</div>
 
-              <div v-on:click="industry = 7" v-bind:class="{selected: industry == 7}">服务业</div>
+              <div v-on:click="industry = 7" v-bind:class="{'orange_text  selected': industry == 7}">服务业</div>
 
-              <div v-on:click="industry = 4" v-bind:class="{selected: industry == 4}">房地产/建筑</div>
+              <div v-on:click="industry = 4" v-bind:class="{'orange_text  selected': industry == 4}">房地产/建筑</div>
 
-              <div v-on:click="industry = 6" v-bind:class="{selected: industry == 6}">汽车/机械/制造业</div>
+              <div v-on:click="industry = 6" v-bind:class="{'orange_text  selected': industry == 6}">汽车/机械/制造业</div>
 
-              <div v-on:click="industry = 5" v-bind:class="{selected: industry == 5}">消费品</div>
+              <div v-on:click="industry = 5" v-bind:class="{'orange_text  selected': industry == 5}">消费品</div>
 
-              <div v-on:click="industry = 10" v-bind:class="{selected: industry == 10}">其他</div>
+              <div v-on:click="industry = 10" v-bind:class="{'orange_text  selected': industry == 10}">其他</div>
 
             </div>
 
@@ -146,37 +146,37 @@
 
           <div class="select_list">
 
-            <div v-on:click="changeType" v-bind:class="{'selected': (type == '')}" v-bind:data-type="''">全部</div>
+            <div v-on:click="changeType" v-bind:class="{'orange_text  selected': (type == '')}" v-bind:data-type="''">全部</div>
 
-            <div v-on:click="changeType" v-bind:class="{'selected': (type == 1)}" v-bind:data-type="1">软件开发</div>
+            <div v-on:click="changeType" v-bind:class="{'orange_text  selected': (type == 1)}" v-bind:data-type="1">软件开发</div>
 
-            <div v-on:click="changeType" v-bind:class="{'selected': (type == 2)}" v-bind:data-type="2">APP开发</div>
+            <div v-on:click="changeType" v-bind:class="{'orange_text  selected': (type == 2)}" v-bind:data-type="2">APP开发</div>
 
-            <div v-on:click="changeType" v-bind:class="{'selected': (type == 3)}" v-bind:data-type="3">小程序开发</div>
+            <div v-on:click="changeType" v-bind:class="{'orange_text  selected': (type == 3)}" v-bind:data-type="3">小程序开发</div>
 
-            <div v-on:click="changeType" v-bind:class="{'selected': (type == 4)}" v-bind:data-type="4">UI设计</div>
+            <div v-on:click="changeType" v-bind:class="{'orange_text  selected': (type == 4)}" v-bind:data-type="4">UI设计</div>
 
-            <div v-on:click="changeType" v-bind:class="{'selected': (type == 5)}" v-bind:data-type="5">技术咨询</div>
+            <div v-on:click="changeType" v-bind:class="{'orange_text  selected': (type == 5)}" v-bind:data-type="5">技术咨询</div>
 
-            <div v-on:click="changeType" v-bind:class="{'selected': (type == 6)}" v-bind:data-type="6">营销咨询</div>
+            <div v-on:click="changeType" v-bind:class="{'orange_text  selected': (type == 6)}" v-bind:data-type="6">营销咨询</div>
 
-            <div v-on:click="changeType" v-bind:class="{'selected': (type == 7)}" v-bind:data-type="7">促销推广</div>
+            <div v-on:click="changeType" v-bind:class="{'orange_text  selected': (type == 7)}" v-bind:data-type="7">促销推广</div>
 
-            <div v-on:click="changeType" v-bind:class="{'selected': (type == 8)}" v-bind:data-type="8">代驾服务</div>
+            <div v-on:click="changeType" v-bind:class="{'orange_text  selected': (type == 8)}" v-bind:data-type="8">代驾服务</div>
 
-            <div v-on:click="changeType" v-bind:class="{'selected': (type == 9)}" v-bind:data-type="9">影视剧务</div>
+            <div v-on:click="changeType" v-bind:class="{'orange_text  selected': (type == 9)}" v-bind:data-type="9">影视剧务</div>
 
-            <div v-on:click="changeType" v-bind:class="{'selected': (type == 10)}" v-bind:data-type="10">临时演员</div>
+            <div v-on:click="changeType" v-bind:class="{'orange_text  selected': (type == 10)}" v-bind:data-type="10">临时演员</div>
 
-            <div v-on:click="changeType" v-bind:class="{'selected': (type == 11)}" v-bind:data-type="11">快递运输</div>
+            <div v-on:click="changeType" v-bind:class="{'orange_text  selected': (type == 11)}" v-bind:data-type="11">快递运输</div>
 
-            <div v-on:click="changeType" v-bind:class="{'selected': (type == 12)}" v-bind:data-type="12">保洁服务</div>
+            <div v-on:click="changeType" v-bind:class="{'orange_text  selected': (type == 12)}" v-bind:data-type="12">保洁服务</div>
 
-            <div v-on:click="changeType" v-bind:class="{'selected': (type == 13)}" v-bind:data-type="13">维修服务</div>
+            <div v-on:click="changeType" v-bind:class="{'orange_text  selected': (type == 13)}" v-bind:data-type="13">维修服务</div>
 
-            <div v-on:click="changeType" v-bind:class="{'selected': (type == 14)}" v-bind:data-type="14">场馆活动服务</div>
+            <div v-on:click="changeType" v-bind:class="{'orange_text  selected': (type == 14)}" v-bind:data-type="14">场馆活动服务</div>
 
-            <div v-on:click="changeType" v-bind:class="{'selected': (type == 15)}" v-bind:data-type="15">其他</div>
+            <div v-on:click="changeType" v-bind:class="{'orange_text  selected': (type == 15)}" v-bind:data-type="15">其他</div>
 
           </div>
 
@@ -200,14 +200,16 @@
 
             <div class="task_title">
 
-              <img src="../../../../static/images/jx_bag.png">
+              <div class="task_title_img orange_background">
+                <img src="../../../../static/images/jx_bag.png">
+              </div>
 
               <span>{{taskList.taskName}}</span>
 
             </div>
             <div class="line"><img src="../../../../static/images/jx_task_bg.png"/></div>
 
-            <div class="task_pay">
+            <div class="task_pay orange_text">
 
               <span><img src="../../../../static/images/jx_task_icon2.png"/>￥{{taskList.taskMinUnit}}</span><span v-if="taskList.taskMaxUnit != taskList.taskMinUnit">-{{taskList.taskMaxUnit}}</span>
 
@@ -219,7 +221,7 @@
 
             <div class="need_person">
 
-              <span><img src="../../../../static/images/jx_task_icon3.png"/>报名人数:<span><span>{{taskList.signUpTotal}}</span>个人已报名</span></span>
+              <span><img src="../../../../static/images/jx_task_icon3.png"/>报名人数:<span><span class="orange_text">{{taskList.signUpTotal}}</span>个人已报名</span></span>
 
             </div>
 
@@ -464,7 +466,7 @@
 
               _this.$messagebox({
                 title: '提示',
-                message: thisEnName + '邀请您查看' + thisSalaryMonth + '工资',
+                message: thisEnName + '邀请您查看' + thisSalaryMonth + '收入',
                 showCancelButton: true,
                 showConfirmButton: true,
                 confirmButtonText: '查看',

@@ -37,17 +37,16 @@
       background-color: transparent;
     }
       .selected{
-      color: #ff7a3c;
-      &:after{
-        content: '';
-        display: block;
-        position: absolute;
-        width: 50%;
-        height: 2px;
-        background-color: #ff7a3c;
-        left: 25%;
-        bottom: 0;
-      }
+        &:after{
+          content: '';
+          display: block;
+          position: absolute;
+          width: 50%;
+          height: 2px;
+          background-color: #ff7a3c;
+          left: 25%;
+          bottom: 0;
+        }
     }
   }
   .my_task_list{
@@ -73,6 +72,9 @@
             align-items: center;
             justify-content: flex-start;
             margin-right: 10px;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
             img{
               height: 40px;
               width: 40px;
@@ -93,7 +95,6 @@
             }
             .task_money{
               &>span{
-                color: #ff7a3c;
                 font-size: 16px;
               }
             }
