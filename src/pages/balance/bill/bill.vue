@@ -119,7 +119,7 @@
 
           console.log('我的');
 
-          document.title="我的账单"
+          document.title="我的订单"
 
           this.loadList();
 
