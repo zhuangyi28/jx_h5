@@ -17,12 +17,12 @@
             <p v-else-if="item.orderType=='03'">转账-转入</p>
           </div>
           <div class="bill_cell">
-            <p class="orange" v-if="item.orderType=='01'&& item.orderState=='0'">待支付</p>
-            <p class="orange" v-else-if="item.orderType=='01'&& item.orderState=='1'">完成</p>
-            <p class="orange" v-else-if="item.orderType=='02'&& item.orderState=='1'">成功</p>
-            <p class="orange" v-else-if="item.orderType=='03'&& item.orderState=='1'" >成功</p>
-            <p class="orange" v-else-if="item.orderType=='01'&& item.orderState=='2'">提交成功</p>
-            <p class="orange" v-else-if="item.orderType=='01'&& item.orderState=='3'">处理中</p>
+            <p class="orange_text" v-if="item.orderType=='01'&& item.orderState=='0'">待支付</p>
+            <p class="orange_text" v-else-if="item.orderType=='01'&& item.orderState=='1'">完成</p>
+            <p class="orange_text" v-else-if="item.orderType=='02'&& item.orderState=='1'">成功</p>
+            <p class="orange_text" v-else-if="item.orderType=='03'&& item.orderState=='1'" >成功</p>
+            <p class="orange_text" v-else-if="item.orderType=='01'&& item.orderState=='2'">提交成功</p>
+            <p class="orange_text" v-else-if="item.orderType=='01'&& item.orderState=='3'">处理中</p>
             <p class="gray" v-else-if="item.orderType=='01'&& item.orderState=='4'">已退款</p>
             <p class="gray" v-else-if="item.orderType=='01'&& item.orderState=='5'">订单关闭</p>
             <p class="gray" v-else-if="item.orderType=='01'&& item.orderState=='7'">退款中</p>
@@ -97,7 +97,7 @@
           this.orderTypes='01',
 
           //判断导航
-            document.title="提现账单"
+            document.title="提现订单"
 
           this.loadList();
 
@@ -109,7 +109,7 @@
 
             this.orderTypes='02,03',
 
-          document.title="转账账单";
+          document.title="转账订单";
 
           this.loadList();
 

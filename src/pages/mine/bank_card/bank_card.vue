@@ -20,7 +20,7 @@
 
     <!-- 添加 -->
     <div class="add_card_btn" v-on:click="addCard">
-      <p>＋</p>
+      <p class="orange_background">＋</p>
       <p>添加银行卡</p>
     </div>
 

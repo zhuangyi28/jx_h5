@@ -4,9 +4,9 @@
     <div class="skill_part">
       <div class="skill_title"><span>*</span>技能标签</div>
       <div class="skill_tags">
-        <div v-for="tag in tags">
+        <div v-for="tag in tags" class="orange_text orange_border">
           <span>{{tag}}</span>
-          <span class="delete_btn" v-bind:data-tag="tag" v-on:click="tagsDel"></span>
+          <span class="delete_btn orange_background" v-bind:data-tag="tag" v-on:click="tagsDel"></span>
         </div>
         <div v-on:click="tagsAdd" v-if="tags.length < 6" class="add_btn">
           <span>添加</span>
@@ -35,12 +35,12 @@
           <img v-bind:src="faceUrl">
           <input type="file" v-on:change="inputImg" imgType="face" accept="image/*">
         </div>
-        <div class="upload_name">上传身份证正面<span v-on:click="exampleImg" class="face">示例</span></div>
+        <div class="upload_name orange_text">上传身份证正面<span v-on:click="exampleImg" class="face">示例</span></div>
         <div class="upload_back">
           <img v-bind:src="backUrl">
           <input type="file" v-on:change="inputImg" imgType="back" accept="image/*">
         </div>
-        <div class="upload_name">上传身份证反面<span v-on:click="exampleImg" class="back">示例</span></div>
+        <div class="upload_name orange_text">上传身份证反面<span v-on:click="exampleImg" class="back">示例</span></div>
       </div>
     </div>
     <mt-popup v-model="popupExample">
