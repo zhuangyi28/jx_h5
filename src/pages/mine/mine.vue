@@ -83,7 +83,7 @@
         <div class="title">
           <img src="../../../static/images/jx_content_1.png"><span class="cell_text">我的签约</span>
         </div>
-        <div class="cell_value" v-show="hasNewSign"><span class="orange">您有新的签约</span></div>
+        <div class="cell_value" v-show="hasNewSign"><span class="orange_text">您有新的签约</span></div>
         <i class="allow_right"></i>
       </div>
       <!--银行卡 -->
@@ -106,7 +106,7 @@
         <div class="title">
           <img src="../../../static/images/jx_unit_1.png"><span class="cell_text">发薪企业</span>
         </div>
-        <div v-show="hasJoinEnt" class="cell_value"><span class="orange">您有新的企业邀请</span></div>
+        <div v-show="hasJoinEnt" class="cell_value"><span class="orange_text">您有新的企业邀请</span></div>
         <i class="allow_right"></i>
       </div>
       <!--我的发薪企业 -->
@@ -127,7 +127,7 @@
         <div class="title">
           <img src="../../../static/images/jx_mail_1.png" ><span class="cell_text">消息</span>
         </div>
-        <div v-show="hasNewMsg" class="cell_value"><span class="red">您有新消息</span></div>
+        <div v-show="hasNewMsg" class="cell_value"><span class="orange_text">您有新消息</span></div>
         <i class="allow_right"></i>
       </div>
       <!--帮助与客服 -->

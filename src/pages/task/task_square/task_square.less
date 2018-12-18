@@ -60,9 +60,9 @@
     align-items: center;
     z-index: 50;
     box-shadow: 1px 1px 8px #e9e9e9;
+    color: #4a4a4a;
     .select{
       font-size: 14px;
-      color: #4a4a4a;
       display: flex;
       align-items: center;
       height: 100%;
@@ -88,7 +88,6 @@
       }
     }
     .orangeText{
-      color: #ff7a3c;
       .up{
         border-bottom: 5px solid #ff7a3c;
       }
@@ -124,10 +123,10 @@
       display: flex;
       align-items: center;
       flex-wrap: wrap;
+      color: #4a4a4a;
 
       div{
         display: inline-block;
-        color: #4a4a4a;
         border: 1px solid #e9e9e9;
         margin: 5px;
         text-align: center;
@@ -138,7 +137,6 @@
       }
       .selected{
         border: 1px solid #ff7a3c;
-        color: #ff7a3c;
         background-color: #fff9f7;
       }
     }
@@ -299,13 +297,16 @@
           justify-content: flex-start;
           padding: 10px 4% 5px;
 
-          img{
+          .task_title_img{
             height: 20px;
             width: 20px;
+            border-radius: 8px;
             margin-top: 2px;
             margin-right: 5px;
-            display: inline-block;
-
+            img{
+              height: 100%;
+              width: 100%;
+            }
           }
           span{
             display: inline-block;
@@ -327,7 +328,6 @@
         .task_pay{
           padding: 2px 4% 0;
           span{
-            color: #ff7a3c;
             img{
               width: 15px;
               height: 15px;
@@ -353,11 +353,8 @@
               vertical-align: sub;
               margin-right: 5px;
             }
-            span{
+            &>span{
               color: #8a8a8a;
-              >span{
-                color: #ff7a3c;
-              }
             }
 
           }

@@ -2,7 +2,7 @@
   <div class="payroll">
     <div class="company_and_money">
       <div class="money">
-        <div>{{salaryMonth}}<span v-if="salaryType=='8'">个体经营所得（元）</span><span v-else>工资（元）</span></div>
+        <div>{{salaryMonth}}<span v-if="salaryType=='8'">个体经营所得（元）</span><span v-else>收入（元）</span></div>
         <div class="wages">{{realAmount|thousandBitSeparator}}</div>
         <div>{{entName}}</div>
       </div>
@@ -142,7 +142,7 @@
 
       hiddenDot:false,//默认不显示有新消息 true为显示 false为不显示
 
-      btnName1:'确认工资条',//按钮名称
+      btnName1:'确认',//按钮名称
 
       btnName2:'确认中',//按钮名称
 
@@ -283,7 +283,7 @@
         }
         else {
 
-          document.title="工资条明细"
+          document.title="收入明细"
         }
 
 

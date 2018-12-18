@@ -20,7 +20,7 @@
             <img v-bind:src="bankImg">
             <span>{{bankName}}<span v-if="this.cardType == 1"></span><span v-else-if="this.cardType == 2"></span></span>
           </div>
-          <span v-on:click="$router.push('/bankList')">查看支持银行</span>
+          <span v-on:click="$router.push('/bankList')" class="orange_text">查看支持银行</span>
         </div>
       </div>
       <div class="card_information_ps">信息填写完整，资金更安全</div>

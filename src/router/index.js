@@ -141,7 +141,7 @@ export default new Router({
 
       name: 'company',
       meta: {
-        title: '我的发薪企业'
+        title: '发薪企业'
       },
       component: company,
 
@@ -528,7 +528,7 @@ export default new Router({
       path: '/myTask',
       name: 'myTask',
       meta: {
-        title: '我的众包任务'
+        title: '众包任务'
       },
       component: myTask
     },

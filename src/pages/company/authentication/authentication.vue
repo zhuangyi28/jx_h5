@@ -7,7 +7,7 @@
     </div>
 
     <div class="text_box">
-      <p>首次查看需要进行身份验证，验证通过后即可接收该企业发放的工资、工资条和个体经营所得</p>
+      <p>首次查看需要进行身份验证，验证通过后即可接收该企业发放的个人收入全额或收入明细</p>
       <p>输入错误3次将被锁定，次日自动解锁</p>
     </div>
 
@@ -212,8 +212,17 @@
           //验证成功后显示工资
           else if (thisCode == '0000') {
 
+            var goFrozen = (localStorage.getItem('goFrozen') && localStorage.removeItem('goFrozen')) || false;
 
-              this.$router.replace('/salary')
+            if(goFrozen){
+
+              this.$router.replace('/balance');
+
+            }else{
+
+              this.$router.replace('/company');
+
+            }
 
             //this.$router.go(-1)
 
