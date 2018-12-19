@@ -60,7 +60,7 @@
 
           code:'',
 
-          src: "../../../../static/images/logo.png"
+          src: ""
 
         }
 
@@ -74,7 +74,7 @@
     mounted(){
 
 
-      /*var str = window.location.href;
+      var str = window.location.href;
 
       str = str.split('?')[1].split('&')[0].split('=')[1];
 
@@ -92,7 +92,7 @@
 
           break;
 
-      }*/
+      }
 
     // console.log(this.getStorage('thisKey'))
 
