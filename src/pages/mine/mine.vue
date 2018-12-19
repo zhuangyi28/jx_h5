@@ -48,10 +48,10 @@
 
     <!-- 列表1 -->
     <div class="list">
-      <!--我的账单 -->
-      <div class="cell" v-on:click="billFn">
+      <!--我的工资条-->
+      <div class="cell" v-on:click="$router.push('/salary')">
         <div class="title">
-          <img src="../../../static/images/jx_bill_1.png"><span class="cell_text">我的订单</span>
+          <img src="../../../static/images/jx_payroll_1.png"><span class="cell_text">工资条</span>
         </div>
         <div class="cell_value"></div>
         <i class="allow_right"></i>
@@ -70,37 +70,14 @@
 
     <!-- 列表2 -->
     <div class="list">
-      <!--我的账单 -->
-      <div class="cell" v-on:click="$router.push('/myTask')">
+      <!--我的订单 -->
+      <div class="cell" v-on:click="billFn">
         <div class="title">
-          <img src="../../../static/images/jx_task_1.png"><span class="cell_text">众包任务</span>
+          <img src="../../../static/images/jx_bill_1.png"><span class="cell_text">我的订单</span>
         </div>
         <div class="cell_value"></div>
         <i class="allow_right"></i>
       </div>
-      <!--我的签约 -->
-      <div class="cell" v-on:click="$router.push('/contractList')">
-        <div class="title">
-          <img src="../../../static/images/jx_content_1.png"><span class="cell_text">我的签约</span>
-        </div>
-        <div class="cell_value" v-show="hasNewSign"><span class="orange_text">您有新的签约</span></div>
-        <i class="allow_right"></i>
-      </div>
-      <!--银行卡 -->
-      <div class="cell" v-on:click="$router.push('/personInformation')">
-        <div class="title">
-          <img src="../../../static/images/jx_resume_1.png"><span class="cell_text">个人履历</span>
-        </div>
-        <div class="cell_value"></div>
-        <i class="allow_right"></i>
-      </div>
-
-
-    </div>
-
-
-    <!-- 列表3 -->
-    <div class="list">
       <!--我的发薪企业 -->
       <div class="cell" v-on:click="$router.push('/company')">
         <div class="title">
@@ -109,14 +86,40 @@
         <div v-show="hasJoinEnt" class="cell_value"><span class="orange_text">您有新的企业邀请</span></div>
         <i class="allow_right"></i>
       </div>
-      <!--我的发薪企业 -->
-      <div class="cell" v-on:click="$router.push('/salary')">
+
+
+
+    </div>
+
+
+    <!-- 列表3 -->
+    <div class="list">
+
+      <!--我的签约 -->
+      <div class="cell" v-on:click="$router.push('/contractList')">
         <div class="title">
-          <img src="../../../static/images/jx_payroll_1.png"><span class="cell_text">工资条</span>
+          <img src="../../../static/images/jx_content_1.png"><span class="cell_text">我的签约</span>
+        </div>
+        <div class="cell_value" v-show="hasNewSign"><span class="orange_text">您有新的签约</span></div>
+        <i class="allow_right"></i>
+      </div>
+      <!--众包 -->
+      <div class="cell" v-on:click="$router.push('/myTask')">
+        <div class="title">
+          <img src="../../../static/images/jx_task_1.png"><span class="cell_text">众包任务</span>
         </div>
         <div class="cell_value"></div>
         <i class="allow_right"></i>
       </div>
+      <!--履历 -->
+      <div class="cell" v-on:click="$router.push('/personInformation')">
+        <div class="title">
+          <img src="../../../static/images/jx_resume_1.png"><span class="cell_text">个人履历</span>
+        </div>
+        <div class="cell_value"></div>
+        <i class="allow_right"></i>
+      </div>
+
 
     </div>
 
