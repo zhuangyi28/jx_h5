@@ -1,7 +1,7 @@
 <template>
   <div class="mine">
 
-    <div class="mine_content">
+    <div class="mine_content change_color_background_mine">
     <!-- 个人信息 -->
     <div class="user" v-on:click="$router.push('/personalCenter')">
       <div class="user_box">
@@ -48,7 +48,6 @@
 
     <!-- 列表1 -->
     <div class="list">
-      <!--我的工资条-->
       <div class="cell" v-on:click="$router.push('/salary')">
         <div class="title">
           <img src="../../../static/images/jx_payroll_1.png"><span class="cell_text">工资条</span>
@@ -68,9 +67,8 @@
 
     </div>
 
-    <!-- 列表2 -->
+    <!-- 列表3 -->
     <div class="list">
-      <!--我的订单 -->
       <div class="cell" v-on:click="billFn">
         <div class="title">
           <img src="../../../static/images/jx_bill_1.png"><span class="cell_text">我的订单</span>
@@ -80,6 +78,7 @@
       </div>
       <!--我的发薪企业 -->
       <div class="cell" v-on:click="$router.push('/company')">
+
         <div class="title">
           <img src="../../../static/images/jx_unit_1.png"><span class="cell_text">发薪企业</span>
         </div>
@@ -92,36 +91,8 @@
     </div>
 
 
-    <!-- 列表3 -->
-    <div class="list">
-
-      <!--我的签约 -->
-      <div class="cell" v-on:click="$router.push('/contractList')">
-        <div class="title">
-          <img src="../../../static/images/jx_content_1.png"><span class="cell_text">我的签约</span>
-        </div>
-        <div class="cell_value" v-show="hasNewSign"><span class="orange_text">您有新的签约</span></div>
-        <i class="allow_right"></i>
-      </div>
-      <!--众包 -->
-      <div class="cell" v-on:click="$router.push('/myTask')">
-        <div class="title">
-          <img src="../../../static/images/jx_task_1.png"><span class="cell_text">众包任务</span>
-        </div>
-        <div class="cell_value"></div>
-        <i class="allow_right"></i>
-      </div>
-      <!--履历 -->
-      <div class="cell" v-on:click="$router.push('/personInformation')">
-        <div class="title">
-          <img src="../../../static/images/jx_resume_1.png"><span class="cell_text">个人履历</span>
-        </div>
-        <div class="cell_value"></div>
-        <i class="allow_right"></i>
-      </div>
 
 
-    </div>
 
     <!-- 列表4 -->
     <div class="list">
