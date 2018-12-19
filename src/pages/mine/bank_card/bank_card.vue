@@ -2,7 +2,7 @@
   <div class="add_card">
     <div class="bank_cards">
       <!--此处应用for循环-->
-      <div class="bank_card" v-for="bank in banks">
+      <div class="bank_card change_color_background_bank_card" v-for="bank in banks">
         <div class="bank_logo">
           <img v-bind:src="bank.bankImg">
         </div>

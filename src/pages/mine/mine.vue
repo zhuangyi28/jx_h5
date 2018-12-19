@@ -1,7 +1,7 @@
 <template>
   <div class="mine">
 
-    <div class="mine_content">
+    <div class="mine_content change_color_background_mine">
     <!-- 个人信息 -->
     <div class="user" v-on:click="$router.push('/personalCenter')">
       <div class="user_box">

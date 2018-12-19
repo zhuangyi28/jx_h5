@@ -4,7 +4,7 @@
     <div class="login_form">
 
       <div class="company_logo">
-        <img src="../../../../static/images/logo.png">
+        <img v-bind:src=src>
       </div>
 
       <div class="content_box">
@@ -58,7 +58,9 @@
 
           Authorization:'',
 
-          code:''
+          code:'',
+
+          src: "../../../../static/images/logo.png"
 
         }
 
@@ -72,9 +74,25 @@
     mounted(){
 
 
- /*  var str = window.location.href;
+      /*var str = window.location.href;
 
-      this.code = str.split('?')[1].split('&')[0].split('=')[1]*/
+      str = str.split('?')[1].split('&')[0].split('=')[1];
+
+      switch (str) {
+
+        case 'orange':
+
+          this.src = "../../../../static/images/logo.png";
+
+          break;
+
+        case 'green':
+
+          this.src = "../../../../static/images/paiyun_logo.png";
+
+          break;
+
+      }*/
 
     // console.log(this.getStorage('thisKey'))
 
