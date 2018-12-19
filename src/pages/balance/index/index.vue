@@ -368,55 +368,131 @@
 
       cashUrlFn:function () {
 
-        /**
-         * 接口：用户发起提现操作
-         * 请求方式：get
-         * 接口：user/work/checkwithdraw
-         * 入参：null
-         **/
-        this.$http({
 
-          method: 'get',
-
-          url: process.env.API_ROOT + 'user/work/checkwithdraw',
-
-        }).then((res)=>{
-
-          console.log(res.data)
-
-          if(res.data.code=='-10'){
-
-            this.$messagebox({
-              title: '提示',
-              message: '您有文件待签署，请至 “ 我的签约”中完成签署后再提现',
-              showConfirmButton: true,
-              showCancelButton: true,
-              confirmButtonText: '去签约',
-              cancelButtonText: '取消',
-              cancelButtonClass:'cancel_btn',
-              confirmButtonClass:'confirm_btn_orange',
-            }).then((res)=>{
-
-              if(res == 'confirm'){
-
-                this.$router.push('/contractList');
-
-              }
+        //获取已认证未认证
+        var _isVerify = this.isVerify;
 
 
-            }).catch((res=>{}))
+        //没认证的去认证 已认证直接跳接口
+        if (_isVerify == '0'||_isVerify == '3') {
 
-          }
+          //存指定的页面  （在实名认证中取值）
+          this.setStorage('hrefId','10');
 
-          else {
+          this.setStorage('personCenter','2');
 
-            this.$router.push('/withdraw')
+          this.$messagebox({
+            title: '提示',
+            message: '为保障账户资金安全，实名用户才能使用转账服务，请先完成实名认证',
+            showConfirmButton: true,
+            showCancelButton: true,
+            confirmButtonText: '去认证',
+            cancelButtonText: '取消',
+            cancelButtonClass:'cancel_btn',
+            confirmButtonClass:'confirm_btn_orange',
+          }).then((res)=>{
+
+            if(res == 'confirm'){
+
+              this.$router.push('/certification');
+
+            }
+            else {
+
+              return
+
+            }
+
+          }).catch((res=>{}))
 
 
-          }
 
 
-        }).catch((res)=>{})
+
+        }
+
+        else if(_isVerify == '2'){
+          //存指定的页面  （在实名认证中取值）
+          this.setStorage('hrefId','10');
+
+          this.setStorage('personCenter','2');
+
+          this.$messagebox({
+            title: '提示',
+            message: '实名认证审核中，审核通过后即可使用转账服务',
+            showCancelButton: false,
+            confirmButtonText: '我知道了',
+            confirmButtonClass:'confirm_btn_orange',
+          }).then((res)=>{
+
+            if(res == 'confirm'){
+
+              //this.$router.push('/certification');
+
+            }
+
+
+          }).catch((res=>{}))
+
+
+        }
+
+
+        else{
+
+          /**
+           * 接口：用户发起提现操作
+           * 请求方式：get
+           * 接口：user/work/checkwithdraw
+           * 入参：null
+           **/
+          this.$http({
+
+            method: 'get',
+
+            url: process.env.API_ROOT + 'user/work/checkwithdraw',
+
+          }).then((res)=>{
+
+            console.log(res.data)
+
+            if(res.data.code=='-10'){
+
+              this.$messagebox({
+                title: '提示',
+                message: '您有文件待签署，请至 “ 我的签约”中完成签署后再提现',
+                showConfirmButton: true,
+                showCancelButton: true,
+                confirmButtonText: '去签约',
+                cancelButtonText: '取消',
+                cancelButtonClass:'cancel_btn',
+                confirmButtonClass:'confirm_btn_orange',
+              }).then((res)=>{
+
+                if(res == 'confirm'){
+
+                  this.$router.push('/contractList');
+
+                }
+
+
+              }).catch((res=>{}))
+
+            }
+
+            else {
+
+              this.$router.push('/withdraw')
+
+
+            }
+
+
+          }).catch((res)=>{})
+
+        }
+
+
 
       }
 
