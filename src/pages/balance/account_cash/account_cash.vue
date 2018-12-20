@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="transfer_ps">
-      <input type="text" placeholder="添加备注（20字以内）" maxlength="20" v-model="tips">
+      <input type="text" placeholder="添加备注（20字以内）" maxlength="20" v-model="tips" @blur="blurFn">
     </div>
     <div v-if="unused">
       <orangeBtn v-bind:name="btnName" v-on:clickEvent="handleClick"></orangeBtn>
@@ -181,6 +181,25 @@
 
       inputClose: function (value) {
         this.inputShow = value;
+      },
+
+      blurFn:function () {
+
+
+
+        var container = document.getElementsByClassName('transfer_accounts')[0];
+
+
+        setTimeout(function () {
+
+          container.scrollTop = container.scrollHeight;
+
+          document.body.scrollTop =document.documentElement.scrollTop = window.pageYOffset = container.scrollHeight;
+
+        },50)
+
+
+
       }
     },
     watch: {

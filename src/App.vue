@@ -15,13 +15,13 @@
 
     mounted () {
 
-      var url = location.href.split('?')[1];
+      var url1 = location.href.split('?')[1];
 
-      url && (url = url.split('=')[1]);
+      var url;
 
-      url && localStorage.setItem('anotherCompany',url);
+      url1 && (url = url1.split('=')[1]);
 
-      url || (url = localStorage.getItem('anotherCompany'));
+      (url && url1.indexOf('theme') != -1) ? this.setCookie('anotherCompany',url) : (url = this.getCookie('anotherCompany'));
 
       switch (url) {
 
@@ -31,7 +31,7 @@
 
         case 'green':
 
-          return require('!style-loader!css-loader!less-loader!../static/css/greed_css.css');
+          return require('!style-loader!css-loader!less-loader!../static/css/green_css.css');
 
       }
 
