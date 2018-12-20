@@ -46,37 +46,36 @@
 
     this.$http({
 
-        method: 'post',
+       method: 'post',
 
-        url: process.env.API_ROOT+'jx/action/togetunionid',
+       url: process.env.API_ROOT+'jx/action/togetunionid',
 
-        params: {
+       params: {
 
-          code:thisUserCode
-
-        }
-
-      }).then((res) => {
-
-        console.log(res.data)
-
-        this.init();
-
-
-
-      }).catch((res)=>{})
-
-
-        if(this.getStorage('loadingShow')!=1){
-
-         this.$indicator.open({
-            text: '加载中...',
-            spinnerType: 'fading-circle'
-          });
-
+       code:thisUserCode
 
        }
 
+       }).then((res) => {
+
+       console.log(res.data)
+
+       this.init();
+
+
+
+       }).catch((res)=>{})
+
+
+       if(this.getStorage('loadingShow')!=1){
+
+       this.$indicator.open({
+       text: '加载中...',
+       spinnerType: 'fading-circle'
+       });
+
+
+       }
 
 
     },
@@ -113,15 +112,7 @@
 
           if(res.data.code=='0000'){
 
-            if(res.data.data.isCommitAuthorize == 0){
-
-              this.$router.push('/workDesk/homepage')
-
-            }else if(res.data.data.isCommitAuthorize == 1){
-
-              this.$router.push('/workDesk/taskSquare');
-
-            }
+            this.$router.push('/workDesk/taskSquare');
 
           }
 

@@ -74,21 +74,19 @@
     mounted(){
 
 
-      var str = window.location.href;
-
-      str = str.split('?')[1].split('&')[0].split('=')[1];
+      var str = this.getCookie('anotherCompany');
 
       switch (str) {
 
         case 'orange':
 
-          this.src = "../../../../static/images/logo.png";
+          this.src = "./static/images/logo.png";
 
           break;
 
         case 'green':
 
-          this.src = "../../../../static/images/paiyun_logo.png";
+          this.src = "./static/images/paiyun_logo.png";
 
           break;
 
