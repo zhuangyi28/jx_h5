@@ -27,6 +27,28 @@
 
     mounted () {
 
+      var anotherCompany = this.getCookie('anotherCompany') || 'orange';
+
+      if(anotherCompany){
+
+        switch (anotherCompany) {
+
+          case 'orange':
+
+            document.title = '嘉薪';
+
+            break;
+
+          case 'blue':
+
+            document.title = '派云众包';
+
+            break;
+
+        }
+
+      }
+
 
         /*console.log('链接='+window.location.href);*/
 
