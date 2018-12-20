@@ -141,7 +141,7 @@
 
             break;
 
-          case 'green':
+          case 'blue':
 
             this.phoneNumber = 'tel:0731-85132713';
 
