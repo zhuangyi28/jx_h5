@@ -14,22 +14,22 @@
           <!-- 未认证-->
           <div class="user_auth" v-if="isVerify=='0'">
             <img src="../../../static/images/jx_uncertified_1.png">
-            <span>未认证</span>
+            <span class="orange_text">未认证</span>
           </div>
           <!-- 已认证-->
           <div class="user_auth" v-else-if="isVerify=='1'">
             <img src="../../../static/images/jx_authentication_1.png">
-            <span>已认证</span>
+            <span class="orange_text">已认证</span>
           </div>
           <!-- 已认证-->
           <div class="user_auth" v-else-if="isVerify=='2'">
             <img src="../../../static/images/jx_uncertified_1.png">
-            <span>审核中</span>
+            <span class="orange_text">审核中</span>
           </div>
           <!-- 已认证-->
           <div class="user_auth" v-else-if="isVerify=='3'">
             <img src="../../../static/images/jx_uncertified_1.png">
-            <span>审核未通过</span>
+            <span class="orange_text">审核未通过</span>
           </div>
         </div>
       </div>
