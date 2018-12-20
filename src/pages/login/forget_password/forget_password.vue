@@ -3,22 +3,22 @@
 
     <div class="content_box">
       <div class="field">
-        <i class="iconfont icon-sign_phone"></i>
+        <i class="iconfont icon-sign_phone orange_text"></i>
         <input type="text" pattern="\d*" placeholder="请输入手机号" v-model="mobile" class="tel" maxlength="11">
       </div>
       <div class="field">
-        <i class="iconfont icon-sign_pen"></i>
+        <i class="iconfont icon-sign_pen orange_text"></i>
         <input type="text" pattern="\d*" placeholder="请输入验证码" v-model="checkCode" class="code" maxlength="6">
-        <span v-show="show" class="get_code" @click="registerMsg">获取验证码</span>
-        <span v-show="!show" class="get_code">{{count}}s后重新发送</span>
+        <span v-show="show" class="get_code orange_background" @click="registerMsg">获取验证码</span>
+        <span v-show="!show" class="get_code orange_text">{{count}}s后重新发送</span>
 
       </div>
       <div class="field">
-        <i class="iconfont icon-sign_password"></i>
+        <i class="iconfont icon-sign_password orange_text"></i>
         <input type="password" placeholder="6-20位字母数字密码" v-model="password" class="password" maxlength="20">
       </div>
       <div class="field">
-        <i class="iconfont icon-sign_password"></i>
+        <i class="iconfont icon-sign_password orange_text"></i>
         <input type="password" placeholder="请再次输入密码" v-model="confirmPassword" class="password_again" maxlength="20">
       </div>
     </div>

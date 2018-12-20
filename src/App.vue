@@ -29,9 +29,9 @@
 
           return require('!style-loader!css-loader!less-loader!../static/css/orange_css.css');
 
-        case 'green':
+        case 'blue':
 
-          return require('!style-loader!css-loader!less-loader!../static/css/green_css.css');
+          return require('!style-loader!css-loader!less-loader!../static/css/blue_css.css');
 
       }
 

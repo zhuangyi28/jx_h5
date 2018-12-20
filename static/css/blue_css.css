@@ -1,0 +1,45 @@
+.login .content_box .field i.orange_text{
+
+  color: #147fff!important;
+}
+.orange_text{
+  color: #147fff!important;
+}
+.orange_border{
+  border-color: #147fff!important;
+}
+.orange_background{
+  background-color: #147fff!important;
+}
+
+button.orange {
+  background: linear-gradient(to left, #78aff1, #147fff)!important;
+}
+
+.change_color_background_mine{
+
+  background: url("../../static/images/main_bg.png") ,-webkit-linear-gradient(180deg,#78aff1, #147fff)!important;
+}
+.balance .detail{
+  background: url("../../static/images/main_bg.png") ,-webkit-linear-gradient(270deg,#78aff1, #147fff)!important;
+}
+
+.task_square .select_content .select_list .selected{
+  border: 1px solid #147fff!important;
+  background-color: #edf5fe!important;
+}
+.task_square .select_btn .orangeText .up{
+  border-bottom: 5px solid #147fff!important;
+}
+.confirm_btn_orange {
+  color: #147fff!important;
+}
+.withdraw .withdraw_info .withdraw_bank{
+
+  background: -webkit-gradient(linear, left top, right top, from(#78aff1), to(#147fff))!important;
+  background: linear-gradient(90deg, #78aff1, #147fff)!important;
+
+}
+.change_color_background_bank_card {
+  background: -webkit-linear-gradient(270deg,#78aff1, #147fff)!important;
+}
