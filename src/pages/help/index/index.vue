@@ -40,7 +40,7 @@
       <div class="area_box"></div>
       <div class="footer">
         <span v-on:click="customer"><i class="iconfont icon-withdraw_custom orange_text"></i>联系客服</span>
-        <a href="tel:4008216990"><i class="iconfont icon-phone_consult orange_text"></i>拨打电话</a>
+        <a v-bind:herf="phoneNumber"><i class="iconfont icon-phone_consult orange_text"></i>拨打电话</a>
       </div>
 
 
@@ -115,6 +115,8 @@
 
         ],
 
+        phoneNumber: 'tel:4008216990'
+
       }
 
     },
@@ -126,6 +128,28 @@
         name:this.getStorage('userName'),// 名字
         tel:this.getStorage('mobile'),// 电话
       });
+
+      var anotherCompany = this.getCookie('anotherCompany');
+
+      if(anotherCompany){
+
+        switch (anotherCompany) {
+
+          case 'orange':
+
+            this.phoneNumber = 'tel:4008216990';
+
+            break;
+
+          case 'green':
+
+            this.phoneNumber = 'tel:0731-85132713';
+
+            break
+
+        }
+
+      }
 
     },
     methods: {
