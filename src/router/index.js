@@ -84,7 +84,7 @@ export default new Router({
       path: '/loadingPage',
       name: 'loadingPage',
       meta: {
-        title: '嘉薪'
+        title: ''
       },
       component: loadingPage,
     },
