@@ -2,7 +2,7 @@
 
   <div class="balance">
 
-    <div class="detail">
+    <div class="detail change_color_background">
 
       <div class="money">
         <p>{{totalSalary| thousandBitSeparator}}</p>

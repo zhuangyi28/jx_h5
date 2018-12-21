@@ -3,7 +3,7 @@
 
     <div class="area_box"></div>
     <div class="footer" :class="classBgName">
-      <span v-on:click="clickEventLeft"><i class="iconfont" :class="iconName1"></i>{{type1}}</span><span v-on:click="clickEventRight" v-show="spanShow" :spanlShow="spanShow"><i class="iconfont" :class="iconName2"></i>{{type2}}</span>
+      <span v-on:click="clickEventLeft"><i class="iconfont color_text" :class="iconName1"></i>{{type1}}</span><span v-on:click="clickEventRight" v-show="spanShow" :spanlShow="spanShow"><i class="iconfont color_text" :class="iconName2"></i>{{type2}}</span>
     </div>
 
 

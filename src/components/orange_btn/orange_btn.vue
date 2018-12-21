@@ -1,6 +1,6 @@
 <template>
   <div class="button">
-    <mt-button size="large"  class="orange" :class="className" v-on:click="clickEvent">{{name}}</mt-button>
+    <mt-button size="large"  class="btn_color" :class="className" v-on:click="clickEvent">{{name}}</mt-button>
   </div>
 </template>
 <script>

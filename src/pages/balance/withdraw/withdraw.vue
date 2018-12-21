@@ -35,7 +35,7 @@
         </div>
         <div class="withdraw_money_show">
           <span>可提额度{{balance|thousandBitSeparator}}元<span class="pop_up" v-on:click="popUp">?</span></span>
-          <span v-on:click="withdrawMoney = balance">全部提现</span>
+          <span class="color_text" v-on:click="withdrawMoney = balance">全部提现</span>
         </div>
       </div>
     </div>
@@ -55,7 +55,7 @@
     <div class="withdraw_service">
 
       <div class="footer">
-        <span v-on:click="customerFn"><i class="iconfont icon-withdraw_custom"></i>联系客服</span><span v-on:click="moreShow=true"><i class="iconfont icon-withdraw_more"></i>更多</span>
+        <span v-on:click="customerFn"><i class="iconfont icon-withdraw_custom color_text"></i>联系客服</span><span v-on:click="moreShow=true"><i class="iconfont icon-withdraw_more color_text"></i>更多</span>
       </div>
 
     </div>

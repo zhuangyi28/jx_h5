@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="transfer_accounts_input_ps">可转余额{{transferBalance}}
-        <span v-on:click="money = transferBalance">全部</span>
+        <span class="color_text" v-on:click="money = transferBalance">全部</span>
       </div>
     </div>
     <div class="transfer_ps">

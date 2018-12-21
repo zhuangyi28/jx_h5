@@ -3,7 +3,7 @@
   <div class="discovery">
 
     <div class="box">
-      <div class="title">金融服务</div>
+      <div class="title before_border">金融服务</div>
       <div class="content">
         <!-- 嘉白条 -->
         <div v-on:click="urlFn" v-bind:data-url="jbtUrl">
@@ -17,7 +17,7 @@
     </div>
 
     <div class="box">
-      <div class="title">购物</div>
+      <div class="title before_border">购物</div>
       <div class="content">
         <!-- 惠购商城 -->
         <div v-on:click="urlFn" v-bind:data-url="jdUrl">
@@ -39,7 +39,7 @@
     </div>
 
     <div class="box">
-      <div class="title">便民生活</div>
+      <div class="title before_border">便民生活</div>
       <div class="content">
         <!-- 美团点评 -->
         <div v-on:click="urlFn" v-bind:data-url="mtUrl">
@@ -90,7 +90,7 @@
     </div>
 
     <div class="box">
-      <div class="title">旅游出行</div>
+      <div class="title before_border">旅游出行</div>
       <div class="content">
         <!-- 美团点评 -->
         <div v-on:click="urlFn" v-bind:data-url="didiUrl">

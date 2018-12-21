@@ -2,9 +2,9 @@
   <div class="task_details">
 
     <!-- 任务详情 -->
-    <div class="task_title" v-on:click="$router.push('/lookTask')">
+    <div class="task_title color_background_gradient" v-on:click="$router.push('/lookTask')">
 
-      <div><img src="../../../../static/images/jx_task_icon.png"/></div>
+      <div><img src="../../../../static/images/jx_task_icon.png"></div>
       <div class="content">
         <div>
           <p class="name">{{taskName}}</p>
@@ -23,11 +23,11 @@
       </div>
 
     </div>
-    <div class="line"><img src="../../../../static/images/jx_bg.png"/></div>
+    <div class="line"><img v-bind:src=imgUrl></div>
     <!-- 任务状态 -->
     <div class="task_state">
 
-      <div class="title">任务状态</div>
+      <div class="title border_color_left">任务状态</div>
       <div class="state_content">
         <div class="state_box" v-bind:class="brightState=='1'? 'selected':''">
           <p><img src="../../../../static/images/jx_task_sign_1.png"/></p>
@@ -60,7 +60,7 @@
           <div class="date">
             <p>{{item.data|fmtDateStr}}</p>
           </div>
-          <div class="circle"></div>
+          <div class="circle circle_color"></div>
           <div v-if="item.type=='1'" class="state">已报名，等待企业审核</div>
           <div v-else-if="item.type=='2'" class="state">您已被录用，可以开始工作啦</div>
           <div v-else-if="item.type=='3'" class="state">提交验收成功，请耐心等待企业验收</div>
@@ -78,7 +78,7 @@
           <div class="date">
             <p>{{item.data|fmtDateStr}}</p>
           </div>
-          <div class="circle"></div>
+          <div class="circle circle_color"></div>
           <div v-if="item.type=='1'" class="state">已报名，等待企业审核</div>
           <div v-else-if="item.type=='2'" class="state">您已被录用，等待企业联系您哦</div>
           <div v-else-if="item.type=='3'" class="state">提交验收成功，请耐心等待企业验收</div>
@@ -89,7 +89,7 @@
         </div>
       </div>
       <!-- 赞开关闭-->
-      <div class="show_more" v-if="taskTimeArea.length>4" v-on:click="changeFoldState">
+      <div class="show_more color_text" v-if="taskTimeArea.length>4" v-on:click="changeFoldState">
         <span>{{brandMore?'展开∨':'收起∧'}}</span>
       </div>
 
@@ -129,7 +129,7 @@
     <!-- 返回任务广场-->
 
       <div class="button_box" v-if="brightState=='1'">
-        <button class="go_back" v-on:click="$router.push('/workDesk/taskSquare')">返回任务广场</button>
+        <button class="go_back btn_border" v-on:click="$router.push('/workDesk/taskSquare')">返回任务广场</button>
       </div>
 
 
@@ -178,7 +178,9 @@
 
         hideTaskTimeArea:[],//隐藏部分
 
-        brandMore: true//显示展开收回
+        brandMore: true,//显示展开收回
+
+        imgUrl:'',//显示图片
       }
     },
     mounted () {
@@ -195,6 +197,24 @@
 
 
           this.taskId = this.getStorage('taskId');
+
+          var str = this.getCookie('anotherCompany')||'orange';
+
+        switch (str) {
+
+          case 'orange':
+
+            this.imgUrl = "./static/images/jx_bg.png";
+
+            break;
+
+          case 'blue':
+
+            this.imgUrl = "./static/images/paiyun/jx_bg.png";
+
+            break;
+
+        }
 
 
         /**

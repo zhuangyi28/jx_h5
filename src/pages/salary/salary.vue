@@ -14,13 +14,13 @@
 
             <div class="money_detail_content">
               <p class="company"><span>{{item.salaryMonth}}</span><span v-if="item.salaryType!='8'">收入</span></p>
-              <p class="money orange_text">实发金额：<span v-if="lookWages"><span>{{item.realAmount | thousandBitSeparator}}</span><span>元</span></span><span
+              <p class="money color_text">实发金额：<span v-if="lookWages"><span>{{item.realAmount | thousandBitSeparator}}</span><span>元</span></span><span
                 v-else><span class="star">******</span><span>元</span></span>
               </p>
             </div>
             <div class="money_detail_title">
               <div class="title"><span v-if="item.salaryType=='8'">任务名称：</span><span v-else>发薪企业：</span>{{item.entName}}</div>
-              <div class="confirm" :class="item.state == '已确认'? 'gray_background':'orange_background'">
+              <div class="confirm" :class="item.state == '已确认'? 'gray_background':'color_background'">
                 <img src="../../../static/images/jx_homepage_icon.png"/>
                 <span>{{item.state}}</span>
               </div>

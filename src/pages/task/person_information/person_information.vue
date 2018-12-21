@@ -2,11 +2,11 @@
   <div class="person_information" id="personInformation">
     <div class="person_information_ps">技能标签能让企业在搜索相应人才时，优先看到您。</div>
     <div class="skill_part">
-      <div class="skill_title"><span>*</span>技能标签</div>
+      <div class="skill_title before_border"><span>*</span>技能标签</div>
       <div class="skill_tags">
-        <div v-for="tag in tags" class="orange_text orange_border">
+        <div v-for="tag in tags" class="color_text color_text">
           <span>{{tag}}</span>
-          <span class="delete_btn orange_background" v-bind:data-tag="tag" v-on:click="tagsDel"></span>
+          <span class="delete_btn color_background" v-bind:data-tag="tag" v-on:click="tagsDel"></span>
         </div>
         <div v-on:click="tagsAdd" v-if="tags.length < 6" class="add_btn">
           <span>添加</span>
@@ -16,15 +16,15 @@
       <div class="skill_ps">注：最多添加5个标签，每个标签最多6个字</div>
     </div>
     <div class="introduce_yourself">
-      <div class="introduce_title">自我介绍</div>
+      <div class="introduce_title before_border">自我介绍</div>
       <div class="introduce_input">
         <textarea cols="30" rows="6" placeholder="详细描述下你自己，字数控制在200字以内" v-model="introduceYourself" maxlength="200"></textarea>
       </div>
     </div>
     <div class="supply_part" v-if="idType == 1">
-      <div class="supply_title">
+      <div class="supply_title before_border">
         <div>
-          <span><span>*</span>补充信息</span>
+          <span ><span>*</span>补充信息</span>
           <span>（身份证照片）</span>
         </div>
         <div v-bind:class="supplyShow ? 'supply_part_show' : 'supply_part_hidden'" v-on:click="supplyShow = !supplyShow"></div>
@@ -35,12 +35,12 @@
           <img v-bind:src="faceUrl">
           <input type="file" v-on:change="inputImg" imgType="face" accept="image/*">
         </div>
-        <div class="upload_name orange_text">上传身份证正面<span v-on:click="exampleImg" class="face">示例</span></div>
+        <div class="upload_name color_text">上传身份证正面<span v-on:click="exampleImg" class="face">示例</span></div>
         <div class="upload_back">
           <img v-bind:src="backUrl">
           <input type="file" v-on:change="inputImg" imgType="back" accept="image/*">
         </div>
-        <div class="upload_name orange_text">上传身份证反面<span v-on:click="exampleImg" class="back">示例</span></div>
+        <div class="upload_name color_text">上传身份证反面<span v-on:click="exampleImg" class="back">示例</span></div>
       </div>
     </div>
     <mt-popup v-model="popupExample">

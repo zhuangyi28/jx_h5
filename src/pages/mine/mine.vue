@@ -1,7 +1,7 @@
 <template>
   <div class="mine">
 
-    <div class="mine_content change_color_background_mine">
+    <div class="mine_content change_color_background">
     <!-- 个人信息 -->
     <div class="user" v-on:click="$router.push('/personalCenter')">
       <div class="user_box">
@@ -14,22 +14,22 @@
           <!-- 未认证-->
           <div class="user_auth" v-if="isVerify=='0'">
             <img src="../../../static/images/jx_uncertified_1.png">
-            <span class="orange_text">未认证</span>
+            <span class="color_text">未认证</span>
           </div>
           <!-- 已认证-->
           <div class="user_auth" v-else-if="isVerify=='1'">
             <img src="../../../static/images/jx_authentication_1.png">
-            <span class="orange_text">已认证</span>
+            <span class="color_text">已认证</span>
           </div>
           <!-- 已认证-->
           <div class="user_auth" v-else-if="isVerify=='2'">
             <img src="../../../static/images/jx_uncertified_1.png">
-            <span class="orange_text">审核中</span>
+            <span class="color_text">审核中</span>
           </div>
           <!-- 已认证-->
           <div class="user_auth" v-else-if="isVerify=='3'">
             <img src="../../../static/images/jx_uncertified_1.png">
-            <span class="orange_text">审核未通过</span>
+            <span class="color_text">审核未通过</span>
           </div>
         </div>
       </div>
@@ -83,7 +83,7 @@
         <div class="title">
           <img src="../../../static/images/jx_unit_1.png"><span class="cell_text">发薪企业</span>
         </div>
-        <div v-show="hasJoinEnt" class="cell_value"><span class="orange_text">您有新的企业邀请</span></div>
+        <div v-show="hasJoinEnt" class="cell_value"><span class="color_text">您有新的企业邀请</span></div>
         <i class="allow_right"></i>
       </div>
 
@@ -97,7 +97,7 @@
         <div class="title">
           <img src="../../../static/images/jx_content_1.png"><span class="cell_text">我的签约</span>
         </div>
-        <div class="cell_value" v-show="hasNewSign"><span class="orange_text">您有新的签约</span></div>
+        <div class="cell_value" v-show="hasNewSign"><span class="color_text">您有新的签约</span></div>
         <i class="allow_right"></i>
       </div>
       <!--我的账单 -->
@@ -130,7 +130,7 @@
         <div class="title">
           <img src="../../../static/images/jx_mail_1.png" ><span class="cell_text">消息</span>
         </div>
-        <div v-show="hasNewMsg" class="cell_value"><span class="orange_text">您有新消息</span></div>
+        <div v-show="hasNewMsg" class="cell_value"><span class="color_text">您有新消息</span></div>
         <i class="allow_right"></i>
       </div>
       <!--帮助与客服 -->

@@ -76,7 +76,7 @@ export default new Router({
       path: '/openPage',
       name: 'openPage',
       meta: {
-        title: '嘉薪'
+        title: ''
       },
       component: openPage,
     },

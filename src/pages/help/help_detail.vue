@@ -34,10 +34,10 @@
 
     mounted () {
 
-        var _helpPage = this.getStorage('helpPage') || 'orange';
+        var _helpPage = this.getStorage('helpPage');
 
 
-        var anotherCompany = this.getCookie('anotherCompany');
+        var anotherCompany = this.getCookie('anotherCompany') || 'orange';
 
        if(_helpPage=='1'){
 

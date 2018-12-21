@@ -3,7 +3,7 @@
     <!-- 订单 -->
     <div class="my_task_order">
       <div class="tab_box">
-        <div v-for="item in tabList" @click="selectSort(item)"  v-bind:data-num="item.state" v-bind:class="{'selected orange_text':item.show===true}">{{item.sort}}</div>
+        <div v-for="item in tabList" @click="selectSort(item)"  v-bind:data-num="item.state" v-bind:class="{'selected color_text':item.show===true}">{{item.sort}}</div>
       </div>
       <div class="tab_box_content"></div>
 
@@ -14,12 +14,12 @@
       <div class="my_task_one" v-for="item in taskList" v-bind:data-id="item.taskId" @click="lookTaskDetailFn">
         <div class="my_task_information">
           <div class="task_left">
-            <div class="task_title orange_background">
+            <div class="task_title color_background">
               <img src="../../../../static/images/jx_bag.png">
             </div>
             <div class="task_content">
               <div>{{item.taskName}}</div>
-              <div class="task_money orange_text">
+              <div class="task_money color_text">
                 <span v-if="item.taskMaxUnit==item.taskMinUnit">￥{{item.taskMaxUnit}}</span>
                 <span v-else>￥{{item.taskMinUnit}}-￥{{item.taskMaxUnit}}</span>
               </div>
@@ -27,10 +27,10 @@
           </div>
 
           <div class="task_status">
-            <span class="orange_text" v-if="item.taskState=='1'">已报名</span>
-            <span class="orange_text" v-else-if="item.taskState=='2'">工作中</span>
-            <span class="orange_text" v-else-if="item.taskState=='3'">待验收</span>
-            <span class="orange_text" v-else-if="item.taskState=='4'">待收款</span>
+            <span class="color_text" v-if="item.taskState=='1'">已报名</span>
+            <span class="color_text" v-else-if="item.taskState=='2'">工作中</span>
+            <span class="color_text" v-else-if="item.taskState=='3'">待验收</span>
+            <span class="color_text" v-else-if="item.taskState=='4'">待收款</span>
             <span v-else-if="item.taskState=='5'">已收款</span>
             <span v-else-if="item.taskState=='6'">已取消</span>
             <span v-else-if="item.taskState=='7'">未被录用</span>

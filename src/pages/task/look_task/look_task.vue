@@ -4,22 +4,22 @@
     <div class="task_no">任务编号：<span>{{taskDetail.taskId}}</span></div>
     <!-- 详细-->
     <div class="task_detail">
-      <div class="title">{{taskDetail.taskName}}</div>
+      <div class="title before_border">{{taskDetail.taskName}}</div>
       <div class="sort">
         <span><img src="../../../../static/images/jx_task_sort.png">{{taskDetail.type}}</span>
         <span><img src="../../../../static/images/jx_task_sort.png">{{taskDetail.industry}}</span>
       </div>
       <div class="detail">
         <div>
-          <p>￥<span>{{taskDetail.taskMinUnit}}</span><span v-if="taskDetail.taskMinUnit != taskDetail.taskMaxUnit">-{{taskDetail.taskMaxUnit}}</span></p>
+          <p class="color_text">￥<span>{{taskDetail.taskMinUnit}}</span><span v-if="taskDetail.taskMinUnit != taskDetail.taskMaxUnit">-{{taskDetail.taskMaxUnit}}</span></p>
           <p>预算</p>
         </div>
         <div>
-          <p>{{taskDetail.peopleCount}}<span v-if="taskDetail.peopleCount != '不限'">人</span></p>
+          <p class="color_text">{{taskDetail.peopleCount}}<span v-if="taskDetail.peopleCount != '不限'">人</span></p>
           <p>需要人数</p>
         </div>
         <div>
-          <p>{{taskDetail.abortDate}}</p>
+          <p class="color_text">{{taskDetail.abortDate}}</p>
           <p>截止时间</p>
         </div>
       </div>
@@ -33,7 +33,7 @@
     </div>
     <!-- 需求描述 -->
     <div class="task_describe">
-      <div class="title">需求描述</div>
+      <div class="title before_border">需求描述</div>
       <div class="content" v-for="detail in taskDetail.taskDetails">{{detail}}</div>
       <!-- 文件下载 -->
       <div class="file" v-if="originalFileNames">
@@ -43,7 +43,7 @@
         </a>
       </div>
       <!-- 补充内容-->
-      <div class="tips_title" v-if="taskDetail.entTaskAddList">补充内容</div>
+      <div class="tips_title before_border" v-if="taskDetail.entTaskAddList">补充内容</div>
       <div class="tips_content" v-for="taskAddtionDetail in taskDetail.entTaskAddList">{{taskAddtionDetail.taskAddtionDetail}}</div>
       <div class="tips_files">
         <div v-if="addListFile">附件：</div>
@@ -59,7 +59,7 @@
       <div class="taskCreateInfo">
         <div class="people">
           <div>{{nickName}}</div>
-          <div><span><img src="../../../../static/images/jx_people_authentication.png"/>已认证</span></div>
+          <div><span class="color_background"><img src="../../../../static/images/jx_people_authentication.png"/>已认证</span></div>
         </div>
         <div class="createDate">发布时间：{{taskDetail.createDate}}</div>
       </div>
@@ -67,7 +67,7 @@
     <div class="task_btn_area">
       <!-- 按钮-->
       <orange-btn :name="btnName" v-on:clickEvent="handleClick" v-if="taskDetail.buttonState == 6"></orange-btn>
-      <div class="jump_to" v-else v-on:click="$router.push('/taskDetail')">查看任务详情</div>
+      <div class="jump_to btn_border" v-else v-on:click="$router.push('/taskDetail')">查看任务详情</div>
     </div>
 
   </div>
