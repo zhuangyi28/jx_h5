@@ -103,13 +103,13 @@ input,textarea,button{
   height: 50px!important;
   line-height: 50px!important;
 }
-.orange_text{
+.color_text{
   color: #ff7a3c;
 }
-.orange_border{
+.color_text{
   border-color: #ff7a3c;
 }
-.orange_background{
+.color_background{
   background-color: #ff7a3c;
 }
 .change_color_background_mine{

@@ -4,7 +4,7 @@
     <div class="help_box">
       <div class="title">提现相关</div>
       <div class="help_details">
-        <div class="orange_text"><i class="iconfont icon-help_withdrawal"></i></div>
+        <div class="color_text"><i class="iconfont icon-help_withdrawal"></i></div>
         <div>
           <p v-for="item in helpDetail1" v-bind:data-no="item.no" v-on:click="detail1Fn">{{item.title}}</p>
         </div>
@@ -15,7 +15,7 @@
     <div class="help_box">
       <div class="title">支付相关</div>
       <div class="help_details">
-        <div class="orange_text"><i class="iconfont icon-help_pay"></i></div>
+        <div class="color_text"><i class="iconfont icon-help_pay"></i></div>
         <div>
           <p v-for="item in helpDetail2" v-bind:data-no="item.no" v-on:click="detail2Fn">{{item.title}}</p>
         </div>
@@ -26,7 +26,7 @@
     <div class="help_box">
       <div class="title">加入企业</div>
       <div class="help_details">
-        <div class="orange_text"><i class="iconfont icon-help_enterprise"></i></div>
+        <div class="color_text"><i class="iconfont icon-help_enterprise"></i></div>
         <div>
           <p v-for="item in helpDetail3" v-bind:data-no="item.no" v-on:click="detail3Fn">{{item.title}}</p>
         </div>
@@ -39,8 +39,8 @@
 
       <div class="area_box"></div>
       <div class="footer">
-        <span v-on:click="customer"><i class="iconfont icon-withdraw_custom orange_text"></i>联系客服</span>
-        <a v-bind:herf="phoneNumber"><i class="iconfont icon-phone_consult orange_text"></i>拨打电话</a>
+        <span v-on:click="customer"><i class="iconfont icon-withdraw_custom color_text"></i>联系客服</span>
+        <a v-bind:href="phoneNumber"><i class="iconfont icon-phone_consult color_text"></i>拨打电话</a>
       </div>
 
 
@@ -129,7 +129,7 @@
         tel:this.getStorage('mobile'),// 电话
       });
 
-      var anotherCompany = this.getCookie('anotherCompany');
+      var anotherCompany = this.getCookie('anotherCompany') || 'orange';
 
       if(anotherCompany){
 

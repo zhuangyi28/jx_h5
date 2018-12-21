@@ -8,7 +8,7 @@
   </div>
   <div class="code_text">
     <span class="code_information">验证码已发送至{{mobile| plusXing(3, 4)}},{{count}}s后可</span>
-    <span :class="lockBtn==1 ? 'orange_text' :'locked'" v-on:click="hasCodeFn">重新获取</span>
+    <span :class="lockBtn==1 ? 'color_text' :'locked'" v-on:click="hasCodeFn">重新获取</span>
   </div>
 
   <div class="content_box">

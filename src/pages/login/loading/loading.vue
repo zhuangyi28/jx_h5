@@ -7,7 +7,7 @@
       <div class="paper"><img src="../../../../static/images/jx_start_page3.png"/></div>
 
     </div>
-    <div class="font"><img src="../../../../static/images/jx_loading_title.png"></div>
+    <div class="font"><img v-bind:src="slogan"></div>
     <div class="bottom"><img src="../../../../static/images/jx_start_page8.png"></div>
   </div>
 </template>
@@ -21,6 +21,7 @@
 
       return {
 
+        slogan:'./static/images/jx_loading_title.png'
 
       }
     },
@@ -37,11 +38,15 @@
 
             document.title = '嘉薪';
 
+            this.slogan='./static/images/jx_loading_title.png'
+
             break;
 
           case 'blue':
 
             document.title = '派云众包';
+
+            this.slogan='./static/images/paiyun/jx_loading_title_1.png'
 
             break;
 

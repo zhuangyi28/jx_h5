@@ -1,6 +1,6 @@
 <template>
   <div class="contract_detail" v-bind:class="{'overFlow': popupShow}">
-    <div class="contract_part_bg"></div>
+    <div class="contract_part_bg change_color_background"></div>
     <div class="contract_part">
       <div class="contract_file" v-on:click="popupShow = true">
         <img v-bind:src="contractUrlImage">
@@ -17,9 +17,17 @@
       <div class="information"><span>甲方签署时间</span><span>{{entSignDate}}</span></div>
       <div class="information" v-if="contractType == 2"><span>乙方</span><span>{{entSignNamePartyB}}</span></div>
       <div class="information" v-if="contractType == 2"><span>乙方签署时间</span><span>{{entSignDate}}</span></div>
-      <div class="information"><span>丙方</span><span v-show="signStateNum == 1">{{userName}}</span></div>
-      <div class="information"><span>丙方签署时间</span><span v-show="signStateNum == 1">{{userSignDate}}</span></div>
-      <div class="information"><span>状态</span><span v-bind:class="(signState == '已过期') ? 'grey' : 'orange'">{{signState}}</span></div>
+      <div class="information">
+        <span v-if="contractType == 1">乙方</span>
+        <span v-else-if="contractType == 2">丙方</span>
+        <span v-show="signStateNum == 1">{{userName}}</span>
+      </div>
+      <div class="information">
+        <span v-if="contractType == 1">乙方签署时间</span>
+        <span v-else-if="contractType == 2">丙方签署时间</span>
+        <span v-show="signStateNum == 1">{{userSignDate}}</span>
+      </div>
+      <div class="information"><span>状态</span><span v-bind:class="(signState == '已过期') ? 'grey' : 'color_text'">{{signState}}</span></div>
       <div class="contract_state_img" v-if="signStateNum == 1">
         <img src="../../../../static/images/jx_contract_sign_useful.png">
       </div>
@@ -94,6 +102,8 @@
       this.getData();
 
       localStorage.getItem('contractDetailBack') || localStorage.setItem('contractDetailBack','1');
+
+
 
 
     },

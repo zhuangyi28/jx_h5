@@ -6,8 +6,8 @@
     </div>
     <div class="transfer_history_title">
       <span>转给最近收款人</span>
-      <div><i class="iconfont icon-all_people"></i>
-        <span v-on:click="$router.push('/transferHistoryUser')">全部收款人</span>
+      <div><i class="iconfont icon-all_people color_text"></i>
+        <span class="color_text" v-on:click="$router.push('/transferHistoryUser')">全部收款人</span>
       </div>
     </div>
     <div class="transfer_history_recent">

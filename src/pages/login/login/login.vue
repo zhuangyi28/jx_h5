@@ -9,11 +9,11 @@
 
       <div class="content_box">
         <div class="field">
-          <i class="iconfont icon-sign_phone orange_text"></i>
+          <i class="iconfont icon-sign_phone color_text"></i>
           <input type="number" pattern="\d*" @blur="lostPointFn" v-model="mobile" oninput="if(value.length > 11)value = value.slice(0, 11)" placeholder="请输入手机号" class="tel" >
         </div>
         <div class="field">
-          <i class="iconfont icon-sign_password orange_text"></i>
+          <i class="iconfont icon-sign_password color_text"></i>
           <input type="password" @blur="lostPointFn" v-model="password" placeholder="请输入密码" class="password" maxlength="20">
         </div>
 
@@ -74,7 +74,7 @@
     mounted(){
 
 
-      var str = this.getCookie('anotherCompany');
+      var str = this.getCookie('anotherCompany')|| 'orange';
 
       switch (str) {
 
@@ -86,7 +86,7 @@
 
         case 'blue':
 
-          this.src = "./static/images/paiyun_logo.png";
+          this.src = "./static/images/paiyun/paiyun_logo.png";
 
           break;
 

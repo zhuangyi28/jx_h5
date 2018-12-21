@@ -3,17 +3,17 @@
 
     <div class="content_box">
         <div class="field">
-          <i class="iconfont icon-sign_phone orange_text"></i>
+          <i class="iconfont icon-sign_phone color_text"></i>
           <input type="text" v-model="mobile" pattern="\d*" placeholder="请输入手机号" class="tel" maxlength="11">
         </div>
         <div class="field">
-          <i class="iconfont icon-sign_pen orange_text"></i>
+          <i class="iconfont icon-sign_pen color_text"></i>
           <input type="text" pattern="\d*" v-model="checkCode" placeholder="请输入验证码" class="code" maxlength="6">
-          <span v-show="show" class="get_code orange_background" @click="registerMsg">获取验证码</span>
-          <span v-show="!show" class="get_code orange_text">{{count}}s后重新发送</span>
+          <span v-show="show" class="get_code color_background" @click="registerMsg">获取验证码</span>
+          <span v-show="!show" class="get_code color_text_bg">{{count}}s后重新发送</span>
         </div>
         <div class="field">
-          <i class="iconfont icon-sign_password orange_text"></i>
+          <i class="iconfont icon-sign_password color_text"></i>
           <input type="password" v-model="password" placeholder="请输入6-20位字母数字密码" maxlength="20" class="password">
         </div>
 
@@ -24,7 +24,7 @@
     <div class="register_button">
 
       <div class="register_ps">
-        <p>点击注册，即表示您同意<span @click="$router.push('/Agreement')">《用户注册协议》</span></p>
+        <p>点击注册，即表示您同意<span class="color_text" @click="$router.push('/Agreement')">《用户注册协议》</span></p>
       </div>
     </div>
 
