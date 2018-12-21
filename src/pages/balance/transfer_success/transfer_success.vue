@@ -9,7 +9,7 @@
       <img src="../../../../static/images/jx_background.png">
     </div>
     <div class="success_title">
-      <span class="title">转账成功</span>
+      <span class="title color_text">转账成功</span>
       <span class="money">￥{{money}}</span>
     </div>
     <orangeBtn v-bind:name="btnName"></orangeBtn>

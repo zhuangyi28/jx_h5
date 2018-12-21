@@ -80,7 +80,7 @@
 
         case 'orange':
 
-          this.src = "./static/images/paiyun_logo.png";
+          this.src = "./static/images/logo.png";
 
           break;
 

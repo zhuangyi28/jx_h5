@@ -1,14 +1,14 @@
 <template>
   <div class="loading">
     <div class="bg">
-      <img src="../../../../static/images/jx_start_page7.png">
-      <div class="card"><img src="../../../../static/images/jx_start_page1.png"/></div>
-      <div class="msg"><img src="../../../../static/images/jx_start_page2.png"/></div>
-      <div class="paper"><img src="../../../../static/images/jx_start_page3.png"/></div>
+      <img v-bind:src="bgUrl">
+      <div class="card"><img v-bind:src="cardUrl"></div>
+      <div class="msg"><img v-bind:src="msgUrl"></div>
+      <div class="paper"><img v-bind:src="paperUrl"></div>
 
     </div>
     <div class="font"><img v-bind:src="slogan"></div>
-    <div class="bottom"><img src="../../../../static/images/jx_start_page8.png"></div>
+    <div class="bottom"><img v-bind:src="bottomUrl"></div>
   </div>
 </template>
  <script>
@@ -21,7 +21,17 @@
 
       return {
 
-        slogan:'./static/images/jx_loading_title.png'
+        slogan:'./static/images/jx_loading_title.png',//slogan
+
+        bgUrl:'./static/images/jx_start_page7.png',//背景图
+
+        bottomUrl:'./static/images/jx_start_page8.png',//底部
+
+        cardUrl:'./static/images/jx_start_page1.png',
+
+        msgUrl:'./static/images/jx_start_page2.png',
+
+        paperUrl:'./static/images/jx_start_page3.png',
 
       }
     },
@@ -38,7 +48,17 @@
 
             document.title = '嘉薪';
 
-            this.slogan='./static/images/jx_loading_title.png'
+            this.slogan='./static/images/jx_loading_title.png',
+
+            this.bgUrl='./static/images/jx_start_page7.png',//背景图
+
+            this.bottomUrl='./static/images/jx_start_page8.png',//底部
+
+            this.cardUrl='./static/images/jx_start_page1.png',
+
+            this.msgUrl='./static/images/jx_start_page2.png',
+
+            this.paperUrl='./static/images/jx_start_page3.png'
 
             break;
 
@@ -46,7 +66,17 @@
 
             document.title = '派云众包';
 
-            this.slogan='./static/images/paiyun/jx_loading_title_1.png'
+              this.slogan='./static/images/paiyun/jx_loading_title_1.png',
+
+              this.bgUrl='./static/images/paiyun/jx_start_page7.png',//背景图
+
+              this.bottomUrl='./static/images/paiyun/jx_start_page8.png',//底部
+
+              this.cardUrl='./static/images/paiyun/jx_start_page1.png',
+
+              this.msgUrl='./static/images/paiyun/jx_start_page2.png',
+
+              this.paperUrl='./static/images/paiyun/jx_start_page3.png'
 
             break;
 
@@ -118,6 +148,7 @@
       init: function () {
 
 
+
         /**
          * 接口：用户中心
          * 请求方式：POST
@@ -139,7 +170,14 @@
 
           if(res.data.code=='0000'){
 
-            this.$router.push('/workDesk/taskSquare');
+            setTimeout(()=> {
+
+              this.$router.push('/workDesk/taskSquare');
+
+            },200)
+
+
+
 
           }
 

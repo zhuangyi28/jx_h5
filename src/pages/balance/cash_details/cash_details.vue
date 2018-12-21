@@ -2,7 +2,7 @@
   <div class="cash_details">
     <!-- 提现详情 -->
     <div class="details">
-      <div class="details_box">
+      <div class="details_box color_background_gradient">
         <div class="step" v-bind:class="orderState=='0'||orderState=='2'||orderState=='5'? 'selected':''">
           <p><img src="../../../../static/images/cash_detail1.png"></p>
           <p v-if="orderState=='0'">待支付</p>

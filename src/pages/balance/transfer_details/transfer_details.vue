@@ -1,7 +1,7 @@
 <template>
   <div class="transfer_details">
     <!-- 提现金额 -->
-    <div class="cash">
+    <div class="cash change_color_background">
       <p>
         <span v-if="orderType=='02'"><img src="../../../../static/images/jx_transfer_out.png"/>转出金额（元）</span>
         <span v-else-if="orderType=='03'"><img src="../../../../static/images/jx_transfer_go.png"/>转入金额（元）</span>

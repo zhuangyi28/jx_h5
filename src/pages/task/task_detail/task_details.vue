@@ -27,7 +27,7 @@
     <!-- 任务状态 -->
     <div class="task_state">
 
-      <div class="title border_color_left">任务状态</div>
+      <div class="title before_border">任务状态</div>
       <div class="state_content">
         <div class="state_box" v-bind:class="brightState=='1'? 'selected':''">
           <p><img src="../../../../static/images/jx_task_sign_1.png"/></p>
@@ -100,11 +100,11 @@
     <div class="task_feedback" v-if="brightState!='1'">
 
       <div class="task_feedback_list">
-        <div class="title">任务反馈</div>
+        <div class="title before_border">任务反馈</div>
         <div class="feedback_content" v-for="item in feedbackList" v-bind:data-id="item.pFeedbackId" v-on:click="lookFeedBackDetailFn">
           <div class="feedback_box">
             <div>
-              <div class="feedback_details"><span>反馈</span><span>{{item.pContent}}</span></div>
+              <div class="feedback_details"><span class="color_background">反馈</span><span>{{item.pContent}}</span></div>
               <div class="time">{{item.pCreateDate|fmtDateStr}}</div>
             </div>
           </div>
@@ -112,7 +112,7 @@
 
       </div>
       <!-- 添加反馈 -->
-      <div v-if="canSubmit=='1'" class="add_feedback" v-on:click="$router.push('/taskFeedback')"><span>+</span>添加任务反馈</div>
+      <div v-if="canSubmit=='1'" class="add_feedback" v-on:click="$router.push('/taskFeedback')"><span class="border_color">+</span>添加任务反馈</div>
 
     </div>
 

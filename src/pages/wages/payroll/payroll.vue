@@ -1,6 +1,6 @@
 <template>
   <div class="payroll">
-    <div class="company_and_money">
+    <div class="company_and_money change_color_background">
       <div class="money">
         <div>{{salaryMonth}}<span v-if="salaryType=='8'">个体经营所得（元）</span><span v-else>收入（元）</span></div>
         <div class="wages">{{realAmount|thousandBitSeparator}}</div>
@@ -11,7 +11,7 @@
     <div class="money_detail_project_all" >
       <!-- 实发金额 -->
       <div class="money_detail_project">
-        <div class="money_detail_project_one special"><span>实发金额</span><span>{{realAmount|thousandBitSeparator}}</span></div>
+        <div class="money_detail_project_one special"><span>实发金额</span><span class="color_text">{{realAmount|thousandBitSeparator}}</span></div>
       </div>
 
       <!-- 基本信息 -->
@@ -88,7 +88,7 @@
 
           <orangeBtn :name="btnName3" class="disabled_btn" :class="className">已确认</orangeBtn>
 
-          <button class="button_left" v-on:click="$router.push('/feedback')">反馈</button>
+          <button class="button_left border_color" v-on:click="$router.push('/feedback')">反馈</button>
 
           <div v-show="hiddenDot" class="dot"></div>
 

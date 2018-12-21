@@ -1,7 +1,7 @@
 <template>
   <div class="withdraw" v-on:click="inputShow=false">
     <div class="withdraw_info">
-      <div class="withdraw_bank">
+      <div class="withdraw_bank color_background_gradient">
         <div v-on:click="pickerShow=true">
           <div class="withdraw_bank_info" v-if="bankList.length==0">
             <img src="">
