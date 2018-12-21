@@ -6,7 +6,7 @@
     <div class="iphone">
       <img  src="../../../../static/images/code_iphone.png"/>
     </div>
-    <div class="code_text">验证码已发送至{{mobile}},{{seconds}}s后可<span :class="lockBtn==1 ? '' :'locked'" v-on:click="getAgain">重新获取</span></div>
+    <div class="code_text">验证码已发送至{{mobile}},{{seconds}}s后可<span :class="lockBtn==1 ? 'color_text' :'locked'" v-on:click="getAgain">重新获取</span></div>
 
     <div class="content_box">
       <div class="field">

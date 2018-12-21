@@ -12,7 +12,7 @@
           <!-- 用户发起的列表-->
           <div v-if="item.type=='1'" class="tips_box">
 
-            <div><span class="tips">{{item.content}}</span></div>
+            <div><span class="tips color_background_gradient">{{item.content}}</span></div>
 
             <div class="people_img"><img src="../../../../static/images/feedback_mine.png"/></div>
 
@@ -37,7 +37,7 @@
       <div class="input_box"></div>
       <div class="feedback_input">
         <input class="weui-input" v-model="contentTitle"  @blur="lostPointFn" @focus="focusFn" placeholder="如有疑问，请提交反馈给HR，200字以内" maxlength="200"/>
-        <button class="send" v-on:click.stop="sendMsgFn">发送</button>
+        <button class="send btn_color" v-on:click.stop="sendMsgFn">发送</button>
       </div>
 
     </div>

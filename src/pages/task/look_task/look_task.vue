@@ -43,7 +43,7 @@
         </a>
       </div>
       <!-- 补充内容-->
-      <div class="tips_title before_border" v-if="taskDetail.entTaskAddList">补充内容</div>
+      <div class="tips_title" v-if="taskDetail.entTaskAddList">补充内容</div>
       <div class="tips_content" v-for="taskAddtionDetail in taskDetail.entTaskAddList">{{taskAddtionDetail.taskAddtionDetail}}</div>
       <div class="tips_files">
         <div v-if="addListFile">附件：</div>

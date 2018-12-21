@@ -10,14 +10,25 @@
       line-height: 16px;
       &:before{
         content: '';
-        display: block;
-        position: absolute;
-        top: 10px;
-        left: -20px;
+        height: 16px;
         width: 4px;
-        height: 15px;
-        background-color: #ff7a3c;
+        position: absolute;
+        bottom: 10px;
+        left: -20px;
+        background-color: #fe7c4e;
+        z-index: 2;
       }
+      &:after{
+        content: '';
+        height: 13px;
+        width: 4px;
+        position: absolute;
+        bottom: 10px;
+        left: -18px;
+        background-color: #ffded3;
+        z-index: 1;
+      }
+
     }
     .feedback_content_input{
       position:relative;
@@ -58,13 +69,23 @@
       line-height: 16px;
       &:before{
         content: '';
-        display: block;
-        position: absolute;
-        top: 10px;
-        left: -20px;
+        height: 16px;
         width: 4px;
-        height: 15px;
-        background-color: #ff7a3c;
+        position: absolute;
+        bottom: 10px;
+        left: -20px;
+        background-color: #fe7c4e;
+        z-index: 2;
+      }
+      &:after{
+        content: '';
+        height: 13px;
+        width: 4px;
+        position: absolute;
+        bottom: 10px;
+        left: -18px;
+        background-color: #ffded3;
+        z-index: 1;
       }
       &>span{
         color: #ababab;
