@@ -79,7 +79,7 @@
         <i class="allow_right"></i>
       </div>
       <!--我的发薪企业 -->
-      <div class="cell" v-on:click="$router.push('/company')">
+      <div class="cell" v-on:click="companyFn">
         <div class="title">
           <img src="../../../static/images/jx_unit_1.png"><span class="cell_text">发薪企业</span>
         </div>
@@ -251,6 +251,8 @@
 
           this.setStorage('userName', res.data.data.userName);
 
+          this.setStorage('userId', res.data.data.userId);
+
           //是否实名认证
           this.setStorage('isVerify', res.data.data.isVerify);
 
@@ -408,7 +410,17 @@
 
            this.$router.push('/bill')
 
+      },
+
+      companyFn:function () {
+
+        this.$router.push('/company');
+
+        this.setStorage('goFrozen','5')
+
+        console.log(this.getStorage('goFrozen'))
       }
+
     }
   }
 </script>

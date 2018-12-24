@@ -165,6 +165,8 @@
     },
     methods: {
 
+
+
       frozenFn:function () {
 
         this.$messagebox({
@@ -183,6 +185,8 @@
 
             //点击去解冻 储存 用于判断跳回哪个页面(再实名认证成功之后获取）
             this.setStorage('goFrozen','1');
+
+            console.log('数值'+this.getStorage('goFrozen'))
 
             this.$router.push('/company');
 
