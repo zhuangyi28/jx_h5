@@ -226,10 +226,14 @@
 
               this.$router.go(-1)
 
+            }else if(goFrozen == '3'){
+
+              this.$router.replace('/salary');
+
             }
             else {
 
-              this.$router.replace('/company');
+              this.$router.go(-1);
 
             }
 

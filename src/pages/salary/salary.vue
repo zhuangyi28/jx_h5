@@ -113,6 +113,8 @@
     },
     mounted(){
 
+      (localStorage.getItem('goFrozen') == 3) && ((localStorage.removeItem('goFrozen')) || (this.$router.push('/payroll')));
+
       var _this = this
 
 

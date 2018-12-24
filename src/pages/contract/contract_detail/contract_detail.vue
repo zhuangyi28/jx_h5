@@ -2,12 +2,16 @@
   <div class="contract_detail" v-bind:class="{'overFlow': popupShow}">
     <div class="contract_part_bg change_color_background"></div>
     <div class="contract_part">
-      <div class="contract_file" v-on:click="popupShow = true">
+      <div class="contract_file" v-on:click="showAll">
         <img v-bind:src="contractUrlImage">
       </div>
+      <div class="showImg" v-on:click="showAll">
+        <span>点击预览合同内容</span>
+        <img src="../../../../static/images/jx_showImg.png">
+      </div>
       <div class="cut_line" v-if="signStateNum == 1"></div>
-      <a class="contract_down" v-bind:href="contractUrl" target="_blank" v-if="signStateNum == 1">
-        <span>下载</span>
+      <a class="contract_down" v-bind:href="contractUrl" v-if="signStateNum == 1" target="_blank">
+        <span>下载该合同</span>
         <img src="../../../../static/images/jx_download.png">
       </a>
     </div>
@@ -360,7 +364,30 @@
 
         })
 
+      },
+
+
+
+
+      showAll: function () {
+
+        var u = navigator.userAgent, app = navigator.appVersion;
+        var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //g
+        var isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+
+        if(isAndroid){
+
+          this.popupShow = true;
+
+        }else if(isIOS){
+
+          window.open(this.contractUrl);
+
+        }
+
       }
+
+
 
     }
 
@@ -371,7 +398,7 @@
 </style>
 <style>
   .contract_detail .mint-popup{
-    height: 80%;
-    width: 80%;
+    height: 100%;
+    width: 100%;
   }
 </style>
