@@ -23,8 +23,31 @@
       overflow: hidden;
       width: 100%;
       height: calc(~'(100vw - 50px) * 354 / 637');
-      >*{
+      position: relative;
+      >img{
         width: 100%;
+        border: 1px solid #eeeeee;
+        box-sizing: border-box;
+        border-radius: 5px;
+      }
+    }
+    .showImg{
+      background-color: #8a8a8a;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 5px;
+      margin: 0 15px 10px;
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+      span{
+        color: #ffffff;
+        font-size: 14px;
+      }
+      img{
+        height: 18px;
+        width: 18px;
       }
     }
     .cut_line{

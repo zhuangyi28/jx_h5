@@ -375,31 +375,7 @@
       //页面加载方法
       onShow: function () {
 
-
-        /**
-         * 接口：工资提醒
-         * 请求方式：GET
-         * 接口：/salary/home/selecttiptype
-         * 入参：null
-         **/
-        this.$http({
-
-          method: 'get',
-
-          url: process.env.API_ROOT + 'user/account/getsalarystate'
-
-        }).then((res)=>{
-
-          if(res.data.code == '0000'){
-
-            console.log(res.data);
-          }
-
-        }).catch((res)=>{
-
-          console.log(res);
-
-        });
+        var _this = this;
 
         /**
          * 接口：工资提醒
@@ -420,9 +396,19 @@
 
           console.log(res.data);
 
-          var _this = this;
-
           var thisType = res.data.data[0].type;
+
+          if(res.data.data[0].salaryType == 1 || res.data.data[0].salaryType == 7){
+
+            localStorage.setItem('goFrozen','1');
+
+          }else{
+
+            this.setStorage('salaryDetailId', res.data.data[0].salaryDetailId);
+
+            localStorage.setItem('goFrozen','3');
+
+          }
 
           //console.log('tpye几'+thisType)
 
