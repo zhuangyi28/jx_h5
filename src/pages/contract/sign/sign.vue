@@ -11,33 +11,85 @@
       return{
 
 
-
       }
 
     },
 
     mounted () {
 
-      var that = this
 
-      this.$indicator.open({
-        text: '跳转中...',
-        spinnerType: 'fading-circle'
-      });
+      //获取signId=后面的字符串
 
-      setTimeout(function () {
+      var thisSignid = location.href.split('?')[1].split('signId=')[1]
 
-        that.$router.push('/contractDetail');
+      this.setStorage('signId',thisSignid)
 
-      },2000)
+      console.log(location.href.split('?')[1].split('signId=')[1])
+
+      this.init();
 
 
     },
 
-
-
     methods: {
 
+      init:function () {
+
+        var that = this;
+
+        /**
+         * 接口：查询合同状态
+         * 请求方式：POST
+         * 接口：user/contract/get/contractstate
+         * 入参：signId，userId
+         * */
+
+        this.$http({
+
+          method: 'post',
+
+          url: process.env.API_ROOT + 'user/contract/get/contractstate',
+
+          params: {
+
+            signId: this.getStorage('signId'),
+
+            userId: this.getStorage('userId'),
+
+          },
+
+        }).then((res)=>{
+
+
+          console.log(res.data);
+
+          if(res.data.data.signState=='1'){
+
+            setTimeout(function () {
+
+              that.$router.push('/contractDetail');
+
+            },1000)
+
+          }
+
+          else {
+
+             this.$indicator.open({
+              text: '跳转中...',
+              spinnerType: 'fading-circle'
+
+            });
+
+            this.init()
+
+
+          }
+
+
+        }).catch((res)=>{})
+
+      }
 
     },
 

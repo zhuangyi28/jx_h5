@@ -56,11 +56,7 @@ router.beforeEach((to,from,next)=>{
 
   if(Authorization){
 
-    if((from.path == '/salary') && (to.path == '/company') || (from.path == '/balance') && (to.path == '/company')){
-
-      next({path: '/workDesk/mine'})
-
-    }else if((from.path == '/contractDetail') && (to.path == '/sign')){
+   if((from.path == '/contractDetail') && (to.path == '/sign')){
 
       next({path: '/workDesk/mine'})
 

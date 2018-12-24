@@ -212,13 +212,22 @@
           //验证成功后显示工资
           else if (thisCode == '0000') {
 
-            var goFrozen = (localStorage.getItem('goFrozen') && localStorage.removeItem('goFrozen')) || false;
+            //var goFrozen = (localStorage.getItem('goFrozen') && localStorage.removeItem('goFrozen')) || false;
 
-            if(goFrozen){
+            var goFrozen = localStorage.getItem('goFrozen')
+
+            console.log('数值'+goFrozen)
+
+            if(goFrozen=='1'){
 
               this.$router.replace('/balance');
 
-            }else{
+            }else if(goFrozen=='5'){
+
+              this.$router.go(-1)
+
+            }
+            else {
 
               this.$router.replace('/company');
 
