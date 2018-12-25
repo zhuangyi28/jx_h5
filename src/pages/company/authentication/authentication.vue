@@ -220,7 +220,9 @@
 
             if(goFrozen=='1'){
 
-              this.$router.replace('/balance');
+              this.$router.go(-2)
+
+              //this.$router.replace('/balance');
 
             }else if(goFrozen=='5'){
 
