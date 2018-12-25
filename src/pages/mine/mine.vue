@@ -233,6 +233,45 @@
 
           var ishasNewSign = res.data.data.isNewSign
 
+
+
+          //判断是否有新消息
+
+          if (ishasNewMsg == '1') {
+
+            console.log('有消息')
+
+
+            _this.hasNewMsg = true
+
+
+          }
+
+          else {
+
+            _this.hasNewMsg = false
+
+
+          }
+
+
+          //判断是否有新签约
+
+          if (ishasNewSign == '1') {
+
+            _this.hasNewSign = true
+
+
+          }
+
+          else {
+
+            _this.hasNewSign = false
+
+
+          }
+
+
           _this.mobile = res.data.data.mobile;
 
           _this.isVerify = res.data.data.isVerify;
@@ -266,38 +305,7 @@
 
 
 
-          //判断是否有新消息
 
-          if (ishasNewMsg == '1') {
-
-
-             _this.hasNewMsg = true
-
-
-          }
-
-          else {
-
-             _this.hasNewMsg = false
-
-
-          }
-
-          //判断是否有新签约
-
-          if (ishasNewSign == '1') {
-
-            _this.hasNewSign = true
-
-
-          }
-
-          else {
-
-            _this.hasNewSign = false
-
-
-          }
 
 
           //如果审核不通过的话 存储一下不通过的原因
