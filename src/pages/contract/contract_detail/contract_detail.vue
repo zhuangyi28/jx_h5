@@ -255,6 +255,10 @@
 
             return '拒签';
 
+          case '7':
+
+            return 7;
+
         }
 
       },
@@ -264,6 +268,19 @@
 
       //签约事件
       signEvent: function () {
+
+        if(this.signState == 7){
+
+          this.$messagebox({
+            message: '合同异常，请联系管理员重新发送',
+            showConfirmButton: true,
+            confirmButtonText: '确定',
+            confirmButtonClass:'confirm_btn_orange',
+          });
+
+          return;
+
+        }
 
         /**
          * 接口：用户中心
@@ -348,7 +365,7 @@
             if(!this.signUrl){
 
               this.$messagebox({
-                message: '正在为您申请电子签名资质，申请成功后即可进行签署，请稍后再试',
+                message: '上上签用户数字证书申请中，则用户端提示：正在为您申请电子签名资质，申请成后即可进行签署，请稍后再试',
                 showConfirmButton: true,
                 confirmButtonText: '确定',
                 confirmButtonClass:'confirm_btn_orange',
