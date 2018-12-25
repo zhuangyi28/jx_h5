@@ -18,7 +18,7 @@
           </div>
           <div>发现</div>
         </div>
-        <div v-on:click="$router.push('/workDesk/mine'); (btnLight = 3)" v-bind:class='{"router-link-active color_text": btnLight == 3}'>
+        <div v-on:click="$router.push('/workDesk/mine'); (btnLight = 3)" v-bind:class='{"router-link-active color_text": (btnLight == 3), "hasNew": hasNew}'>
           <div>
             <i class="iconfont icon-bottom-main1"></i>
           </div>
@@ -39,7 +39,9 @@
 
         homepage: '',
 
-        btnLight: ''
+        btnLight: '',
+
+        hasNew: false
 
       }
 
@@ -78,6 +80,8 @@
 
       }).then(function (res) {
 
+        ('' + res.data.data.isHaveNewMsg + res.data.data.isNewSign != '00') && (this.hasNew = true);
+
         console.log(res);
 
         if(res.data.data.isCommitAuthorize == 1){
@@ -95,6 +99,26 @@
         console.log(res);
 
       });
+
+      /**
+       * 接口：有待加入企业
+       * 请求方式：GET
+       * 接口：/user/workunit/selectisjoinent
+       * 入参：null
+       **/
+
+      this.$http({
+
+        method: 'get',
+
+        url: process.env.API_ROOT + 'user/workunit/selectisjoinent',
+
+
+      }).then((res)=>{
+
+        (res.data.data.type == 1) && (this.hasNew) || (this.hasNew = false);
+
+      })
 
     },
 
