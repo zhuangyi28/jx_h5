@@ -94,31 +94,31 @@
 
         }
 
+        /**
+         * 接口：有待加入企业
+         * 请求方式：GET
+         * 接口：/user/workunit/selectisjoinent
+         * 入参：null
+         **/
+
+        this.$http({
+
+          method: 'get',
+
+          url: process.env.API_ROOT + 'user/workunit/selectisjoinent',
+
+
+        }).then(function (res) {
+
+          ((res.data.data.type == 1) || (this.hasNew)) ? (this.hasNew = true): (this.hasNew = false);
+
+        }.bind(this))
+
       }.bind(this)).catch((res)=>{
 
         console.log(res);
 
       });
-
-      /**
-       * 接口：有待加入企业
-       * 请求方式：GET
-       * 接口：/user/workunit/selectisjoinent
-       * 入参：null
-       **/
-
-      this.$http({
-
-        method: 'get',
-
-        url: process.env.API_ROOT + 'user/workunit/selectisjoinent',
-
-
-      }).then((res)=>{
-
-        (res.data.data.type == 1) && (this.hasNew) || (this.hasNew = false);
-
-      })
 
     },
 
