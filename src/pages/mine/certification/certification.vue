@@ -21,7 +21,7 @@
           <span>{{country}}</span>
         </div>
       </div>
-      <div class="certification_name" v-on:click="pickerShow = true" v-if="(isVerify == 0||isVerify == 3)&&source==1">
+      <div class="certification_name" v-on:click="pickerShow = true" v-if="isVerify == 0||isVerify == 3">
         <span>证件类型</span>
         <div class="information_btn">
           <span>{{cardType}}</span>
@@ -91,7 +91,7 @@
         isVerify: '',//是否认证
         slots: [
           {
-            values: ['身份证','港澳居民来往内地通行证','台湾居民来往内地通行证','护照'],
+            values: ['身份证','港澳居民来往内地通行证','台湾居民来往大陆通行证','护照'],
             textAlign: 'center'
           }
         ],//证件类型弹窗值
@@ -146,7 +146,7 @@
             this.cardType = '港澳居民来往内地通行证'
           }
           if(this.cardType == 4){
-            this.cardType = '台湾居民来往内地通行证'
+            this.cardType = '台湾居民来往大陆通行证'
           }
 
         }
@@ -435,7 +435,7 @@
         if(this.cardType == '港澳居民来往内地通行证'){
           return 3;
         }
-        if(this.cardType == '台湾居民来往内地通行证'){
+        if(this.cardType == '台湾居民来往大陆通行证'){
           return 4;
         }
       }
@@ -467,7 +467,7 @@
   .certification .mint-indexlist{
     overflow: scroll;
     height:auto;
-    bottom: auto;
+    bottom: 0;
   }
   .certification .mint-indexlist-content{
     overflow: scroll!important;

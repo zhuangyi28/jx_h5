@@ -271,6 +271,57 @@
 
           }
 
+          /**
+           * 接口：有待加入企业
+           * 请求方式：GET
+           * 接口：/user/workunit/selectisjoinent
+           * 入参：null
+           **/
+
+          this.$http({
+
+            method: 'get',
+
+            url: process.env.API_ROOT + 'user/workunit/selectisjoinent',
+
+
+          }).then((res) => {
+
+
+            console.log(res.data);
+
+            let hasEntType = res.data.data.type;
+
+            //判断是否有加入企业
+
+            if (hasEntType == '1') {
+
+              _this.hasJoinEnt = true
+
+            }
+
+            else {
+
+              _this.hasJoinEnt = false
+
+            }
+
+            console.log('亮点'+this.$parent.$children[0].hasNew)
+
+            (this.hasJoinEnt || this.hasNewMsg || this.hasNewSign) && (this.$parent.$children[0].hasNew = true);
+
+
+
+
+
+
+          }).catch((res) => {
+
+            //console.log(res.data);
+
+
+          })
+
 
           _this.mobile = res.data.data.mobile;
 
@@ -317,53 +368,12 @@
 
 
 
-
         }
+
+
 
 
       }).catch((res) => {
-
-      })
-
-      /**
-       * 接口：有待加入企业
-       * 请求方式：GET
-       * 接口：/user/workunit/selectisjoinent
-       * 入参：null
-       **/
-
-      this.$http({
-
-        method: 'get',
-
-        url: process.env.API_ROOT + 'user/workunit/selectisjoinent',
-
-
-      }).then((res) => {
-
-        console.log(res.data);
-
-        let hasEntType = res.data.data.type;
-
-        //判断是否有加入企业
-
-        if (hasEntType == '1') {
-
-          _this.hasJoinEnt = true
-
-        }
-
-        else {
-
-          _this.hasJoinEnt = false
-
-        }
-
-
-      }).catch((res) => {
-
-        //console.log(res.data);
-
 
       })
 
@@ -407,6 +417,8 @@
 
 
       })
+
+
 
 
     },
