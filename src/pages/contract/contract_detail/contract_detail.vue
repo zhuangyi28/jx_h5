@@ -39,7 +39,7 @@
         <!--<img src="../../../../static/images/jx_contract_sign_unuseful.png">-->
       <!--</div>-->
     </div>
-    <orangeBtn v-bind:name="btnName" v-on:clickEvent="signEvent" v-if="signStateNum == 2"></orangeBtn>
+    <orangeBtn v-bind:name="btnName" v-on:clickEvent="signEvent" v-if="signStateNum == 2||signStateNum == 7"></orangeBtn>
     <mt-popup v-model="popupShow" popup-transition="popup-fade">
       <div class="close" v-on:click="popupShow=false">
         <img src="../../../../static/images/contract_close.png">

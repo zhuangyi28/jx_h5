@@ -3,7 +3,7 @@
  */
 import Vconsole from 'vconsole';
 
-if(process.env.NODE_ENV=='development')
+if(/*process.env.NODE_ENV=='development'*/0)
  {
   var vConsole = new Vconsole();
 }
