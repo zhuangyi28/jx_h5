@@ -222,7 +222,8 @@
 
 
 
-      }).then((res) => {
+      }).then(function (res) {
+
 
         console.log(res.data);
 
@@ -239,11 +240,7 @@
 
           if (ishasNewMsg == '1') {
 
-            console.log('有消息')
-
-
             _this.hasNewMsg = true
-
 
           }
 
@@ -285,7 +282,7 @@
             url: process.env.API_ROOT + 'user/workunit/selectisjoinent',
 
 
-          }).then((res) => {
+          }).then(function (res) {
 
 
             console.log(res.data);
@@ -308,14 +305,18 @@
 
             console.log('亮点'+this.$parent.$children[0].hasNew)
 
-            (this.hasJoinEnt || this.hasNewMsg || this.hasNewSign) && (this.$parent.$children[0].hasNew = true);
+            if(this.hasJoinEnt || this.hasNewMsg || this.hasNewSign){
+              this.$parent.$children[0].hasNew = true;
+              this.$parent.$children[1].hasNew = true;
+
+            }
 
 
 
 
 
 
-          }).catch((res) => {
+          }.bind(this)).catch((res) => {
 
             //console.log(res.data);
 
@@ -373,7 +374,7 @@
 
 
 
-      }).catch((res) => {
+      }.bind(this)).catch((res) => {
 
       })
 
