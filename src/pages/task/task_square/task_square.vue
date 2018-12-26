@@ -400,7 +400,7 @@
 
           if(res.data.data[0].salaryType == 1 || res.data.data[0].salaryType == 7){
 
-            localStorage.setItem('goFrozen','1');
+            localStorage.setItem('goFrozen','2');
 
           }else{
 

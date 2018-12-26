@@ -222,8 +222,6 @@
 
               this.$router.go(-2)
 
-              //this.$router.replace('/balance');
-
             }else if(goFrozen=='5'){
 
               this.$router.go(-1)
@@ -231,6 +229,10 @@
             }else if(goFrozen == '3'){
 
               this.$router.replace('/salary');
+
+            }else if(goFrozen == '2'){
+
+              this.$router.replace('/balance');
 
             }
             else {

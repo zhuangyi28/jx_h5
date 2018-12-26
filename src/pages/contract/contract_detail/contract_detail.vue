@@ -95,7 +95,7 @@
 
         entSignNamePartyB: '',//乙方名称
 
-        contractUrlImage: ''//文件图片链接
+        contractUrlImage: '',//文件图片链接
 
       }
 
@@ -257,7 +257,7 @@
 
           case '7':
 
-            return 7;
+            return '待签约';
 
         }
 
@@ -269,7 +269,7 @@
       //签约事件
       signEvent: function () {
 
-        if(this.signState == 7){
+        if(this.signStateNum == 7){
 
           this.$messagebox({
             message: '合同异常，请联系管理员重新发送',
