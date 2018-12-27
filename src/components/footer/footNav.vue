@@ -49,6 +49,10 @@
 
     mounted () {
 
+      this.bus.$on('pageChange',this.changeBtnLight);
+
+      this.bus.$on('hasNew',this.cueHasNew);
+
       var locationHref = location.href;
 
       if(locationHref.indexOf('homepage') != -1 || locationHref.indexOf('taskSquare') != -1){
@@ -132,7 +136,47 @@
 
         this.$router.push('/workDesk/' + this.homepage);
 
+      },
+
+      changeBtnLight: function (data) {
+
+        switch (data) {
+
+          case '1':
+
+            this.btnLight = 1;
+
+            break;
+
+          case '2':
+
+            this.btnLight = 2;
+
+            break;
+
+          case '3':
+
+            this.btnLight = 3;
+
+            break;
+
+        }
+
+      },
+
+
+      cueHasNew: function (data) {
+
+        data ? (this.hasNew = true) : (this.hasNew = false);
+
       }
+
+    },
+
+
+    destroyed () {
+
+      this.bus.$off('pageChange',this.changeBtnLight);
 
     }
 

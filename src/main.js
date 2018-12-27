@@ -27,6 +27,8 @@ import VueWechatTitle from 'vue-wechat-title';
 /*import VueResource from 'vue-resource'*/
 import Filters from './api/filters'
 
+import bus from './api/eventBus'
+
 import AMap from 'vue-amap'
 
 //!!!!!_____!!!!!!!!!!-------------控制台---------------!!!!!!!!!!!!!!!!!!!
@@ -40,6 +42,8 @@ Vue.use(MD5);
 Vue.use(VueWechatTitle);
 Vue.use(MintUI);
 Vue.use(axios)
+Vue.use(bus);
+Vue.prototype.bus = bus;
 Vue.prototype.wx = wx
 //Vue.use(BasicJs)
 Vue.config.productionTip = false
