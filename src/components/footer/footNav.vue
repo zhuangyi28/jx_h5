@@ -178,6 +178,8 @@
 
       this.bus.$off('pageChange',this.changeBtnLight);
 
+      this.bus.$off('hasNew',this.cueHasNew);
+
     }
 
   }
