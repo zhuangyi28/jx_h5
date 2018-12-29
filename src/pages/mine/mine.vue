@@ -346,8 +346,6 @@
 
           this.setStorage('userName', res.data.data.userName);
 
-          this.setStorage('userId', res.data.data.userId);
-
           //是否实名认证
           this.setStorage('isVerify', res.data.data.isVerify);
 
@@ -358,9 +356,6 @@
           this.setStorage('nationality', res.data.data.nationality);
 
           this.setStorage('source', res.data.data.source);
-
-
-
 
 
 

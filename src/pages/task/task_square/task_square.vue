@@ -377,6 +377,106 @@
 
         var _this = this;
 
+
+        /**
+         * 接口：签约弹框提醒
+         * 请求方式：POST
+         * 接口：user/contract/get/contract/remind
+         * 入参：null
+         **/
+
+        this.$http({
+
+          method: 'post',
+
+          url: process.env.API_ROOT + 'user/contract/get/contract/remind',
+
+
+        }).then((res) => {
+
+
+            console.log(res.data)
+
+          if(res.data.data.type==1){
+
+            this.$messagebox({
+              title: '提示',
+              message: '您有新的合同待签署，请在“我的”-“我的签约”中查看并签署',
+              showCancelButton: true,
+              showConfirmButton: true,
+              confirmButtonText: '查看',
+              cancelButtonText: '不再提醒',
+              closeOnClickModal: false,
+              cancelButtonClass: 'cancel_btn',
+              confirmButtonClass: 'confirm_btn_orange',
+            }).then(action => {
+
+              if (action == 'confirm') {
+
+                /**
+                 * 接口：查看签约提醒
+                 * 请求方式：POST
+                 * 接口：user/contract/update/contract/remind
+                 * 入参：null
+                 **/
+
+                this.$http({
+
+                  method: 'post',
+
+                  url: process.env.API_ROOT + 'user/contract/update/contract/remind',
+
+
+                }).then(function (res) {
+
+                    console.log(res.data)
+
+                  this.$router.push('/contractList')
+
+
+                }.bind(this)).catch((res)=>{})
+
+
+
+              }else {
+
+                /**
+                 * 接口：查看签约提醒
+                 * 请求方式：POST
+                 * 接口：user/contract/update/contract/remind
+                 * 入参：null
+                 **/
+
+                this.$http({
+
+                  method: 'post',
+
+                  url: process.env.API_ROOT + 'user/contract/update/contract/remind',
+
+
+                }).then(function (res) {
+
+                  console.log(res.data)
+
+
+                }.bind(this)).catch((res)=>{})
+
+
+
+
+              }
+
+
+            })
+
+
+          }
+
+
+
+        }).catch((res)=>{})
+
+
         /**
          * 接口：工资提醒
          * 请求方式：GET

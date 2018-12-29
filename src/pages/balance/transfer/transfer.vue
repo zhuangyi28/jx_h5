@@ -4,7 +4,7 @@
       <span>对方账户</span>
       <input type="number" pattern="\d*"  placeholder="请输入手机号" v-model="transferMobile" oninput="if(value.length > 11)value = value.slice(0, 11)" autofocus>
       <div class="input_img" v-on:click="$router.push('/transferHistoryUser')">
-        <i class="iconfont icon-sign_phone"></i>
+        <i class="iconfont icon-sign_phone color_text"></i>
       </div>
     </div>
     <div class="transfer_ps">
@@ -90,10 +90,10 @@
             if(res.data.code == -8){
               this.$messagebox({
                 title: res.data.msg,
-                message: '分享微信公众号，邀请好友注册“嘉工资”并实名认证，通过后即可给该好友转账',
+                message:  res.data.msg+'，请先注册并实名认证',
                 showConfirmButton: true,
                 showCancelButton: true,
-                confirmButtonText: '去分享',
+                confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 cancelButtonClass:'cancel_btn',
                 confirmButtonClass:'confirm_btn_orange',
@@ -112,10 +112,10 @@
             }else if(res.data.code == -9){
               this.$messagebox({
                 title: res.data.msg,
-                message: '分享微信公众号，提醒好友完成实名认证，通过后即可给该好友转账',
+                message: res.data.msg+'，请先注册并实名认证',
                 showConfirmButton: true,
                 showCancelButton: true,
-                confirmButtonText: '去分享',
+                confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 cancelButtonClass:'cancel_btn',
                 confirmButtonClass:'confirm_btn_orange',
