@@ -385,6 +385,7 @@
          * 入参：null
          **/
 
+        this.$http({
 
           method: 'post',
 
@@ -412,10 +413,12 @@
 
               if (action == 'confirm') {
 
+                /**
                  * 接口：查看签约提醒
                  * 请求方式：POST
                  * 接口：user/contract/update/contract/remind
                  * 入参：null
+                 **/
 
                 this.$http({
 
@@ -437,10 +440,12 @@
 
               }else {
 
+                /**
                  * 接口：查看签约提醒
                  * 请求方式：POST
                  * 接口：user/contract/update/contract/remind
                  * 入参：null
+                 **/
 
                 this.$http({
 
@@ -469,6 +474,7 @@
 
 
 
+        }).catch((res)=>{})
 
 
         /**
