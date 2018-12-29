@@ -182,7 +182,7 @@
 
     mounted(){
 
-      this.$parent.$children[0].btnLight = 3;
+      this.bus.$emit('pageChange','3');
 
       if(localStorage.getItem('contractDetailBack') == 1){
 
@@ -306,8 +306,12 @@
             console.log('亮点'+this.$parent.$children[0].hasNew)
 
             if(this.hasJoinEnt || this.hasNewMsg || this.hasNewSign){
-              this.$parent.$children[0].hasNew = true;
-              this.$parent.$children[1].hasNew = true;
+
+              this.bus.$emit('hasNew',true);
+
+            }else{
+
+              this.bus.$emit('hasNew',false);
 
             }
 

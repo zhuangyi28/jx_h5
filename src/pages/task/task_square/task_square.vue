@@ -322,7 +322,7 @@
 
     mounted () {
 
-      this.$parent.$children[0].btnLight = 1;
+      this.bus.$emit('pageChange','1');
 
       if(this.getStorage('reloadtask')=='1'){
 
