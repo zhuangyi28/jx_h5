@@ -1,0 +1,54 @@
+.certification_state{
+  padding: 5px 0;
+  .person_information{
+    margin: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 8px #ddd;
+    background-color: white;
+    .information{
+      padding: 10px 15px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 14px;
+      span:first-child{
+        color: #ababab;
+      }
+      span:last-child{
+        color: #4a4a4a;
+      }
+    }
+    .information+.information:before{
+      content: '';
+      width: 96%;
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 4%;
+      border-top: 1px solid #eeeeee;
+    }
+  }
+  .state{
+    margin: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 8px #ddd;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    padding: 10px 15px;
+    span:first-child{
+      color: #8a8a8a;
+      flex: 1;
+    }
+    span:nth-child(2){
+      color: #ff7a3c;
+    }
+    img{
+      height: 22px;
+      width: 22px;
+    }
+  }
+}
