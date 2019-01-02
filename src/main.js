@@ -27,7 +27,10 @@ import VueWechatTitle from 'vue-wechat-title';
 /*import VueResource from 'vue-resource'*/
 import Filters from './api/filters'
 
+//引入中央总线
 import bus from './api/eventBus'
+
+import store from './api/store'
 
 import AMap from 'vue-amap'
 
@@ -249,4 +252,5 @@ new Vue({
   components: { App },
   // 传入 router 到 vue 实例
   router,
+  store
 }).$mount('#app')// app 上装载 router

@@ -1,0 +1,229 @@
+.another_certification{
+  padding: 1px 0 20px;
+  position: relative;
+  .certification_information{
+    margin: 10px 15px 0 15px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 8px #ddd;
+
+    .certification_name{
+      display: flex;
+      align-items : center;
+      padding: 15px 4%;
+      position: relative;
+      &>*{
+        flex: 1;
+        text-align: left;
+      }
+      &>div{
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        color: #4a4a4a;
+        text-align: right;
+      }
+      img{
+        width: 20px;
+        height: 20px;
+      }
+      input{
+        border: none;
+        outline: none;
+        text-align: right;
+        &::placeholder{
+          color: #dddddd;
+          font-size: 14px;
+        }
+      }
+      &>span{
+        display: block;
+        max-width: 35%;
+        color: #ababab;
+      }
+    }
+    .certification_name:before{
+      content: '';
+      display: block;
+      position: absolute;
+      width: 98%;
+      height: 1px;
+      border-top: 1px solid #e9e9e9;
+      transform: scaleY(.4);
+      bottom: 0;
+      left: 15px;
+    }
+    .another_title{
+      color: #ababab;
+      padding: 10px 15px;
+    }
+    .certification_pic_input{
+      text-align: center;
+      padding: 10px 0;
+      .img{
+        margin: 0 auto;
+        width: 228px;
+        height: 153px;
+        position: relative;
+        img{
+          width: 100%;
+          height: 100%;
+        }
+        input{
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          opacity: 0;
+        }
+      }
+      .title{
+        padding: 5px;
+        color: #ababab;
+        span:last-child{
+          padding-left: 15px;
+          color: #ff7a3b;
+        }
+      }
+    }
+  }
+
+  .another_certification_input{
+    background-color: white;
+    margin: 10px 15px;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 1px 1px 6px #e9e9e9;
+  }
+  .information_picker{
+    width: 100%;
+    background-color: white;
+    .picker_btn{
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      &:after{
+        content: '';
+        display: block;
+        width: 100%;
+        height: 1px;
+        position: absolute;
+        border-bottom: 1px solid #f5f5f5;
+        bottom: 0;
+        left: 0;
+      }
+      &>button{
+        background-color: white;
+        box-shadow: none;
+      }
+      &>button:first-child{
+        color: #ababab;
+      }
+      &>button:last-child{
+        color: green;
+      }
+    }
+    .picker{
+      width: 100%;
+    }
+
+  }
+  .certification_btn{
+    margin-top: 30px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 4%;
+  }
+  .input_ps{
+    position: absolute;
+    bottom: 0;
+    color: #ababab;
+    text-align: center;
+    margin: auto;
+    width: 100%;
+    font-size: 12px;
+  }
+  .mint-popup{
+    border-radius: 5px;
+    overflow: hidden;
+    .example{
+      padding: 15px 0 0;
+      .example_title{
+        font-size: 16px;
+        text-align: center;
+      }
+      .example_img{
+        width: 228px;
+        height: 153px;
+        margin: auto;
+        padding: 10px 20px;
+        img{
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .example_button{
+        text-align: center;
+        position: relative;
+
+        &:before{
+          content: '';
+          display: block;
+          width: 100%;
+          height: 1px;
+          position: absolute;
+          top: 0;
+          left: 0;
+          border-top: 1px solid #eeeeee;
+        }
+        button{
+          padding: 8px 0 15px;
+          width: 100%;
+          background-color: transparent;
+          color: #ff7d37;
+          font-size: 18px;
+        }
+      }
+    }
+  }
+  .mint-indexlist{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 50;
+    overflow: auto;
+    li{
+      text-align: left;
+      flex: 1;
+    }
+    .select_box{
+      display: flex;
+      justify-content: space-between;
+      padding: 5px;
+      width: 100%;
+      box-sizing: border-box;
+      background-color: #f5f5f9;
+      .select_input{
+        background-color: white;
+        display: flex;
+        padding: 5px;
+        justify-content: center;
+        border-radius: 5px;
+        flex: 1;
+        img{
+          width: 14px;
+          height: 14px;
+          margin: 0 3px;
+          flex-grow:0;
+        }
+      }
+      .close_btn{
+        padding: 0 5px 0 10px;
+        color: #ff7a3b;
+      }
+    }
+  }
+}
