@@ -65,6 +65,11 @@ import salary from '@/pages/salary/salary'
 import contractList from '@/pages/contract/contract_list/contract_list'
 import contractDetail from '@/pages/contract/contract_detail/contract_detail'
 import sign from '@/pages/contract/sign/sign'
+import certificationChoose from '@/pages/mine/certification_choose/certification_choose'
+import IDCardCertification from '@/pages/mine/IDcard_certification/IDcard_certification'
+import anotherCertification from '@/pages/mine/another_certification/another_certification'
+import IDCardInformation from '@/pages/mine/IDCard_information/IDCard_information'
+import certificationState from '@/pages/mine/certification_state/certification_state'
 
 Vue.use(Router)
 
@@ -627,6 +632,46 @@ export default new Router({
         title: '详情'
       },
       component: contractDetail
+    },
+    {
+      path: '/certificationChoose',
+      name: 'certificationChoose',
+      meta: {
+        title: '实名认证'
+      },
+      component: certificationChoose
+    },
+    {
+      path: '/IDCardCertification',
+      name: 'IDCardCertification',
+      meta: {
+        title: '实名认证'
+      },
+      component: IDCardCertification
+    },
+    {
+      path: '/anotherCertification',
+      name: 'anotherCertification',
+      meta: {
+        title: '实名认证'
+      },
+      component: anotherCertification
+    },
+    {
+      path: '/IDCardInformation',
+      name: 'IDCardInformation',
+      meta: {
+        title: '实名认证'
+      },
+      component: IDCardInformation
+    },
+    {
+      path: '/certificationState',
+      name: 'certificationState',
+      meta: {
+        title: '实名认证'
+      },
+      component: certificationState
     }
 
 

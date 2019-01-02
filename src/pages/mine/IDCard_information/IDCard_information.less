@@ -1,0 +1,55 @@
+.IDCard_information{
+  .information_title{
+    padding: 5px 15px 5px 30px;
+    color: #4a4a4a;
+    font-size: 12px;
+  }
+  .information_part{
+    margin: 0 15px;
+    padding: 5px 0;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 8px #ddd;
+    .information_detail{
+      padding: 5px 15px;
+      font-size: 0;
+      display: flex;
+      align-items: center;
+      position: relative;
+      span{
+        display: inline-block;
+        width: 40%;
+        color: #4a4a4a;
+        font-size: 14px;
+      }
+      input{
+        width: 60%;
+        color: #ababab;
+        outline: none;
+        border: none;
+        background-color: transparent;
+        height: 22px;
+        font-size: 14px;
+      }
+      textarea{
+        color: #ababab;
+        font-size: 14px;
+        resize: none;
+        width: 60%;
+        word-break: break-all;
+      }
+      .address{
+        align-self: flex-start;
+      }
+    }
+    .information_detail+.information_detail:before{
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 4%;
+      width: 92%;
+      border-top: 1px solid #eeeeee;
+    }
+  }
+}

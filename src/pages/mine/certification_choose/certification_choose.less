@@ -1,0 +1,61 @@
+.certification_choose{
+  background-color: rgb(247,247,247);
+  .choose_list{
+
+    margin: 30px 15px 0 15px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    box-shadow: 0 0 8px #ddd;
+    overflow: hidden;
+
+  }
+
+
+  .choose{
+    width: 100%;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 4%;
+    box-sizing : border-box;
+    position : relative;
+    color: #4a4a4a;
+    .jump_to_logo{
+      color: rgb(236,86,78);
+      display: flex;
+      align-items : center;
+      span{
+        margin-right: 15px;
+      }
+      i {
+        position: relative;
+        &:after {
+
+          border: solid 2px #ddd;
+          border-bottom-width: 0;
+          border-left-width: 0;
+          content: " ";
+          top: 0;
+          right: 0px;
+          position: absolute;
+          width: 5px;
+          height: 5px;
+          transform: translateY(-50%) rotate(45deg);
+        }
+      }
+
+    }
+  }
+  .choose+.choose:before{
+    content: '';
+    width: 100%;
+    height: 1px;
+    display: block;
+    position: absolute;
+    border-top: 1px solid #ababab;
+    transform: scaleY(.4);
+    top: 0;
+    left: 0;
+  }
+}
