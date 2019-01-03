@@ -384,6 +384,56 @@
 
             }else{
 
+
+              /**
+               * 接口：重新发送合同
+               * 请求方式：POST
+               * 接口：user/contract/sendcontractagain
+               * 入参：null
+               **/
+
+              this.$http({
+
+                method: 'post',
+
+                url: process.env.API_ROOT + 'user/contract/sendcontractagain',
+
+              }).then(res=>{
+
+                console.log(res.data)
+
+                if(res.data.code=='-1'){
+
+                  this.$toast({
+                    message: res.data.msg,
+                    duration: 1500
+
+                  })
+
+                }
+                else if(res.data.code=='-7'){
+
+                  this.$messagebox({
+                    title: '提示',
+                    message: '合同异常，请联系管理员重新发送',
+                    confirmButtonText: '确定',
+                    confirmButtonClass:'confirm_btn_orange',
+                  });
+                  return;
+
+                }
+                else {
+                  this.showBtn = false
+
+                  window.location.href = res.data.data;
+
+                }
+
+
+
+              }).catch((res)=>{})
+
+
               //window.location.href = this.signUrl;
 
               }
