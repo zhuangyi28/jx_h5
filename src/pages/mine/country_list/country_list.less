@@ -1,0 +1,52 @@
+.country_list{
+  padding-top: 1px;
+  .find{
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    .input{
+      background-color: white;
+      flex: 1;
+      text-align: center;
+      img{
+        vertical-align: middle;
+        height: 14px;
+        width: 14px;
+      }
+      input{
+        vertical-align: middle;
+        outline: none;
+        border: none;
+        color: #4a4a4a;
+        font-size: 14px;
+        &::placeholder{
+          font-size: 14px;
+          color: #ababab;
+        }
+      }
+    }
+    .cancel{
+      color: #ff7a3c;
+    }
+  }
+  .list{
+    .list_title{
+      background-color: #fafafa;
+      font-size: 14px;
+      color: #4a4a4a;
+      padding: 5px;
+    }
+    .country{
+      background-color: white;
+      font-size: 16px;
+      color: #4a4a4a;
+      padding: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      span:last-child{
+        color: #ababab;
+      }
+    }
+  }
+}

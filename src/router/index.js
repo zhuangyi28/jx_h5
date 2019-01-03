@@ -70,6 +70,7 @@ import IDCardCertification from '@/pages/mine/IDcard_certification/IDcard_certif
 import anotherCertification from '@/pages/mine/another_certification/another_certification'
 import IDCardInformation from '@/pages/mine/IDCard_information/IDCard_information'
 import certificationState from '@/pages/mine/certification_state/certification_state'
+import countryList from '@/pages/mine/country_list/country_list'
 
 Vue.use(Router)
 
@@ -672,6 +673,14 @@ export default new Router({
         title: '实名认证'
       },
       component: certificationState
+    },
+    {
+      path: '/countryList',
+      name: 'countryList',
+      meta: {
+        title: '国籍选择'
+      },
+      component: countryList
     }
 
 
