@@ -71,6 +71,7 @@ import anotherCertification from '@/pages/mine/another_certification/another_cer
 import IDCardInformation from '@/pages/mine/IDCard_information/IDCard_information'
 import certificationState from '@/pages/mine/certification_state/certification_state'
 import countryList from '@/pages/mine/country_list/country_list'
+import anotherCertificationIndex from '@/pages/mine/another_certification_index/another_certification_index'
 
 Vue.use(Router)
 
@@ -651,23 +652,14 @@ export default new Router({
       component: IDCardCertification
     },
     {
-      path: '/anotherCertification',
-      name: 'anotherCertification',
-      meta: {
-        title: '实名认证'
-      },
-      component: anotherCertification
-    },
-    {
       path: '/IDCardInformation',
       name: 'IDCardInformation',
       meta: {
         title: '实名认证'
       },
       component: IDCardInformation
-    },
-    {
-      path: '/certificationState',
+    },{
+      path: 'certificationState',
       name: 'certificationState',
       meta: {
         title: '实名认证'
@@ -675,12 +667,30 @@ export default new Router({
       component: certificationState
     },
     {
-      path: '/countryList',
-      name: 'countryList',
+      path: '/anotherCertificationIndex',
+      name: 'anotherCertificationIndex',
       meta: {
-        title: '国籍选择'
+        title: '实名认证'
       },
-      component: countryList
+      component: anotherCertificationIndex,
+      children: [
+        {
+          path: '/anotherCertification',
+          name: 'anotherCertification',
+          meta: {
+            title: '实名认证'
+          },
+          component: anotherCertification
+        },
+        {
+          path: '/countryList',
+          name: 'countryList',
+          meta: {
+            title: '国籍选择'
+          },
+          component: countryList
+        },
+      ]
     }
 
 
