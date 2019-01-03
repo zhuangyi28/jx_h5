@@ -191,7 +191,7 @@
                 this.$router.go(-1);
               }else if(res == 'confirm'){
                 this.setStorage('hrefId','4');
-                this.$router.push('/certification');
+                this.$router.push('/certificationChoose');
               }
             });
           }else if(res.data.data.isVerify == 2){

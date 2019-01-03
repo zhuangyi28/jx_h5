@@ -41,6 +41,16 @@
           <span v-else>{{IDNumber}}</span>
         </div>
       </div>
+      <div class="certification_name" v-if="isVerify == 1">
+        <span v-if="cardType == '身份证'&&isHaveUserVerifyImg == 1">身份证照片</span>
+        <span v-else-if="cardType == '身份证'&&isHaveUserVerifyImg == 0">补充身份证照片</span>
+        <span v-else>证件照片</span>
+
+        <div class="information_btn">
+          <span class="red" v-if="isHaveUserVerifyImg == 1">已上传</span>
+          <span class="red" v-else v-on:click="$router.push('/IDCardCertification')">未上传<img src="../../../../static/images/reset_go.png"></span>
+        </div>
+      </div>
     </div>
     <div class="certification_popup">
       <mt-popup class="information_picker" v-model="pickerShow" position="bottom">
@@ -98,6 +108,7 @@
         closeBtn: '',//国家列表取消按键显示
         select: '',//国家列表筛选值
         source:'',
+        isHaveUserVerifyImg:''//是否上传图片0为未上传1为上传
       }
     },
     mounted () {
@@ -125,6 +136,8 @@
         if(res.data.code=='0000'){
 
           this.isVerify = res.data.data.isVerify;
+
+          this.isHaveUserVerifyImg = res.data.data.isHaveUserVerifyImg
 
           res.data.data.userName ? (this.userName = res.data.data.userName) : (this.userName = '');
 

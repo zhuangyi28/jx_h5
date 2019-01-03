@@ -117,7 +117,7 @@
             if (action == 'confirm') {
 
 
-                this.$router.push('/certification')
+                this.$router.push('/certificationChoose')
             }
           })
 

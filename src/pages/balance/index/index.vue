@@ -226,7 +226,7 @@
 
               if(res == 'confirm'){
 
-                this.$router.push('/certification');
+                this.$router.push('/certificationChoose');
 
               }
               else {
@@ -398,7 +398,7 @@
 
             if(res == 'confirm'){
 
-              this.$router.push('/certification');
+              this.$router.push('/certificationChoose');
 
             }
             else {

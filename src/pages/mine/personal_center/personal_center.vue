@@ -138,14 +138,18 @@
 
         //如果为1跳转的页面名字和身份证不能修改
 
-        if(_isVerify=='1'||_isVerify=='0'){
+        if(_isVerify=='1'){
 
           this.$router.push('/certification')
 
 
         }
 
+        else if(_isVerify=='0'){
 
+          this.$router.push('/certificationChoose')
+
+        }
         //审核中
         else if(_isVerify=='2'){
 

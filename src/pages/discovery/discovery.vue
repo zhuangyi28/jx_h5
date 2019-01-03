@@ -475,7 +475,7 @@
           }).then((action) =>{
             console.log(action);
             if(action == 'confirm'){
-              this.$router.push('/certification');
+              this.$router.push('/certificationChoose');
             }
           }).catch((res)=>{
             console.log(res);

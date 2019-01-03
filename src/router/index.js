@@ -637,7 +637,7 @@ export default new Router({
       path: '/certificationChoose',
       name: 'certificationChoose',
       meta: {
-        title: '实名认证'
+        title: ''
       },
       component: certificationChoose
     },

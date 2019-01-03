@@ -64,7 +64,7 @@
 
       goAgainFn:function () {
 
-          this.$router.push('/certification')
+          this.$router.push('/certificationChoose')
       }
     }
   }
