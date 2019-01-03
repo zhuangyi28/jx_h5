@@ -5,7 +5,9 @@ Vue.use(Vuex);
 
 const state = {
 
-  personInformation: {}
+  personInformation: {},
+
+  imageUrl: ''
 
 };
 

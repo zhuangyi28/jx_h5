@@ -8,7 +8,7 @@
           <span v-else>{{userName}}</span>
         </div>
       </div>
-      <div class="certification_name" onclick="if(!!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) ){setTimeout(function() {$('.mint-indexlist-content').css('height','auto') },200)}" v-on:click="indexShow = true" v-if="(isVerify == 0||isVerify == 3)">
+      <div class="certification_name" v-on:click="$router.push('/countryList')" v-if="(isVerify == 0||isVerify == 3)">
         <span>国籍（地区）</span>
         <div class="information_btn">
           <span>{{country}}</span>
@@ -62,13 +62,13 @@
           <input type="file" name="file" accept="image/png,image/gif,image/jpeg" @change="updateface" class="back_img"/>
         </div>
         <div class="title">
-          <span v-if="cardType=='港澳居民来往内地通行证'">上传港澳通行证反面</span>
-          <span v-else-if="cardType=='台湾居民来往大陆通行证'">上传台湾通行证反面</span>
+          <span v-if="cardTypeId == 3">上传港澳通行证反面</span>
+          <span v-else-if="cardTypeId == 4">上传台湾通行证反面</span>
           <span v-on:click="exampleImg" class="back">示例</span>
         </div>
       </div>
     </div>
-    <orangeBtn v-bind:name="btnName"></orangeBtn>
+    <orangeBtn v-bind:name="btnName" v-on:clickEvent="submit"></orangeBtn>
     <div class="input_ps">此信息仅用于身份验证，平台不会向第三方透露用户信息</div>
     <mt-popup v-model="popupExample">
       <div class="example">
@@ -198,23 +198,24 @@
 
             this.source=res.data.data.source;
 
-            (res.data.data.idNumber) && (this.IDNumber = res.data.data.idNumber);
+            if(this.source == 0){
 
-            (res.data.data.idType) && (this.cardType = res.data.data.idType);
+              (res.data.data.idNumber) && (this.IDNumber = res.data.data.idNumber);
 
-            (res.data.data.idType) && (this.country = res.data.data.nationality);
+              (res.data.data.idType) && (this.cardType = res.data.data.idType);
 
-            if(this.cardType == 1){
-              this.cardType = '身份证'
-            }
-            if(this.cardType == 2){
-              this.cardType = '护照'
-            }
-            if(this.cardType == 3){
-              this.cardType = '港澳居民来往内地通行证'
-            }
-            if(this.cardType == 4){
-              this.cardType = '台湾居民来往内地通行证'
+              (res.data.data.idType) && (this.country = res.data.data.nationality);
+
+              if(this.cardType == 2){
+                this.cardType = '护照'
+              }
+              if(this.cardType == 3){
+                this.cardType = '港澳居民来往内地通行证'
+              }
+              if(this.cardType == 4){
+                this.cardType = '台湾居民来往大陆通行证'
+              }
+
             }
 
           }
@@ -581,7 +582,7 @@
         if(this.cardType == '港澳居民来往内地通行证'){
           return 3;
         }
-        if(this.cardType == '台湾居民来往内地通行证'){
+        if(this.cardType == '台湾居民来往大陆通行证'){
           return 4;
         }
       }
