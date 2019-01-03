@@ -308,6 +308,8 @@
 
               this.$indicator.close();
 
+              this.$store.state.imageUrl = this.faceUrl + ',' + this.backUrl;
+
               this.$store.state.personInformation = res.data.data;
 
               if(this.isVerify=='1'&&this.isHaveUserVerifyImg=='0'){
