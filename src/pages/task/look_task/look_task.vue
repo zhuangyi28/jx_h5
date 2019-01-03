@@ -623,7 +623,7 @@
 
                 if(res == 'confirm'){
 
-                  this.$router.push('/certification');
+                  this.$router.push('/certificationChoose');
 
                   return;
 

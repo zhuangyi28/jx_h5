@@ -182,7 +182,7 @@
               return false;
             }else if(res == 'confirm'){
               this.setStorage('hrefId','4');
-              this.$router.push('/certification');
+              this.$router.push('/certificationChoose');
             }
           });
           return false;

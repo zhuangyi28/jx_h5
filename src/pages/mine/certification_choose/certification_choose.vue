@@ -2,14 +2,14 @@
   <div class="certification_choose">
     <div class="choose_list">
 
-      <div class="choose">
+      <div class="choose" v-on:click="$router.push('/IDCardCertification')">
         <span>身份证认证</span>
         <span class="jump_to_logo">
             <i class="allow_right"></i>
         </span>
       </div>
 
-      <div class="choose">
+      <div class="choose" v-on:click="">
         <span>其他证件认证</span>
         <span class="jump_to_logo">
           <i class="allow_right"></i>

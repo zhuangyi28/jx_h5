@@ -39,7 +39,16 @@
         <!--<img src="../../../../static/images/jx_contract_sign_unuseful.png">-->
       <!--</div>-->
     </div>
-    <orangeBtn v-bind:name="btnName" v-on:clickEvent="signEvent" v-if="signStateNum == 2||signStateNum == 7"></orangeBtn>
+
+    <!-- 签署-->
+    <orangeBtn v-bind:name="btnName" v-show="showBtn" v-on:clickEvent="signEvent" v-if="signStateNum == 2||signStateNum == 7"></orangeBtn>
+
+    <!-- 签署loading -->
+    <div class="button" v-show="!showBtn">
+      <div class="loading"><mt-spinner color="#fff" :size="20" type="fading-circle"></mt-spinner></div>
+      <mt-button size="large" class="btn_color" disabled>签署</mt-button>
+    </div>
+
     <mt-popup v-model="popupShow" popup-transition="popup-fade">
       <div class="close" v-on:click="popupShow=false">
         <img src="../../../../static/images/contract_close.png">
@@ -96,6 +105,8 @@
         entSignNamePartyB: '',//乙方名称
 
         contractUrlImage: '',//文件图片链接
+
+        showBtn:true,
 
       }
 
@@ -317,7 +328,7 @@
               }else if(res == 'confirm'){
 
                 this.setStorage('hrefId','7');
-                this.$router.push('/certification');
+                this.$router.push('/certificationChoose');
 
               }
 
@@ -354,7 +365,7 @@
               }else if(res == 'confirm'){
 
                 this.setStorage('hrefId','7');
-                this.$router.push('/certification');
+                this.$router.push('/certificationChoose');
 
               }
 
@@ -373,7 +384,7 @@
 
             }else{
 
-              window.location.href = this.signUrl;
+              //window.location.href = this.signUrl;
 
               }
 

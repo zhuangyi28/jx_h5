@@ -2,7 +2,8 @@
   <div class="IDCard_certification">
     <div class="IDCard_certification_input">
       <div class="IDCard_title">
-        <span>上传<span v-if="userName">（姓名：{{userName}}）</span>身份证照片，请确保证件照片完整、清晰</span>
+        <span v-if="isVerify=='1'&&isHaveUserVerifyImg=='0'">请上传（证件号：{{idNumberAll}}）对应的证件照片</span>
+        <span v-else>上传<span v-if="userName">（姓名：{{userName}}）</span>身份证照片，请确保证件照片完整、清晰</span>
       </div>
       <div class="certification_pic_input">
       <div class="img">
@@ -58,7 +59,7 @@
 
       return {
 
-        btnName: '下一步',
+        btnName: '',
 
         userName: '',
 
@@ -68,13 +69,74 @@
 
         popupExample: false,
 
-        exampleUrl: ''
+        exampleUrl: '',
+
+        isVerify:'',//实名认证
+
+        isHaveUserVerifyImg:'',//是否上传图片
+
+        idNumberAll:'',//身份证号码
+
+
 
       }
 
     },
 
     mounted () {
+
+
+
+      /**
+       * 接口：用户中心
+       * 请求方式：POST
+       * 接口：/user/center/usercenter
+       * 入参：null
+       **/
+
+      this.$http({
+
+        method: 'post',
+
+        url: process.env.API_ROOT + 'user/center/usercenter',
+
+
+
+      }).then(function(res) {
+
+        console.log(res.data);
+
+        this.isVerify = res.data.data.isVerify;
+
+        this.isHaveUserVerifyImg = res.data.data.isHaveUserVerifyImg;
+
+        this.idNumberAll = res.data.data.idNumberAll;
+
+
+        if(res.data.code=='0000'){
+
+          if(this.isVerify=='1'&&this.isHaveUserVerifyImg=='0'){
+
+              document.title = '补充证件照片'
+
+              this.btnName = '提交'
+
+          }
+
+          else {
+
+            document.title = '实名认证'
+
+            this.btnName = '下一步'
+          }
+
+
+
+
+        }
+
+
+      }.bind(this)).catch(function (error) {}.bind(this))
 
 
 
@@ -182,13 +244,31 @@
 
         }else{
 
-          this.$indicator.open({
-            text: '图片信息读取中...',
-            spinnerType: 'fading-circle'
-          });
+          if(this.isVerify=='1'&&this.isHaveUserVerifyImg=='0'){
+
+
+            this.$indicator.open({
+              text: '证件信息核对中...',
+              spinnerType: 'fading-circle'
+            });
+
+          }
+
+          else {
+
+
+            this.$indicator.open({
+              text: '图片信息读取中...',
+              spinnerType: 'fading-circle'
+            });
+          }
+
+
+
+
 
           /**
-           * 接口：登录
+           * 接口：保存用户证件URL
            * 请求方式：POST
            * 接口：/user/center/orc/userverify
            * 入参：urls
@@ -230,7 +310,31 @@
 
               this.$store.state.personInformation = res.data.data;
 
-              this.$router.push('/IDCardInformation');
+              if(this.isVerify=='1'&&this.isHaveUserVerifyImg=='0'){
+
+                this.$router.go(-1);
+
+                this.$toast({
+
+                  message: '身份证照片上传成功',
+
+                  position: 'middle',
+
+                  duration: 3500
+
+                });
+
+
+              }
+
+              else {
+
+                this.$router.push('/IDCardInformation');
+              }
+
+
+
+
             }
 
           }.bind(this));

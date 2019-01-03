@@ -21,41 +21,41 @@
         <textarea cols="30" rows="6" placeholder="详细描述下你自己，字数控制在200字以内" v-model="introduceYourself" maxlength="200"></textarea>
       </div>
     </div>
-    <div class="supply_part" v-if="idType == 1">
-      <div class="supply_title before_border">
-        <div>
-          <span ><span>*</span>补充信息</span>
-          <span>（身份证照片）</span>
-        </div>
-        <div v-bind:class="supplyShow ? 'supply_part_show' : 'supply_part_hidden'" v-on:click="supplyShow = !supplyShow"></div>
-      </div>
-      <div class="upload" v-if="supplyShow || lookTaskToPersonInformation">
-        <div class="upload_title">请上传（证件号：<span>{{idNumber}}</span>）对应的证件照片</div>
-        <div class="upload_face">
-          <img v-bind:src="faceUrl">
-          <input type="file" v-on:change="inputImg" imgType="face" accept="image/*">
-        </div>
-        <div class="upload_name color_text">上传身份证正面<span v-on:click="exampleImg" class="face">示例</span></div>
-        <div class="upload_back">
-          <img v-bind:src="backUrl">
-          <input type="file" v-on:change="inputImg" imgType="back" accept="image/*">
-        </div>
-        <div class="upload_name color_text">上传身份证反面<span v-on:click="exampleImg" class="back">示例</span></div>
-      </div>
-    </div>
-    <mt-popup v-model="popupExample">
-      <div class="example">
-        <div class="example_title">
-          证件示例
-        </div>
-        <div class="example_img">
-          <img v-bind:src="exampleUrl">
-        </div>
-        <div class="example_button">
-          <button v-on:click="popupExample = false">确定</button>
-        </div>
-      </div>
-    </mt-popup>
+    <!--<div class="supply_part" v-if="idType == 1">-->
+      <!--<div class="supply_title before_border">-->
+        <!--<div>-->
+          <!--<span ><span>*</span>补充信息</span>-->
+          <!--<span>（身份证照片）</span>-->
+        <!--</div>-->
+        <!--<div v-bind:class="supplyShow ? 'supply_part_show' : 'supply_part_hidden'" v-on:click="supplyShow = !supplyShow"></div>-->
+      <!--</div>-->
+      <!--<div class="upload" v-if="supplyShow || lookTaskToPersonInformation">-->
+        <!--<div class="upload_title">请上传（证件号：<span>{{idNumber}}</span>）对应的证件照片</div>-->
+        <!--<div class="upload_face">-->
+          <!--<img v-bind:src="faceUrl">-->
+          <!--<input type="file" v-on:change="inputImg" imgType="face" accept="image/*">-->
+        <!--</div>-->
+        <!--<div class="upload_name color_text">上传身份证正面<span v-on:click="exampleImg" class="face">示例</span></div>-->
+        <!--<div class="upload_back">-->
+          <!--<img v-bind:src="backUrl">-->
+          <!--<input type="file" v-on:change="inputImg" imgType="back" accept="image/*">-->
+        <!--</div>-->
+        <!--<div class="upload_name color_text">上传身份证反面<span v-on:click="exampleImg" class="back">示例</span></div>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<mt-popup v-model="popupExample">-->
+      <!--<div class="example">-->
+        <!--<div class="example_title">-->
+          <!--证件示例-->
+        <!--</div>-->
+        <!--<div class="example_img">-->
+          <!--<img v-bind:src="exampleUrl">-->
+        <!--</div>-->
+        <!--<div class="example_button">-->
+          <!--<button v-on:click="popupExample = false">确定</button>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</mt-popup>-->
     <orangeBtn v-bind:name="btnName" v-on:clickEvent="saveInformation"></orangeBtn>
   </div>
 </template>
@@ -132,56 +132,56 @@
        * 入参：null
        **/
 
-      this.$http({
-
-        method: 'post',
-
-        url: process.env.API_ROOT + 'user/center/usercenter',
-
-      }).then(function (res) {
-
-        if(res.data.data.isVerify == 0 || res.data.data.isVerify == 3){
-
-          this.$messagebox({
-            title: '提示',
-            message: '未实名认证用户，需先完成实名认证才填写个人履历',
-            showCancelButton: true,
-            showConfirmButton: true,
-            confirmButtonText: '去认证',
-            cancelButtonText: '取消',
-            closeOnClickModal: false,
-            cancelButtonClass: 'cancel_btn',
-            confirmButtonClass: 'confirm_btn_orange',
-          }).then((res)=>{
-
-            if(res == 'confirm'){
-
-              this.setStorage('hrefId','4');
-
-              this.$router.push('/certification');
-
-            }else if(res == 'cancel'){
-
-              window.history.go(-1);
-
-            }
-
-          })
-
-        }else if(res.data.data.isVerify == 2){
-
-          this.$messagebox({
-            title: '提示',
-            message: '实名认证审核中，审核通过后即可填写个人履历',
-            confirmButtonText: '确认',
-            confirmButtonClass: 'confirm_btn_orange',
-          }).then((res)=>{
-            window.history.go(-1);
-          })
-
-        }
-
-      }.bind(this));
+//      this.$http({
+//
+//        method: 'post',
+//
+//        url: process.env.API_ROOT + 'user/center/usercenter',
+//
+//      }).then(function (res) {
+//
+//        if(res.data.data.isVerify == 0 || res.data.data.isVerify == 3){
+//
+//          this.$messagebox({
+//            title: '提示',
+//            message: '未实名认证用户，需先完成实名认证才填写个人履历',
+//            showCancelButton: true,
+//            showConfirmButton: true,
+//            confirmButtonText: '去认证',
+//            cancelButtonText: '取消',
+//            closeOnClickModal: false,
+//            cancelButtonClass: 'cancel_btn',
+//            confirmButtonClass: 'confirm_btn_orange',
+//          }).then((res)=>{
+//
+//            if(res == 'confirm'){
+//
+//              this.setStorage('hrefId','4');
+//
+//              this.$router.push('/certificationChoose');
+//
+//            }else if(res == 'cancel'){
+//
+//              window.history.go(-1);
+//
+//            }
+//
+//          })
+//
+//        }else if(res.data.data.isVerify == 2){
+//
+//          this.$messagebox({
+//            title: '提示',
+//            message: '实名认证审核中，审核通过后即可填写个人履历',
+//            confirmButtonText: '确认',
+//            confirmButtonClass: 'confirm_btn_orange',
+//          }).then((res)=>{
+//            window.history.go(-1);
+//          })
+//
+//        }
+//
+//      }.bind(this));
 
       this.lookTaskToPersonInformation = localStorage.getItem('lookTaskToPersonInformation');
 
