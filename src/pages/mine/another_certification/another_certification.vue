@@ -91,20 +91,6 @@
         </div>
         <mt-picker v-bind:slots="slots" v-on:change="onValueChange"></mt-picker>
       </mt-popup>
-      <mt-index-list v-if="indexShow">
-        <div class="select_box">
-          <div class="select_input">
-            <img src="../../../../static/images/jx_found.png">
-            <input type="text" placeholder="请输入国家中文名/英文名" v-on:click="closeBtn=true" v-model="select" v-on:input="displayChange">
-          </div>
-          <div class="close_btn" v-if="closeBtn==true" v-on:click="indexShow = false">取消</div>
-        </div>
-        <mt-index-section v-for="(values, key, index) in countryArr" v-bind:index="key" v-on:click="console.log('cehsi')">
-          <div v-on:click="getPlace">
-            <mt-cell :data-shortname="value.shortName" onclick="localStorage.setItem('dataCountry',this.getAttribute('data-shortName'))" v-for="value in values" v-bind:title="value.shortName" v-bind:value="value.englishName" v-if="(value.shortName + value.englishName).match(select)"></mt-cell>
-          </div>
-        </mt-index-section>
-      </mt-index-list>
     </div>
   </div>
 </template>
@@ -128,7 +114,7 @@
 
         btnName: '提交',
 
-        userName: '测试',
+        userName: '',
 
         faceUrl: './static/images/ID_card_face.png',
 
@@ -144,7 +130,7 @@
         country: '中国大陆',//国籍
         countryArr: {},//国家列表
         indexShow: false,//国家列表显示
-        isVerify: '3',//是否认证
+        isVerify: '',//是否认证
         slots: [
           {
             values: ['港澳居民来往内地通行证','台湾居民来往大陆通行证','护照'],
@@ -153,7 +139,7 @@
         ],//证件类型弹窗值
         closeBtn: '',//国家列表取消按键显示
         select: '',//国家列表筛选值
-        source:'1',
+        source:'',
 
       }
 
@@ -161,6 +147,14 @@
     mounted() {
 
       this.getData();
+
+    },
+
+    activated () {
+
+      (this.$store.state.place) && (this.country = this.$store.state.place);
+
+      delete this.$store.state.place;
 
     },
 
@@ -223,32 +217,6 @@
 
         }.bind(this)).catch(function (error) {}.bind(this))
 
-
-        /*
-        * 接口： 国籍查询
-        * 访问方式： POST
-        * 接口： /user/country/getcountry
-        * 传参： null
-        * */
-        this.$http({
-          method: 'post',
-          url: process.env.API_ROOT+ 'user/country/getcountry',
-          headers:{
-            'Content-type': 'application/x-www-form-urlencoded'
-          }
-        }).then( (res) => {
-          var getCountry = res.data.data;
-          delete getCountry.firstLetter;//去掉首字母列
-          getCountry = JSON.parse(JSON.stringify(getCountry).replace(/hotCountry/g,'热门城市'));//将列表中hotCountry改成热门城市
-          this.countryArr = getCountry;
-        }).catch((res) => {
-          this.$toast({
-            message: res.data.msg,
-            position: 'middle',
-            duration: 1500
-          });
-        });
-
       },
 
 
@@ -264,61 +232,10 @@
         this.cardType = this.pickerValue;
         this.pickerShow = false;
       },
-      //国家弹窗点击国家获取国家名称
-      getPlace: function () {
-
-
-        if(!!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) ){
-
-
-          setTimeout(function () {
-
-
-            var dataCountry=localStorage.getItem('dataCountry');
-
-            if(dataCountry){
-
-              this.country = localStorage.getItem('dataCountry');
-
-              this.indexShow = false;
-
-              localStorage.removeItem('dataCountry')
-
-
-            }
-
-
-
-
-          }.bind(this),300)
-
-
-
-
-        }
-        else {
-          for (var parent of event.path) {
-            if (parent.nodeName == 'A') {
-              var parentTest = parent.innerText.split('\n');
-              this.country = parentTest[0];
-            }
-            if (parent.nodeName == 'BODY') {
-              this.indexShow = false;
-              return;
-            }
-          }
-        }
-
-
-      },
       //提交
       submit: function () {
         var check = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
-        if(this.cardTypeId == 1){
-          //身份证
-          check = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
-        }
-        else if(this.cardTypeId == 3){
+        if(this.cardTypeId == 3){
           //港澳
           check = /^[a-z0-9A-Z]{11}$/;
         }
@@ -355,6 +272,54 @@
             duration: 1500
           });
           return;
+        }
+        /*faceUrl: './static/images/ID_card_face.png',
+
+        backUrl: './static/images/ID_card_back.png',*/
+        if(this.cardTypeId != 2){
+
+          if(this.faceUrl == './static/images/ID_card_face.png' && this.backUrl == './static/images/ID_card_back.png'){
+
+            this.$toast({
+              message: '请上传证件照片',
+              position: 'middle',
+              duration: 1500
+            });
+            return;
+
+          }else if(this.faceUrl == './static/images/ID_card_face.png'){
+
+            this.$toast({
+              message: '请上传证件照正面',
+              position: 'middle',
+              duration: 1500
+            });
+            return;
+
+          }else if(this.backUrl == './static/images/ID_card_back.png'){
+
+            this.$toast({
+              message: '请上传证件照反面',
+              position: 'middle',
+              duration: 1500
+            });
+            return;
+
+          }
+
+        }else if(this.cardTypeId == 2){
+
+          if(this.faceUrl == './static/images/ID_card_face.png'){
+
+            this.$toast({
+              message: '请上传证件照片',
+              position: 'middle',
+              duration: 1500
+            });
+            return;
+
+          }
+
         }
         /*
         * 接口： 证件实名认证
@@ -478,20 +443,6 @@
           this.setStorage('cardType',this.cardType);
           this.$router.push('/certificationPic');
         }
-      },
-      //国籍列表筛选
-      displayChange: function () {
-        setTimeout(()=>{
-          var nodes = document.getElementsByClassName('mint-indexsection');
-          for(var node of nodes){
-            var child = node.getElementsByClassName('mint-cell');
-            if(child.length == 0){
-              node.style.display = 'none';
-            }else{
-              node.style.display = '';
-            }
-          }
-        },10);
       },
       //上传照片
       updateface: function () {
