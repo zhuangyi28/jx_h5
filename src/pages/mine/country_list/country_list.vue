@@ -9,14 +9,16 @@
     </div>
     <div class="list" v-for="(countryList,index) in countryLists">
       <div class="list_title">{{index}}</div>
-      <div class="country"
-           v-for="country in countryList"
-           v-bind:englishName="country.englishName"
-           v-if="(country.shortName + country.englishName).indexOf(select) != -1"
-           v-on:click="getPlace(country.shortName)"
-      >
-        <span>{{country.shortName}}</span>
-        <span>{{country.englishName}}</span>
+      <div class="all_country">
+        <div class="country"
+             v-for="country in countryList"
+             v-bind:englishName="country.englishName"
+             v-if="(country.shortName + country.englishName.toLocaleLowerCase() + country.englishName.toLocaleUpperCase()).indexOf(select) != -1"
+             v-on:click="getPlace(country.shortName)"
+        >
+          <span>{{country.shortName}}</span>
+          <span>{{country.englishName}}</span>
+        </div>
       </div>
     </div>
   </div>
