@@ -1,7 +1,7 @@
 /**
  * Created by ZHUANGYI on 2018/5/31.
  */
-const bankCardJson = [
+var bankCardJson = [
 
   {
     "img": "./static/icon/bank_01.png",

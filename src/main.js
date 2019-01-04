@@ -7,6 +7,9 @@ import Vue from 'vue'
 import App from './App'
 // 导入 路由
 import router from './router'
+
+import 'babel-polyfill'
+import Es6Promise from 'es6-promise'
 //http.js文件，即全局配置axios请求，与main.js在同级目录
 import axios from './api/axios'
 //封装的插件
@@ -50,6 +53,9 @@ Vue.prototype.bus = bus;
 Vue.prototype.wx = wx
 //Vue.use(BasicJs)
 Vue.config.productionTip = false
+
+require('es6-promise').polyfill();
+Es6Promise.polyfill();
 
 
 //判断用户是否处于登录状态，访问权限验证
