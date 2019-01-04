@@ -61,7 +61,7 @@
 
       <div class="weui-help">
         <img src="../../../../static/icon/bank_08.png" class="jx_cash"/>
-        <span class="service_title">浦发银行</span>
+        <span class="service_title">浦东发展银行</span>
       </div>
 
 
