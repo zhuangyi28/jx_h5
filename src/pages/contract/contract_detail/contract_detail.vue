@@ -31,7 +31,7 @@
         <span v-else-if="contractType == 2">丙方签署时间</span>
         <span v-show="signStateNum == 1">{{userSignDate}}</span>
       </div>
-      <div class="information"><span>状态</span><span v-bind:class="(signState == '已过期') ? 'grey' : 'color_text'">{{signState}}</span></div>
+      <div class="information"><span>状态</span><span v-bind:class="(signState == '已失效') ? 'grey' : 'color_text'">{{signState}}</span></div>
       <div class="contract_state_img" v-if="signStateNum == 1">
         <img src="../../../../static/images/jx_contract_sign_useful.png">
       </div>
@@ -260,7 +260,7 @@
 
           case '5':
 
-            return '已过期';
+            return '已失效';
 
           case '6':
 
@@ -305,6 +305,7 @@
           method: 'post',
 
           url: process.env.API_ROOT + 'user/center/usercenter',
+
 
         }).then(res=>{
 
@@ -398,6 +399,12 @@
 
                 url: process.env.API_ROOT + 'user/contract/sendcontractagain',
 
+                params: {
+
+                  signId: localStorage.getItem('signId')
+
+            },
+
               }).then(res=>{
 
                 console.log(res.data)
@@ -423,6 +430,8 @@
 
                 }
                 else {
+
+
                   this.showBtn = false
 
                   window.location.href = res.data.data;
