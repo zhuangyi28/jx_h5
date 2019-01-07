@@ -73,7 +73,11 @@ router.beforeEach((to,from,next)=>{
 
       next({path: '/workDesk/mine'})
 
-    }else if((from.path == '/salary' || from.path == '/balance') && to.path == '/workDesk/taskSquare'){
+    }else if((from.path == '/personalCenter') && (to.path == '/IDCardInformation')){
+
+     next({path: '/workDesk/mine'});
+
+   }else if((from.path == '/salary' || from.path == '/balance') && to.path == '/workDesk/taskSquare'){
 
      next({path: '/workDesk/mine'});
 

@@ -57,27 +57,39 @@
 
       return {
 
-        btnName: '提交认证',
+        btnName: '提交认证',//按钮名称
 
-        address: '',
+        address: '',//地址
 
-        addressRows: 1,
+        addressRows: 1,//地址栏行数
 
-        userName: '',
+        userName: '',//姓名
 
-        sex: '',
+        sex: '',//性别
 
-        nation: '',
+        nation: '',//民族
 
-        birth: '',
+        birth: '',//出生日期
 
-        idNumber: '',
+        idNumber: '',//身份证号
 
-        pickerVisible: true,
+        startDate: new Date('1968-01-01'),//时间选择开始事件
 
-        startDate: new Date('1968-01-01'),
+        timeDefault: '',//时间选择值
 
-        timeDefault: ''
+        urls: '',//身份证链接
+
+        issuingTime: '',//签发时间
+
+        expiryTime: '',//有效日期
+
+        riskType: '',//身份类型
+
+        extTradeNoB: '',//交易号（反面流水交易号）
+
+        extTradeNo: '',//交易号
+
+        issuingAuthority: '' //签发机关
 
       }
 
@@ -85,36 +97,59 @@
 
     mounted () {
 
-      //this.$store.state.personInformation
-
-      this.userName = this.$store.state.personInformation.name;
-
-      this.sex = this.$store.state.personInformation.sex;
-
-      this.nation = this.$store.state.personInformation.nation;
-
-      this.address = this.$store.state.personInformation.address;
-
-      this.birth = this.$store.state.personInformation.birth;
-
-      this.idNumber = this.$store.state.personInformation.idNumber;
-
-      this.timeDefault = this.timeDefaultChange(this.birth);
-
-      this.birth = this.birthChange(this.birth);
-
-      this.addressInput();
+      this.getData();
 
     },
 
 
     methods: {
+
+      getData: function () {
+
+        var personInformation = this.$store.state.personInformation;
+
+        this.userName = personInformation.name;
+
+        this.sex = personInformation.sex;
+
+        this.nation = personInformation.nation;
+
+        this.address = personInformation.address;
+
+        this.birth = personInformation.birth;
+
+        this.idNumber = personInformation.idNumber;
+
+        this.timeDefault = this.timeDefaultChange(this.birth);
+
+        this.birth = this.birthChange(this.birth);
+
+        this.issuingTime = this.dateChange(personInformation.issuingDate);
+
+        this.expiryTime = this.dateChange(personInformation.expiryDate);
+
+        this.riskType = personInformation.riskType;
+
+        this.extTradeNo = personInformation.extTradeNo;
+
+        this.extTradeNoB = personInformation.extTradeNoB;
+
+        this.issuingAuthority = personInformation.issuingAuthority;
+
+        this.urls = this.$store.state.imageUrl;
+
+        this.addressInput();
+
+      },
+
+      //地址赋值
       addressChange: function () {
 
         this.address = document.getElementsByTagName('textarea')[0].value;
 
       },
 
+      //地址栏行数控制
       addAddressRows: function () {
 
         var textarea = document.getElementsByTagName('textarea')[0];
@@ -143,6 +178,7 @@
 
       },
 
+      //地址栏地址添加
       addressInput: function () {
 
         var address = this.address.split('');
@@ -159,6 +195,7 @@
 
       },
 
+      //更改生日格式
       birthChange: function (oldBirth) {
 
         var birth = oldBirth.split('');
@@ -169,6 +206,27 @@
 
       },
 
+
+      //日期格式更改
+      dateChange: function (date) {
+
+        var newDate = new Date(date);
+
+        var year = newDate.getFullYear();
+
+        var month = newDate.getMonth() + 1;
+
+        var day = newDate.getDate();
+
+        (month < 10) && (month = '0' + month);
+
+        (day < 10) && (day = '0' + day);
+
+        return '' + year + '-' + month + '-' + day;
+
+      },
+
+      //日期弹窗默认值格式更改
       timeDefaultChange: function (oldTime) {
 
         var time = oldTime.split('');
@@ -180,6 +238,7 @@
       },
 
 
+      //打开日期弹窗
       openPicker: function () {
 
         this.$refs.picker.open();
@@ -187,6 +246,7 @@
       },
 
 
+      //确认弹窗中选择的日期
       handleConfirm: function (data) {
 
         var year = data.getFullYear();
@@ -204,6 +264,7 @@
       },
 
 
+      //提交认证
       submit: function () {
 
         if(!this.userName){
@@ -236,7 +297,7 @@
 
             if(res.data.code == '0000'){
 
-              if(res.data.data.source == 1 && res.data.data.userName != this.userName){
+              if(res.data.data.source == 0 && res.data.data.userName != this.userName){
 
                 this.$toast({
 
@@ -254,9 +315,9 @@
                 });
 
                 /**
-                 * 接口：证件实名认证
+                 * 接口：提交认证
                  * 请求方式：POST
-                 * 接口：/user/center/verifyuserinfo
+                 * 接口：/user/center/orc/commit/userverify
                  * 入参：urls
                  **/
 
@@ -264,29 +325,55 @@
 
                   method: 'post',
 
-                  url:process.env.API_ROOT+'user/center/verifyuserinfo',
+                  url:process.env.API_ROOT+'user/center/orc/commit/userverify',
 
                   params: {
 
-                    userName: this.userName,
+                    name: this.userName,
 
                     idNumber: this.idNumber,
 
                     idType: 1,
 
-                    nationality: '中国大陆',
+                    urls: this.urls,
 
-                    urls: this.$store.state.imageUrl
+                    sex: this.sex,
+
+                    nation: this.nation,
+
+                    birth: this.birth,
+
+                    address: this.address,
+
+                    issuingTime: this.issuingTime,
+
+                    expiryTime: this.expiryTime,
+
+                    riskType: this.riskType,
+
+                    extTradeNo: this.extTradeNo,
+
+                    extTradeNoB: this.extTradeNoB,
+
+                    issuingAuthority: this.issuingAuthority
 
                   }
 
                 }).then(function(res){
 
+                  console.log(res);
+
                   this.$indicator.close();
 
                   if(res.data.code == '0000'){
 
-                    this.$router.push('/certification');
+                    this.$toast({
+                      message: '实名认证成功',
+                      position: 'middle',
+                      duration: 2000
+                    });
+
+                    this.$router.push('/personalCenter');
 
                   }else if(res.data.code == '-1'){
 
@@ -331,6 +418,8 @@
 
     },
     watch: {
+
+      //监听地址值调整地址栏高度
       address: function (newValue,oldValue) {
 
 
