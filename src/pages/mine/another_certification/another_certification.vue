@@ -321,128 +321,69 @@
           }
 
         }
-        /*
-        * 接口： 证件实名认证
-        * 访问方式： POST
-        * 接口： /user/center/vertifyuserinfo
-        * 参数： userName, idNumber, idType, nationality
-        * */
-        if(this.cardTypeId == 1){
-          this.$http({
-            method: 'post',
-            url: process.env.API_ROOT+ 'user/center/verifyuserinfo',
-            headers:{
-              'Content-type': 'application/x-www-form-urlencoded'
-            },
-            params: {
-              userName: this.userName,
-              idNumber: this.IDNumber,
-              idType: this.cardTypeId,
-              nationality: this.country
-            }
-          }).then((res) => {
-            console.log(res);
-            var toast = this.$toast({
+        /**
+         * 接口：实名认证
+         * 请求方式：POST
+         * 接口：user/center/verifyuserinfo
+         * 入参：userName,idNumber,idType,nationality,urls
+         **/
+        this.$http({
+
+          method: 'post',
+
+          url: process.env.API_ROOT + 'user/center/verifyuserinfo',
+
+          header: {
+
+            'content-type': 'application/x-www-form-urlencoded'
+
+          },
+
+          params: {
+
+            userName:this.userName,
+
+            idNumber:this.IDNumber,
+
+            idType:this.cardTypeId,
+
+            nationality:this.country,
+
+            urls:this.faceUrl+','+this.backUrl
+
+          }
+
+        }).then(function(res){
+
+          console.log(res);
+
+          if(res.data.code == '0000'){
+
+            this.$router.push('/certificationSuccess');
+
+          }else{
+
+            this.$toast({
               message: res.data.msg,
               position: 'middle',
               duration: 1500
             });
-            var _hrefId = this.getStorage('hrefId');
-            if(res.data.code == '0000'){
-              this.setStorage('isVerify','1');
-              var _this = this
-              setTimeout(()=>{
-                toast.close();
 
-                if(_hrefId=='1'){
+          }
 
-
-
-                  console.log('从个人中心');
-
-                  setTimeout(function () {
-
-                    _this.$router.push('/personalCenter');
-
-                    _this.mounted();
-
-
-                  },1000)
-
-
-                }
-
-                else if(_hrefId=='4'||_hrefId=='8'){
-
-                  setTimeout(function () {
-
-                    _this.$router.go(-1)
-
-                  },1000)
-
-                }
-
-                else if(_hrefId=='10'){
-
-                  console.log('从转账');
-
-
-
-
-
-                }
-
-                else if(_hrefId=='6'){
-
-                  console.log('从京东');
-
-                  setTimeout(function () {
-
-                    _this.$router.push('/workDesk/discovery')
-
-                  },1000)
-
-
-
-
-
-                }else if(_hrefId == '7'){
-
-                  console.log('从签约合同详情');
-
-                  setTimeout(function () {
-
-                    _this.$router.push('/contractList');
-
-                  },1000)
-
-                }
-
-
-              },500);
-            }
-          }).catch((res) => {
-            var toast = this.$toast({
-              message: res.data.msg,
-              position: 'middle',
-              duration: 1500
-            });
-            if(res.data.code == '3001'){
-              setTimeout( () => {
-                toast.close();
-                this.$router.push('/');
-              },500);
-            }
+        }.bind(this)).catch((res) => {
+          var toast = this.$toast({
+            message: res.data.msg,
+            position: 'middle',
+            duration: 1500
           });
-        }
-        else{
-          this.setStorage('idType',this.cardTypeId);
-          this.setStorage('idNumber',this.IDNumber);
-          this.setStorage('userName',this.userName);
-          this.setStorage('country',this.country);
-          this.setStorage('cardType',this.cardType);
-          this.$router.push('/certificationPic');
-        }
+          if(res.data.code == '3001'){
+            setTimeout( () => {
+              toast.close();
+              this.$router.push('/');
+            },500);
+          }
+        });
       },
       //上传照片
       updateface: function () {
@@ -503,7 +444,7 @@
       //示例照片弹出
       exampleImg: function () {
 
-        if(this.cardTypeId == 3 || this.cardTypeId == 4){
+        if(this.cardTypeId == 4){
 
           if(event.currentTarget.classList.contains('back')){
             this.exampleUrl = './static/images/jx_example_back.jpg'
@@ -516,6 +457,15 @@
 
           this.exampleUrl = './static/images/jx_example_password.jpg'
 
+        }else if(this.cardTypeId == 3){
+
+          if(event.currentTarget.classList.contains('back')){
+            this.exampleUrl = './static/images/jx_example_exit_back.jpg'
+          }
+          else if(event.currentTarget.classList.contains('face')){
+            this.exampleUrl = './static/images/jx_example_exit_face.jpg'
+          }
+
         }
 
         this.popupExample = true;
@@ -524,9 +474,6 @@
     },
     computed: {
       cardTypeId: function () {
-        if(this.cardType == '身份证'){
-          return 1;
-        }
         if(this.cardType == '护照'){
           return 2;
         }
