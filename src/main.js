@@ -81,6 +81,10 @@ router.beforeEach((to,from,next)=>{
 
      next({path: '/workDesk/mine'});
 
+   }else if(from.path == '/certificationSuccess' && (to.path == '/anotherCertification')){
+
+     next({path: '/workDesk/mine'});
+
    }
 
 
