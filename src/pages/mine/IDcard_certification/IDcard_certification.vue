@@ -148,6 +148,11 @@
 
       updateface: function () {
 
+        var loading = this.$toast({
+          message: '图片上传中',
+          position: 'middle'
+        });
+
         var Event = event;
 
         var file = event.target.files[0];
@@ -167,6 +172,8 @@
           console.log(res.data);
 
           if(res.data.code=='0000'){
+
+            loading.close();
 
             this.$toast({
 
