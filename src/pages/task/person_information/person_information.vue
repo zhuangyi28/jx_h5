@@ -358,7 +358,7 @@
 
           });
 
-        }else if((this.faceUrl == './static/images/jx_idcard_face.png' || this.backUrl == './static/images/jx_idcard_back.png')&&this.idType=='1'){
+        }/*else if((this.faceUrl == './static/images/jx_idcard_face.png' || this.backUrl == './static/images/jx_idcard_back.png')&&this.idType=='1'){
 
           this.$toast({
 
@@ -370,7 +370,7 @@
 
           });
 
-        }else{
+        }*/else{
 
           /*
          * 接口：用户填写履历
