@@ -119,7 +119,6 @@
 
     },
 
-
     methods: {
 
       getData: function () {
@@ -158,12 +157,15 @@
 
         this.addressInput();
 
+
       },
 
       //地址赋值
       addressChange: function () {
 
         this.address = document.getElementsByTagName('textarea')[0].value;
+
+
 
       },
 
@@ -201,7 +203,7 @@
 
         var address = this.address.split('');
 
-        this.address = '';
+        //this.address = '';
 
         for(let word of address){
 
@@ -223,7 +225,6 @@
         return birth;
 
       },
-
 
       //日期格式更改
       dateChange: function (date) {
@@ -255,14 +256,12 @@
 
       },
 
-
       //打开日期弹窗
       openPicker: function () {
 
         this.$refs.picker.open();
 
       },
-
 
       //确认弹窗中选择的日期
       handleConfirm: function (data) {
@@ -280,8 +279,6 @@
         this.birth = year + '年' + month + '月' + day + '日';
 
       },
-
-
 
       checked: function () {
 
@@ -375,7 +372,6 @@
 
 
       },
-
 
       //提交认证
       submit: function () {
@@ -516,7 +512,6 @@
 
       },
 
-
       onValueChange: function (picker,values) {
         console.log(picker);
         console.log(values);
@@ -543,6 +538,9 @@
               this.address = document.getElementsByTagName('textarea')[0].value = oldValue;
 
             }
+
+          this.address = document.getElementsByTagName('textarea')[0].value
+
 
         }
 
