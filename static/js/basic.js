@@ -9,21 +9,14 @@ var jxCustomerService = {
     if (!$("#MEIQIA-PANEL-HOLDER").length > 0) {
 
 
-      var isIosProduct = 0;                                                                                         //判断是不是可能出现位移的页面
+      var isIosProduct = 0;
+
+      //判断是不是可能出现位移的页面
 
 
-      var jfServiceInit = function(visibility) {
-
-        jfServiceSwitch(visibility);
-
-        if (browser.os.iOS && $('html').hasClass('ovfHiden') && $('body').hasClass('ovfHiden')) {                    //解决ios10的在详情页聊天移位问题。
-          isIosProduct = 1;
-          $(document).scrollTop(0);
-        }
-      }
 
 
-       var jfServiceSwitch = function(visibility) {
+      function jfServiceSwitch(visibility) {
         if (visibility === 'visible') {
 
           if (isIosProduct) {                                                                                   //解决ios10的在详情页聊天移位问题。
@@ -45,6 +38,21 @@ var jxCustomerService = {
         }
       }
 
+      function jfServiceInit(visibility) {
+
+        debugger
+
+        jfServiceSwitch(visibility);
+
+        if (browser.os.iOS && $('html').hasClass('ovfHiden') && $('body').hasClass('ovfHiden')) {                    //解决ios10的在详情页聊天移位问题。
+          isIosProduct = 1;
+          $(document).scrollTop(0);
+        }
+      }
+
+
+
+
       (function (m, ei, q, i, a, j, s) {
         m[i] = m[i] || function () {
             (m[i].a = m[i].a || []).push(arguments)
@@ -64,7 +72,7 @@ var jxCustomerService = {
 
       // ----------------------------------------------------------------------------------------------------------你可以自己的代码中选择合适的时机来调用手动初始化
       _MEIQIA('withoutBtn');                                                                                      //不使用插件按钮
-      _MEIQIA('allSet', jfServiceSwitch);                                                                         //初始设置
+      _MEIQIA('allSet', jfServiceInit);                                                                         //初始设置
       _MEIQIA('getPanelVisibility', jfServiceSwitch);                                                              //改变状态后设置
       _MEIQIA('init');                                                                                             //初始化
 

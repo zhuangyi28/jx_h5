@@ -171,7 +171,7 @@
 
         this.$messagebox({
           title: '不可提金额只可消费，不可提现',
-          message: '在“我的发薪企业”中同意企业邀请，身份验证通过后，即可提现',
+          message: '在“发薪企业”中同意企业邀请，身份验证通过后，即可提现',
           showConfirmButton: true,
           showCancelButton: true,
           confirmButtonText: '加入企业',
@@ -387,7 +387,7 @@
 
           this.$messagebox({
             title: '提示',
-            message: '为保障账户资金安全，实名用户才能使用转账服务，请先完成实名认证',
+            message: '为保障账户资金安全，实名用户才能使用提现服务，请先完成实名认证',
             showConfirmButton: true,
             showCancelButton: true,
             confirmButtonText: '去认证',
@@ -423,7 +423,7 @@
 
           this.$messagebox({
             title: '提示',
-            message: '实名认证审核中，审核通过后即可使用转账服务',
+            message: '实名认证审核中，审核通过后即可使用提现服务',
             showCancelButton: false,
             confirmButtonText: '我知道了',
             confirmButtonClass:'confirm_btn_orange',

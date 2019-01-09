@@ -4,31 +4,31 @@
       <div class="certification_name">
         <span>姓名</span>
         <div class="information_btn">
-          <input type="text" v-model="userName" placeholder="请输入姓名" v-if="(isVerify == 0||isVerify == 3)&&source==1">
-          <span v-else>{{userName}}</span>
+         <!-- <input type="text" v-model="userName" placeholder="请输入姓名" v-if="(isVerify == 0||isVerify == 3)&&source==1">-->
+          <span>{{userName}}</span>
         </div>
       </div>
-      <div class="certification_name" onclick="if(!!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) ){setTimeout(function() {$('.mint-indexlist-content').css('height','auto') },200)}" v-on:click="indexShow = true" v-if="(isVerify == 0||isVerify == 3)">
+<!--      <div class="certification_name" onclick="if(!!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) ){setTimeout(function() {$('.mint-indexlist-content').css('height','auto') },200)}" v-on:click="indexShow = true" v-if="(isVerify == 0||isVerify == 3)">
         <span>国籍（地区）</span>
         <div class="information_btn">
           <span>{{country}}</span>
           <img src="../../../../static/images/reset_go.png">
         </div>
-      </div>
-      <div class="certification_name" v-else>
+      </div>-->
+      <div class="certification_name">
         <span>国籍（地区）</span>
         <div class="information_btn">
           <span>{{country}}</span>
         </div>
       </div>
-      <div class="certification_name" v-on:click="pickerShow = true" v-if="isVerify == 0||isVerify == 3">
+<!--      <div class="certification_name" v-on:click="pickerShow = true" v-if="isVerify == 0||isVerify == 3">
         <span>证件类型</span>
         <div class="information_btn">
           <span>{{cardType}}</span>
           <img src="../../../../static/images/reset_go.png">
         </div>
-      </div>
-      <div class="certification_name" v-else>
+      </div>-->
+      <div class="certification_name">
         <span>证件类型</span>
         <div class="information_btn">
           <span>{{cardType}}</span>
@@ -37,8 +37,7 @@
       <div class="certification_name">
         <span>证件号码</span>
         <div class="information_btn">
-          <input type="text" placeholder="请填写证件号码" v-model="IDNumber" v-if="isVerify == 0||isVerify == 3">
-          <span v-else>{{IDNumber}}</span>
+          <span>{{IDNumber}}</span>
         </div>
       </div>
       <div class="certification_name" v-if="isVerify == 1">
@@ -52,31 +51,6 @@
         </div>
       </div>
     </div>
-    <div class="certification_popup">
-      <mt-popup class="information_picker" v-model="pickerShow" position="bottom">
-        <div class="picker_btn">
-          <mt-button v-on:click="pickerShow=false">取消</mt-button>
-          <mt-button v-on:click="getCardType">确认</mt-button>
-        </div>
-        <mt-picker v-bind:slots="slots" v-on:change="onValueChange"></mt-picker>
-      </mt-popup>
-      <mt-index-list v-if="indexShow">
-        <div class="select_box">
-          <div class="select_input">
-            <img src="../../../../static/images/jx_found.png">
-            <input type="text" placeholder="请输入国家中文名/英文名" v-on:click="closeBtn=true" v-model="select" v-on:input="displayChange">
-          </div>
-          <div class="close_btn" v-if="closeBtn==true" v-on:click="indexShow = false">取消</div>
-        </div>
-        <mt-index-section v-for="(values, key, index) in countryArr" v-bind:index="key" v-on:click="console.log('cehsi')">
-          <div v-on:click="getPlace">
-            <mt-cell :data-shortname="value.shortName" onclick="localStorage.setItem('dataCountry',this.getAttribute('data-shortName'))" v-for="value in values" v-bind:title="value.shortName" v-bind:value="value.englishName" v-if="(value.shortName + value.englishName).match(select)"></mt-cell>
-          </div>
-        </mt-index-section>
-      </mt-index-list>
-    </div>
-
-    <orangeBtn v-if="isVerify == 0||isVerify == 3" v-bind:name="btnName" v-on:clickEvent="submit"></orangeBtn>
 
   </div>
 </template>
