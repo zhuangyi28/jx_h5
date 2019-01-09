@@ -200,6 +200,9 @@
 
               (res.data.data.idType) && (this.country = res.data.data.nationality);
 
+
+              (this.cardType == 1)&&(this.cardType = 3);
+
               if(this.cardType == 2){
                 this.cardType = '护照'
               }

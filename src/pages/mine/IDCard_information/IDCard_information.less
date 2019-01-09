@@ -21,6 +21,9 @@
         color: #ababab;
         font-size: 14px;
       }
+      span+span{
+        color: #4a4a4a;
+      }
       input{
         width: 60%;
         color: #4a4a4a;
@@ -29,9 +32,9 @@
         background-color: transparent;
         height: 22px;
         font-size: 14px;
-        &:disabled{
-          color: #4a4a4a;
-        }
+      }
+      input:disabled,input[disabled]{
+        color: #4a4a4a!important;
       }
       textarea{
         color: #4a4a4a;
