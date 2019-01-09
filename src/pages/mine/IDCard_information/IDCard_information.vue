@@ -8,11 +8,11 @@
       </div>
       <div class="information_detail">
         <span>身份证号</span>
-        <input type="text" v-model="idNumber" disabled>
+        <span>{{idNumber}}</span>
       </div>
       <div class="information_detail" v-on:click="pickerShow = true">
         <span>性别</span>
-        <input type="text" v-model="sex" disabled>
+        <span>{{sex}}</span>
       </div>
       <div class="information_detail">
         <span>民族</span>
@@ -20,7 +20,7 @@
       </div>
       <div class="information_detail" @click="openPicker">
         <span>出生日期</span>
-        <input type="text" v-model="birth" disabled>
+        <span>{{birth}}</span>
       </div>
       <div class="information_detail">
         <span class="address">地址</span>
@@ -68,7 +68,7 @@
 
         address: '',//地址
 
-        addressRows: 1,//地址栏行数
+        addressRows: 3,//地址栏行数
 
         userName: '',//姓名
 
@@ -168,7 +168,7 @@
       },
 
       //地址栏行数控制
-      addAddressRows: function () {
+      /*addAddressRows: function () {
 
         var textarea = document.getElementsByTagName('textarea')[0];
 
@@ -194,7 +194,7 @@
 
         }
 
-      },
+      },*/
 
       //地址栏地址添加
       addressInput: function () {
@@ -207,7 +207,7 @@
 
           document.getElementsByTagName('textarea')[0].value = document.getElementsByTagName('textarea')[0].value + word;
 
-          this.addAddressRows();
+          //this.addAddressRows();
 
         }
 
@@ -284,6 +284,9 @@
 
 
       checked: function () {
+
+
+          console.log(this.address)
 
         if(!this.userName){
 
@@ -531,8 +534,20 @@
     },
     watch: {
 
+        address: function (newValue,oldValue){
+
+            if(newValue.length > 32){
+
+              var textarea = document.getElementsByTagName('textarea')[0];
+
+              this.address = document.getElementsByTagName('textarea')[0].value = oldValue;
+
+            }
+
+        }
+
       //监听地址值调整地址栏高度
-      address: function (newValue,oldValue) {
+      /*address: function (newValue,oldValue) {
 
 
 
@@ -570,7 +585,7 @@
 
         }.bind(this),1);
 
-      }
+      }*/
     }
   }
 </script>
