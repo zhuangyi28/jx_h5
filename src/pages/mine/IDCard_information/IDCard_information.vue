@@ -10,9 +10,9 @@
         <span>身份证号</span>
         <input type="text" v-bind:value="idNumber" disabled>
       </div>
-      <div class="information_detail">
+      <div class="information_detail" v-on:click="pickerShow = true">
         <span>性别</span>
-        <input type="text" v-bind:value="sex">
+        <input type="text" v-bind:value="sex" disabled>
       </div>
       <div class="information_detail">
         <span>民族</span>
@@ -39,6 +39,13 @@
       v-model="timeDefault"
     >
     </mt-datetime-picker>
+    <mt-popup class="information_picker" v-model="pickerShow" position="bottom">
+    <div class="picker_btn">
+      <mt-button v-on:click="pickerShow=false">取消</mt-button>
+      <mt-button v-on:click="getCardType">确认</mt-button>
+    </div>
+    <mt-picker v-bind:slots="slots" v-on:change="onValueChange"></mt-picker>
+  </mt-popup>
   </div>
 </template>
 <script>
@@ -89,7 +96,18 @@
 
         extTradeNo: '',//交易号
 
-        issuingAuthority: '' //签发机关
+        issuingAuthority: '', //签发机关
+
+        pickerShow: false,
+
+        slots: [
+          {
+            values: ['男','女'],
+            textAlign: 'center'
+          }
+        ],
+
+        pickerValue: ''
 
       }
 
@@ -411,7 +429,19 @@
 
         }
 
-      }
+      },
+
+
+      onValueChange: function (picker,values) {
+        console.log(picker);
+        console.log(values);
+        this.pickerValue = values[0];
+      },
+      //证件类型弹窗点击确定后获取证件类型
+      getCardType: function () {
+        this.sex = this.pickerValue;
+        this.pickerShow = false;
+      },
 
 
 
@@ -464,4 +494,9 @@
 </script>
 <style lang="less" scoped>
   @import "IDCard_information.less";
+</style>
+<style>
+  .IDCard_information .mint-popup{
+    width: 100%;
+  }
 </style>

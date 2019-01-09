@@ -140,7 +140,7 @@
         closeBtn: '',//国家列表取消按键显示
         select: '',//国家列表筛选值
         source:'',
-
+        urls: ''
       }
 
     },
@@ -237,7 +237,7 @@
         var check = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
         if(this.cardTypeId == 3){
           //港澳
-          check = /^[a-z0-9A-Z]{11}$/;
+          check = /^[a-z0-9A-Z]{9}$/;
         }
         else if(this.cardTypeId == 4){
           //台湾
@@ -305,6 +305,10 @@
             });
             return;
 
+          }else{
+
+            this.urls = this.faceUrl + ',' + this.backUrl;
+
           }
 
         }else if(this.cardTypeId == 2){
@@ -317,6 +321,10 @@
               duration: 1500
             });
             return;
+
+          }else{
+
+            this.urls = this.faceUrl;
 
           }
 
@@ -349,7 +357,7 @@
 
             nationality:this.country,
 
-            urls:this.faceUrl+','+this.backUrl
+            urls:this.urls
 
           }
 
@@ -358,6 +366,8 @@
           console.log(res);
 
           if(res.data.code == '0000'){
+
+            this.setStorage('anotherCertification','1');
 
             this.$router.push('/certificationSuccess');
 

@@ -182,6 +182,8 @@
 
     mounted(){
 
+      (this.getStorage('anotherCertification') == 1) && (this.removeStorage('anotherCertification') || this.$router.push('/personalCenter'));
+
       this.bus.$emit('pageChange','3');
 
       if(localStorage.getItem('contractDetailBack') == 1){

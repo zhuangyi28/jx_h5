@@ -112,7 +112,7 @@
 
         this.idNumberAll = res.data.data.idNumberAll;
 
-        (res.data.data.name) && (this.userName = res.data.data.name);
+        (res.data.data.userName) && (this.userName = res.data.data.userName);
 
         if(res.data.code=='0000'){
 
