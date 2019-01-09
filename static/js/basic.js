@@ -12,7 +12,7 @@ var jxCustomerService = {
       var isIosProduct = 0;                                                                                         //判断是不是可能出现位移的页面
 
 
-      var jfServiceInit = function (visibility) {
+      var jfServiceInit = function(visibility) {
 
         jfServiceSwitch(visibility);
 
@@ -23,7 +23,7 @@ var jxCustomerService = {
       }
 
 
-      var jfServiceSwitch = function (visibility) {
+       var jfServiceSwitch = function(visibility) {
         if (visibility === 'visible') {
 
           if (isIosProduct) {                                                                                   //解决ios10的在详情页聊天移位问题。

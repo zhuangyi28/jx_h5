@@ -47,7 +47,7 @@
       <div class="certification_pic_input">
         <div class="img">
           <img v-bind:src="faceUrl">
-          <input type="file" name="file" accept="image/png,image/gif,image/jpeg" @change="updateface" class="face_img"/>
+          <input type="file" name="file" accept="image/*;capture=camera" @change="updateface" class="face_img"/>
         </div>
         <div class="title">
           <span v-if="cardTypeId==3">上传港澳通行证正面</span>
@@ -59,7 +59,7 @@
       <div class="certification_pic_input" v-if="cardTypeId != 2">
         <div class="img">
           <img v-bind:src="backUrl">
-          <input type="file" name="file" accept="image/png,image/gif,image/jpeg" @change="updateface" class="back_img"/>
+          <input type="file" name="file" accept="image/*;capture=camera" @change="updateface" class="back_img"/>
         </div>
         <div class="title">
           <span v-if="cardTypeId == 3">上传港澳通行证反面</span>

@@ -639,7 +639,7 @@ export default new Router({
       path: '/certificationChoose',
       name: 'certificationChoose',
       meta: {
-        title: ''
+        title: '实名认证'
       },
       component: certificationChoose
     },
@@ -647,7 +647,7 @@ export default new Router({
       path: '/IDCardCertification',
       name: 'IDCardCertification',
       meta: {
-        title: '实名认证'
+        title: ''
       },
       component: IDCardCertification
     },
