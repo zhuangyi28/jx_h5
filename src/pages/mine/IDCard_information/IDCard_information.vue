@@ -4,23 +4,23 @@
     <div class="information_part">
       <div class="information_detail">
         <span>姓名</span>
-        <input type="text" v-bind:value="userName">
+        <input type="text" v-model="userName">
       </div>
       <div class="information_detail">
         <span>身份证号</span>
-        <input type="text" v-bind:value="idNumber" disabled>
+        <input type="text" v-model="idNumber" disabled>
       </div>
       <div class="information_detail" v-on:click="pickerShow = true">
         <span>性别</span>
-        <input type="text" v-bind:value="sex" disabled>
+        <input type="text" v-model="sex" disabled>
       </div>
       <div class="information_detail">
         <span>民族</span>
-        <input type="text" v-bind:value="nation">
+        <input type="text" v-model="nation">
       </div>
       <div class="information_detail" @click="openPicker">
         <span>出生日期</span>
-        <input type="text" v-bind:value="birth" disabled>
+        <input type="text" v-model="birth" disabled>
       </div>
       <div class="information_detail">
         <span class="address">地址</span>
@@ -282,8 +282,8 @@
       },
 
 
-      //提交认证
-      submit: function () {
+
+      checked: function () {
 
         if(!this.userName){
 
@@ -295,7 +295,89 @@
 
           });
 
-        }else{
+          return false;
+
+        }
+
+        if(!this.idNumber){
+
+          this.$toast({
+
+            message: '请输入身份证号码',
+            position: 'middle',
+            duration: 1000
+
+          });
+
+          return false;
+
+        }
+
+        if(!this.sex){
+
+          this.$toast({
+
+            message: '请选择您的性别',
+            position: 'middle',
+            duration: 1000
+
+          });
+
+          return false;
+
+        }
+
+        if(!this.nation){
+
+          this.$toast({
+
+            message: '请输入民族',
+            position: 'middle',
+            duration: 1000
+
+          });
+
+          return false;
+        }
+
+        if(!this.birth){
+
+          this.$toast({
+
+            message: '请选择出生日期',
+            position: 'middle',
+            duration: 1000
+
+          });
+
+          return false;
+
+        }
+
+        if(!this.address){
+
+          this.$toast({
+
+            message: '请输入地址',
+            position: 'middle',
+            duration: 1000
+
+          });
+
+          return false;
+
+        }
+
+        return true;
+
+
+      },
+
+
+      //提交认证
+      submit: function () {
+
+        if(this.checked()){
 
 
           /**
