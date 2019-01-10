@@ -16,7 +16,7 @@ var jxCustomerService = {
 
 
 
-      function jfServiceSwitch(visibility) {
+      var jfServiceSwitch = function (visibility) {
         if (visibility === 'visible') {
 
           if (isIosProduct) {                                                                                   //解决ios10的在详情页聊天移位问题。
@@ -38,9 +38,8 @@ var jxCustomerService = {
         }
       }
 
-      function jfServiceInit(visibility) {
+      var jfServiceInit = function (visibility) {
 
-        debugger
 
         jfServiceSwitch(visibility);
 
@@ -48,10 +47,7 @@ var jxCustomerService = {
           isIosProduct = 1;
           $(document).scrollTop(0);
         }
-      }
-
-
-
+      };
 
       (function (m, ei, q, i, a, j, s) {
         m[i] = m[i] || function () {
