@@ -402,7 +402,7 @@
 
                   message: '请使用姓名为' + res.data.data.userName + '的证件认证，核对一致再进行实名认证',
                   position: 'middle',
-                  duration: 1000
+                  duration: 2000
 
                 });
 
