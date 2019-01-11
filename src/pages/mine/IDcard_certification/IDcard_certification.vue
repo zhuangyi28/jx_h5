@@ -112,7 +112,7 @@
 
         this.idNumberAll = res.data.data.idNumberAll;
 
-        (res.data.data.userName) && (this.userName = res.data.data.userName);
+        (res.data.data.source == 0) && (res.data.data.userName) && (this.userName = res.data.data.userName);
 
         if(res.data.code=='0000'){
 
@@ -150,7 +150,8 @@
 
         var loading = this.$toast({
           message: '图片上传中',
-          position: 'middle'
+          position: 'middle',
+          duration: 60000
         });
 
         var Event = event;
