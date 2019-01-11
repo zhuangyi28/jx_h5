@@ -13,9 +13,6 @@
         <div class="country"
              v-for="country in countryList"
              v-bind:englishName="country.englishName"
-             v-if="(country.shortName + country.englishName.toLocaleLowerCase() + country.englishName.toLocaleUpperCase() + country.englishName).indexOf(select) != -1"
-             v-on:click="getPlace(country.shortName)"
-        >
           <span>{{country.shortName}}</span>
           <span>{{country.englishName}}</span>
         </div>

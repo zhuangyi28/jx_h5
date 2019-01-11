@@ -6,8 +6,8 @@
     <div class="task_detail">
       <div class="title before_border">{{taskDetail.taskName}}</div>
       <div class="sort">
-        <span><img src="../../../../static/images/jx_task_sort.png">{{taskDetail.type}}</span>
-        <span><img src="../../../../static/images/jx_task_sort.png">{{taskDetail.industry}}</span>
+        <span><i class="iconfont color_text icon-form_star"></i>{{taskDetail.type}}</span>
+        <span><i class="iconfont color_text icon-form_star"></i>{{taskDetail.industry}}</span>
       </div>
       <div class="detail">
         <div>
