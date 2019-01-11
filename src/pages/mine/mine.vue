@@ -13,22 +13,22 @@
 
           <!-- 未认证-->
           <div class="user_auth" v-if="isVerify=='0'">
-            <img src="../../../static/images/jx_uncertified_1.png">
+            <i class="iconfont color_text icon-careful_Authenticati"></i>
             <span class="color_text">未认证</span>
           </div>
           <!-- 已认证-->
           <div class="user_auth" v-else-if="isVerify=='1'">
-            <img src="../../../static/images/jx_authentication_1.png">
+            <i class="iconfont color_text icon-main_success"></i>
             <span class="color_text">已认证</span>
           </div>
           <!-- 已认证-->
           <div class="user_auth" v-else-if="isVerify=='2'">
-            <img src="../../../static/images/jx_uncertified_1.png">
+            <i class="iconfont color_text icon-careful_Authenticati"></i>
             <span class="color_text">审核中</span>
           </div>
           <!-- 已认证-->
           <div class="user_auth" v-else-if="isVerify=='3'">
-            <img src="../../../static/images/jx_uncertified_1.png">
+            <i class="iconfont color_text icon-careful_Authenticati"></i>
             <span class="color_text">审核未通过</span>
           </div>
         </div>

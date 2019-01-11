@@ -377,7 +377,7 @@
             if(!this.signUrl){
 
               this.$messagebox({
-                message: '上上签用户数字证书申请中，则用户端提示：正在为您申请电子签名资质，申请成后即可进行签署，请稍后再试',
+                message: '正在为您申请电子签名资质，申请成后即可进行签署，请稍后再试',
                 showConfirmButton: true,
                 confirmButtonText: '确定',
                 confirmButtonClass:'confirm_btn_orange',
