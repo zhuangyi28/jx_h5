@@ -360,78 +360,44 @@
       //获取任务分类
       typeChange: function (type) {
 
-        /*1-软件开发
-         2-App开发 
-          3-小程序开发  
-          4-UI设计 
-          5-技术咨询 
-          6-营销咨询 
-          7-促销推广 
-          8-代驾服务 
-          9-影视剧务 
-          10-临时演员 
-          11-快递运输 
-          12-保洁服务 
-          13-维修服务 
-          14-场馆活动服务 
-          15-其他 */
+
 
         switch(type){
 
           case 1:
 
-            return '软件开发';
+            return '设计/制作/咨询';
 
           case 2:
 
-            return 'App开发';
+            return '市场调研/服务督导/竞品调研';
 
           case 3:
 
-            return '小程序开发';
+            return '代驾服务';
 
           case 4:
 
-            return 'UI设计';
+            return '软件开发';
 
           case 5:
 
-            return '技术咨询';
+            return '跑腿代办';
 
           case 6:
 
-            return '营销咨询';
+            return '产品试用/定价调研';
 
           case 7:
 
-            return '促销推广';
+            return '中介服务';
 
           case 8:
 
-            return '代驾服务';
+            return '其他';
 
-          case 9:
+          default:
 
-            return '影视剧务';
-
-          case 10:
-
-            return '临时演员';
-
-          case 11:
-
-            return '快递运输';
-
-          case 12:
-            return '保洁服务';
-
-          case 13:
-            return '维修服务';
-
-          case 14:
-            return '场馆活动服务';
-
-          case 15:
             return '其他';
 
         }
