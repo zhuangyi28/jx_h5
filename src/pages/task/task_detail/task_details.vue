@@ -61,12 +61,12 @@
             <p>{{item.data|fmtDateStr}}</p>
           </div>
           <div class="circle circle_color"></div>
-          <div v-if="item.type=='1'" class="state">已报名，等待企业审核</div>
-          <div v-else-if="item.type=='2'" class="state">您已被录用，可以开始工作啦</div>
+          <div v-if="item.type=='1'" class="state">已报名，等待企业审核录用</div>
+          <div v-else-if="item.type=='2'" class="state">您已被录用，可以开始工作啦！</div>
           <div v-else-if="item.type=='3'" class="state">提交验收成功，请耐心等待企业验收</div>
           <div v-else-if="item.type=='4'" class="state">任务验收通过<span class="green">验</span></div>
-          <div v-else-if="item.type=='5'" class="state">很遗憾，您未被录用<span class="red">未</span></div>
-          <div v-else-if="item.type=='6'" class="state">企业已关闭改任务</div>
+          <div v-else-if="item.type=='5'" class="state">该任务已结束，很遗憾，您未被录用<span class="red"> 未</span></div>
+          <div v-else-if="item.type=='6'" class="state">企业已关闭该任务</div>
           <div v-else-if="item.type=='7'" class="state">您已取消报名</div>
         </div>
 
