@@ -148,35 +148,21 @@
 
             <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == '')}" v-bind:data-type="''">全部</div>
 
-            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 1)}" v-bind:data-type="1">软件开发</div>
+            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 1)}" v-bind:data-type="1">设计/制作/咨询</div>
 
-            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 2)}" v-bind:data-type="2">APP开发</div>
+            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 2)}" v-bind:data-type="2">市场调研/服务督导/竞品调研</div>
 
-            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 3)}" v-bind:data-type="3">小程序开发</div>
+            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 3)}" v-bind:data-type="3">代驾服务</div>
 
-            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 4)}" v-bind:data-type="4">UI设计</div>
+            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 4)}" v-bind:data-type="4">软件开发</div>
 
-            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 5)}" v-bind:data-type="5">技术咨询</div>
+            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 5)}" v-bind:data-type="5">跑腿代办</div>
 
-            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 6)}" v-bind:data-type="6">营销咨询</div>
+            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 6)}" v-bind:data-type="6">产品试用/定价调研</div>
 
-            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 7)}" v-bind:data-type="7">促销推广</div>
+            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 7)}" v-bind:data-type="7">中介服务</div>
 
-            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 8)}" v-bind:data-type="8">代驾服务</div>
-
-            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 9)}" v-bind:data-type="9">影视剧务</div>
-
-            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 10)}" v-bind:data-type="10">临时演员</div>
-
-            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 11)}" v-bind:data-type="11">快递运输</div>
-
-            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 12)}" v-bind:data-type="12">保洁服务</div>
-
-            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 13)}" v-bind:data-type="13">维修服务</div>
-
-            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 14)}" v-bind:data-type="14">场馆活动服务</div>
-
-            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 15)}" v-bind:data-type="15">其他</div>
+            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 8)}" v-bind:data-type="8">其他</div>
 
           </div>
 
@@ -643,11 +629,11 @@
 
                       console.log(res.data)
 
-                      _this.$toast({
-
-                        message: '必须加入企业才可查看哦~关闭后可在“发薪企业”中继续加入',
-                        duration: 1500
-
+                      _this.$messagebox({
+                        message: '首次查看需进行身份验证，在“我的”-“发新企业”中同意企业邀请，验证通过后即可查看',
+                        showCancelButton: true,
+                        showConfirmButton: true,
+                        confirmButtonText: '确定',
                       })
 
 
