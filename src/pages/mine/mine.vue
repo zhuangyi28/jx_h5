@@ -105,7 +105,7 @@
         <div class="title">
           <img src="../../../static/images/jx_task_1.png"><span class="cell_text">众包任务</span>
         </div>
-        <div class="cell_value"></div>
+        <div v-show="hasNewTask" class="cell_value"><span class="color_text">您有新任务</span></div>
         <i class="allow_right"></i>
       </div>
       <!--银行卡 -->
@@ -176,6 +176,8 @@
 
         hasNewSign:false,//默认不显示有新签约 true为不显示 false为显示
 
+        hasNewTask: false,//默认不显示有新任务 true为不显示  false 为显示
+
       }
 
     },
@@ -234,7 +236,9 @@
 
           var ishasNewMsg = res.data.data.isHaveNewMsg;
 
-          var ishasNewSign = res.data.data.isNewSign
+          var ishasNewSign = res.data.data.isNewSign;
+
+          var ishasNewTask = res.data.data.isNewSign;
 
 
 
@@ -266,6 +270,22 @@
           else {
 
             _this.hasNewSign = false
+
+
+          }
+
+          //判断是否有新任务
+
+          if (ishasNewTask == '1') {
+
+            _this.hasNewTask = true
+
+
+          }
+
+          else {
+
+            _this.hasNewTask = false
 
 
           }

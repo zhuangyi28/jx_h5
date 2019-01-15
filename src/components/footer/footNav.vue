@@ -84,7 +84,7 @@
 
       }).then(function (res) {
 
-        ('' + res.data.data.isHaveNewMsg + res.data.data.isNewSign != '00') && (this.hasNew = true);
+        ('' + res.data.data.isHaveNewMsg + res.data.data.isNewSign + res.data.data.isHaveNewTask != '000') && (this.hasNew = true);
 
         console.log(res);
 
