@@ -631,7 +631,7 @@
 
                       _this.$messagebox({
                         message: '首次查看需进行身份验证，在“我的”-“发新企业”中同意企业邀请，验证通过后即可查看',
-                        showCancelButton: true,
+                        showCancelButton: false,
                         showConfirmButton: true,
                         confirmButtonText: '确定',
                       })
@@ -904,12 +904,22 @@
 
                       console.log(res.data)
 
+                      _this.$messagebox({
+                        message: '首次查看需进行身份验证，在“我的”-“发新企业”中同意企业邀请，验证通过后即可查看',
+                        showCancelButton: false,
+                        showConfirmButton: true,
+                        confirmButtonText: '确定',
+                      })
+
+/*
+
                       _this.$toast({
 
                         message: '必须加入企业才可查看哦~关闭后可在“发薪企业”中继续加入',
                         duration: 1500
 
                       })
+*/
 
 
                     }).catch((res) => {})

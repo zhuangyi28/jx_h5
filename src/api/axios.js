@@ -10,7 +10,7 @@ axios.install = (Vue) => {
 
 }
 
-  axios.defaults.withCredentials = true;
+axios.defaults.withCredentiantials = true;
 
   axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 

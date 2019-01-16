@@ -238,7 +238,7 @@
 
           var ishasNewSign = res.data.data.isNewSign;
 
-          var ishasNewTask = res.data.data.isNewSign;
+          var ishasNewTask = res.data.data.isHaveNewTask;
 
 
 
@@ -327,7 +327,7 @@
 
             console.log('亮点'+this.$parent.$children[0].hasNew)
 
-            if(this.hasJoinEnt || this.hasNewMsg || this.hasNewSign){
+            if(this.hasJoinEnt || this.hasNewMsg || this.hasNewSign || this.hasNewTask){
 
               this.bus.$emit('hasNew',true);
 
