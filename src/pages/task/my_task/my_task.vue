@@ -18,7 +18,8 @@
               <img src="../../../../static/images/jx_bag.png">
             </div>
             <div class="task_content">
-              <div>{{item.taskName}}</div>
+              <div class="contract_is_read" v-if="item.isRead && item.isRead=='1'"><div class="title color_text">NEW!</div></div>
+              <div class="name">{{item.taskName}}</div>
               <div class="task_money color_text">
                 <span v-if="item.taskMaxUnit==item.taskMinUnit">￥{{item.taskMaxUnit}}</span>
                 <span v-else>￥{{item.taskMinUnit}}-￥{{item.taskMaxUnit}}</span>
@@ -155,6 +156,7 @@
         moreLoading: false,//上拉加载
 
         scrollTop:''
+
 
       }
 
