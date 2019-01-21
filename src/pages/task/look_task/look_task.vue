@@ -70,6 +70,27 @@
       <div class="jump_to btn_border" v-else v-on:click="$router.push('/taskDetail')">查看任务详情</div>
     </div>
 
+    <mt-popup v-model="popupShow">
+
+      <div class="protocol">
+
+        <div class="title">自由职业者入住协议</div>
+
+        <div class="content">
+          感谢您使用众包平台，在使用本服务前，请您务必认真阅读
+          <span v-on:click="$router.push('/protocol')">《自由职业者入驻协议》</span>
+          ，同意后方可继续报名参加众包任务。
+        </div>
+
+        <div class="button">
+          <div class="cancel" v-on:click="$router.go(-1)">不同意</div>
+          <div class="confirm" v-on:click="protocolAgree">&nbsp;&nbsp;同意&nbsp;&nbsp;</div>
+        </div>
+
+      </div>
+
+    </mt-popup>
+
   </div>
 </template>
 <script>
@@ -102,6 +123,8 @@
         originalFileNames:[],
 
         addListFile:'',
+
+        popupShow: false
 
       }
     },
@@ -556,110 +579,170 @@
       //按键点击事件
       handleClick: function () {
 
-        if(this.taskDetail.buttonState == 6){
+        if(!localStorage.getItem('Authorization')){
 
-          /**
-           * 接口：用户中心
-           * 请求方式：POST
-           * 接口：/user/center/usercenter
-           * 入参：null
-           **/
+          this.$router.push('/login');
 
-          this.$http({
+        }else{
 
-            method: 'post',
+          if(this.taskDetail.buttonState == 6){
 
-            url: process.env.API_ROOT + 'user/center/usercenter',
+            /**
+             * 接口：用户中心
+             * 请求方式：POST
+             * 接口：/user/center/usercenter
+             * 入参：null
+             **/
 
-          }).then((res)=>{
+            this.$http({
 
-            console.log(res);
+              method: 'post',
 
-            if(res.data.data.isVerify == 0 || res.data.data.isVerify == 3){
+              url: process.env.API_ROOT + 'user/center/usercenter',
 
-              this.$messagebox({
-                message: '未实名认证用户，需先完成实名认证才可报名',
-                showCancelButton: true,
-                showConfirmButton: true,
-                confirmButtonText: '去认证',
-                cancelButtonText: '取消',
-                cancelButtonClass: 'cancel_btn',
-                confirmButtonClass: 'confirm_btn_orange'
-              }).then(function (res) {
+            }).then((res)=>{
 
-                if(res == 'confirm'){
+              console.log(res);
 
-                  this.$router.push('/certificationChoose');
+              if(res.data.data.isVerify == 0 || res.data.data.isVerify == 3){
 
-                  return;
+                this.$messagebox({
+                  message: '未实名认证用户，需先完成实名认证才可报名',
+                  showCancelButton: true,
+                  showConfirmButton: true,
+                  confirmButtonText: '去认证',
+                  cancelButtonText: '取消',
+                  cancelButtonClass: 'cancel_btn',
+                  confirmButtonClass: 'confirm_btn_orange'
+                }).then(function (res) {
+
+                  if(res == 'confirm'){
+
+                    this.$router.push('/certificationChoose');
+
+                    return;
+
+                  }
+
+                }.bind(this))
+
+              }else if(res.data.data.isVerify == 2){
+
+                this.$messagebox({
+                  message: '实名认证审核中，审核通过后即可报名',
+                  showConfirmButton: true,
+                  confirmButtonText: '确定',
+                  cancelButtonClass: 'cancel_btn',
+                })
+
+              }else{
+
+                if(res.data.data.isCommitAuthorize == 0){
+
+                  this.popupShow = true;
+
+                }else{
+
+                  if(res.data.data.isHaveResume == 0){
+
+                    this.$messagebox({
+                      title: '完善个人履历',
+                      message: '丰富的技能标签，精彩的个人介绍，可以增加企业录用的概率',
+                      showCancelButton: true,
+                      showConfirmButton: true,
+                      confirmButtonText: '去完善',
+                      cancelButtonText: '取消',
+                      cancelButtonClass: 'cancel_btn',
+                      confirmButtonClass: 'confirm_btn_orange'
+                    }).then((res)=>{
+
+                      if(res == 'confirm'){
+
+                        localStorage.setItem('lookTaskToPersonInformation','true');
+
+                        this.$router.push('/personInformation');
+
+                      }
+
+                    });
+
+                  }else if(res.data.data.isHaveResume == 1){
+
+                    this.$messagebox({
+                      message: '确认报名参加该任务？',
+                      showCancelButton: true,
+                      showConfirmButton: true,
+                      confirmButtonText: '确认',
+                      cancelButtonText: '取消',
+                      cancelButtonClass: 'cancel_btn',
+                      confirmButtonClass: 'confirm_btn_orange'
+                    }).then((res)=>{
+
+                      if(res == 'confirm'){
+
+                        this.signUp();
+
+                      }
+
+                    });
+
+                  }
 
                 }
 
-              }.bind(this))
-
-            }else if(res.data.data.isVerify == 2){
-
-              this.$messagebox({
-                message: '实名认证审核中，审核通过后即可报名',
-                showConfirmButton: true,
-                confirmButtonText: '确定',
-                cancelButtonClass: 'cancel_btn',
-              })
-
-            }else{
-
-              if(res.data.data.isHaveResume == 0){
-
-                this.$messagebox({
-                  title: '完善个人履历',
-                  message: '丰富的技能标签，精彩的个人介绍，可以增加企业录用的概率',
-                  showCancelButton: true,
-                  showConfirmButton: true,
-                  confirmButtonText: '去完善',
-                  cancelButtonText: '取消',
-                  cancelButtonClass: 'cancel_btn',
-                  confirmButtonClass: 'confirm_btn_orange'
-                }).then((res)=>{
-
-                  if(res == 'confirm'){
-
-                    localStorage.setItem('lookTaskToPersonInformation','true');
-
-                    this.$router.push('/personInformation');
-
-                  }
-
-                });
-
-              }else if(res.data.data.isHaveResume == 1){
-
-                this.$messagebox({
-                  message: '确认报名参加该任务？',
-                  showCancelButton: true,
-                  showConfirmButton: true,
-                  confirmButtonText: '确认',
-                  cancelButtonText: '取消',
-                  cancelButtonClass: 'cancel_btn',
-                  confirmButtonClass: 'confirm_btn_orange'
-                }).then((res)=>{
-
-                  if(res == 'confirm'){
-
-                    this.signUp();
-
-                  }
-
-                });
-
               }
 
-            }
+            });
 
-          });
+          }
 
         }
 
+
+
       },
+
+      //同意协议
+      protocolAgree: function () {
+
+        /**
+         * 接口：用户同意广场授权
+         * 请求方式：POST
+         * 接口：/user/task/commit/usertaskaggree
+         * 入参：isCommitAuthorize
+         **/
+
+        this.$http({
+
+          method: 'post',
+
+          url: process.env.API_ROOT + 'user/task/commit/usertaskaggree',
+
+          params: {
+
+            isCommitAuthorize: 1
+
+          }
+
+        }).then(function (res) {
+
+          if(res.data.code == '0000'){
+
+            this.popupShow = false;
+
+          }else{
+
+            console.log(res);
+
+          }
+
+        }.bind(this)).catch((res)=>{
+
+          console.log(res);
+
+        });
+
+      }
 
       /*downloadFile: function () {
 

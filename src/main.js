@@ -132,6 +132,11 @@ router.beforeEach((to,from,next)=>{
       next();
 
     }
+    else if(to.path == '/workDesk/taskSquare' || to.path == '/workDesk/discovery' || to.path == '/workDesk/mine' || to.path == '/lookTask' || to.path == '/helpCenter' || to.path == '/helpDetail' || to.path == '/find'){
+
+      next();
+
+    }
     else  if((from.path === '/workDesk/homepage' && to.path === '/login')||(from.path === '/workDesk/homepage' && to.path === '/Register')){
 
 
@@ -139,7 +144,7 @@ router.beforeEach((to,from,next)=>{
 
      }
 
-     else if ((from.path == '/workDesk/taskSquare' && to.path == '/login') || (from.path == '/workDesk/homepage' && to.path == 'Register')) {
+     else if ((from.path == '/workDesk/taskSquare' && to.path == '/login') || (from.path == '/workDesk/taskSquare' && to.path == 'Register')) {
 
       next({path: '/workDesk/homepage'})
 

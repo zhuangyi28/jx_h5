@@ -427,7 +427,7 @@
             }).catch((res)=>{});
 
             //跳转
-            _this.$router.push('/workDesk/taskSquare');
+            _this.$router.go(-2);
 
           }
 
