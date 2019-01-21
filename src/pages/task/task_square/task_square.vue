@@ -310,15 +310,6 @@
 
       this.bus.$emit('pageChange','1');
 
-      if(this.getStorage('reloadtask')=='1'){
-
-
-          window.location.reload();
-
-          this.setStorage('reloadtask','0')
-
-      }
-
       localStorage.getItem('taskHistory') && (this.taskHistory = localStorage.getItem('taskHistory').split(','));
 
       this.userMobile = localStorage.getItem('mobile');
@@ -331,17 +322,10 @@
 
       localStorage.removeItem(this.userMobile + 'findWord');
 
-      this.onShow();
+      localStorage.getItem('Authorization') && this.onShow();
 
       //监听滚动条事件
       window.addEventListener('scroll', this.handelscroll);
-
-      //刷新锁
-      if(this.getStorage('taskSquare')=='0'){
-
-        this.setStorage('taskSquare','1')
-
-      }
 
 
 
