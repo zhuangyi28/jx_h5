@@ -148,47 +148,15 @@
       init: function () {
 
 
+        setTimeout(()=> {
 
-        /**
-         * 接口：用户中心
-         * 请求方式：POST
-         * 接口：/user/center/usercenter
-         * 入参：null
-         **/
+          this.$router.push('/workDesk/taskSquare');
 
-        this.$http({
-
-          method: 'post',
-
-          url: process.env.API_ROOT + 'user/center/usercenter',
+        },200)
 
 
 
-        }).then((res) => {
-
-            console.log(res.data);
-
-          if(res.data.code=='0000'){
-
-            setTimeout(()=> {
-
-              this.$router.push('/workDesk/taskSquare');
-
-            },200)
-
-
-
-
-          }
-
-
-        }).catch(function (error) {
-
-
-        }.bind(this))
-
-
-}
+      }
 
   }
 
