@@ -333,6 +333,65 @@
     color: #ff7a3b;
   }
 
+  .mint-popup{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    background-color: #fff;
+    width: 85%;
+    border-radius: 3px;
+    font-size: 16px;
+    overflow: hidden;
+    backface-visibility: hidden;
+    transition: .2s;
+    .protocol{
+      .title{
+        text-align: center;
+        margin-bottom: 0;
+        font-size: 16px;
+        font-weight: 700;
+        color: #333;
+        padding: 15px 0 0;
+      }
+      .content{
+        color: #999;
+        margin: 0;
+        text-align: center;
+        line-height: 36px;
+        padding: 10px 20px 15px;
+        border-bottom: 1px solid #ddd;
+        min-height: 36px;
+        position: relative;
+
+        span{
+          color: #ff9902;
+        }
+      }
+      .button{
+
+        display: flex;
+        height: 50px!important;
+        line-height: 50px!important;
+
+        div{
+          display: block;
+          background-color: #fff;
+          flex: 1;
+          margin: 0;
+          border: 0;
+          width: 50%;
+          text-align: center;
+
+        }
+
+        .cancel{
+          border-right: 1px solid #ddd;
+        }
+        .confirm{
+          color: #ff7d37!important;
+          font-size: 16px;
+
         }
       }
     }
