@@ -44,7 +44,7 @@
        <span class="cell_text">收入余额</span>
       </div>
       <div class="cell_value" v-if="isLogin"><span>{{totalSalary | thousandBitSeparator}}</span></div>
-      <div class="cell_value" v-else><span>******</span></div>
+      <div class="cell_value" v-else><span style="font-size: 16px">******</span></div>
       <i class="allow_right"></i>
     </div>
 
