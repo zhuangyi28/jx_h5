@@ -130,7 +130,7 @@
     },
     mounted () {
 
-      this.taskId = localStorage.getItem('taskId');
+      this.taskId = this.$route.query.taskId;
 
       this.$parent.detailShow = false;
 
