@@ -70,6 +70,19 @@
       <div class="jump_to btn_border" v-else v-on:click="$router.push('/taskDetail')">查看任务详情</div>
     </div>
 
+
+    <!-- 弹框-->
+    <mt-popup v-model="popupProtocol">
+      <div class="protocol">
+        <div class="protocol_title">自由职业者入驻协议</div>
+        <div class="protocol_content">感谢您使用众包平台，在使用本服务前，请您务必认真阅读<span style="color: #ff7a3b" v-on:click="lookAgreeFn">《自由职业者入驻协议》</span>，同意后方可继续报名参加众包任务。</div>
+        <div class="protocol_button">
+         <button class="noAgreen" v-on:click="popupProtocol = false">不同意</button>
+          <button v-on:click="userAgreeFn">同意</button>
+        </div>
+      </div>
+    </mt-popup>
+
   </div>
 </template>
 <script>
@@ -102,6 +115,8 @@
         originalFileNames:[],
 
         addListFile:'',
+
+        popupProtocol:false
 
       }
     },
@@ -608,7 +623,16 @@
 
             }else{
 
-              if(res.data.data.isHaveResume == 0){
+
+                if(res.data.data.isCommitAuthorize == 0){
+
+
+                    this.popupProtocol = true
+
+
+                }
+
+              else if(res.data.data.isHaveResume == 0){
 
                 this.$messagebox({
                   title: '完善个人履历',
@@ -661,6 +685,53 @@
 
       },
 
+      //查看入驻协议
+
+      lookAgreeFn:function () {
+
+          console.log('点击')
+
+          this.$router.push('/protocol')
+
+        },
+
+      userAgreeFn:function () {
+
+        /**
+         * 接口：用户同意广场授权
+         * 请求方式：POST
+         * 接口：user/task/commit/usertaskaggree
+         * 入参：isCommitAuthorize
+         **/
+
+        this.$http({
+
+          method: 'post',
+
+          url: process.env.API_ROOT + 'user/task/commit/usertaskaggree',
+
+          header: {
+
+            'content-type': 'application/x-www-form-urlencoded'
+
+          },
+
+          params: {
+
+            isCommitAuthorize: 1
+
+          }
+
+        }).then(function (res) {
+
+            console.log(res.data)
+
+
+        }).catch((res)=>{})
+
+
+      },
+
       /*downloadFile: function () {
 
         // 创建隐藏的可下载链接
@@ -688,4 +759,23 @@
 </script>
 <style lang="less" scoped>
   @import "look_task.less";
+</style>
+<style>
+  .look_task .mint-indexlist-nav{
+    display: none;
+  }
+  .look_task .mint-indexlist{
+    background-color: white;
+  }
+  .look_task .mint-indexlist{
+    overflow: scroll;
+    height:auto;
+  }
+  .look_task .mint-indexlist-content{
+    overflow: scroll!important;
+
+  }
+  .look_task .mint-indexlist-nav{
+    display: none;
+  }
 </style>
