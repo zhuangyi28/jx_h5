@@ -70,24 +70,6 @@
       <div class="jump_to btn_border" v-else v-on:click="$router.push('/taskDetail')">查看任务详情</div>
     </div>
 
-    <mt-popup v-model="popupShow">
-
-      <div class="protocol">
-
-        <div class="title">自由职业者入住协议</div>
-
-        <div class="content">
-          感谢您使用众包平台，在使用本服务前，请您务必认真阅读
-          <span v-on:click="$router.push('/protocol')">《自由职业者入驻协议》</span>
-          ，同意后方可继续报名参加众包任务。
-        </div>
-
-        <div class="button">
-          <div class="cancel" v-on:click="$router.go(-1)">不同意</div>
-          <div class="confirm" v-on:click="protocolAgree">&nbsp;&nbsp;同意&nbsp;&nbsp;</div>
-        </div>
-
-      </div>
 
     </mt-popup>
 
@@ -124,7 +106,6 @@
 
         addListFile:'',
 
-        popupShow: false
 
       }
     },
@@ -604,8 +585,6 @@
 
               console.log(res);
 
-              if(res.data.data.isVerify == 0 || res.data.data.isVerify == 3){
-
                 this.$messagebox({
                   message: '未实名认证用户，需先完成实名认证才可报名',
                   showCancelButton: true,
@@ -702,13 +681,12 @@
 
       },
 
-      //同意协议
-      protocolAgree: function () {
+
 
         /**
          * 接口：用户同意广场授权
          * 请求方式：POST
-         * 接口：/user/task/commit/usertaskaggree
+
          * 入参：isCommitAuthorize
          **/
 
@@ -718,6 +696,7 @@
 
           url: process.env.API_ROOT + 'user/task/commit/usertaskaggree',
 
+
           params: {
 
             isCommitAuthorize: 1
@@ -725,6 +704,7 @@
           }
 
         }).then(function (res) {
+
 
           if(res.data.code == '0000'){
 
@@ -743,6 +723,7 @@
         });
 
       }
+
 
       /*downloadFile: function () {
 
@@ -771,4 +752,23 @@
 </script>
 <style lang="less" scoped>
   @import "look_task.less";
+</style>
+<style>
+  .look_task .mint-indexlist-nav{
+    display: none;
+  }
+  .look_task .mint-indexlist{
+    background-color: white;
+  }
+  .look_task .mint-indexlist{
+    overflow: scroll;
+    height:auto;
+  }
+  .look_task .mint-indexlist-content{
+    overflow: scroll!important;
+
+  }
+  .look_task .mint-indexlist-nav{
+    display: none;
+  }
 </style>

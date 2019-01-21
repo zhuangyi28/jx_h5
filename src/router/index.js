@@ -72,6 +72,7 @@ import IDCardInformation from '@/pages/mine/IDCard_information/IDCard_informatio
 import certificationState from '@/pages/mine/certification_state/certification_state'
 import countryList from '@/pages/mine/country_list/country_list'
 import anotherCertificationIndex from '@/pages/mine/another_certification_index/another_certification_index'
+import taskNews from'@/pages/feedback/task_news/task_news'
 
 Vue.use(Router)
 
@@ -563,7 +564,14 @@ export default new Router({
       },
       component: salary
     },
-
+    {
+      path: '/taskNews',
+      name: 'taskNews',
+      meta:{
+        title: '众包任务通知'
+      },
+      component: taskNews
+    },
     {
       path: '/workDesk',
       name: 'workDesk',

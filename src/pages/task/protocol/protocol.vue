@@ -62,7 +62,7 @@
   </div>
 </template>
 <script>
-  import orangeBtn from '../../../components/orange_btn/orange_btn'
+
 
   export default {
 
@@ -70,21 +70,8 @@
 
 
 
-    components: {
-
-      orangeBtn: orangeBtn
-
-    },
-
-
-
     data () {
 
-      return {
-
-        btnName: '同意协议并开通嘉薪众包'
-
-      }
 
     },
 
@@ -92,32 +79,6 @@
 
     mounted () {
 
-      /**
-       * 接口：用户中心
-       * 请求方式：POST
-       * 接口：/user/center/usercenter
-       * 入参：null
-       **/
-
-      this.$http({
-
-        method: 'post',
-
-        url: process.env.API_ROOT + 'user/center/usercenter',
-
-      }).then(function (res) {
-
-        if(res.data.data.isCommitAuthorize == 1){
-
-          this.$router.replace('/workDesk/taskSquare');
-
-        }
-
-      }.bind(this)).catch((res)=>{
-
-        console.log(res);
-
-      });
 
     },
 
@@ -125,47 +86,7 @@
 
     methods: {
 
-      //同意协议
-      protocolAgree: function () {
 
-        /**
-         * 接口：用户同意广场授权
-         * 请求方式：POST
-         * 接口：/user/task/commit/usertaskaggree
-         * 入参：isCommitAuthorize
-         **/
-
-        this.$http({
-
-          method: 'post',
-
-          url: process.env.API_ROOT + 'user/task/commit/usertaskaggree',
-
-          params: {
-
-            isCommitAuthorize: 1
-
-          }
-
-        }).then(function (res) {
-
-          if(res.data.code == '0000'){
-
-            this.$router.push('/workDesk/taskSquare');
-
-          }else{
-
-            console.log(res);
-
-          }
-
-        }.bind(this)).catch((res)=>{
-
-          console.log(res);
-
-        });
-
-      }
 
 
 

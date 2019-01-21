@@ -2,7 +2,7 @@
 <div class="feedbackList" v-infinite-scroll="loadMore" infinite-scroll-disabled="moreLoading" infinite-scroll-distance="20" infinite-scroll-immediate-check="false">
 
   <mt-loadmore :top-method="loadTop" ref="loadmore">
-    <div class="list_box" v-for="item in feedBackList" v-bind:data-detail="item.salaryDetailId"  v-bind:data-id="item.salaryId" v-bind:data-click="item.isClick" v-on:click="feedBackUrlFn">
+    <div class="list_box" v-for="item in feedBackList" v-bind:data-detail="item.salaryDetailId"  v-bind:data-id="item.salaryId" v-bind:data-name="item.taskName" v-bind:data-click="item.isClick" v-bind:data-type="item.salaryType" v-on:click="feedBackUrlFn">
 
       <div class="icon_orange" v-if="item.isUserHaveNew=='1'"><img src="../../../../static/images/feedback_unlook.png"/></div>
       <div class="icon_blue" v-else>
@@ -236,17 +236,39 @@
 
       feedBackUrlFn:function (e) {
 
-
           if(e.currentTarget.dataset.click=='0'){
 
-            this.setStorage('salaryDetailId',e.currentTarget.dataset.detail);
 
-            this.setStorage('salaryId',e.currentTarget.dataset.id);
+              if(e.currentTarget.dataset.type=='X'){
 
-            this.$router.push('/feedback')
+            /*      console.log(e.currentTarget.dataset.detail)
+
+                console.log(e.currentTarget.dataset.name)*/
+
+                this.setStorage('salaryDetailId',e.currentTarget.dataset.detail);
+
+                this.setStorage('taskName',e.currentTarget.dataset.name)
+
+                this.$router.push('/taskNews')
+
+              }
+              else{
+
+                this.setStorage('salaryDetailId',e.currentTarget.dataset.detail);
+
+                this.setStorage('salaryId',e.currentTarget.dataset.id);
+
+                this.$router.push('/feedback')
+
+
+              }
+
 
 
           }
+
+
+
 
 
       },
