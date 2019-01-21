@@ -20,7 +20,7 @@
           <div class="picture"><img src="../../../../static/images/task_news.png"></div>
           <div class="details">
             <div>{{item.msgContent}}</div>
-            <div>{{item.createTime}}</div>
+            <div>{{item.createDate|fmtDateStr}}</div>
           </div>
 
         </div>
@@ -130,9 +130,6 @@
 
 
         },
-
-
-
 
 
       //查看任务详情
