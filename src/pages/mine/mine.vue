@@ -5,10 +5,10 @@
     <!-- 个人信息 -->
     <div class="user" v-on:click="$router.push('/personalCenter')">
       <div class="user_box">
-        <div class="user_img">
+        <div class="user_img" v-bind:class="{'grayScale': !isLogin}">
           <img src="../../../static/images/jx_mine_image_1.png">
         </div>
-        <div class="user_information">
+        <div class="user_information" v-if="isLogin">
           <div class="user_tel">{{mobile | plusXing(3, 4)}}</div>
 
           <!-- 未认证-->
@@ -32,6 +32,9 @@
             <span class="color_text">审核未通过</span>
           </div>
         </div>
+        <div class="noUser" v-else>
+          登录/注册
+        </div>
       </div>
       <i class="allow_right"></i>
     </div>
@@ -40,7 +43,8 @@
       <div class="title">
        <span class="cell_text">收入余额</span>
       </div>
-      <div class="cell_value"><span>{{totalSalary | thousandBitSeparator}}</span></div>
+      <div class="cell_value" v-if="isLogin"><span>{{totalSalary | thousandBitSeparator}}</span></div>
+      <div class="cell_value" v-else><span>******</span></div>
       <i class="allow_right"></i>
     </div>
 
@@ -178,6 +182,10 @@
 
         hasNewTask: false,//默认不显示有新任务 true为不显示  false 为显示
 
+        isLogin: ''
+
+
+
       }
 
     },
@@ -196,7 +204,9 @@
 
       }
 
-      let _this = this
+      this.isLogin = !!localStorage.getItem('Authorization');
+
+      console.log(this.isLogin);
 
       document.body.scrollTop =document.documentElement.scrollTop = window.pageYOffset = 0
 
@@ -211,234 +221,7 @@
 */
 
 
-      /**
-       * 接口：用户中心
-       * 请求方式：POST
-       * 接口：/user/center/usercenter
-       * 入参：null
-       **/
-
-      this.$http({
-
-        method: 'post',
-
-        url: process.env.API_ROOT + 'user/center/usercenter',
-
-
-
-      }).then(function (res) {
-
-
-        console.log(res.data);
-
-        if (res.data.code == '0000') {
-
-
-          var ishasNewMsg = res.data.data.isHaveNewMsg;
-
-          var ishasNewSign = res.data.data.isNewSign;
-
-          var ishasNewTask = res.data.data.isHaveNewTask;
-
-
-
-          //判断是否有新消息
-
-          if (ishasNewMsg == '1') {
-
-            _this.hasNewMsg = true
-
-          }
-
-          else {
-
-            _this.hasNewMsg = false
-
-
-          }
-
-
-          //判断是否有新签约
-
-          if (ishasNewSign == '1') {
-
-            _this.hasNewSign = true
-
-
-          }
-
-          else {
-
-            _this.hasNewSign = false
-
-
-          }
-
-          //判断是否有新任务
-
-          if (ishasNewTask == '1') {
-
-            _this.hasNewTask = true
-
-
-          }
-
-          else {
-
-            _this.hasNewTask = false
-
-
-          }
-
-          /**
-           * 接口：有待加入企业
-           * 请求方式：GET
-           * 接口：/user/workunit/selectisjoinent
-           * 入参：null
-           **/
-
-          this.$http({
-
-            method: 'get',
-
-            url: process.env.API_ROOT + 'user/workunit/selectisjoinent',
-
-
-          }).then(function (res) {
-
-
-            console.log(res.data);
-
-            let hasEntType = res.data.data.type;
-
-            //判断是否有加入企业
-
-            if (hasEntType == '1') {
-
-              _this.hasJoinEnt = true
-
-            }
-
-            else {
-
-              _this.hasJoinEnt = false
-
-            }
-
-            console.log('亮点'+this.$parent.$children[0].hasNew)
-
-            if(this.hasJoinEnt || this.hasNewMsg || this.hasNewSign || this.hasNewTask){
-
-              this.bus.$emit('hasNew',true);
-
-            }else{
-
-              this.bus.$emit('hasNew',false);
-
-            }
-
-
-
-
-
-
-          }.bind(this)).catch((res) => {
-
-            //console.log(res.data);
-
-
-          })
-
-
-          _this.mobile = res.data.data.mobile;
-
-          _this.isVerify = res.data.data.isVerify;
-
-          //获取手机号
-          this.setStorage('mobile', res.data.data.mobile);
-
-          //获取是否设置密码
-          this.setStorage('isPayPwd', res.data.data.isPayPwd);
-
-          //是否开启验证
-          this.setStorage('isSecurity', res.data.data.isSecurity);
-
-          //存姓名和身份证
-          this.setStorage('idNumber', res.data.data.idNumber);
-
-          this.setStorage('userName', res.data.data.userName);
-
-          //是否实名认证
-          this.setStorage('isVerify', res.data.data.isVerify);
-
-          //证件类型 只有花名册导入的时候有
-          this.setStorage('idType', res.data.data.idType);
-
-          //国籍
-          this.setStorage('nationality', res.data.data.nationality);
-
-          this.setStorage('source', res.data.data.source);
-
-
-
-          //如果审核不通过的话 存储一下不通过的原因
-          if (this.setStorage('isVerify') == '3') {
-
-            this.setStorage('refuseReason', res.data.data.refuseReason);
-
-          }
-
-
-
-        }
-
-
-
-
-      }.bind(this)).catch((res) => {
-
-      })
-
-      /**
-       * 接口：获取用户工资金额状况
-       * 请求方式：GET
-       * 接口：/user/bank/getsalarystatus
-       * 入参：null
-       **/
-
-      this.$http({
-
-        method: 'get',
-
-        url: process.env.API_ROOT + 'user/bank/getsalarystatus',
-
-      }).then((res) => {
-
-        console.log(res.data);
-
-        if (!res.data.data.totalSalary) {
-
-
-          _this.totalSalary = '--.--'
-
-
-        }
-
-        else {
-
-
-          _this.totalSalary = res.data.data.totalSalary
-
-
-        }
-
-
-      }).catch((res) => {
-
-        //console.log(res.data);
-
-
-      })
+      localStorage.getItem('Authorization') && (this.getData());
 
 
 
@@ -461,6 +244,243 @@
         this.setStorage('goFrozen','5')
 
         console.log(this.getStorage('goFrozen'))
+      },
+
+
+
+      getData: function () {
+
+        var _this = this;
+
+        /**
+         * 接口：用户中心
+         * 请求方式：POST
+         * 接口：/user/center/usercenter
+         * 入参：null
+         **/
+
+        this.$http({
+
+          method: 'post',
+
+          url: process.env.API_ROOT + 'user/center/usercenter',
+
+
+
+        }).then(function (res) {
+
+
+          console.log(res.data);
+
+          if (res.data.code == '0000') {
+
+
+            var ishasNewMsg = res.data.data.isHaveNewMsg;
+
+            var ishasNewSign = res.data.data.isNewSign;
+
+            var ishasNewTask = res.data.data.isHaveNewTask;
+
+
+
+            //判断是否有新消息
+
+            if (ishasNewMsg == '1') {
+
+              _this.hasNewMsg = true
+
+            }
+
+            else {
+
+              _this.hasNewMsg = false
+
+
+            }
+
+
+            //判断是否有新签约
+
+            if (ishasNewSign == '1') {
+
+              _this.hasNewSign = true
+
+
+            }
+
+            else {
+
+              _this.hasNewSign = false
+
+
+            }
+
+            //判断是否有新任务
+
+            if (ishasNewTask == '1') {
+
+              _this.hasNewTask = true
+
+
+            }
+
+            else {
+
+              _this.hasNewTask = false
+
+
+            }
+
+            /**
+             * 接口：有待加入企业
+             * 请求方式：GET
+             * 接口：/user/workunit/selectisjoinent
+             * 入参：null
+             **/
+
+            this.$http({
+
+              method: 'get',
+
+              url: process.env.API_ROOT + 'user/workunit/selectisjoinent',
+
+
+            }).then(function (res) {
+
+
+              console.log(res.data);
+
+              let hasEntType = res.data.data.type;
+
+              //判断是否有加入企业
+
+              if (hasEntType == '1') {
+
+                _this.hasJoinEnt = true
+
+              }
+
+              else {
+
+                _this.hasJoinEnt = false
+
+              }
+
+              console.log('亮点'+this.$parent.$children[0].hasNew)
+
+              if(this.hasJoinEnt || this.hasNewMsg || this.hasNewSign || this.hasNewTask){
+
+                this.bus.$emit('hasNew',true);
+
+              }else{
+
+                this.bus.$emit('hasNew',false);
+
+              }
+
+
+
+
+
+
+            }.bind(this)).catch((res) => {
+
+              //console.log(res.data);
+
+
+            })
+
+
+            _this.mobile = res.data.data.mobile;
+
+            _this.isVerify = res.data.data.isVerify;
+
+            //获取手机号
+            this.setStorage('mobile', res.data.data.mobile);
+
+            //获取是否设置密码
+            this.setStorage('isPayPwd', res.data.data.isPayPwd);
+
+            //是否开启验证
+            this.setStorage('isSecurity', res.data.data.isSecurity);
+
+            //存姓名和身份证
+            this.setStorage('idNumber', res.data.data.idNumber);
+
+            this.setStorage('userName', res.data.data.userName);
+
+            //是否实名认证
+            this.setStorage('isVerify', res.data.data.isVerify);
+
+            //证件类型 只有花名册导入的时候有
+            this.setStorage('idType', res.data.data.idType);
+
+            //国籍
+            this.setStorage('nationality', res.data.data.nationality);
+
+            this.setStorage('source', res.data.data.source);
+
+
+
+            //如果审核不通过的话 存储一下不通过的原因
+            if (this.setStorage('isVerify') == '3') {
+
+              this.setStorage('refuseReason', res.data.data.refuseReason);
+
+            }
+
+
+
+          }
+
+
+
+
+        }.bind(this)).catch((res) => {
+
+        })
+
+        /**
+         * 接口：获取用户工资金额状况
+         * 请求方式：GET
+         * 接口：/user/bank/getsalarystatus
+         * 入参：null
+         **/
+
+        this.$http({
+
+          method: 'get',
+
+          url: process.env.API_ROOT + 'user/bank/getsalarystatus',
+
+        }).then((res) => {
+
+          console.log(res.data);
+
+          if (!res.data.data.totalSalary) {
+
+
+            _this.totalSalary = '--.--'
+
+
+          }
+
+          else {
+
+
+            _this.totalSalary = res.data.data.totalSalary
+
+
+          }
+
+
+        }).catch((res) => {
+
+          //console.log(res.data);
+
+
+        });
+
       }
 
     }

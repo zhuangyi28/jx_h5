@@ -225,9 +225,7 @@
                 }).catch((res)=>{});
 
 
-                this.$router.push('/workDesk/taskSquare');
-
-                this.setStorage('reloadtask','1')
+                this.$router.go(-1);
 
 
               }

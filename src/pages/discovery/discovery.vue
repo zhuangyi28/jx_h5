@@ -207,23 +207,101 @@
 //
 //      }).catch((res)=>{});
 
+      localStorage.getItem('Authorization') && (this.getData());
 
-      /**
-       * 接口：用户中心
-       * 请求方式：POST
-       * 接口：/user/center/usercenter
-       * 入参：mobile
-       **/
 
-      this.$http({
+    },
+    methods: {
 
-        method: 'post',
+      urlFn: function (e) {
 
-        url: process.env.API_ROOT + 'user/center/usercenter',
+        if(!localStorage.getItem('Authorization')){
 
-      }).then((res) => {
+          this.$router.push('/login');
 
-        console.log(res.data.data);
+        }else{
+
+          if((this.isOpen=='0'&&this.isVerify == '3')||(this.isOpen=='0'&&this.isVerify == '0')){
+
+            //存指定的页面  （在实名认证中取值）
+            this.setStorage('hrefId','6');
+
+            this.$messagebox({
+              title: '提示',
+              message:'为保障账户资金安全，实名用户才能使用账户消费，请先完成实名认证',
+              showCancelButton: true,
+              cancelButtonText: '取消',
+              confirmButtonText: '去认证',
+              cancelButtonClass: 'cancel_btn',
+              confirmButtonClass: 'confirm_btn_orange',
+            }).then((action) =>{
+              console.log(action);
+              if(action == 'confirm'){
+                this.$router.push('/certificationChoose');
+              }
+            }).catch((res)=>{
+              console.log(res);
+            });
+
+
+          }
+
+          else if(this.isOpen=='0'&&this.isVerify == '2'){
+
+            //存指定的页面  （在实名认证中取值）
+            this.setStorage('hrefId','6');
+
+            this.$messagebox({
+              title: '提示',
+              message:'为保障账户资金安全，实名用户才能使用账户消费，请先完成实名认证',
+              showCancelButton: false,
+              confirmButtonText: '我知道了',
+              confirmButtonClass: 'confirm_btn_orange',
+            }).then((action) =>{
+              console.log(action);
+            }).catch((res)=>{
+              console.log(res);
+            });
+
+
+
+          }
+
+          else {
+
+
+            /*          this.$indicator.open({
+                        text: '跳转中...',
+                        spinnerType: 'fading-circle'
+                      });*/
+
+            window.location.href = e.currentTarget.dataset.url
+
+          }
+
+        }
+
+      },
+
+
+      getData: function () {
+
+        /**
+         * 接口：用户中心
+         * 请求方式：POST
+         * 接口：/user/center/usercenter
+         * 入参：mobile
+         **/
+
+        this.$http({
+
+          method: 'post',
+
+          url: process.env.API_ROOT + 'user/center/usercenter',
+
+        }).then((res) => {
+
+          console.log(res.data.data);
 
 
           this.isOpen=res.data.data.isOpen;
@@ -232,293 +310,227 @@
 
 
 
-      }).catch((res)=>{})
+        }).catch((res)=>{})
 
 
-      /**
-       * 接口：消费场景-滴滴打车
-       * 请求方式：GET
-       * 接口：open/didi/redirect
-       * 入参：null
-       **/
-      this.$http({
+        /**
+         * 接口：消费场景-滴滴打车
+         * 请求方式：GET
+         * 接口：open/didi/redirect
+         * 入参：null
+         **/
+        this.$http({
 
-        method: 'get',
+          method: 'get',
 
-        url: process.env.API_ROOT + 'open/didi/redirect',
+          url: process.env.API_ROOT + 'open/didi/redirect',
 
-      }).then((res) => {
+        }).then((res) => {
 
-        console.log(res.data);
+          console.log(res.data);
 
-        this.didiUrl = res.data.data
+          this.didiUrl = res.data.data
 
-      }).catch((res)=>{})
+        }).catch((res)=>{})
 
 
-      /**
-       * 接口：消费场景-订火车票
-       * 请求方式：GET
-       * 接口：open/trainticket/redirect
-       * 入参：null
-       **/
-      this.$http({
+        /**
+         * 接口：消费场景-订火车票
+         * 请求方式：GET
+         * 接口：open/trainticket/redirect
+         * 入参：null
+         **/
+        this.$http({
 
-        method: 'get',
+          method: 'get',
 
-        url: process.env.API_ROOT + 'open/trainticket/redirect',
+          url: process.env.API_ROOT + 'open/trainticket/redirect',
 
-      }).then((res) => {
+        }).then((res) => {
 
-        console.log(res.data);
+          console.log(res.data);
 
-        this.trainUrl = res.data.data
+          this.trainUrl = res.data.data
 
-      }).catch((res)=>{})
+        }).catch((res)=>{})
 
 
-      /**
-       * 接口：消费场景-酒店
-       * 请求方式：GET
-       * 接口：open/hotel/redirect
-       * 入参：null
-       **/
-      this.$http({
+        /**
+         * 接口：消费场景-酒店
+         * 请求方式：GET
+         * 接口：open/hotel/redirect
+         * 入参：null
+         **/
+        this.$http({
 
-        method: 'get',
+          method: 'get',
 
-        url: process.env.API_ROOT + 'open/hotel/redirect',
+          url: process.env.API_ROOT + 'open/hotel/redirect',
 
-      }).then((res) => {
+        }).then((res) => {
 
-        console.log(res.data);
+          console.log(res.data);
 
-        this.hotelUrl = res.data.data
+          this.hotelUrl = res.data.data
 
-      }).catch((res)=>{})
+        }).catch((res)=>{})
 
 
 
 
 
-      /**
-       * 接口：消费场景-丽人消费
-       * 请求方式：GET
-       * 接口：open/beauty/redirect
-       * 入参：null
-       **/
-      this.$http({
+        /**
+         * 接口：消费场景-丽人消费
+         * 请求方式：GET
+         * 接口：open/beauty/redirect
+         * 入参：null
+         **/
+        this.$http({
 
-        method: 'get',
+          method: 'get',
 
-        url: process.env.API_ROOT + 'open/beauty/redirect',
+          url: process.env.API_ROOT + 'open/beauty/redirect',
 
-      }).then((res) => {
+        }).then((res) => {
 
-        console.log(res.data);
+          console.log(res.data);
 
-        this.beautyUrl = res.data.data
+          this.beautyUrl = res.data.data
 
-      }).catch((res)=>{})
+        }).catch((res)=>{})
 
 
-      /**
-       * 接口：消费场景-电子卡券
-       * 请求方式：GET
-       * 接口：open/card/redirect
-       * 入参：null
-       **/
-      this.$http({
+        /**
+         * 接口：消费场景-电子卡券
+         * 请求方式：GET
+         * 接口：open/card/redirect
+         * 入参：null
+         **/
+        this.$http({
 
-        method: 'get',
+          method: 'get',
 
-        url: process.env.API_ROOT + 'open/card/redirect',
+          url: process.env.API_ROOT + 'open/card/redirect',
 
-      }).then((res) => {
+        }).then((res) => {
 
-        console.log(res.data);
+          console.log(res.data);
 
-        this.cardUrl = res.data.data
+          this.cardUrl = res.data.data
 
-      }).catch((res)=>{})
+        }).catch((res)=>{})
 
 
 
-      /**
-       * 接口：消费场景-点评餐饮
-       * 请求方式：GET
-       * 接口：open/catering/redirect
-       * 入参：null
-       **/
-      this.$http({
+        /**
+         * 接口：消费场景-点评餐饮
+         * 请求方式：GET
+         * 接口：open/catering/redirect
+         * 入参：null
+         **/
+        this.$http({
 
-        method: 'get',
+          method: 'get',
 
-        url: process.env.API_ROOT + 'open/catering/redirect',
+          url: process.env.API_ROOT + 'open/catering/redirect',
 
-      }).then((res) => {
+        }).then((res) => {
 
-        console.log(res.data);
+          console.log(res.data);
 
-        this.dpUrl = res.data.data
+          this.dpUrl = res.data.data
 
-      }).catch((res)=>{})
+        }).catch((res)=>{})
 
 
-      /**
-       * 接口：消费场景-休闲娱乐
-       * 请求方式：GET
-       * 接口：open/entertainment/redirect
-       * 入参：null
-       **/
-      this.$http({
+        /**
+         * 接口：消费场景-休闲娱乐
+         * 请求方式：GET
+         * 接口：open/entertainment/redirect
+         * 入参：null
+         **/
+        this.$http({
 
-        method: 'get',
+          method: 'get',
 
-        url: process.env.API_ROOT + 'open/entertainment/redirect',
+          url: process.env.API_ROOT + 'open/entertainment/redirect',
 
-      }).then((res) => {
+        }).then((res) => {
 
-        console.log(res.data);
+          console.log(res.data);
 
-        this.playUrl = res.data.data
+          this.playUrl = res.data.data
 
-      }).catch((res)=>{})
+        }).catch((res)=>{})
 
 
 
 
 
-      /**
-       * 接口：消费场景-惠购商城
-       * 请求方式：GET
-       * 接口：/open/jd/redirect
-       * 入参：null
-       **/
-      this.$http({
+        /**
+         * 接口：消费场景-惠购商城
+         * 请求方式：GET
+         * 接口：/open/jd/redirect
+         * 入参：null
+         **/
+        this.$http({
 
-        method: 'get',
+          method: 'get',
 
-        url: process.env.API_ROOT + 'open/jd/redirect',
+          url: process.env.API_ROOT + 'open/jd/redirect',
 
-      }).then((res) => {
+        }).then((res) => {
 
-        console.log(res.data);
+          console.log(res.data);
 
-        this.jdUrl = res.data.data
+          this.jdUrl = res.data.data
 
-      }).catch((res)=>{})
+        }).catch((res)=>{})
 
 
-      /**
-       * 接口：消费场景-美团点评
-       * 请求方式：GET
-       * 接口：/open/wm/redirect
-       * 入参：null
-       **/
-      this.$http({
+        /**
+         * 接口：消费场景-美团点评
+         * 请求方式：GET
+         * 接口：/open/wm/redirect
+         * 入参：null
+         **/
+        this.$http({
 
-        method: 'get',
+          method: 'get',
 
-        url: process.env.API_ROOT + 'open/wm/redirect',
+          url: process.env.API_ROOT + 'open/wm/redirect',
 
-      }).then((res) => {
+        }).then((res) => {
 
-        console.log(res.data);
+          console.log(res.data);
 
-        this.mtUrl = res.data.data
+          this.mtUrl = res.data.data
 
-      }).catch((res)=>{})
+        }).catch((res)=>{})
 
 
 
-      /**
-       * 接口：消费场景-嘉白条
-       * 请求方式：GET
-       * 接口：/open/jbt/redirect
-       * 入参：null
-       **/
-      this.$http({
+        /**
+         * 接口：消费场景-嘉白条
+         * 请求方式：GET
+         * 接口：/open/jbt/redirect
+         * 入参：null
+         **/
+        this.$http({
 
-        method: 'get',
+          method: 'get',
 
-        url: process.env.API_ROOT + 'open/jbt/redirect',
+          url: process.env.API_ROOT + 'open/jbt/redirect',
 
-      }).then((res) => {
+        }).then((res) => {
 
-        console.log(res.data);
+          console.log(res.data);
 
-        this.jbtUrl = res.data.data
+          this.jbtUrl = res.data.data
 
-      }).catch((res)=>{})
+        }).catch((res)=>{})
 
-
-    },
-    methods: {
-
-      urlFn: function (e) {
-
-
-        if((this.isOpen=='0'&&this.isVerify == '3')||(this.isOpen=='0'&&this.isVerify == '0')){
-
-          //存指定的页面  （在实名认证中取值）
-          this.setStorage('hrefId','6');
-
-          this.$messagebox({
-            title: '提示',
-            message:'为保障账户资金安全，实名用户才能使用账户消费，请先完成实名认证',
-            showCancelButton: true,
-            cancelButtonText: '取消',
-            confirmButtonText: '去认证',
-            cancelButtonClass: 'cancel_btn',
-            confirmButtonClass: 'confirm_btn_orange',
-          }).then((action) =>{
-            console.log(action);
-            if(action == 'confirm'){
-              this.$router.push('/certificationChoose');
-            }
-          }).catch((res)=>{
-            console.log(res);
-          });
-
-
-        }
-
-        else if(this.isOpen=='0'&&this.isVerify == '2'){
-
-          //存指定的页面  （在实名认证中取值）
-          this.setStorage('hrefId','6');
-
-          this.$messagebox({
-            title: '提示',
-            message:'为保障账户资金安全，实名用户才能使用账户消费，请先完成实名认证',
-            showCancelButton: false,
-            confirmButtonText: '我知道了',
-            confirmButtonClass: 'confirm_btn_orange',
-          }).then((action) =>{
-            console.log(action);
-          }).catch((res)=>{
-            console.log(res);
-          });
-
-
-
-        }
-
-        else {
-
-
-/*          this.$indicator.open({
-            text: '跳转中...',
-            spinnerType: 'fading-circle'
-          });*/
-
-          window.location.href = e.currentTarget.dataset.url
-
-        }
-
-
-      },
+      }
     },
 
 
