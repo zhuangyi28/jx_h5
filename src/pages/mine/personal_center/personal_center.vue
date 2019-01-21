@@ -112,7 +112,7 @@
                 this.removeStorage('Authorization');
                 this.removeStorage('jxsid');
                 this.removeStorage('taskHistory');
-                this.$router.push('/login');
+                this.$router.push('/workDesk/mine');
               }else{
                 console.log(res.data);
                 //alert(res.data.msg);

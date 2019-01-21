@@ -69,60 +69,7 @@
 
       }
 
-      /**
-       * 接口：用户中心
-       * 请求方式：POST
-       * 接口：/user/center/usercenter
-       * 入参：null
-       **/
-
-      this.$http({
-
-        method: 'post',
-
-        url: process.env.API_ROOT + 'user/center/usercenter',
-
-      }).then(function (res) {
-
-        ('' + res.data.data.isHaveNewMsg + res.data.data.isNewSign + res.data.data.isHaveNewTask != '000') && (this.hasNew = true);
-
-        console.log(res);
-
-        if(res.data.data.isCommitAuthorize == 1){
-
-          this.homepage = 'taskSquare';
-
-        }else{
-
-          this.homepage = 'homepage';
-
-        }
-
-        /**
-         * 接口：有待加入企业
-         * 请求方式：GET
-         * 接口：/user/workunit/selectisjoinent
-         * 入参：null
-         **/
-
-        this.$http({
-
-          method: 'get',
-
-          url: process.env.API_ROOT + 'user/workunit/selectisjoinent',
-
-
-        }).then(function (res) {
-
-          ((res.data.data.type == 1) || (this.hasNew)) ? (this.hasNew = true): (this.hasNew = false);
-
-        }.bind(this))
-
-      }.bind(this)).catch((res)=>{
-
-        console.log(res);
-
-      });
+      localStorage.getItem('Authorization') && (this.getNew());
 
     },
 
@@ -168,6 +115,67 @@
       cueHasNew: function (data) {
 
         data ? (this.hasNew = true) : (this.hasNew = false);
+
+      },
+
+      getNew: function () {
+
+        console.log('getNew');
+
+        /**
+         * 接口：用户中心
+         * 请求方式：POST
+         * 接口：/user/center/usercenter
+         * 入参：null
+         **/
+
+        this.$http({
+
+          method: 'post',
+
+          url: process.env.API_ROOT + 'user/center/usercenter',
+
+        }).then(function (res) {
+
+          ('' + res.data.data.isHaveNewMsg + res.data.data.isNewSign + res.data.data.isHaveNewTask != '000') && (this.hasNew = true);
+
+          console.log(res);
+
+          if(res.data.data.isCommitAuthorize == 1){
+
+            this.homepage = 'taskSquare';
+
+          }else{
+
+            this.homepage = 'homepage';
+
+          }
+
+          /**
+           * 接口：有待加入企业
+           * 请求方式：GET
+           * 接口：/user/workunit/selectisjoinent
+           * 入参：null
+           **/
+
+          this.$http({
+
+            method: 'get',
+
+            url: process.env.API_ROOT + 'user/workunit/selectisjoinent',
+
+
+          }).then(function (res) {
+
+            ((res.data.data.type == 1) || (this.hasNew)) ? (this.hasNew = true): (this.hasNew = false);
+
+          }.bind(this))
+
+        }.bind(this)).catch((res)=>{
+
+          console.log(res);
+
+        });
 
       }
 
