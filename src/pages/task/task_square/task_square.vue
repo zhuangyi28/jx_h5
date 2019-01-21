@@ -179,7 +179,7 @@
       <div class="task_list" v-if="taskLists.length != 0">
 
         <div class="list_one"
-             v-for="taskList in taskLists" v-bind:data-taskId="taskList.taskId" v-on:click="jumpTo"
+             v-for="taskList in taskLists" v-bind:data-taskId="taskList.taskId" v-on:click="jumpTo(taskList.taskId)"
              v-bind:class="{'gary_text': taskHistory.indexOf(taskList.taskId) != -1}">
 
           <div class="task_information">
@@ -1237,11 +1237,9 @@
 
 
       //点击进入任务详情
-      jumpTo: function () {
+      jumpTo: function (taskid) {
 
-        var taskId = event.currentTarget.dataset.taskid;
-
-        localStorage.setItem('taskId', taskId);
+        localStorage.setItem('taskId', taskid);
 
   /*      if(localStorage.getItem('taskHistory')){
           (localStorage.getItem('taskHistory').indexOf(taskId) == -1) &&
@@ -1250,15 +1248,15 @@
           localStorage.setItem('taskHistory',taskId);
         }
 */
-        this.scrollTop = document.getElementsByClassName('task_square')[0].scrollTop|| document.documentElement.getElementsByClassName('task_square')[0].scrollTop
+        this.scrollTop = document.getElementsByClassName('task_square')[0].scrollTop|| document.documentElement.getElementsByClassName('task_square')[0].scrollTop;
 
         this.setStorage('scrollTop',this.scrollTop);
 
-        this.taskHistory.indexOf(taskId) == -1 && this.taskHistory.push(taskId);
+        this.taskHistory.indexOf(taskid) == -1 && this.taskHistory.push(taskid);
 
         this.$parent.detailShow = false;
 
-        this.$router.push('/lookTask');
+        this.$router.push({path: '/lookTask',query: {taskId: taskid}});
 
       },
 
