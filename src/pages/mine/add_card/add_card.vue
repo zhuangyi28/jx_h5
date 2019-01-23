@@ -88,7 +88,40 @@
       }
     },
     mounted () {
-      this.userName = this.getStorage('userName');
+      /**
+       * 接口：用户中心
+       * 请求方式：POST
+       * 接口：/user/center/usercenter
+       * 入参：null
+       **/
+
+      this.$http({
+
+        method: 'post',
+
+        url: process.env.API_ROOT + 'user/center/usercenter',
+
+
+
+      }).then(function (res) {
+
+
+        console.log(res.data);
+
+        if (res.data.code == '0000') {
+
+            this.userName = res.data.data.userName
+
+        }
+
+
+
+
+      }.bind(this)).catch((res) => {
+
+      })
+
+      /*this.userName = this.getStorage('userName');*/
       this.$http({
         method: 'get',
         url: process.env.API_ROOT + 'user/bank/provinces'

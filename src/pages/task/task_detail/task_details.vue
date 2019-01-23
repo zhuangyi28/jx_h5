@@ -2,7 +2,7 @@
   <div class="task_details">
 
     <!-- 任务详情 -->
-    <div class="task_title color_background_gradient" v-on:click="$router.push('/lookTask')">
+    <div class="task_title color_background_gradient" v-on:click="jumpTo">
 
       <div><img src="../../../../static/images/jx_task_icon.png"></div>
       <div class="content">
@@ -459,6 +459,12 @@
         this.setStorage('pFeedbackId',e.currentTarget.dataset.id);
         this.$router.push('/taskFeedbackContent')
       },
+
+      jumpTo: function () {
+
+        this.$router.push({path: '/lookTask',query: {taskId: localStorage.getItem('taskId')}});
+
+      }
     },
     /*    computed: {
       showTaskTimeArea: {
