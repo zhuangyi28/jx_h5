@@ -412,7 +412,7 @@
 
                 localStorage.setItem('personalInformationAlready','true');
 
-                this.$router.push('/lookTask');
+                this.$router.go(-1);
 
               }else{
 
