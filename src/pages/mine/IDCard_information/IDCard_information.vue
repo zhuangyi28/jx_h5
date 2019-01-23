@@ -472,7 +472,7 @@
                       duration: 2000
                     });
 
-                    this.$router.push('/personalCenter');
+                    this.$router.go(-3);
 
                   }else if(res.data.code == '-1'){
 
