@@ -147,7 +147,6 @@
 
       init: function () {
 
-
         setTimeout(()=> {
 
           this.$router.push('/workDesk/taskSquare');

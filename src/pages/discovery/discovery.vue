@@ -253,7 +253,7 @@
 
             this.$messagebox({
               title: '提示',
-              message:'为保障账户资金安全，实名用户才能使用账户消费，请先完成实名认证',
+              message:'为保障账户资金安全，实名用户才能使用账户消费，您的账户正在审核中',
               showCancelButton: false,
               confirmButtonText: '我知道了',
               confirmButtonClass: 'confirm_btn_orange',

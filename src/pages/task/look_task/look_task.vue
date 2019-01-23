@@ -24,10 +24,15 @@
         </div>
       </div>
       <div class="buttonState">
-        <img src="../../../../static/images/jx_closed.png" v-if="taskDetail.buttonState == 1">
-        <img src="../../../../static/images/jx_finish.png" v-if="taskDetail.buttonState == 2">
+        <!--已关闭-->
+        <img src="../../../../static/images/jx_closed.png" v-if="taskDetail.state == 4">
+        <!--已结束-->
+        <img src="../../../../static/images/jx_finish.png" v-if="taskDetail.state == 3">
+        <!--已报名-->
         <img src="../../../../static/images/jx_already_signup.png" v-if="taskDetail.buttonState == 3">
+        <!--已被录取-->
         <img src="../../../../static/images/jx_been_hired.png" v-if="taskDetail.buttonState == 4">
+        <!--未被录取-->
         <img src="../../../../static/images/jx_unemploy.png" v-if="taskDetail.buttonState == 5">
       </div>
     </div>
@@ -67,6 +72,9 @@
     <div class="task_btn_area">
       <!-- 按钮-->
       <orange-btn :name="btnName" v-on:clickEvent="handleClick" v-if="taskDetail.buttonState == 6"></orange-btn>
+      <div class="gray_btn" v-else-if="taskDetail.buttonState == 7">
+        <div>报名</div>
+      </div>
       <div class="jump_to btn_border" v-else v-on:click="$router.push('/taskDetail')">查看任务详情</div>
     </div>
 
@@ -142,7 +150,7 @@
 
       this.taskId = this.$route.query.taskId;
 
-      localStorage.getItem('taskId') || localStorage.setItem('taskId',this.taskId);
+      localStorage.setItem('taskId',this.taskId);
 
       this.$parent.detailShow = false;
 
@@ -181,11 +189,11 @@
     },
     destroyed(){
 
-        this.$store.state.popupShow = this.popupShow;
+      this.$store.state.popupShow = this.popupShow;
 
-        this.$messagebox.close();
+      this.$messagebox.close();
 
-        this.$parent.detailShow = true;
+      this.$parent.detailShow = true;
     },
     methods:{
       //取消报名
@@ -371,6 +379,7 @@
             }
 
           }
+
           console.log('补充列表'+this.entTaskAddList)
 
         }.bind(this)).catch((res)=>{
@@ -462,15 +471,15 @@
       industryChange: function (industry) {
 
         /*"1",  "互联网IT/电子/通信"
-        "2",  "广告/传媒/文化/体育"
-        "3",  "金融"
-        "4",  "房地产/建筑"
-        "5",  "消费品"
-        "6",  "汽车/机械/制造业"
-        "7",  "服务业"
-        "8",  "交通/物流/贸易/零售"
-        "9",  "教育培训"
-        "10",  "其他"*/
+         "2",  "广告/传媒/文化/体育"
+         "3",  "金融"
+         "4",  "房地产/建筑"
+         "5",  "消费品"
+         "6",  "汽车/机械/制造业"
+         "7",  "服务业"
+         "8",  "交通/物流/贸易/零售"
+         "9",  "教育培训"
+         "10",  "其他"*/
 
         switch (industry) {
 
@@ -575,19 +584,19 @@
 
       },
       //获取按键状态
-     /* btnNameChange: function (name) {
+      /* btnNameChange: function (name) {
 
-        if(name == 6){
+       if(name == 6){
 
-          return '报名';
+       return '报名';
 
-        }else{
+       }else{
 
-          return '查看任务详情';
+       return '查看任务详情';
 
-        }
+       }
 
-      },*/
+       },*/
       //隐藏企业名称
       hiddenName: function (name) {
 
@@ -778,20 +787,20 @@
 
       /*downloadFile: function () {
 
-        // 创建隐藏的可下载链接
-        var eleLink = document.createElement('a');
-        eleLink.download = event.currentTarget.dataset.url;
-        eleLink.style.display = 'none';
-        // 字符内容转变成blob地址
-        var blob = new Blob();
-        eleLink.href = URL.createObjectURL(blob);
-        // 触发点击
-        document.body.appendChild(eleLink);
-        eleLink.click();
-        // 然后移除
-        document.body.removeChild(eleLink);
+       // 创建隐藏的可下载链接
+       var eleLink = document.createElement('a');
+       eleLink.download = event.currentTarget.dataset.url;
+       eleLink.style.display = 'none';
+       // 字符内容转变成blob地址
+       var blob = new Blob();
+       eleLink.href = URL.createObjectURL(blob);
+       // 触发点击
+       document.body.appendChild(eleLink);
+       eleLink.click();
+       // 然后移除
+       document.body.removeChild(eleLink);
 
-      }*/
+       }*/
 
 
 

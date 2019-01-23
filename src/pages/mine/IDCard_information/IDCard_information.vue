@@ -229,6 +229,12 @@
       //日期格式更改
       dateChange: function (date) {
 
+        if(isNaN(+date)){
+
+          return date;
+
+        }
+
         var newDate = new Date(date);
 
         var year = newDate.getFullYear();

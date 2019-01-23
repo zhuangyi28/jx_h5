@@ -46,7 +46,7 @@
         <span>1.订单提交后工作日一般2小时内处理，如出款失败，则5个工作日内退款至原支付账户，具体以银行事件为准，正常退款时间内，建议咨询相关银行</span>
       </div>
       <div class="content">
-        <span>2.限额说明：单卡单笔<span>{{amountMax|thousandBitSeparator}}</span>元，当日100,000元，当月100,000元</span>
+        <span>2.限额说明：单卡单笔<span>{{amountMax|thousandBitSeparator}}</span>元，当日99,000.00元，当月198,000.00元</span>
       </div>
     </div>
 
