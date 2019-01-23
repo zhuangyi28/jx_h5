@@ -74,7 +74,7 @@
 
       <div class="protocol">
 
-        <div class="title">自由职业者入住协议</div>
+        <div class="title">自由职业者入驻协议</div>
 
         <div class="content">
           感谢您使用众包平台，在使用本服务前，请您务必认真阅读
@@ -130,7 +130,19 @@
     },
     mounted () {
 
+      if(!!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){
+
+        location.href = location.href.split('#')[0] +'#'+ this.$route.fullPath;
+
+        console.log('isIOS');
+
+      }
+
+      this.popupShow = this.$store.state.popupShow;
+
       this.taskId = this.$route.query.taskId;
+
+      localStorage.getItem('taskId') || localStorage.setItem('taskId',this.taskId);
 
       this.$parent.detailShow = false;
 
@@ -138,10 +150,28 @@
 
       if(this.getStorage('personalInformationAlready')){
 
-        this.$toast({
-          message: '个人履历已完善',
-          position: 'bottom',
-          duration: 1500,
+        this.$messagebox({
+          title: '提示',
+          message: '您已完善个人履历，确认报名参加该任务？',
+          showCancelButton: true,
+          showConfirmButton: true,
+          confirmButtonText: '确定',
+          cancelButtonText: '暂不',
+          closeOnClickModal: false,
+          cancelButtonClass: 'cancel_btn',
+          confirmButtonClass: 'confirm_btn_orange',
+        }).then(function (res) {
+
+          if(res == 'confirm'){
+
+            this.signUp();
+
+          }
+
+        }.bind(this)).catch(res=>{
+
+          console.log(res);
+
         });
 
         this.removeStorage('personalInformationAlready');
@@ -150,6 +180,8 @@
 
     },
     destroyed(){
+
+        this.$store.state.popupShow = this.popupShow;
 
         this.$messagebox.close();
 

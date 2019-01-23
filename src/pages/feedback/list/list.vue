@@ -11,7 +11,7 @@
       </div>
       <div class="content">
         <div>
-          <p v-if="item.salaryType=='X'">企业消息</p>
+          <p v-if="item.salaryType=='X'">众包任务通知</p>
           <p v-else-if="item.salaryType=='Y'">签约提醒</p>
           <p v-else>反馈处理结果</p>
           <span v-if="item.isUserHaveNew=='1'">new</span>

@@ -7,7 +7,9 @@ const state = {
 
   personInformation: {},
 
-  imageUrl: ''
+  imageUrl: '',
+
+  popupShow: false
 
 };
 

@@ -308,6 +308,8 @@
 
     mounted () {
 
+      this.$store.state.popupShow = false;
+
       this.bus.$emit('pageChange','1');
 
       localStorage.getItem('taskHistory') && (this.taskHistory = localStorage.getItem('taskHistory').split(','));
