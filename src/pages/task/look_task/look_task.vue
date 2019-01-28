@@ -25,9 +25,9 @@
       </div>
       <div class="buttonState">
         <!--已关闭-->
-        <img src="../../../../static/images/jx_closed.png" v-if="taskDetail.state == 4">
+        <img src="../../../../static/images/jx_closed.png" v-if="taskDetail.state == 4 && taskDetail.buttonState == 1">
         <!--已结束-->
-        <img src="../../../../static/images/jx_finish.png" v-if="taskDetail.state == 3">
+        <img src="../../../../static/images/jx_finish.png" v-if="taskDetail.signupState == 3 && taskDetail.buttonState== 2">
         <!--已报名-->
         <img src="../../../../static/images/jx_already_signup.png" v-if="taskDetail.buttonState == 3">
         <!--已被录取-->

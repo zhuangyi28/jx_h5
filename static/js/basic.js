@@ -60,7 +60,9 @@ var jxCustomerService = {
         j.src = '//static.meiqia.com/dist/meiqia.js';
         s.parentNode.insertBefore(j, s);
       })(window, document, 'script', '_MEIQIA');
-      _MEIQIA('entId', '108828');
+     //_MEIQIA('entId', '108828');//嘉薪企业id
+      _MEIQIA('entId', '39750');//嘉福企业id
+
 
       // ----------------------------------------------------------------------------------------------------------在这里开启手动模式（必须紧跟美洽的嵌入代码）
       _MEIQIA('manualInit');
