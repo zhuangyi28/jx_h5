@@ -7,7 +7,7 @@
 
         <div class="people_list" v-bind:class="item.type=='1'? '':'sevice_left'">
 
-          <div class="feedback-time">{{item.sendDate|fmtDateStr}}</div>
+          <div class="feedback-time">{{item.sendTime|fmtDateStr}}</div>
 
           <!-- 用户发起的列表-->
           <div v-if="item.type=='1'" class="tips_box">
