@@ -33,6 +33,10 @@
 
           return require('!style-loader!css-loader!less-loader!../static/css/blue_css.css');
 
+        case 'lexiang':
+
+          return require('!style-loader!css-loader!less-loader!../static/css/lexiangyibao_css.css');
+
       }
 
     }

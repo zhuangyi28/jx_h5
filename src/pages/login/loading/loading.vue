@@ -80,6 +80,24 @@
 
             break;
 
+          case 'lexiang':
+
+            document.title = '乐享易保';
+
+            this.slogan='./static/images/lexiangyibao/jx_loading_title_1.png',
+
+              this.bgUrl='./static/images/lexiangyibao/jx_start_page7.png',//背景图
+
+              this.bottomUrl='./static/images/lexiangyibao/jx_start_page8.png',//底部
+
+              this.cardUrl='./static/images/lexiangyibao/jx_start_page1.png',
+
+              this.msgUrl='./static/images/lexiangyibao/jx_start_page2.png',
+
+              this.paperUrl='./static/images/lexiangyibao/jx_start_page3.png'
+
+            break;
+
         }
 
       }

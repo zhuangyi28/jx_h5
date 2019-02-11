@@ -22,7 +22,7 @@
     </div>
 
     <ul class="bg-bubbles">
-      <li v-for="(item,index) in bubbles" :key="index"></li>
+      <li class="bubble_color" v-for="(item,index) in bubbles" :key="index"></li>
     </ul>
 
 
@@ -87,6 +87,12 @@
         case 'blue':
 
           this.src = "./static/images/paiyun/paiyun_logo.png";
+
+          break;
+
+        case 'lexiang':
+
+          this.src = "./static/images/lexiangyibao/lexiangyibao_logo.png";
 
           break;
 
