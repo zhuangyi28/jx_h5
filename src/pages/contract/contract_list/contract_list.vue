@@ -122,6 +122,15 @@
 
           break;
 
+
+        case 'lexiang':
+
+          this.waitUrl = "./static/images/lexiangyibao/sign_wait.png";
+
+          this.doneUrl='./static/images/lexiangyibao/sign_done.png'
+
+          break;
+
       }
 
     },

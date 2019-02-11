@@ -218,6 +218,12 @@
 
             break;
 
+          case 'lexiang':
+
+            this.imgUrl = "./static/images/lexiangyibao/jx_bg.png";
+
+            break;
+
         }
 
 
