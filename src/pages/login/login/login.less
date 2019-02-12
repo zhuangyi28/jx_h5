@@ -140,17 +140,24 @@
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      background-color: rgba(255, 104, 85, .1);
+      opacity: .05;
       list-style: none;
       animation: square 15s 1 forwards;
       transition-timing-function: linear;
+      &.bubble_color{
+
+        background-color: rgba(255, 104, 85, .1);
+
+      }
+
 
       &:nth-child(1) {
 
         width: 140px;
         height: 140px;
         left: 2%;
-        background-color: rgba(255, 104, 85, .03);
+        opacity: .03;
+
       }
       &:nth-child(2) {
 
@@ -175,7 +182,8 @@
         width: 60px;
         height: 60px;
         animation-duration: 8s;
-        background-color: rgba(255, 104, 85, .05);
+        opacity: .05;
+
 
       }
       &:nth-child(5) {

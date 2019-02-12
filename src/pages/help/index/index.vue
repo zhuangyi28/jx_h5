@@ -147,6 +147,12 @@
 
             break
 
+          case 'lexiang':
+
+            this.phoneNumber = 'tel:4001568886';
+
+            break
+
         }
 
       }

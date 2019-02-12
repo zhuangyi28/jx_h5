@@ -1,73 +1,73 @@
 /*basic*/
 /*字体颜色*/
 .color_text{
-  color: #147fff!important;
+  color: #4199f0!important;
 }
 /*下拉箭头*/
 .color_text .up,.color_text .down{
-  border-bottom: 5px solid #147fff!important;
+  border-bottom: 5px solid #4199f0!important;
 }
 /*边框颜色+字体颜色*/
 .border_color{
-  border-color: #147fff!important;
-  color: #147fff!important;
+  border-color: #4199f0!important;
+  color: #4199f0!important;
 }
 .selected:after{
-  background-color: #147fff!important;
+  background-color: #4199f0!important;
 }
 /*背景颜色*/
 .color_background{
-  background-color: #147fff!important;
+  background-color: #4199f0!important;
 }
 .bubble_color{
   background-color: #ecf4fd!important;
 }
 /*背景颜色-渐变*/
 .color_background_gradient{
-  background: -webkit-linear-gradient(180deg,#78aff1, #147fff)!important;
+  background: -webkit-linear-gradient(180deg,#4490e8, #4199f0)!important;
 }
 /*左边框颜色*/
 .border_color_left{
-  border-left: 5px solid #147fff!important;
+  border-left: 5px solid #4199f0!important;
 }
 /*下边框颜色*/
 .border_color_bottom{
-  border-bottom: 1px solid #147fff!important;
+  border-bottom: 1px solid #4199f0!important;
 }
 /*按钮颜色-实心*/
 button.btn_color,.btn_color {
-  background: linear-gradient(to left, #78aff1, #147fff)!important;
+  background: linear-gradient(to left, #4490e8, #4199f0)!important;
 }
 /*按钮颜色-空心*/
 .btn_border,button.btn_border{
-  color: #26a2ff!important;
-  border: 1px solid #26a2ff!important;
+  color: #4199f0!important;
+  border: 1px solid #4199f0!important;
 }
 /*字体加背景颜色*/
 .color_text_bg{
-  background-color: #26a2ff!important;
+  background-color: #4199f0!important;
   color: #fff!important;
 }
 /*边框+字体+背景*/
 .border_text_bg{
-  border: 1px solid #26a2ff!important;
-  background-color: #eaf3ff!important;
+  border: 1px solid #4199f0!important;
+  background-color:  #eaf3ff!important;
   color:#26a2ff!important;
 }
 /*--------------------------------------------------------------------------*/
 /*渐变背景-我的&余额*/
 .change_color_background{
-  background: url("../../static/images/main_bg.png") ,-webkit-linear-gradient(180deg,#78aff1, #147fff)!important;
+  background: url("../../static/images/main_bg.png") ,-webkit-linear-gradient(180deg,#4490e8, #4199f0)!important;
 }
 /*--------------------------------------------------------------------------*/
 /*渐变背景-银行卡*/
 .change_color_background_bank_card {
-  background: -webkit-linear-gradient(270deg,#78aff1, #147fff)!important;
+  background: -webkit-linear-gradient(270deg,#4490e8, #4199f0)!important;
 }
 /*--------------------------------------------------------------------------*/
 /*伪类边框-发现&任务详情*/
 .before_border:before{
-  background-color: #147fff!important;
+  background-color: #4199f0!important;
  }
 .before_border:after{
 
@@ -76,39 +76,39 @@ button.btn_color,.btn_color {
 /*--------------------------------------------------------------------------*/
 /*弹框按钮等*/
 .mint-msgbox-btns> .mint-msgbox-confirm {
-  color: #147fff!important;
+  color: #4199f0!important;
 }
 .person_information .mint-popup .example .example_button button{
 
-  color: #147fff!important;
+  color: #4199f0!important;
 }
 .confirm_btn_orange {
-  color: #147fff!important;
+  color: #4199f0!important;
 }
 .mint-switch-input:checked + .mint-switch-core {
-  border-color: #26a2ff!important;
-  background-color: #26a2ff!important;
+  border-color: #4490e8!important;
+  background-color: #4490e8!important;
 }
 /*--------------------------------------------------------------------------*/
 /*圆圈对勾颜色-任务详情*/
 .last_part_show:last-child .circle_color{
-border: 1px solid #147fff!important;
+border: 1px solid #4199f0!important;
 background-color: #e7f2ff!important;
 }
 .last_part_show:last-child .circle_color:after{
-color: #147fff!important;
+color: #4199f0!important;
 border-bottom: 1px solid!important;
 border-right: 1px solid!important;
 border-left: none!important;
 }
 .state_box{
-  color: #147fff!important;
+  color: #4199f0!important;
 }
 .state_box p:first-child{
-  background-color: #147fff!important;
+  background-color: #4199f0!important;
 }
 .state_box p.border{
-  border-bottom: 1px solid #147fff!important;
+  border-bottom: 1px solid #4199f0!important;
 }
 .selected~.state_box{
   color: #d5d5d5!important;
