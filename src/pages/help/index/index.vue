@@ -153,6 +153,13 @@
 
             break
 
+
+          case 'rongyada':
+
+            this.phoneNumber = 'tel:010-84176835';
+
+            break
+
         }
 
       }

@@ -224,6 +224,13 @@
 
             break;
 
+          case 'rongyada':
+
+            this.imgUrl = "./static/images/rongyada/jx_bg.png";
+
+            break;
+
+
         }
 
 

@@ -12,7 +12,7 @@
       </div>
       <div class="title">
         <span>上传身份证正面</span>
-        <span v-on:click="exampleImg" class="face">示例</span>
+        <span v-on:click="exampleImg" class="face color_text">示例</span>
       </div>
     </div>
       <div class="certification_pic_input">
@@ -22,7 +22,7 @@
         </div>
         <div class="title">
           <span>上传身份证反面</span>
-          <span v-on:click="exampleImg" class="back">示例</span>
+          <span v-on:click="exampleImg" class="back color_text">示例</span>
         </div>
       </div>
     </div>
@@ -37,7 +37,7 @@
           <img v-bind:src="exampleUrl">
         </div>
         <div class="example_button">
-          <button v-on:click="popupExample = false">确定</button>
+          <button class="color_text" v-on:click="popupExample = false">确定</button>
         </div>
       </div>
     </mt-popup>

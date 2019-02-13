@@ -96,6 +96,12 @@
 
           break;
 
+        case 'rongyada':
+
+          this.src = "./static/images/rongyada/rongyada_logo.png";
+
+          break;
+
       }
 
     // console.log(this.getStorage('thisKey'))

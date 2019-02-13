@@ -131,6 +131,15 @@
 
           break;
 
+
+        case 'rongyada':
+
+          this.waitUrl = "./static/images/rongyada/sign_wait.png";
+
+          this.doneUrl='./static/images/rongyada/sign_done.png'
+
+          break;
+
       }
 
     },

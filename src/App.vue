@@ -37,6 +37,10 @@
 
           return require('!style-loader!css-loader!less-loader!../static/css/lexiangyibao_css.css');
 
+        case 'rongyada':
+
+          return require('!style-loader!css-loader!less-loader!../static/css/rongyada_css.css');
+
       }
 
     }

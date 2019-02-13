@@ -11,7 +11,7 @@
       <div class="title">
         <span v-if="cardTypeId == 4 || cardTypeId == 3">上传港、澳、台通行证正面</span>
         <span v-else-if="cardTypeId == 2">上传护照照片</span>
-        <span v-on:click="exampleImg" class="face">示例</span>
+        <span v-on:click="exampleImg" class="face color_text">示例</span>
       </div>
     </div>
     <div class="certification_pic_input" v-if="cardTypeId == 4 || cardTypeId == 3">
@@ -36,7 +36,7 @@
           <img v-bind:src="exampleUrl">
         </div>
         <div class="example_button">
-          <button v-on:click="popupExample = false">确定</button>
+          <button class="color_text" v-on:click="popupExample = false">确定</button>
         </div>
       </div>
     </mt-popup>
