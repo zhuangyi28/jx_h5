@@ -21,8 +21,8 @@
 
             <div class="content_img">
 
-              <div v-if="contractList.signState == '待签'"><img v-bind:src="waitUrl"></div>
-              <div v-else-if="contractList.signState == '已签'"><img v-bind:src="doneUrl"></div>
+              <div v-if="contractList.signState == '待签'"><i class="iconfont icon-File_pen color_text"></i></div>
+              <div v-else-if="contractList.signState == '已签'"><i class="iconfont icon-File_Stars color_text"></i></div>
               <div v-else-if="contractList.signState == '失效'"><img src="../../../../static/images/sign_no.png"/></div>
               <!-- 状态-->
               <div class="contract_state color_text" v-bind:class="{'grey': contractList.signState == '失效','op': contractList.signState == '已签'}" >{{contractList.signState}}</div>
@@ -100,47 +100,6 @@
       this.getData();
 
       localStorage.getItem('contractDetailBack') && localStorage.removeItem('contractDetailBack');
-
-
-      var str = this.getCookie('anotherCompany')||'orange';
-
-      switch (str) {
-
-        case 'orange':
-
-          this.waitUrl = "./static/images/sign_wait.png";
-
-          this.doneUrl='./static/images/sign_done.png'
-
-          break;
-
-        case 'blue':
-
-          this.waitUrl = "./static/images/paiyun/sign_wait.png";
-
-          this.doneUrl='./static/images/paiyun/sign_done.png'
-
-          break;
-
-
-        case 'lexiang':
-
-          this.waitUrl = "./static/images/lexiangyibao/sign_wait.png";
-
-          this.doneUrl='./static/images/lexiangyibao/sign_done.png'
-
-          break;
-
-
-        case 'rongyada':
-
-          this.waitUrl = "./static/images/rongyada/sign_wait.png";
-
-          this.doneUrl='./static/images/rongyada/sign_done.png'
-
-          break;
-
-      }
 
     },
 
