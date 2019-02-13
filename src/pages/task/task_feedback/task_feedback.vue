@@ -11,6 +11,7 @@
       <div class="upload_file_input">
         <div class="input_file" v-for="(file,index) in files">
           <div class="file_img">
+
             <img src="../../../../static/images/jx_file.png">
           </div>
           <div class="file_name">{{file.name}}</div>
@@ -18,10 +19,11 @@
         </div>
         <div class="input_add" v-if="files.length < 6">
           <input type="file" v-on:change="addFile">
+          <i class="iconfont icon-Add_picture color_text"></i>
         </div>
       </div>
       <div class="position">
-        <img src="../../../../static/images/jx_position.png">
+        <i class="iconfont icon-positionl_coordinate color_text"></i>
         <span v-if="place">{{place}}</span>
         <span v-else>所在位置</span>
       </div>
