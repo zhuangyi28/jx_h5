@@ -4,8 +4,11 @@
   color: #4199f0!important;
 }
 /*下拉箭头*/
-.color_text .up,.color_text .down{
+.color_text .up{
   border-bottom: 5px solid #4199f0!important;
+}
+.color_text .down{
+  border-top: 5px solid #4199f0!important;
 }
 /*边框颜色+字体颜色*/
 .border_color{

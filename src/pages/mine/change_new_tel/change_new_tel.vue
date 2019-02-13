@@ -6,13 +6,13 @@
     </div>
     <div class="change_new_tel_input">
       <div class="change_new_tel_tel">
-        <i class="iconfont icon-sign_phone"></i>
+        <i class="iconfont icon-sign_phone color_text"></i>
         <input type="number" v-model="newMobile" placeholder="请输入新的手机号码"  pattern="\d*" oninput="if(value.length > 11)value = value.slice(0, 11)" class="tel">
       </div>
       <div class="change_new_tel_code">
-        <i class="iconfont icon-sign_pen"></i>
+        <i class="iconfont icon-sign_pen color_text"></i>
         <input type="number" v-model="code" placeholder="请输入验证码"  pattern="\d*" oninput="if(value.length > 6)value = value.slice(0, 6)" class="code">
-        <div class="get_code" v-on:click="getCode">
+        <div class="get_code color_background" v-on:click="getCode">
           <span v-if="show===''">获取验证码</span>
           <span v-else-if="show===true">{{seconds}}s后重新发送</span>
           <span v-else="show===false">重新发送</span>

@@ -14,7 +14,7 @@
   <div class="content_box">
     <div class="field">
       <span>验证码</span>
-      <input type="text" pattern="\d*" v-model="code"  maxlength="6" placeholder="请输入验证码">
+      <input type="text" pattern="\d*" v-model="code" @blur="lostPointFn" maxlength="6" placeholder="请输入验证码">
     </div>
   </div>
 
@@ -290,6 +290,11 @@
 
 
         }
+
+      },
+      lostPointFn:function () {
+
+        document.body.scrollTop =document.documentElement.scrollTop = window.pageYOffset = 200;
 
       }
     },

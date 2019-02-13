@@ -1,6 +1,6 @@
 <template>
   <div class="certification_fail">
-    <div class="fail_box">
+    <div class="fail_box color_background_gradient">
       <img src="../../../../static/images/jx_fail_white.png"/>
       <div class="circle">
         <div class="circle_bot"></div>
@@ -9,7 +9,7 @@
       <div class="wave"></div>
     </div>
     <div class="fail_title">
-      <span class="title">实名认证审核不通过</span>
+      <span class="title color_text">实名认证审核不通过</span>
       <span class="content">很抱歉，您提交的认证资料未通过审核</span>
       <span class="content">原因：{{errorCause}}</span>
     </div>

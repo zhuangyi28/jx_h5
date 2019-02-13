@@ -46,7 +46,7 @@
       <div class="file" v-if="originalFileNames">
         <div>附件：</div>
         <a :href ="item.downLoadUrl" v-for="item in filesList">
-          <p>{{item.name}}</p>
+          <p class="color_text">{{item.name}}</p>
         </a>
       </div>
       <!-- 补充内容-->
@@ -55,7 +55,7 @@
       <div class="tips_files">
         <div v-if="addListFile">附件：</div>
         <a v-for="fileDetail in entTaskAddList" v-bind:href="fileDetail.file">
-          <p>{{fileDetail.fileName}}</p>
+          <p class="color_text">{{fileDetail.fileName}}</p>
         </a>
       </div>
     </div>

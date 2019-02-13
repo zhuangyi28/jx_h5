@@ -4,7 +4,7 @@
       <span>短信验证码</span>
       <input type="number" pattern="\d*" oninput="if(value.length > 6)value = value.slice(0, 6)" placeholder="请输入短信验证码" v-model="code" v-focus>
     </div>
-    <div class="sms_ps">验证码已发送至{{mobile|plusXing(3,4)}},{{seconds}}s后可<span v-on:click="getAgain" v-bind:class="{orange: used}">重新获取</span></div>
+    <div class="sms_ps">验证码已发送至{{mobile|plusXing(3,4)}},{{seconds}}s后可<span v-on:click="getAgain" v-bind:class="{color_text: used}">重新获取</span></div>
     <orangeBtn v-bind:name="btnName" v-on:clickEvent="handleClick"></orangeBtn>
   </div>
 </template>

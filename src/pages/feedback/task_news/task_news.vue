@@ -7,7 +7,7 @@
 
       <div class="content" v-on:click="lookTaskDetailFn">
         <div>{{taskName}}</div>
-        <div>查看</div>
+        <div class="color_text">查看</div>
       </div>
 
     </div>
