@@ -104,19 +104,13 @@
           }else if(res == 'confirm'){
             this.$http({
               method: 'get',
-              url:process.env.API_ROOT+'user/set/logout',
+              url:process.env.API_ROOT+'logout',
             }).then( (res) => {
-                console.log(res.data)
-              if(res.data.code == '0000'){
-                //清除token
-                this.removeStorage('Authorization');
-                this.removeStorage('jxsid');
-                this.removeStorage('taskHistory');
-                this.$router.push('/workDesk/mine');
-              }else{
-                console.log(res.data);
-                //alert(res.data.msg);
-              }
+                console.log(res);
+              this.removeStorage('Authorization');
+              this.removeStorage('jxsid');
+              this.removeStorage('taskHistory');
+              this.$router.push('/workDesk/mine');
             }).catch( (res) => {
 
                 //console.log(res);

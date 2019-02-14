@@ -113,6 +113,10 @@
 
             let _this=this;
 
+            let str = location.href;
+
+            var thisUserCode = str.split('?')[1].split('&')[0].split('=')[1];
+
 
           if(_this.mobile==''){
 
@@ -152,7 +156,7 @@
             /**
              * 接口：登录
              * 请求方式：POST
-             * 接口：/jx/action/login
+             * 接口：login
              * 入参：mobile，password,code
              **/
 
@@ -160,13 +164,17 @@
 
               method: 'post',
 
-              url:process.env.API_ROOT+'jx/action/login',
+              url:process.env.API_ROOT+'login',
 
               params: {
 
                 mobile:_this.mobile,
 
                 password:hexMD5(_this.password),
+
+                code: thisUserCode,
+
+                device: 'platform'
 
               }
 
@@ -189,16 +197,16 @@
 
               else if(res.data.code=='0000'){
 
-                var Authorization = res.data.token.access_token;//Authorization数据
+                //var Authorization = res.data.token.access_token;//Authorization数据
 
                 this.Authorization = res.data.token.access_token;
 
                  //this.$indicator.close();
 
                 //存取token
-                this.setStorage('Authorization',Authorization);
+                //this.setStorage('Authorization',Authorization);
 
-                this.setStorage('jxsid',res.data.jxsid);
+                //this.setStorage('jxsid',res.data.jxsid);
 
                 this.setStorage('userId',res.data.data.userId);
 
@@ -215,7 +223,7 @@
 
                 //获取UnionID
 
-                this.$http({
+                /*this.$http({
 
                   method: 'post',
 
@@ -234,7 +242,7 @@
                   console.log(res.data)
 
 
-                }).catch((res)=>{});
+                }).catch((res)=>{});*/
 
 
                 this.$router.go(-1);
