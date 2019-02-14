@@ -14,6 +14,8 @@ axios.defaults.withCredentiantials = true;
 
   axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
+  localStorage.getItem('Authorization') && (axios.defaults.headers.common['Authorization'] = localStorage.getItem('Authorization'));
+
   Vue.config.productductionTip = false;
 
 
@@ -33,15 +35,23 @@ axios.defaults.withCredentiantials = true;
 // http response 拦截器
   axios.interceptors.response.use(function (res) {
 
+    if(!!res.headers.authorization){
+
+      axios.defaults.headers.common['Authorization'] = res.headers.authorization;
+
+      localStorage.setItem('Authorization',res.headers.authorization);
+
+    }
+
     return res
 
   }, function (error) {
 
     console.log(error);
 
-    if(error.response.data.code=='3001'||error.response.data.code=='3003') {
+    if((error.response.data.code=='3001'||error.response.data.code=='3003') && !location.href.includes('loadingPage')) {
 
-      localStorage.setItem('loadingShow',1)
+      localStorage.setItem('loadingShow',1);
 
   /*    Toast({
 

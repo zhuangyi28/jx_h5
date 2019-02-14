@@ -141,7 +141,7 @@
 
        method: 'post',
 
-       url: process.env.API_ROOT+'jx/action/togetunionid',
+       url: process.env.API_ROOT+'platform',
 
        params: {
 
@@ -151,13 +151,17 @@
 
        }).then((res) => {
 
-       console.log(res.data)
+       console.log(res.data);
 
        this.init();
 
 
 
-       }).catch((res)=>{})
+       }).catch((res)=>{
+
+      this.init();
+
+    });
 
 
        if(this.getStorage('loadingShow')!=1){
