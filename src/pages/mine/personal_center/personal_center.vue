@@ -111,6 +111,7 @@
               this.removeStorage('jxsid');
               this.removeStorage('taskHistory');
               this.$router.push('/workDesk/mine');
+              window.location.reload();
             }).catch( (res) => {
 
                 //console.log(res);
