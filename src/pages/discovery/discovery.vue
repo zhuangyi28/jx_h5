@@ -6,7 +6,7 @@
       <div class="title before_border">金融服务</div>
       <div class="content">
         <!-- 嘉白条 -->
-        <div v-on:click="urlFn" v-bind:data-url="jbtUrl">
+        <div v-on:click="urlFn" class="jbt">
           <div class="btn_icon"><img src="../../../static/images/icon_jbt_1.png"/></div>
           <div class="btn_information">
             <span class="btn_name">嘉白条</span>
@@ -20,7 +20,7 @@
       <div class="title before_border">购物</div>
       <div class="content">
         <!-- 惠购商城 -->
-        <div v-on:click="urlFn" v-bind:data-url="jdUrl">
+        <div v-on:click="urlFn" class="jd">
           <div class="btn_icon"><img src="../../../static/images/icon_jd_1.png"/></div>
           <div class="btn_information">
             <span class="btn_name">惠购商城</span>
@@ -42,7 +42,7 @@
       <div class="title before_border">便民生活</div>
       <div class="content">
         <!-- 美团点评 -->
-        <div v-on:click="urlFn" v-bind:data-url="mtUrl">
+        <div v-on:click="urlFn" class="meituan">
           <div class="btn_icon"><img src="../../../static/images/icon_mt_1.png"/></div>
           <div class="btn_information">
             <span class="btn_name">美团外卖</span>
@@ -51,7 +51,7 @@
         </div>
 
         <!-- 餐饮美食 -->
-        <div v-on:click="urlFn" v-bind:data-url="dpUrl">
+        <div v-on:click="urlFn" class="dianping">
           <div class="btn_icon"><img src="../../../static/images/icon_dp_1.png"/></div>
           <div class="btn_information">
             <span class="btn_name">餐饮美食</span>
@@ -60,7 +60,7 @@
         </div>
 
         <!-- 丽人 -->
-        <div v-on:click="urlFn" v-bind:data-url="beautyUrl">
+        <div v-on:click="urlFn" class="beauty">
           <div class="btn_icon"><img src="../../../static/images/icon_beauty_1.png"/></div>
           <div class="btn_information">
             <span class="btn_name">丽人</span>
@@ -78,7 +78,7 @@
         </div>-->
 
         <!-- 休闲娱乐 -->
-        <div v-on:click="urlFn" v-bind:data-url="playUrl">
+        <div v-on:click="urlFn" class="play">
           <div class="btn_icon"><img src="../../../static/images/icon_play_1.png"/></div>
           <div class="btn_information">
             <span class="btn_name">休闲娱乐</span>
@@ -93,7 +93,7 @@
       <div class="title before_border">旅游出行</div>
       <div class="content">
         <!-- 美团点评 -->
-        <div v-on:click="urlFn" v-bind:data-url="didiUrl">
+        <div v-on:click="urlFn" class="didi">
           <div class="btn_icon"><img src="../../../static/images/icon_didi_1.png"/></div>
           <div class="btn_information">
             <span class="btn_name">打车</span>
@@ -102,7 +102,7 @@
         </div>
 
         <!-- 餐饮美食 -->
-        <div v-on:click="urlFn" v-bind:data-url="trainUrl">
+        <div v-on:click="urlFn" class="train">
           <div class="btn_icon"><img src="../../../static/images/icon_train_1.png"/></div>
           <div class="btn_information">
             <span class="btn_name">订火车票</span>
@@ -111,7 +111,7 @@
         </div>
 
         <!-- 丽人 -->
-        <div v-on:click="urlFn" v-bind:data-url="hotelUrl">
+        <div v-on:click="urlFn" class="hotel">
           <div class="btn_icon"><img src="../../../static/images/icon_hotel_1.png"/></div>
           <div class="btn_information">
             <span class="btn_name">酒店</span>
@@ -167,9 +167,9 @@
 
       this.bus.$emit('pageChange','2');
 
+      document.body.scrollTop =document.documentElement.scrollTop = window.pageYOffset = 0;
 
-      document.body.scrollTop =document.documentElement.scrollTop = window.pageYOffset = 0
-
+      localStorage.getItem('Authorization') && (this.getData());
  /*     if(this.getStorage('taskSquare')=='1'){
 
         window.location.reload();
@@ -207,7 +207,7 @@
 //
 //      }).catch((res)=>{});
 
-      localStorage.getItem('Authorization') && (this.getData());
+      //
 
 
     },
@@ -275,7 +275,7 @@
                         spinnerType: 'fading-circle'
                       });*/
 
-            window.location.href = e.currentTarget.dataset.url
+            this.jumpTo(e);
 
           }
 
@@ -303,190 +303,82 @@
 
           console.log(res.data.data);
 
-
           this.isOpen=res.data.data.isOpen;
 
           this.isVerify=res.data.data.isVerify
 
-
-
         }).catch((res)=>{})
 
+      },
 
-        /**
-         * 接口：消费场景-滴滴打车
-         * 请求方式：GET
-         * 接口：open/didi/redirect
-         * 入参：null
-         **/
-        this.$http({
 
-          method: 'get',
+      jumpTo: function (e) {
 
-          url: process.env.API_ROOT + 'open/didi/redirect',
+        var buttonName = e.currentTarget.classList[0];
 
-        }).then((res) => {
+        switch (buttonName) {
 
-          console.log(res.data);
+          case 'meituan':
 
-          this.didiUrl = res.data.data
+            this.meituan();
 
-        }).catch((res)=>{})
+            break;
 
+          case 'dianping':
 
-        /**
-         * 接口：消费场景-订火车票
-         * 请求方式：GET
-         * 接口：open/trainticket/redirect
-         * 入参：null
-         **/
-        this.$http({
+            this.dianping();
 
-          method: 'get',
+            break;
 
-          url: process.env.API_ROOT + 'open/trainticket/redirect',
+          case 'jbt':
 
-        }).then((res) => {
+            this.jbt();
 
-          console.log(res.data);
+            break;
 
-          this.trainUrl = res.data.data
+          case 'jd':
 
-        }).catch((res)=>{})
+            this.jd();
 
+            break;
 
-        /**
-         * 接口：消费场景-酒店
-         * 请求方式：GET
-         * 接口：open/hotel/redirect
-         * 入参：null
-         **/
-        this.$http({
+          case 'beauty':
 
-          method: 'get',
+            this.beauty();
 
-          url: process.env.API_ROOT + 'open/hotel/redirect',
+            break;
 
-        }).then((res) => {
+          case 'play':
 
-          console.log(res.data);
+            this.play();
 
-          this.hotelUrl = res.data.data
+            break;
 
-        }).catch((res)=>{})
+          case 'didi':
 
+            this.didi();
 
+            break;
 
+          case 'train':
 
+            this.train();
 
-        /**
-         * 接口：消费场景-丽人消费
-         * 请求方式：GET
-         * 接口：open/beauty/redirect
-         * 入参：null
-         **/
-        this.$http({
+            break;
 
-          method: 'get',
+          case 'hotel':
 
-          url: process.env.API_ROOT + 'open/beauty/redirect',
+            this.hotel();
 
-        }).then((res) => {
+            break;
 
-          console.log(res.data);
+        }
 
-          this.beautyUrl = res.data.data
+      },
 
-        }).catch((res)=>{})
 
 
-        /**
-         * 接口：消费场景-电子卡券
-         * 请求方式：GET
-         * 接口：open/card/redirect
-         * 入参：null
-         **/
-        this.$http({
-
-          method: 'get',
-
-          url: process.env.API_ROOT + 'open/card/redirect',
-
-        }).then((res) => {
-
-          console.log(res.data);
-
-          this.cardUrl = res.data.data
-
-        }).catch((res)=>{})
-
-
-
-        /**
-         * 接口：消费场景-点评餐饮
-         * 请求方式：GET
-         * 接口：open/catering/redirect
-         * 入参：null
-         **/
-        this.$http({
-
-          method: 'get',
-
-          url: process.env.API_ROOT + 'open/catering/redirect',
-
-        }).then((res) => {
-
-          console.log(res.data);
-
-          this.dpUrl = res.data.data
-
-        }).catch((res)=>{})
-
-
-        /**
-         * 接口：消费场景-休闲娱乐
-         * 请求方式：GET
-         * 接口：open/entertainment/redirect
-         * 入参：null
-         **/
-        this.$http({
-
-          method: 'get',
-
-          url: process.env.API_ROOT + 'open/entertainment/redirect',
-
-        }).then((res) => {
-
-          console.log(res.data);
-
-          this.playUrl = res.data.data
-
-        }).catch((res)=>{})
-
-
-
-
-
-        /**
-         * 接口：消费场景-惠购商城
-         * 请求方式：GET
-         * 接口：/open/jd/redirect
-         * 入参：null
-         **/
-        this.$http({
-
-          method: 'get',
-
-          url: process.env.API_ROOT + 'open/jd/redirect',
-
-        }).then((res) => {
-
-          console.log(res.data);
-
-          this.jdUrl = res.data.data
-
-        }).catch((res)=>{})
-
+      meituan: function () {
 
         /**
          * 接口：消费场景-美团点评
@@ -504,11 +396,66 @@
 
           console.log(res.data);
 
-          this.mtUrl = res.data.data
+          window.location.href = res.data.data;
 
         }).catch((res)=>{})
 
+      },
 
+
+
+      dianping: function () {
+
+        /**
+         * 接口：消费场景-点评餐饮
+         * 请求方式：GET
+         * 接口：open/catering/redirect
+         * 入参：null
+         **/
+        this.$http({
+
+          method: 'get',
+
+          url: process.env.API_ROOT + 'open/catering/redirect',
+
+        }).then((res) => {
+
+          console.log(res.data);
+
+          location.href = (res.data.data);
+
+        }).catch((res)=>{})
+
+      },
+
+
+      didi: function () {
+
+        /**
+         * 接口：消费场景-滴滴打车
+         * 请求方式：GET
+         * 接口：open/didi/redirect
+         * 入参：null
+         **/
+        this.$http({
+
+          method: 'get',
+
+          url: process.env.API_ROOT + 'open/didi/redirect',
+
+        }).then((res) => {
+
+          console.log(res.data);
+
+          location.href = (res.data.data);
+
+        }).catch((res)=>{})
+
+      },
+
+
+
+      jbt: function () {
 
         /**
          * 接口：消费场景-嘉白条
@@ -526,12 +473,172 @@
 
           console.log(res.data);
 
-          this.jbtUrl = res.data.data
+          window.location.href = res.data.data;
+
+        }).catch((res)=>{})
+
+      },
+
+
+      jd: function () {
+
+        /**
+         * 接口：消费场景-惠购商城
+         * 请求方式：GET
+         * 接口：/open/jd/redirect
+         * 入参：null
+         **/
+        this.$http({
+
+          method: 'get',
+
+          url: process.env.API_ROOT + 'open/jd/redirect',
+
+        }).then((res) => {
+
+          console.log(res.data);
+
+          location.href = (res.data.data);
+
+        }).catch((res)=>{})
+
+      },
+
+
+
+      play: function () {
+
+        /**
+         * 接口：消费场景-休闲娱乐
+         * 请求方式：GET
+         * 接口：open/entertainment/redirect
+         * 入参：null
+         **/
+        this.$http({
+
+          method: 'get',
+
+          url: process.env.API_ROOT + 'open/entertainment/redirect',
+
+        }).then((res) => {
+
+          console.log(res.data);
+
+          location.href = (res.data.data);
+
+        }).catch((res)=>{})
+
+      },
+
+
+
+      card: function () {
+
+        /**
+         * 接口：消费场景-电子卡券
+         * 请求方式：GET
+         * 接口：open/card/redirect
+         * 入参：null
+         **/
+        this.$http({
+
+          method: 'get',
+
+          url: process.env.API_ROOT + 'open/card/redirect',
+
+        }).then((res) => {
+
+          console.log(res.data);
+
+          location.href = (res.data.data);
+
+        }).catch((res)=>{})
+
+      },
+
+
+
+      beauty: function () {
+
+        /**
+         * 接口：消费场景-丽人消费
+         * 请求方式：GET
+         * 接口：open/beauty/redirect
+         * 入参：null
+         **/
+        this.$http({
+
+          method: 'get',
+
+          url: process.env.API_ROOT + 'open/beauty/redirect',
+
+        }).then((res) => {
+
+          console.log(res.data);
+
+          location.href = (res.data.data);
+
+        }).catch((res)=>{})
+
+      },
+
+
+
+      hotel: function () {
+
+        /**
+         * 接口：消费场景-酒店
+         * 请求方式：GET
+         * 接口：open/hotel/redirect
+         * 入参：null
+         **/
+        this.$http({
+
+          method: 'get',
+
+          url: process.env.API_ROOT + 'open/hotel/redirect',
+
+        }).then((res) => {
+
+          console.log(res.data);
+
+          location.href = (res.data.data);
+
+        }).catch((res)=>{})
+
+      },
+
+
+
+      train: function () {
+
+        /**
+         * 接口：消费场景-订火车票
+         * 请求方式：GET
+         * 接口：open/trainticket/redirect
+         * 入参：null
+         **/
+        this.$http({
+
+          method: 'get',
+
+          url: process.env.API_ROOT + 'open/trainticket/redirect',
+
+        }).then((res) => {
+
+          console.log(res.data);
+
+          location.href = (res.data.data);
 
         }).catch((res)=>{})
 
       }
+
+
+
+
     },
+
 
 
   }
