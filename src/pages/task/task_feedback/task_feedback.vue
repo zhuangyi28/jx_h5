@@ -174,8 +174,12 @@
 
                 console.log('经度' + this.longitude)
 
+                delete self._http.defaults.headers.common.Authorization;
+
+
+
                 //转gps
-                self.$http({
+                self._http({
 
                   method: 'get',
 
@@ -201,7 +205,7 @@
 
 
                     //逆编译
-                    self.$http({
+                    self._http({
 
                       method: 'get',
 
@@ -213,7 +217,7 @@
 
                         location: this.gpsLocation
 
-                      }
+                      },
 
                     }).then(function (res) {
 
@@ -222,7 +226,11 @@
 
                       console.log(res.data.regeocode.formatted_address)
 
-                      self.place = res.data.regeocode.formatted_address
+                      self.place = res.data.regeocode.formatted_address;
+
+                      self._http.defaults.headers.common.Authorization = localStorage.getItem('Authorization');
+
+
 
 
                     }.bind(this)).catch((res) => {

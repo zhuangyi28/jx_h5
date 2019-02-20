@@ -444,7 +444,7 @@
 
 
 
-        }).catch((res)=>{
+        }.bind(this)).catch((res)=>{
 
           //console.log(res.data);
 
