@@ -197,9 +197,12 @@
 
               else if(res.data.code=='0000'){
 
+
+                this.$router.go(-1);
+
                 //var Authorization = res.data.token.access_token;//Authorization数据
 
-                this.Authorization = res.data.token.access_token;
+                //this.Authorization = res.data.token.access_token;
 
                  //this.$indicator.close();
 
@@ -208,44 +211,14 @@
 
                 //this.setStorage('jxsid',res.data.jxsid);
 
-                this.setStorage('userId',res.data.data.userId);
+             /*   this.setStorage('userId',res.data.data.userId);
 
-                this.setStorage('isCommitAuthorize',res.data.data.isCommitAuthorize);
-
-
-                /**
-                 * 接口：保存用户UNIONID
-                 * 请求方式：POST
-                 * 接口：jx/action/toaddunionid
-                 * 入参：key
-                 **/
-
-
-                //获取UnionID
-
-                /*this.$http({
-
-                  method: 'post',
-
-                  url: process.env.API_ROOT+'jx/action/toaddunionid',
-
-                  params: {
-
-                    key:this.getStorage('thisKey')
-
-                  }
+                this.setStorage('isCommitAuthorize',res.data.data.isCommitAuthorize);*/
 
 
 
-                }).then((res) => {
-
-                  console.log(res.data)
 
 
-                }).catch((res)=>{});*/
-
-
-                this.$router.go(-1);
 
 
               }
