@@ -26,16 +26,16 @@
       <div class="buttonState">
         <!-- 已结束-->
         <img src="../../../../static/images/jx_finish.png" v-if="taskDetail.state == 3">
+        <!--报名结束-->
+        <img src="../../../../static/images/jx_sign_over.png" v-else-if="taskDetail.signupState == 3 && taskDetail.buttonState== 2">
+        <!--已报名-->
+        <img src="../../../../static/images/jx_already_signup.png" v-else-if="taskDetail.buttonState == 3">
+        <!--已被录取-->
+        <img src="../../../../static/images/jx_been_hired.png" v-else-if="taskDetail.buttonState == 4">
+        <!--未被录取-->
+        <img src="../../../../static/images/jx_unemploy.png" v-else-if="taskDetail.buttonState == 5">
         <!--已关闭-->
         <img src="../../../../static/images/jx_closed.png" v-if="taskDetail.state == 4 && taskDetail.buttonState == 1">
-        <!--报名结束-->
-        <img src="../../../../static/images/jx_sign_over.png" v-if="taskDetail.signupState == 3 && taskDetail.buttonState== 2">
-        <!--已报名-->
-        <img src="../../../../static/images/jx_already_signup.png" v-if="taskDetail.buttonState == 3">
-        <!--已被录取-->
-        <img src="../../../../static/images/jx_been_hired.png" v-if="taskDetail.buttonState == 4">
-        <!--未被录取-->
-        <img src="../../../../static/images/jx_unemploy.png" v-if="taskDetail.buttonState == 5">
       </div>
     </div>
     <!-- 需求描述 -->
