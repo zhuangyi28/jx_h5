@@ -1,18 +1,26 @@
 import Vue from 'vue'
 import router from '../router'
-import axios from 'axios'
+import Axios from 'axios'
 import { Toast } from 'mint-ui'
+
+var axios = Axios.create();
+
+var _axios = Axios.create();
 
 
 axios.install = (Vue) => {
 
-    Vue.prototype.$http = axios
+    Vue.prototype.$http = axios;
+
+    Vue.prototype._http = _axios;
 
 }
 
-axios.defaults.withCredentiantials = true;
+  axios.defaults.withCredentiantials = true;
 
   axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+
+
 
   localStorage.getItem('Authorization') && (axios.defaults.headers.common['Authorization'] = localStorage.getItem('Authorization'));
 
@@ -42,6 +50,7 @@ axios.defaults.withCredentiantials = true;
       localStorage.setItem('Authorization',res.headers.authorization);
 
     }
+
 
     return res
 

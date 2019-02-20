@@ -343,8 +343,6 @@
 
         let str = location.href;
 
-        var thisUserCode = str.split('?')[1].split('&')[0].split('=')[1];
-
         /**
          * 接口：登录
          * 请求方式：POST
@@ -363,8 +361,6 @@
             mobile:_this.mobile,
 
             password:hexMD5(_this.password),
-
-            code: thisUserCode,
 
             device: 'platform'
 
@@ -389,9 +385,11 @@
 
           else if(res.data.code=='0000'){
 
+            this.$router.go(-2);
+
             //var Authorization = res.data.token.access_token;//Authorization数据
 
-            this.Authorization = res.data.token.access_token;
+            //this.Authorization = res.data.token.access_token;
 
             //this.$indicator.close();
 
@@ -400,9 +398,9 @@
 
             //this.setStorage('jxsid',res.data.jxsid);
 
-            this.setStorage('userId',res.data.data.userId);
+            /*this.setStorage('userId',res.data.data.userId);
 
-            this.setStorage('isCommitAuthorize',res.data.data.isCommitAuthorize);
+            this.setStorage('isCommitAuthorize',res.data.data.isCommitAuthorize);*/
 
 
             /**
@@ -437,14 +435,12 @@
             }).catch((res)=>{});*/
 
 
-            this.$router.go(-2);
-
 
           }
 
 
 
-        }).catch((res)=>{
+        }.bind(this)).catch((res)=>{
 
           //console.log(res.data);
 
