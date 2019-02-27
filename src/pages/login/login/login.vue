@@ -115,7 +115,7 @@
 
             let str = location.href;
 
-            var thisUserCode = str.split('?')[1].split('&')[0].split('=')[1];
+            //var thisUserCode = str.split('?')[1].split('&')[0].split('=')[1];
 
 
           if(_this.mobile==''){
@@ -147,12 +147,6 @@
 
           else {
 
-
-      /*      this.$indicator.open({
-              text: '加载中...',
-              spinnerType: 'double-bounce'
-            });
-*/
             /**
              * 接口：登录
              * 请求方式：POST
@@ -172,7 +166,7 @@
 
                 password:hexMD5(_this.password),
 
-                code: thisUserCode,
+                //code: thisUserCode,
 
                 device: 'platform'
 
@@ -199,28 +193,6 @@
 
 
                 this.$router.go(-1);
-
-                //var Authorization = res.data.token.access_token;//Authorization数据
-
-                //this.Authorization = res.data.token.access_token;
-
-                 //this.$indicator.close();
-
-                //存取token
-                //this.setStorage('Authorization',Authorization);
-
-                //this.setStorage('jxsid',res.data.jxsid);
-
-             /*   this.setStorage('userId',res.data.data.userId);
-
-                this.setStorage('isCommitAuthorize',res.data.data.isCommitAuthorize);*/
-
-
-
-
-
-
-
               }
 
 

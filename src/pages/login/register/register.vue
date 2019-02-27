@@ -341,7 +341,9 @@
 
         var _this=this;
 
-        let str = location.href;
+        var str = location.href;
+
+        var thisUserCode = str.split('?')[1].split('&')[0].split('=')[1];
 
         /**
          * 接口：登录
@@ -361,6 +363,8 @@
             mobile:_this.mobile,
 
             password:hexMD5(_this.password),
+
+            code: thisUserCode,
 
             device: 'platform'
 

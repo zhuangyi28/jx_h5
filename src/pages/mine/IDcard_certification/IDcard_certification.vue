@@ -148,62 +148,96 @@
 
       updateface: function () {
 
-        var loading = this.$toast({
-          message: '图片上传中',
-          position: 'middle',
-          duration: 60000
-        });
+
+
+        var that = this;
 
         var Event = event;
 
         var file = event.target.files[0];
 
-        console.log(file);
-
-        var param = new FormData(); //创建form对象
-
-        param.append('File',file);//通过append向form对象添加数据
+        var imgSize = file.size;
 
 
-        this.$http.post(process.env.API_ROOT + 'jx/uploadimg/oss',param,{
-          headers:{'Content-Type':'multipart/form-data'}
+        if(imgSize<1024*1024*2){
 
-        }).then((res)=>{
+          that.$toast({
 
-          console.log(res.data);
+            message: '上传文件大于2M！',
+            position: 'middle',
+            duration: 1500
+          })
 
-          if(res.data.code=='0000'){
+        }
 
-            loading.close();
+        else {
 
-            this.$toast({
+          var loading = that.$toast({
+            message: '图片上传中',
+            position: 'middle',
+            duration: 60000
+          });
 
-              message: '上传成功',
-              position: 'middle',
-              duration: 1500
-            })
+          lrz(file, {
+            width : 800,
+            quality: 0.8   //自定义使用压缩方式
+          })
+            .then(function(rst) {
+              //成功时执行
+              console.log(rst)
 
-            if (Event.target.classList.contains('face_img')){
+              var thisfiles = new window.File([rst.file], file.name, {type: file.type})
 
-              this.faceUrl = res.data.data.url;
+              var param = new FormData(); //创建form对象
 
-            }
+              param.append('File', thisfiles);//通过append向form对象添加数据
 
-            else if(Event.target.classList.contains('back_img')){
+              that.$http.post(process.env.API_ROOT + 'jx/uploadimg/oss', param, {
+                headers: {'Content-Type': 'multipart/form-data'}
+
+              }).then((res) => {
+
+                console.log(res.data);
+
+                if (res.data.code == '0000') {
+
+                  loading.close();
+
+                  that.$toast({
+
+                    message: '上传成功',
+                    position: 'middle',
+                    duration: 1500
+                  })
+
+                  if (Event.target.classList.contains('face_img')) {
+
+                    that.faceUrl = res.data.data.url;
+
+                  }
+
+                  else if (Event.target.classList.contains('back_img')) {
 
 
-              this.backUrl = res.data.data.url;
+                    that.backUrl = res.data.data.url;
 
-            }
-          }
-
-
+                  }
+                }
 
 
+              }).catch((res) => {
+                console.log(res);
+              })
 
-        }).catch((res)=>{
-          console.log(res);
-        })
+            }).catch(function(error) {
+            //失败时执行
+          }).always(function() {
+            //不管成功或失败，都会执行
+          })
+        }
+
+
+
 
       },
 
