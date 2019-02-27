@@ -115,7 +115,7 @@
 
             let str = location.href;
 
-            //var thisUserCode = str.split('?')[1].split('&')[0].split('=')[1];
+            var thisUserCode = str.split('?')[1].split('&')[0].split('=')[1];
 
 
           if(_this.mobile==''){
@@ -166,7 +166,7 @@
 
                 password:hexMD5(_this.password),
 
-                //code: thisUserCode,
+                code: thisUserCode,
 
                 device: 'platform'
 

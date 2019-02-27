@@ -133,6 +133,8 @@
 
       var thisUserCode = str.split('?')[1].split('&')[0].split('=')[1];
 
+      this.setStorage('thisUserCodeWx',thisUserCode)
+
       //this.init();
 
       //获取UnionID

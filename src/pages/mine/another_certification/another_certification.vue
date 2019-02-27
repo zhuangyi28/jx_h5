@@ -412,18 +412,6 @@
 
         console.log(file);
 
-        if(imgSize<1024*1024*2){
-
-          that.$toast({
-
-            message: '上传文件大于2M！',
-            position: 'middle',
-            duration: 1500
-          })
-
-        }
-
-        else {
 
           var loading = that.$toast({
             message: '图片上传中',
@@ -446,43 +434,59 @@
 
               param.append('File', thisfiles);//通过append向form对象添加数据
 
-              that.$http.post(process.env.API_ROOT + 'jx/uploadimg/oss', param, {
-                headers: {'Content-Type': 'multipart/form-data'},
+              if(rst.file.size>1024*1024*2){
+
+                that.$toast({
+
+                  message: '文件大于2M，请重新上传！',
+                  position: 'middle',
+                  duration: 1500
+
+                })
+
+              }
+
+              else {
+
+                that.$http.post(process.env.API_ROOT + 'jx/uploadimg/oss', param, {
+                  headers: {'Content-Type': 'multipart/form-data'},
 
 
-              }).then((res) => {
+                }).then((res) => {
 
-                console.log(res.data);
+                  console.log(res.data);
 
-                if (res.data.code == '0000') {
+                  if (res.data.code == '0000') {
 
-                  loading.close();
+                    loading.close();
 
-                  that.$toast({
+                    that.$toast({
 
-                    message: '上传成功',
-                    position: 'middle',
-                    duration: 1500
-                  })
+                      message: '上传成功',
+                      position: 'middle',
+                      duration: 1500
+                    })
 
-                  if (Event.target.classList.contains('face_img')) {
+                    if (Event.target.classList.contains('face_img')) {
 
-                    that.faceUrl = res.data.data.url;
+                      that.faceUrl = res.data.data.url;
 
+                    }
+
+                    else if (Event.target.classList.contains('back_img')) {
+
+
+                      that.backUrl = res.data.data.url;
+
+                    }
                   }
 
-                  else if (Event.target.classList.contains('back_img')) {
 
+                }).catch((res) => {
+                  console.log(res);
+                })
 
-                    that.backUrl = res.data.data.url;
-
-                  }
-                }
-
-
-              }).catch((res) => {
-                console.log(res);
-              })
+              }
             }).catch(function (error) {
             //失败时执行
           }).always(function () {
@@ -490,7 +494,6 @@
           })
 
 
-        }
 
       },
 
