@@ -156,7 +156,7 @@
 
           params: {
 
-            signId: localStorage.getItem('signId')
+            signId: this.signId
 
           }
 

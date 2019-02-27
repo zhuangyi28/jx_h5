@@ -150,7 +150,9 @@
 
       className:'middle_btn',
 
-      salaryType:''//默认不显示有新消息 true为不显示 false为显示
+      salaryType:'',//默认不显示有新消息 true为不显示 false为显示
+
+      salaryDetailId: ''//工资条ID
 
 
     }
@@ -158,7 +160,17 @@
   },
     mounted(){
 
-      var thisSalaryDetailId = this.getStorage('salaryDetailId');
+      if(!!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){
+
+        location.href = location.href.split('#')[0] +'#'+ this.$route.fullPath;
+
+        console.log('isIOS');
+
+      }
+
+      this.salaryDetailId= this.$route.query.salaryDetailId;
+
+      var thisSalaryDetailId = this.salaryDetailId;
 
 
 
@@ -345,7 +357,7 @@
       confirmFn:function () {
 
 
-          var thisSalaryDetailId = this.getStorage('salaryDetailId');
+          var thisSalaryDetailId = this.salaryDetailId;
 
           this.comfrimBtn=1
 

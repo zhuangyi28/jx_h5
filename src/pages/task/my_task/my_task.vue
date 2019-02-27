@@ -11,7 +11,7 @@
     <!-- 列表 -->
     <div class="my_task_list" v-infinite-scroll="loadMore" infinite-scroll-disabled="moreLoading" infinite-scroll-distance="20" infinite-scroll-immediate-check="false">
       <!-- list -->
-      <div class="my_task_one" v-for="item in taskList" v-bind:data-id="item.taskId" @click="lookTaskDetailFn">
+      <div class="my_task_one" v-for="item in taskList" v-bind:data-id="item.taskId" @click="lookTaskDetailFn(item.taskId,item.taskState)">
         <div class="my_task_information">
           <div class="task_left">
             <div class="task_title color_background">
@@ -468,16 +468,14 @@
 
       },
 
-      lookTaskDetailFn:function (e) {
-
-        console.log(e.currentTarget.dataset.id)
+      lookTaskDetailFn:function (taskId,thisState) {
 
         //存下任务id 在任务详情中取
-        this.setStorage('taskId',e.currentTarget.dataset.id);
+        this.setStorage('taskId',taskId);
 
-        this.setStorage(this.getStorage('mobile')+'myTaskItemState',this.thisState);
+        this.setStorage(this.getStorage('mobile')+'myTaskItemState',thisState);
 
-        this.$router.push('/taskDetail')
+        this.$router.push({path: '/taskDetail',query: {taskId: taskId, thisState: thisState}});
 
 
 

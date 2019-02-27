@@ -10,7 +10,7 @@
 
         <div class="money_detail_month_one" v-for="item in wagesList">
 
-          <div :class="item.state == '已确认'? '':'already_confirm'" v-on:click="clickSeeList" v-bind:data-detail="item.salaryDetailId">
+          <div :class="item.state == '已确认'? '':'already_confirm'" v-on:click="clickSeeList(item.salaryDetailId)" v-bind:data-detail="item.salaryDetailId">
 
             <div class="money_detail_content">
               <p class="company"><span>{{item.salaryMonth}}</span><span v-if="item.salaryType!='8'">收入</span></p>
@@ -860,12 +860,12 @@
         }
       },
       //点击查看工资条跳转链接
-      clickSeeList: function (e) {
+      clickSeeList: function (salaryDetailId) {
 
-        this.setStorage('salaryDetailId', e.currentTarget.dataset.detail);
+        this.setStorage('salaryDetailId', salaryDetailId);
 
         //跳转
-        this.$router.push('/payroll')
+        this.$router.push({path: '/payroll',query: {salaryDetailId: salaryDetailId}});
 
 
       },

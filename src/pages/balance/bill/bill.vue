@@ -2,7 +2,7 @@
 
   <div class="bill" v-infinite-scroll="loadMore" infinite-scroll-disabled="moreLoading" infinite-scroll-distance="20" infinite-scroll-immediate-check="false">
 
-      <div class="bill_box" v-for="item in billList" v-on:click="clickBill" v-bind:data-no="item.orderId"
+      <div class="bill_box" v-for="item in billList" v-on:click="clickBill(item.orderId, item.orderType)" v-bind:data-no="item.orderId"
          v-bind:data-type="item.orderType">
         <div class="bill_img">
           <img v-if="item.orderType=='01'" src="../../../../static/images/jx_record.png"/>
@@ -58,13 +58,9 @@
 
         billList: [],
 
-        orderId: '',
-
         pageNum: 1,//
 
         pageSize: 10,//一页的数量
-
-        orderTypes: '',//订单类型 01提现 02 03转入转出 全部订单不用传
 
         moreText: '没有更多数据啦~',//无数据显示暂无数据
 
@@ -290,27 +286,22 @@
 
       },
 
-      clickBill: function (e) {
+      clickBill: function (orderId, orderType) {
 
-        this.orderId=e.currentTarget.dataset.no;
-
-        this.orderType=e.currentTarget.dataset.type;
-
-        this.setStorage('orderId',this.orderId);
+        this.setStorage('orderId',orderId);
 
         //console.log(this.getStorage('orderId'));
 
-        this.setStorage('orderType',e.currentTarget.dataset.type);
+        this.setStorage('orderType',orderType);//订单类型 01提现 02 03转入转出 全部订单不用传
 
-        if(this.orderType=='02' || this.orderType=='03'){
+        if(orderType=='02' || orderType=='03'){
 
-
-          this.$router.push('/transferDetail')
+          this.$router.push({path: '/transferDetail',query: {orderType: orderType, orderId: orderId}});
 
         }
         else {
 
-          this.$router.push('/cashDetail')
+          this.$router.push({path: '/cashDetail',query: {orderId: orderId}});
 
 
         }

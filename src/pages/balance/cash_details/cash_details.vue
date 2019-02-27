@@ -163,6 +163,16 @@
     },
    mounted () {
 
+     if(!!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){
+
+       location.href = location.href.split('#')[0] +'#'+ this.$route.fullPath;
+
+       console.log('isIOS');
+
+     }
+
+     this.orderId = this.$route.query.orderId;
+
      //美恰初始化
      customerInit({
        name:this.getStorage('userName'),// 名字
@@ -182,7 +192,7 @@
 
          this.mobile=this.getStorage('mobile');
 
-         var _orderId = this.getStorage('orderId');
+         var _orderId = this.orderId;
 
          //console.log(_orderId)
 
