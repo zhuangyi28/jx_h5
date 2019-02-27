@@ -139,7 +139,11 @@
           });
 
         }
+
+
         else {
+
+            console.log(this.getStorage('thisUserCodeWx'))
 
 
           /**
@@ -154,16 +158,19 @@
 
             url:process.env.API_ROOT+'jx/action/register',
 
-            //url:process.env.API_ROOT+'jx/action/register',
-
-
             params: {
 
               mobile: _this.mobile,
 
               code: _this.checkCode,
 
+              wxCode:this.getStorage('thisUserCodeWx'),
+
               password: hexMD5(_this.password),
+
+              device:'platform',
+
+
 
             }
           }).then((res)=>{
@@ -195,15 +202,18 @@
               });
 
 
-
-
-
-
               setTimeout(function () {
 
                 _this.signin()
 
               },1000)
+
+
+
+
+
+
+
 
             }
 
@@ -391,54 +401,6 @@
 
             this.$router.go(-2);
 
-            //var Authorization = res.data.token.access_token;//Authorization数据
-
-            //this.Authorization = res.data.token.access_token;
-
-            //this.$indicator.close();
-
-            //存取token
-            //this.setStorage('Authorization',Authorization);
-
-            //this.setStorage('jxsid',res.data.jxsid);
-
-            /*this.setStorage('userId',res.data.data.userId);
-
-            this.setStorage('isCommitAuthorize',res.data.data.isCommitAuthorize);*/
-
-
-            /**
-             * 接口：保存用户UNIONID
-             * 请求方式：POST
-             * 接口：jx/action/toaddunionid
-             * 入参：key
-             **/
-
-
-            //获取UnionID
-
-            /*this.$http({
-
-              method: 'post',
-
-              url: process.env.API_ROOT+'jx/action/toaddunionid',
-
-              params: {
-
-                key:this.getStorage('thisKey')
-
-              }
-
-
-
-            }).then((res) => {
-
-              console.log(res.data)
-
-
-            }).catch((res)=>{});*/
-
-
 
           }
 
@@ -456,7 +418,8 @@
       },
 
 
-    }
+    },
+
   }
 </script>
 <style lang="less" scoped>
