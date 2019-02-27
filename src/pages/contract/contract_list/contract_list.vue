@@ -17,7 +17,7 @@
       <mt-loadmore :top-method="loadTop" ref="loadmore">
         <div class="contract_list_list">
           <!-- list -->
-          <div class="contract_list_one" v-for="contractList in contractLists" v-bind:data-signId="contractList.signId" v-on:click="jumpTo">
+          <div class="contract_list_one" v-for="contractList in contractLists" v-bind:data-signId="contractList.signId" v-on:click="jumpTo(contractList.signId)">
 
             <div class="content_img">
 
@@ -277,15 +277,15 @@
 
 
       //跳转到对应合同的页面
-      jumpTo: function () {
+      jumpTo: function (signId) {
 
-        localStorage.setItem('signId',event.currentTarget.dataset.signid);
+        localStorage.setItem('signId',signId);
 
         localStorage.setItem('signState',this.limit.signState);
 
         (!this.limit.signState) && localStorage.removeItem('signState');
 
-        this.$router.push('/contractDetail');
+        this.$router.push({path: '/contractDetail',query: {signId: signId}});
 
       },
 

@@ -76,6 +76,8 @@
 
       return {
 
+        signId: '',//合同ID
+
         contractName: '',//文件名称
 
         contractUrl: '',//文件链接
@@ -113,6 +115,16 @@
     },
 
     mounted () {
+
+      if(!!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){
+
+        location.href = location.href.split('#')[0] +'#'+ this.$route.fullPath;
+
+        console.log('isIOS');
+
+      }
+
+      this.signId = this.$route.query.signId;
 
       this.getData();
 
