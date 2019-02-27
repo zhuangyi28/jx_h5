@@ -118,7 +118,17 @@
 
    mounted () {
 
+     if(!!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){
 
+       location.href = location.href.split('#')[0] +'#'+ this.$route.fullPath;
+
+       console.log('isIOS');
+
+     }
+
+     this.orderId = this.$route.query.orderId;
+
+     this.orderType = this.$route.query.orderType;
 
 
      //美恰初始化
@@ -140,13 +150,11 @@
 
        var _transferOrderId = this.getStorage('transferOrderId');
 
-       var _orderId = this.getStorage('orderId');
+       var _orderId = this.orderId;
 
-       var _orderType = this.getStorage('orderType');
+       var _orderType = this.orderType;
 
        var _billHref = this.getStorage('billHref');
-
-       this.orderType=_orderType;
 
          //console.log(_orderId)
 

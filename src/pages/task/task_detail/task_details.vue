@@ -199,8 +199,15 @@
       //获取数据
       init:function () {
 
+        if(!!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){
 
-          this.taskId = this.getStorage('taskId');
+          location.href = location.href.split('#')[0] +'#'+ this.$route.fullPath;
+
+          console.log('isIOS');
+
+        }
+
+        this.taskId = this.$route.query.taskId;
 
           var str = this.getCookie('anotherCompany')||'orange';
 
@@ -475,7 +482,7 @@
 
       jumpTo: function () {
 
-        this.$router.push({path: '/lookTask',query: {taskId: localStorage.getItem('taskId')}});
+        this.$router.push({path: '/lookTask',query: {taskId: this.taskId}});
 
       }
     },
