@@ -56,7 +56,9 @@
 
         moreData: true,//是否还有更多数据
 
-        loading: false
+        loading: false,
+
+        taskId: '',//任务ID
 
 
       }
@@ -108,6 +110,8 @@
 
             this.setStorage('taskId',res.data.data[0].taskId);
 
+            this.taskId = res.data.data[0].taskId;
+
             if (!list) {
 
               this.taskList= []//反馈消息列表
@@ -135,8 +139,7 @@
       //查看任务详情
       lookTaskDetailFn:function () {
 
-        this.$router.push('/taskDetail')
-
+        this.$router.push({path: '/taskDetail', query: {taskId: this.taskId}});
 
       },
 
