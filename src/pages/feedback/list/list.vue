@@ -18,8 +18,16 @@
         </div>
         <div>
           {{item.contentTitle}}
-          <span class="click_class color_text" v-bind:data-sign="item.salaryDetailId" v-bind:data-process="item.isProcess" v-on:click="contractDetailFn" v-if="item.contentTitle=='您收到一份新合同,'">点击查看</span>
-          <span class="click_class color_text" v-bind:data-sign="item.salaryDetailId" v-bind:data-process="item.isProcess" v-on:click="contractDetailFn" v-else-if="item.contentTitle.indexOf('去签署')>-1">合同</span>
+          <span class="click_class color_text"
+                v-bind:data-sign="item.salaryDetailId"
+                v-bind:data-process="item.isProcess"
+                v-on:click="contractDetailFn(item.salaryDetailId,item.isProcess)"
+                v-if="item.contentTitle=='您收到一份新合同,'">点击查看</span>
+          <span class="click_class color_text"
+                v-bind:data-sign="item.salaryDetailId"
+                v-bind:data-process="item.isProcess"
+                v-on:click="contractDetailFn(item.salaryDetailId,item.isProcess)"
+                v-else-if="item.contentTitle.indexOf('去签署')>-1">合同</span>
         </div>
         <div v-if="item.salaryType=='X'">
           <p class="color_text">{{item.taskName}}</p>
@@ -286,9 +294,9 @@
       },
 
       //点击跳转
-      contractDetailFn:function (e) {
+      contractDetailFn:function (signId,process) {
 
-          if(e.currentTarget.dataset.process=='4'){
+          if(process=='4'){
 
             this.$toast({
               message: '管理员已撤销该合同',
@@ -299,9 +307,9 @@
 
           else {
 
-            this.setStorage('signId',e.currentTarget.dataset.sign);
+            this.setStorage('signId',signId);
 
-            this.$router.push('/contractDetail')
+            this.$router.push({path: '/contractDetail', query: {signId: signId}});
 
           }
 
