@@ -76,7 +76,7 @@
 
             setTimeout(function () {
 
-              that.$router.push({path: '/contractDetail',query: {signId: this.signId}});
+              that.$router.push({path: '/contractDetail',query: {signId: that.signId}});
 
             },1000)
 

@@ -159,71 +159,7 @@
          //console.log(_orderId)
 
 
-       if(_billHref=='4'){
-
-
-         console.log('从账单过来的')
-
-         /**
-          * 接口：
-          * 请求方式：GET
-          * 接口：user/withdraw/getdetailrecord
-          * 入参：orderId
-          **/
-
-         this.$http({
-
-           method: 'get',
-
-           url: process.env.API_ROOT + 'user/withdraw/getdetailrecord',
-
-           params: {
-
-             orderId: _orderId,
-
-             orderType:_orderType,
-
-           }
-
-
-         }).then((res)=>{
-
-           console.log(res.data)
-/*
-           if(res.data.data.remark){
-
-
-               this.remark=res.data.data.remark
-
-
-           }*/
-
-           this.remark = res.data.data.remark
-
-            this.orderAmount= res.data.data.orderAmount;
-
-              this.orderState= res.data.data.orderState;
-
-             this.orderId=res.data.data.orderId;
-
-             this.orderType= res.data.data.orderType;
-
-             this.userName=res.data.data.userName;
-
-             this.mobile=res.data.data.mobile;
-
-             this.createDate=res.data.data.createDate;
-
-
-
-
-         }).catch((res)=>{})
-
-
-
-       }
-
-       else if(_billHref=='6'){
+       if(_billHref=='6'){
 
          console.log('从查看订单');
 
@@ -272,6 +208,68 @@
 
 
          }).catch((res)=>{})
+
+
+       }else{
+
+
+         console.log('从账单过来的')
+
+         /**
+          * 接口：
+          * 请求方式：GET
+          * 接口：user/withdraw/getdetailrecord
+          * 入参：orderId
+          **/
+
+         this.$http({
+
+           method: 'get',
+
+           url: process.env.API_ROOT + 'user/withdraw/getdetailrecord',
+
+           params: {
+
+             orderId: _orderId,
+
+             orderType:_orderType,
+
+           }
+
+
+         }).then((res)=>{
+
+           console.log(res.data)
+           /*
+            if(res.data.data.remark){
+
+
+            this.remark=res.data.data.remark
+
+
+            }*/
+
+           this.remark = res.data.data.remark
+
+           this.orderAmount= res.data.data.orderAmount;
+
+           this.orderState= res.data.data.orderState;
+
+           this.orderId=res.data.data.orderId;
+
+           this.orderType= res.data.data.orderType;
+
+           this.userName=res.data.data.userName;
+
+           this.mobile=res.data.data.mobile;
+
+           this.createDate=res.data.data.createDate;
+
+
+
+
+         }).catch((res)=>{})
+
 
 
        }
