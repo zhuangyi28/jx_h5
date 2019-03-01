@@ -51,11 +51,9 @@
     methods: {
       jumpTo: function () {
         if(this.withdraw == 1){
-          this.$router.push('/cashDetail');
+          this.$router.push({path: '/cashDetail',query: {orderId: localStorage.getItem('orderId')}});
         }else if(this.change == 1){
-          this.setStorage('orderType','2');
-          this.setStorage('billHref','6');
-          this.$router.push('/transferDetail');
+          this.$router.push({path: '/transferDetail',query: {orderId: localStorage.getItem('transferOrderId'),orderType: '02'}});
         }
       }
     }
