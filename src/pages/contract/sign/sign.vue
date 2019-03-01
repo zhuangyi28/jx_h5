@@ -63,16 +63,17 @@
 
         }).then((res)=>{
 
+          this.$indicator.open({
+            text: '跳转中...',
+            spinnerType: 'fading-circle'
+
+          });
 
           console.log(res.data);
 
           if(res.data.data.signState=='1'){
 
-            this.$indicator.open({
-              text: '跳转中...',
-              spinnerType: 'fading-circle'
 
-            });
 
             setTimeout(function () {
 
@@ -83,12 +84,7 @@
           }
 
           else {
-
-             this.$indicator.open({
-              text: '跳转中...',
-              spinnerType: 'fading-circle'
-
-            });
+            
 
             this.init()
 

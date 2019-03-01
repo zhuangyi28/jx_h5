@@ -148,131 +148,77 @@
      init:function () {
 
 
-       var _transferOrderId = this.getStorage('transferOrderId');
+
 
        var _orderId = this.orderId;
 
        var _orderType = this.orderType;
 
-       var _billHref = this.getStorage('billHref');
-
          //console.log(_orderId)
 
 
-       if(_billHref=='6'){
-
-         console.log('从查看订单');
-
-         /**
-          * 接口：
-          * 请求方式：GET
-          * 接口：user/withdraw/getdetailrecord
-          * 入参：orderId
-          **/
-
-         this.$http({
-
-           method: 'get',
-
-           url: process.env.API_ROOT + 'user/withdraw/getdetailrecord',
-
-           params: {
-
-             orderId: _transferOrderId,
-
-             orderType:'02',
-
-           }
 
 
-         }).then((res)=>{
 
-           console.log(res.data)
+       console.log('从账单过来的')
 
+       /**
+        * 接口：
+        * 请求方式：GET
+        * 接口：user/withdraw/getdetailrecord
+        * 入参：orderId
+        **/
 
-           this.orderAmount= res.data.data.orderAmount;
+       this.$http({
 
-           this.orderState= res.data.data.orderState;
+         method: 'get',
 
-           this.orderId=res.data.data.orderId;
+         url: process.env.API_ROOT + 'user/withdraw/getdetailrecord',
 
-           this.orderType= res.data.data.orderType;
+         params: {
 
-           this.userName=res.data.data.userName;
+           orderId: _orderId,
 
-           this.mobile=res.data.data.mobile;
+           orderType:_orderType,
 
-           this.createDate=res.data.data.createDate;
-
-           this.remark = res.data.data.remark
-
-
-         }).catch((res)=>{})
-
-
-       }else{
+         }
 
 
-         console.log('从账单过来的')
+       }).then((res)=>{
 
-         /**
-          * 接口：
-          * 请求方式：GET
-          * 接口：user/withdraw/getdetailrecord
-          * 入参：orderId
-          **/
-
-         this.$http({
-
-           method: 'get',
-
-           url: process.env.API_ROOT + 'user/withdraw/getdetailrecord',
-
-           params: {
-
-             orderId: _orderId,
-
-             orderType:_orderType,
-
-           }
+         console.log(res.data)
+         /*
+          if(res.data.data.remark){
 
 
-         }).then((res)=>{
-
-           console.log(res.data)
-           /*
-            if(res.data.data.remark){
+          this.remark=res.data.data.remark
 
 
-            this.remark=res.data.data.remark
+          }*/
 
+         this.remark = res.data.data.remark
 
-            }*/
+         this.orderAmount= res.data.data.orderAmount;
 
-           this.remark = res.data.data.remark
+         this.orderState= res.data.data.orderState;
 
-           this.orderAmount= res.data.data.orderAmount;
+         this.orderId=res.data.data.orderId;
 
-           this.orderState= res.data.data.orderState;
+         this.orderType= res.data.data.orderType;
 
-           this.orderId=res.data.data.orderId;
+         this.userName=res.data.data.userName;
 
-           this.orderType= res.data.data.orderType;
+         this.mobile=res.data.data.mobile;
 
-           this.userName=res.data.data.userName;
-
-           this.mobile=res.data.data.mobile;
-
-           this.createDate=res.data.data.createDate;
+         this.createDate=res.data.data.createDate;
 
 
 
 
-         }).catch((res)=>{})
+       }).catch((res)=>{})
 
 
 
-       }
 
 
      },
@@ -286,7 +232,8 @@
 
 
 
-   }
+   },
+
 
 
  }
