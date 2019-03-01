@@ -10,7 +10,7 @@
 
       return{
 
-
+          signId: '',//合同编号
       }
 
     },
@@ -23,6 +23,8 @@
       var thisSignid = location.href.split('?')[1].split('signId=')[1]
 
       this.setStorage('signId',thisSignid)
+
+      this.signId = thisSignid;
 
       console.log(location.href.split('?')[1].split('signId=')[1])
 
@@ -53,7 +55,7 @@
 
           params: {
 
-            signId: this.getStorage('signId'),
+            signId: this.signId,
 
             userId: this.getStorage('userId'),
 
@@ -74,7 +76,7 @@
 
             setTimeout(function () {
 
-              that.$router.push('/contractDetail');
+              that.$router.push({path: '/contractDetail',query: {signId: that.signId}});
 
             },1000)
 

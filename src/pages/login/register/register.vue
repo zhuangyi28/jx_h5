@@ -399,6 +399,8 @@
 
           else if(res.data.code=='0000'){
 
+            this.setStorage('userId',res.data.data.userId);
+
             this.$router.go(-2);
 
 

@@ -115,7 +115,16 @@
 
             let str = location.href;
 
-            //var thisUserCode = str.split('?')[1].split('&')[0].split('=')[1];
+            if(str.includes('code')){
+
+              var thisUserCode = str.split('?')[1].split('&')[0].split('=')[1];
+
+            }
+
+            else {
+
+              var thisUserCode = 0
+            }
 
 
           if(_this.mobile==''){
@@ -166,7 +175,7 @@
 
                 password:hexMD5(_this.password),
 
-                //code: thisUserCode,
+                code: thisUserCode,
 
                 device: 'platform'
 
@@ -191,8 +200,9 @@
 
               else if(res.data.code=='0000'){
 
+                  this.setStorage('userId',res.data.data.userId);
 
-                this.$router.go(-1);
+                  this.$router.go(-1);
               }
 
 
