@@ -33,49 +33,60 @@
     },
     mounted () {
 
-      //重新调用data方法
-      this.seconds = 60;
-      this.used =true;
-
-      this.mobile = this.getStorage('mobile');
-      this.withdrawMoney = this.getStorage('withdrawMoney');
-      this.bankCardId = this.getStorage('bankCardId');
-      this.change= this.getStorage('change');
-      this.withdraw = this.getStorage('withdraw');
-      this.transferMoney = this.getStorage('transferMoney');
-      this.transferMobile = this.getStorage('transferMobile');
-      this.transferTips = this.getStorage('transferTips')
-      //this.setCodeBack(this.getAgain())
-
-      setTimeout(function () {
-
-        if(localStorage.getItem('backing')==0) {
-
-          this.getAgain()
-
-        }
-      }.bind(this),1)
+      this.init();
 
     },
     methods: {
 
+      //页面初始化
+      init: function () {
+
+        //重新调用data方法
+        this.seconds = 60;
+        this.used =true;
+
+        this.mobile = this.getStorage('mobile');
+        this.withdrawMoney = this.getStorage('withdrawMoney');
+        this.bankCardId = this.getStorage('bankCardId');
+        this.change= this.getStorage('change');
+        this.withdraw = this.getStorage('withdraw');
+        this.transferMoney = this.getStorage('transferMoney');
+        this.transferMobile = this.getStorage('transferMobile');
+        this.transferTips = this.getStorage('transferTips');
+
+        this.getAgain()
+
+      },
+
       //获取验证码
       getAgain: function () {
+        const TIME_COUNT = 60;
         if(this.used){
           this.used = false;
-          if(!this.seconds){
-            this.seconds = 60;
-          }
+          this.seconds = TIME_COUNT;
+
+          /**
+           * 接口：支付发送短信认证
+           * 请求方式：GET
+           * 接口：/jx/action/withdrawmsg
+           * 入参：null
+           * */
           this.$http({
             method: 'post',
             url: process.env.API_ROOT + 'jx/action/withdrawmsg'
           }).then((res)=>{
+
             this.$toast({
+
               message: res.data.msg,
               position: 'bottom',
               duration: 1500
+
             });
+
             if(res.data.code == '0000'){
+
+              //倒计时
               var countDown = setInterval(()=>{
                 this.seconds--;
                 if(!this.seconds){
@@ -83,6 +94,8 @@
                   this.used = true;
                 }
               },1000);
+
+
             }else{
               this.seconds = 0;
               this.used = true;
@@ -94,7 +107,11 @@
 
 
       },
+
+      //提交验证码
       handleClick: function () {
+
+
         if(this.code == ''){
           this.$toast({
             message: '请输入验证码',
@@ -116,90 +133,59 @@
           spinnerType: 'fading-circle'
         });
 
-        if(this.withdraw == 1){
+        var url;
+        var params;
 
+        /*
+         * 接口： 用户发起提现操作
+         * 请求方式： GET
+         * 接口： /user/withdraw/dowithdraw
+         * 入参： bankCardId,balance,code
+         * */
 
-          /*
-           * 接口： 用户发起提现操作
-           * 请求方式： GET
-           * 接口： /user/withdraw/dowithdraw
-           * 入参： bankCardId,balance,code
-           * */
-          this.$http({
-            method: 'get',
-            url: process.env.API_ROOT + 'user/withdraw/dowithdraw?bankCardId='+this.bankCardId+'&balance='+this.withdrawMoney+'&code='+this.code
-          }).then((res)=>{
-            console.log(res.data);
-            if(res.data.code=='3001') {
-              setTimeout( ()=> {
-                this.$router.push('/');
-              },1500);
-              return false;
-            }
-            else {
-              if (res.data.code == '0000') {
-                this.setStorage('orderId',res.data.data);
-                this.$toast({
-                  message: res.data.msg,
-                  position: 'bottom',
-                  duration: 500
-                });
-                setTimeout(() => {
-                  this.$router.push( '/paySuccess')
-                },1500);
-              }
-              else {
+        (this.withdraw == 1)&&(url = process.env.API_ROOT + 'user/withdraw/dowithdraw')&&
+        (params = {bankCardId: this.bankCardId,balance: this.withdrawMoney, code: this.code});
 
-                  this.$indicator.close()
-                this.$toast({
-                  message: res.data.msg,
-                  position: 'bottom',
-                  duration: 500
-                })
-              }
-            }
-          })
-        }else if(this.change == 1){
-          /*
-           * 接口： 用户发起转账操作
-           * 请求方式： GET
-           * 接口： /user/withdraw/dowithdraw
-           * 入参： mobile,balance,code
-           * */
-          this.$http({
-            method: 'get',
-            url: process.env.API_ROOT + 'user/transfer/dotransfer?mobile='+this.transferMobile+'&balance='+this.transferMoney+'&code='+this.code+'&remark='+this.transferTips
-          }).then((res)=>{
-            console.log(res.data);
-            if(res.data.code=='3001') {
-              setTimeout( ()=> {
-                this.$router.push('/');
-              },1500);
-              return false;
-            }
-            else {
-              if (res.data.code == '0000') {
-                this.setStorage('transferOrderId',res.data.data);
-                this.$toast({
-                  message: res.data.msg,
-                  position: 'bottom',
-                  duration: 1500
-                });
-                setTimeout(() => {
-                  this.$router.push( '/paySuccess')
-                },1500);
-              }
-              else {
-                this.$indicator.close()
-                this.$toast({
-                  message: res.data.msg,
-                  position: 'bottom',
-                  duration: 1500
-                })
-              }
-            }
-          })
-        }
+        /*
+         * 接口： 用户发起转账操作
+         * 请求方式： GET
+         * 接口： /user/withdraw/dowithdraw
+         * 入参： mobile,balance,code,remark
+         * */
+
+        (this.change == 1)&&(url = process.env.API_ROOT + 'user/transfer/dotransfer')&&
+        (params = {mobile: this.transferMobile, balance: this.transferMoney, code: this.code, remark: this.transferTips});
+
+        this.$http({
+
+          method: 'get',
+          url: url,
+          params: params
+
+        }).then(res=>{
+
+          console.log(res);
+
+          this.$indicator.close();
+          this.$toast({
+            message: res.data.msg,
+            position: 'bottom',
+            duration: 1500
+          });
+
+          if(res.data.code == '0000'){
+
+            (this.withdraw == 1) && (this.setStorage('orderId',res.data.data));
+
+            (this.change == 1) && (this.setStorage('transferOrderId',res.data.data));
+
+            setTimeout(() => {
+              this.$router.replace( '/paySuccess');
+            },1500);
+
+          }
+
+        }).catch(res=>{console.log(res)});
       }
 
 

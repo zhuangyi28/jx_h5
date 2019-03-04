@@ -58,44 +58,32 @@
 
         disabled:true,//按钮的可点击
 
-        count: '',
+        count: '',//倒计时
 
-        lockBtn:1,
+        lockBtn:1,//重新获取验证
 
-        timer: null,
+        timer: null,//倒计时函数
 
-        btnName:'确定',
+        btnName:'确定',//按钮名称
 
 
       }
     },
     mounted () {
 
-      this.init()
-
-
-      console.log('num='+localStorage.getItem('backing'))
-
-      setTimeout(function () {
-
-        if(localStorage.getItem('backing')==0) {
-
-          //发验证码
-          this.getCode();
-
-        }
-      }.bind(this),1)
+      this.init();
 
     },
     methods:{
 
+      //页面初始化
       init:function () {
 
         var _mobile = this.getStorage('mobile');
 
-        var _forgetTab = this.getStorage('isPayPwd')
+        var _forgetTab = this.getStorage('isPayPwd');
 
-        console.log(this.locked)
+        console.log(this.lockBtn);
 
         if(_forgetTab=='0'){
 
@@ -108,9 +96,51 @@
 
         this.mobile = _mobile;
 
+        //发验证码
+        this.hasCodeFn();
+
+      },
 
 
 
+      //获取验证码按键事件
+      hasCodeFn:function () {
+
+        const TIME_COUNT = 60;
+
+        if (!this.timer) {
+
+          this.count = TIME_COUNT;
+
+          this.lockBtn = 0;
+
+          this.getCode();
+
+          this.timer = setInterval(() => {
+
+            if (this.count > 0 && this.count <= TIME_COUNT) {
+
+              this.count--;
+
+            } else {
+
+              this.lockBtn = 1;
+
+              clearInterval(this.timer);
+
+              this.timer = null;
+
+            }
+
+          }, 1000)
+
+        }
+
+      },
+
+
+      //获取验证码
+      getCode:function(){
 
         /**
          * 接口：设置支付密码
@@ -127,6 +157,8 @@
 
 
         }).then((res)=>{
+
+          console.log(res);
 
           if (res.data.code == '0000') {
 
@@ -154,44 +186,10 @@
 
         }).catch((res)=>{})
 
-
       },
-      hasCodeFn:function () {
 
-          this.getCode()
 
-      },
-      getCode:function(){
-
-        const TIME_COUNT = 60;
-
-        if (!this.timer) {
-
-          this.count = TIME_COUNT;
-
-          this.lockBtn = 0;
-
-          this.timer = setInterval(() => {
-
-            if (this.count > 0 && this.count <= TIME_COUNT) {
-
-              this.count--;
-
-            } else {
-
-              this.lockBtn = 1;
-
-              clearInterval(this.timer);
-
-              this.timer = null;
-
-            }
-
-          }, 1000)
-
-        }
-
-      },
+      //提交验证码
       codeUrlFn:function () {
 
 
@@ -249,7 +247,7 @@
 
               console.log(res.data)
 
-            var _this = this
+            var _this = this;
 
             if (res.data.code == '0000') {
 
@@ -259,7 +257,7 @@
                 position: 'bottom',
                 duration: 1500
 
-              })
+              });
 
               setTimeout(function () {
 
@@ -271,7 +269,7 @@
 
 
 
-             },1500)
+             },1500);
 
             }
             else {
@@ -292,6 +290,10 @@
         }
 
       },
+
+
+
+      //键盘防挡
       lostPointFn:function () {
 
         document.body.scrollTop =document.documentElement.scrollTop = window.pageYOffset = 200;
