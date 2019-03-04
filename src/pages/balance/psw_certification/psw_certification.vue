@@ -29,18 +29,28 @@
       }
     },
     mounted () {
-      this.withdrawMoney = this.getStorage('withdrawMoney');
-      this.bankCardId = this.getStorage('bankCardId');
-      this.change= this.getStorage('change');
-      this.withdraw = this.getStorage('withdraw');
-      this.transferMoney = this.getStorage('transferMoney');
-      this.transferMobile = this.getStorage('transferMobile');
-      this.transferTips = this.getStorage('transferTips')
-      this.setStorage('forgetPsw','1');
-      document.getElementsByTagName('input')[0].focus();
+
+      this.init();
+
     },
     methods: {
+
+      init: function () {
+
+        this.withdrawMoney = this.getStorage('withdrawMoney');
+        this.bankCardId = this.getStorage('bankCardId');
+        this.change= this.getStorage('change');
+        this.withdraw = this.getStorage('withdraw');
+        this.transferMoney = this.getStorage('transferMoney');
+        this.transferMobile = this.getStorage('transferMobile');
+        this.transferTips = this.getStorage('transferTips')
+        this.setStorage('forgetPsw','1');
+        document.getElementsByTagName('input')[0].focus();
+
+      },
+
       handleClick: function () {
+
         if(this.password == ''){
           this.$toast({
             message: '请输入密码',
@@ -62,227 +72,99 @@
             spinnerType: 'fading-circle'
           });
 
-          if(this.withdraw == 1){
-            /*
-          * 接口： 用户发起提现操作
-          * 请求方式： GET
-          * 接口： /user/withdraw/dowithdraw
-          * 入参： bankCardId,balance,code
-          * */
-            this.$http({
-              method: 'get',
-              url: process.env.API_ROOT + 'user/withdraw/dowithdraw?bankCardId='+this.bankCardId+'&balance='+this.withdrawMoney+'&payPassword='+hexMD5(this.password)
-            }).then((res)=>{
-              console.log(res);
-              if(res.data.code == -10){
+          var url;
+          var params;
 
-                this.$messagebox({
-                  title: '提示',
-                  message: '您有文件待签署，请至 “ 我的签约”中完成签署后再提现',
-                  showConfirmButton: true,
-                  showCancelButton: true,
-                  confirmButtonText: '去签约',
-                  cancelButtonText: '取消',
-                  cancelButtonClass:'cancel_btn',
-                  confirmButtonClass:'confirm_btn_orange',
-                }).then((res)=>{
+          /*
+           * 接口： 用户发起提现操作
+           * 请求方式： GET
+           * 接口： /user/withdraw/dowithdraw
+           * 入参： bankCardId,balance,payPassword
+           * */
 
-                  if(res == 'confirm'){
+          (this.withdraw == 1)&&(url = process.env.API_ROOT + 'user/withdraw/dowithdraw')&&
+          (params = {bankCardId: this.bankCardId,balance: this.withdrawMoney, payPassword: hexMD5(this.password)});
 
-                    this.$router.push('/contractList');
+          /*
+           * 接口： 用户发起转账操作
+           * 请求方式： GET
+           * 接口： /user/withdraw/dowithdraw
+           * 入参： mobile,balance,payPassword,remark
+           * */
 
-                  }
+          (this.change == 1)&&(url = process.env.API_ROOT + 'user/transfer/dotransfer')&&
+          (params = {mobile: this.transferMobile, balance: this.transferMoney, payPassword: hexMD5(this.password), remark: this.transferTips});
 
+          this.$http({
 
-                }).catch((res=>{}))
-              }
-              else if(res.data.code == -4){
-                this.$indicator.close()
-                if(res.data.msg.indexOf('输入错误3次') != -1){
-                  this.$messagebox({
-                    title: '提示',
-                    message: res.data.msg,
-                    showConfirmButton: true,
-                    showCancelButton: true,
-                    confirmButtonText: '我知道了',
-                    cancelButtonText: '忘记密码',
-                    cancelButtonClass:'cancel_btn',
-                    confirmButtonClass:'confirm_btn_orange',
-                  }).then((res)=>{
-                    if(res == 'confirm'){
-                      this.password = '';
-                      return;
-                    }else if(res == 'cancel'){
-                      this.$router.push('/code');
-                      return;
-                    }
-                  })
+            method: 'get',
+            url: url,
+            params: params
+
+          }).then(res=>{
+
+            console.log(res);
+
+            if(res.data.code == -10){
+
+              this.$messagebox({
+                title: '提示',
+                message: '您有文件待签署，请至 “ 我的签约”中完成签署后再提现',
+                showConfirmButton: true,
+                showCancelButton: true,
+                confirmButtonText: '去签约',
+                cancelButtonText: '取消',
+                cancelButtonClass:'cancel_btn',
+                confirmButtonClass:'confirm_btn_orange',
+              }).then((res)=>{
+
+                if(res == 'confirm'){
+
+                  this.$router.push('/contractList');
+
                 }
-                else{
-                  this.$messagebox({
-                    title: '提示',
-                    message: res.data.msg,
-                    showConfirmButton: true,
-                    showCancelButton: true,
-                    confirmButtonText: '重新输入',
-                    cancelButtonText: '忘记密码',
-                    cancelButtonClass:'cancel_btn',
-                    confirmButtonClass:'confirm_btn_orange',
-                  }).then((res)=>{
-                    if(res == 'confirm'){
-                      this.password = '';
-                      return;
-                    }else if(res == 'cancel'){
-                      this.$router.push('/code');
-                      return;
-                    }
-                  })
-                }
-              }
-              else if(res.data.code == -3){
 
-                this.$indicator.close()
-                this.$messagebox({
-                  title: '提示',
-                  message: res.data.msg,
-                  showConfirmButton: true,
-                  showCancelButton: true,
-                  confirmButtonText: '我知道了',
-                  cancelButtonText: '忘记密码',
-                  cancelButtonClass:'cancel_btn',
-                  confirmButtonClass:'confirm_btn_orange',
-                }).then((res)=>{
-                  if(res == 'confirm'){
-                    this.password = '';
-                    return;
-                  }else if(res == 'cancel'){
-                    this.$router.push('/code');
-                    return;
-                  }
-                })
-              }
-            /*  var toast = this.$toast({
+
+              }).catch((res=>{}))
+            }
+            else if(res.data.code == -4 || res.data.code == -3){
+              this.$indicator.close();
+
+              var buttonName;
+
+              (res.data.msg.indexOf('输入错误3次') != -1)? (buttonName = '我知道了') : (buttonName = '重新输入');
+
+              this.$messagebox({
+                title: '提示',
                 message: res.data.msg,
-                position: 'bottom',
-                duration: 1500
-              });*/
-              if(res.data.code == '0000'){
-                setTimeout(()=>{
-                  this.setStorage('orderId',res.data.data);
-                  this.$router.push('/paySuccess')
-                },500);
-              }
-            }).catch((res)=>{
-              console.log(res);
-            });
-          }else if(this.change == 1){
-            /*
-          * 接口： 用户发起转账操作
-          * 请求方式： GET
-          * 接口： /user/withdraw/dowithdraw
-          * 入参： mobile,balance,code
-          * */
-            this.$http({
-              method: 'get',
-              url: process.env.API_ROOT + 'user/transfer/dotransfer?mobile='+this.transferMobile+'&balance='+this.transferMoney+'&payPassword='+hexMD5(this.password)+'&remark='+this.transferTips
-            }).then((res)=>{
-              console.log(res);
-              if(res.data.code == -10){
-
-                this.$messagebox({
-                  title: '提示',
-                  message: '您有文件待签署，请至 “ 我的签约”中完成签署后再转账',
-                  showConfirmButton: true,
-                  showCancelButton: true,
-                  confirmButtonText: '去签约',
-                  cancelButtonText: '取消',
-                  cancelButtonClass:'cancel_btn',
-                  confirmButtonClass:'confirm_btn_orange',
-                }).then((res)=>{
-
-                  if(res == 'confirm'){
-
-                    this.$router.push('/contractList');
-
-                  }
-
-
-                }).catch((res=>{}))
-              }
-              else if(res.data.code == -4){
-                this.$indicator.close()
-                if(res.data.msg.indexOf('输入错误3次') != -1){
-                  this.$messagebox({
-                    title: '提示',
-                    message: res.data.msg,
-                    showConfirmButton: true,
-                    showCancelButton: true,
-                    confirmButtonText: '我知道了',
-                    cancelButtonText: '忘记密码',
-                    cancelButtonClass:'cancel_btn',
-                    confirmButtonClass:'confirm_btn_orange',
-                  }).then((res)=>{
-                    if(res == 'confirm'){
-                      this.password = '';
-                      return;
-                    }else if(res == 'cancel'){
-                      this.$router.push('/code');
-                      return;
-                    }
-                  })
+                showConfirmButton: true,
+                showCancelButton: true,
+                confirmButtonText: buttonName,
+                cancelButtonText: '忘记密码',
+                cancelButtonClass:'cancel_btn',
+                confirmButtonClass:'confirm_btn_orange',
+              }).then((res)=>{
+                if(res == 'confirm'){
+                  this.password = '';
+                  return;
+                }else if(res == 'cancel'){
+                  this.$router.push('/code');
+                  return;
                 }
-                else{
-                  this.$messagebox({
-                    title: '提示',
-                    message: res.data.msg,
-                    showConfirmButton: true,
-                    showCancelButton: true,
-                    confirmButtonText: '重新输入',
-                    cancelButtonText: '忘记密码',
-                    cancelButtonClass:'cancel_btn',
-                    confirmButtonClass:'confirm_btn_orange',
-                  }).then((res)=>{
-                    if(res == 'confirm'){
-                      this.password = '';
-                      return;
-                    }else if(res == 'cancel'){
-                      this.$router.push('/code');
-                      return;
-                    }
-                  })
-                }
-              }
-              else if(res.data.code == -3){
-                this.$indicator.close()
-                this.$messagebox({
-                  title: '提示',
-                  message: res.data.msg,
-                  showConfirmButton: true,
-                  showCancelButton: true,
-                  confirmButtonText: '我知道了',
-                  cancelButtonText: '忘记密码',
-                  cancelButtonClass:'cancel_btn',
-                  confirmButtonClass:'confirm_btn_orange',
-                }).then((res)=>{
-                  if(res == 'confirm'){
-                    this.password = '';
-                    return;
-                  }else if(res == 'cancel'){
-                    this.$router.push('/code');
-                    return;
-                  }
-                })
-              }
-              if(res.data.code == '0000'){
-                setTimeout(()=>{
-                  this.setStorage('transferOrderId',res.data.data);
-                  this.$router.push('/paySuccess');
-                },500);
-              }
-            }).catch((res)=>{
-              console.log(res);
-            });
-          }
+              });
+            }else{
+
+              (this.withdraw == 1) && (this.setStorage('orderId',res.data.data));
+
+              (this.change == 1) && (this.setStorage('transferOrderId',res.data.data));
+
+              setTimeout(()=>{
+                this.$router.push('/paySuccess');
+              },1500);
+
+            }
+
+          }).catch(res=>{console.log(res)});
         }
       }
     },
