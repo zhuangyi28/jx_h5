@@ -71,13 +71,19 @@ axios.install = (Vue) => {
 
       localStorage.clear();
 
+      Toast({
+        message: error.response.data.msg,
+        position: 'middle',
+        duration: 1000
+      });
+
       setTimeout(function () {
 
         router.push('/');
 
         window.location.reload();
 
-      },1000)
+      },1000);
 
     }
     else if(error.response.data.code=='3004'){
