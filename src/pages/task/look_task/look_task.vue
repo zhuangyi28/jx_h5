@@ -77,7 +77,7 @@
       <div class="gray_btn" v-else-if="taskDetail.buttonState == 7">
         <div>报名</div>
       </div>
-      <div class="jump_to btn_border" v-else v-on:click="$router.push('/taskDetail')">查看任务详情</div>
+      <div class="jump_to btn_border" v-else v-on:click="$router.push({path: '/taskDetail', query: {taskId: taskId}})">查看任务详情</div>
     </div>
 
     <mt-popup v-model="popupShow">
