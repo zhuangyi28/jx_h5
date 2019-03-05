@@ -284,26 +284,13 @@
 
         this.originalFileName = this.originalFileNameList.join(",");
 
-        /*        var str = '';
-
-         for(var j = 0;j<this.originalFileNameList.length;j++) {
-
-         str += this.originalFileNameList[j] + ",";
-
-         }
-
-         if (str.length > 0) {
-         str = str.substr(0, str.length - 1);
-         }
-
-         */
-
 
         //上传图片
 
-        this.$indicator.open({
-            text: '上传中...',
-            spinnerType: 'fading-circle'
+        var loading = this.$toast({
+          message: '上传中...',
+          position: 'middle',
+          duration: 60000
           });
 
 
@@ -322,7 +309,7 @@
 
           if (res.data.code == '0000') {
 
-            this.$indicator.close();
+            loading.close();
 
             this.$toast({
               message: '上传成功',
