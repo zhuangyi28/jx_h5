@@ -8,7 +8,7 @@
       <div class="certification_pic_input">
       <div class="img">
         <img v-bind:src="faceUrl">
-        <input type="file" name="file" accept="image/*;capture=camera" @change="updateface" class="face_img"/>
+        <input type="file" name="file" accept="image/*" @change="updateface" class="face_img"/>
       </div>
       <div class="title">
         <span>上传身份证正面</span>
@@ -18,7 +18,7 @@
       <div class="certification_pic_input">
         <div class="img">
           <img v-bind:src="backUrl">
-          <input type="file" name="file" accept="image/*;capture=camera" @change="updateface" class="back_img"/>
+          <input type="file" name="file" accept="image/*" @change="updateface" class="back_img"/>
         </div>
         <div class="title">
           <span>上传身份证反面</span>
@@ -146,9 +146,7 @@
 
     methods: {
 
-      updateface: function () {
-
-
+      updateface: function (event) {
 
         var that = this;
 
