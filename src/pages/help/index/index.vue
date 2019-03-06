@@ -160,6 +160,13 @@
 
             break
 
+          case 'yibangsheng':
+
+            this.phoneNumber = 'tel:022-65183210';
+
+            break
+
+
         }
 
       }

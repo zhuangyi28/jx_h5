@@ -27,19 +27,62 @@
 
         case 'orange':
 
-          return require('!style-loader!css-loader!less-loader!../static/css/orange_css.css');
+          return ;
 
         case 'blue':
 
-          return require('!style-loader!css-loader!less-loader!../static/css/blue_css.css');
+          document.documentElement.style.setProperty('--mainColor', '#4199f0');
+
+          document.documentElement.style.setProperty('--lessColor', '#4490e8');
+
+          document.documentElement.style.setProperty('--lightColor', '#ecf4fd');
+
+          document.documentElement.style.setProperty('--borderColor', '#89bfff');
+
+          /*require('!style-loader!css-loader!less-loader!../static/css/blue_css.css');*/
+
+          break;
 
         case 'lexiang':
 
-          return require('!style-loader!css-loader!less-loader!../static/css/lexiangyibao_css.css');
+          document.documentElement.style.setProperty('--mainColor', '#4199f0');
+
+          document.documentElement.style.setProperty('--lessColor', '#4490e8');
+
+          document.documentElement.style.setProperty('--lightColor', '#ecf4fd');
+
+          document.documentElement.style.setProperty('--borderColor', '#89bfff');
+
+          break;
 
         case 'rongyada':
 
-          return require('!style-loader!css-loader!less-loader!../static/css/rongyada_css.css');
+          document.documentElement.style.setProperty('--mainColor', '#063786');
+
+          document.documentElement.style.setProperty('--lessColor', '#2e5fad');
+
+          document.documentElement.style.setProperty('--lightColor', '#e8f2ff');
+
+          document.documentElement.style.setProperty('--borderColor', '#b6d5ff');
+
+          //require('!style-loader!css-loader!less-loader!../static/css/rongyada_css.css');
+
+          break;
+
+         case 'yibangsheng':
+
+          document.documentElement.style.setProperty('--mainColor', '#ffa200');
+
+          document.documentElement.style.setProperty('--lessColor', '#ffcd72');
+
+          document.documentElement.style.setProperty('--lightColor', '#fffaf0');
+
+          document.documentElement.style.setProperty('--borderColor', '#ffd389');
+
+          //require('!style-loader!css-loader!less-loader!../static/css/rongyada_css.css');
+
+          break;
+
 
       }
 

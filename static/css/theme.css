@@ -1,0 +1,139 @@
+/*变量*/
+:root {
+  --mainColor:#ff7a3c;
+  --lessColor:#ff6855;
+  --lightColor:#fff9f7;
+  --borderColor:#ffc0a3;
+  --whiteColor:#fff;
+  --garyColor:#d5d5d5;
+}
+/*basic*/
+/*字体颜色*/
+.color_text{
+  color: var(--mainColor)!important;
+}
+/*下拉箭头*/
+.color_text .up{
+  border-bottom: 5px solid var(--mainColor)!important;
+}
+.color_text .down{
+  border-top: 5px solid var(--mainColor)!important;
+}
+/*边框颜色+字体颜色*/
+.border_color{
+  border-color: var(--mainColor)!important;
+  color: var(--mainColor)!important;
+}
+.selected:after{
+  background-color: var(--mainColor)!important;
+}
+/*背景颜色*/
+/*背景颜色*/
+.color_background{
+  background-color: var(--mainColor)!important;
+}
+.bubble_color{
+  background-color: var(--lightColor)!important;
+}
+/*背景颜色-渐变*/
+.color_background_gradient{
+  background: -webkit-linear-gradient(180deg,var(--lessColor), var(--mainColor))!important;
+}
+/*左边框颜色*/
+.border_color_left{
+  border-left: 5px solid var(--mainColor)!important;
+}
+/*下边框颜色*/
+.border_color_bottom{
+  border-bottom: 1px solid var(--mainColor)!important;
+}
+/*按钮颜色-实心*/
+button.btn_color,.btn_color {
+  background: linear-gradient(to left, var(--lessColor), var(--mainColor))!important;
+}
+/*按钮颜色-空心*/
+.btn_border,button.btn_border{
+  color: var(--lessColor)!important;
+  border: 1px solid var(--lessColor)!important;
+}
+/*字体加背景颜色*/
+.color_text_bg{
+  background-color: var(--lessColor)!important;
+  color: var(--whiteColor)!important;
+}
+/*边框+字体+背景*/
+.border_text_bg{
+  border: 1px solid var(--lessColor)!important;
+  background-color: var(--lightColor)!important;
+  color:var(--lessColor)!important;
+}
+/*--------------------------------------------------------------------------*/
+/*渐变背景-我的&余额*/
+.change_color_background{
+  background: url("../../static/images/main_bg.png") ,-webkit-linear-gradient(180deg,var(--lessColor), var(--mainColor))!important;
+}
+/*--------------------------------------------------------------------------*/
+/*渐变背景-银行卡*/
+.change_color_background_bank_card {
+  background: -webkit-linear-gradient(270deg,var(--lessColor), var(--mainColor))!important;
+}
+/*--------------------------------------------------------------------------*/
+/*伪类边框-发现&任务详情*/
+.before_border:before{
+  background-color: var(--mainColor)!important;
+}
+.before_border:after{
+
+  background-color:var(--borderColor)!important;
+}
+/*--------------------------------------------------------------------------*/
+/*弹框按钮等*/
+.mint-msgbox-btns> .mint-msgbox-confirm {
+  color: var(--mainColor)!important;
+}
+.person_information .mint-popup .example .example_button button{
+
+  color: var(--mainColor)!important;
+}
+.confirm_btn_orange {
+  color: var(--mainColor)!important;
+}
+.mint-switch-input:checked + .mint-switch-core {
+  border-color: var(--lessColor)!important;
+  background-color:var(--lessColor)!important;
+}
+/*--------------------------------------------------------------------------*/
+/*圆圈对勾颜色-任务详情*/
+.last_part_show:last-child .circle_color{
+  border: 1px solid var(--mainColor)!important;
+  background-color: var(--lightColor)!important;
+}
+.last_part_show:last-child .circle_color:after{
+  color: var(--mainColor)!important;
+  border-bottom: 1px solid!important;
+  border-right: 1px solid!important;
+  border-left: none!important;
+}
+.state_box{
+  color: var(--mainColor)!important;
+}
+.state_box p:first-child{
+  background-color: var(--mainColor)!important;
+}
+.state_box p.border{
+  border-bottom: 1px solid var(--mainColor)!important;
+}
+.selected~.state_box{
+  color: var(--garyColor)!important;
+}
+.selected~.state_box p:first-child{
+  background-color: var(--garyColor)!important;
+}
+.selected~.state_box p.border{
+  border-bottom: 1px solid var(--garyColor)!important;
+}
+/*--------------------------------------------------------------------------*/
+
+
+
+

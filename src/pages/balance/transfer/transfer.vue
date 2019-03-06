@@ -127,6 +127,22 @@
                 }
               })
             }
+            else if(res.data.code == -7){
+              this.$messagebox({
+                title: '提示',
+                message: res.data.msg,
+                showConfirmButton: true,
+                showCancelButton: false,
+                confirmButtonText: '确定',
+                confirmButtonClass:'confirm_btn_orange',
+              }).then((res)=>{
+                if(res == 'cancel'){
+                  return;
+                }else if(res == 'confirm'){
+                  debugger;
+                }
+              })
+            }
             else if(res.data.code == '-10'){
               this.$messagebox({
                 title: '提示',

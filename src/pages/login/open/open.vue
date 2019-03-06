@@ -51,6 +51,14 @@
 
             break;
 
+
+          case 'yibangsheng':
+
+            document.title = '亿邦盛';
+
+            break;
+
+
         }
 
       }

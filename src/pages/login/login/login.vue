@@ -86,21 +86,28 @@
 
         case 'blue':
 
-          this.src = "./static/images/paiyun/paiyun_logo.png";
+          this.src = "./static/images/paiyun/logo.png";
 
           break;
 
         case 'lexiang':
 
-          this.src = "./static/images/lexiangyibao/lexiangyibao_logo.png";
+          this.src = "./static/images/lexiangyibao/logo.png";
 
           break;
 
         case 'rongyada':
 
-          this.src = "./static/images/rongyada/rongyada_logo.png";
+          this.src = "./static/images/rongyada/logo.png";
 
           break;
+
+        case 'yibangsheng':
+
+          this.src = "./static/images/yibangsheng/logo.png";
+
+          break;
+
 
       }
 
