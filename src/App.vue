@@ -27,7 +27,15 @@
 
         case 'orange':
 
-          return ;
+          document.documentElement.style.setProperty('--mainColor', '#ff7a3c');
+
+          document.documentElement.style.setProperty('--lessColor', '#ff6855');
+
+          document.documentElement.style.setProperty('--lightColor', '#fff9f7');
+
+          document.documentElement.style.setProperty('--borderColor', '#ffc0a3');
+
+          break;
 
         case 'blue':
 
