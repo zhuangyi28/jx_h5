@@ -3,12 +3,16 @@
  */
 import Vconsole from 'vconsole';
 
-if(/*process.env.NODE_ENV=='development'*/0)
+//var vConsole = new Vconsole();
+
+
+if(process.env.NODE_ENV=='development')
  {
   var vConsole = new Vconsole();
 }
 else{
   var vConsole={}
 }
+
 
 export default vConsole;

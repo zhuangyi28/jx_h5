@@ -237,6 +237,14 @@
 
             break;
 
+          case 'yibangsheng':
+
+            this.imgUrl = "./static/images/yibangsheng/jx_bg.png";
+
+            break;
+
+
+
 
         }
 

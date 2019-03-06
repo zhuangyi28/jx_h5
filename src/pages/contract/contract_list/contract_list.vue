@@ -32,7 +32,7 @@
 
             <div class="content">
               <div class="contract_is_read" v-if="contractList.isRead == 0">
-                <div class="title color_text">NEW!</div>
+                <div class="title">NEW!</div>
               </div>
               <!-- 标签-->
               <div class="contract_is_read" v-else-if="contractList.flag != ''">
