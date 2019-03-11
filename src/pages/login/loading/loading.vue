@@ -33,10 +33,15 @@
 
         paperUrl:'./static/images/jx_start_page3.png',
 
+        channel:'',
+
       }
     },
 
     mounted () {
+
+
+
 
       var anotherCompany = this.getCookie('anotherCompany') || 'orange';
 
@@ -120,7 +125,7 @@
 
             document.title = '亿邦盛';
 
-            this.slogan='./static/images/yibangsheng/jx_loading_title_1.png',
+             this.slogan='./static/images/yibangsheng/jx_loading_title_1.png',
 
               this.bgUrl='./static/images/yibangsheng/jx_start_page7.png',//背景图
 
@@ -153,6 +158,12 @@
 
       this.setStorage('thisUserCodeWx',thisUserCode)
 
+      console.log('cookie'+anotherCompany)
+
+      anotherCompany=='orange'?this.channel='jiaxin':this.channel = anotherCompany;
+
+      console.log('传值'+this.channel);
+
       //this.init();
 
       //获取UnionID
@@ -165,7 +176,10 @@
 
        params: {
 
-       code:thisUserCode
+         code:thisUserCode,
+
+         channel:this.channel
+
 
        }
 

@@ -57,12 +57,26 @@
 
         timer: null,
 
-        btnName:'注册'//按钮名称
+        btnName:'注册',//按钮名称
+
+        channel:''
 
       }
 
     },
 
+
+    mounted () {
+
+      var anotherCompany = this.getCookie('anotherCompany') || 'orange';
+
+      console.log('cookie' + anotherCompany)
+
+      anotherCompany == 'orange' ? this.channel = 'jiaxin' : this.channel = anotherCompany;
+
+      console.log('传值' + this.channel);
+
+    },
 
     methods:{
 
@@ -376,7 +390,9 @@
 
             code: thisUserCode,
 
-            device: 'platform'
+            device: 'platform',
+
+            channel:this.channel,
 
           }
 

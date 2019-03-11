@@ -5,8 +5,8 @@
     <!-- 个人信息 -->
     <div class="user" v-on:click="$router.push('/personalCenter')">
       <div class="user_box">
-        <div class="user_img" v-bind:class="{'grayScale': !isLogin}">
-          <img src="../../../static/images/jx_mine_image_1.png">
+        <div class="user_img person_bg_color" v-bind:class="{'grayScale': !isLogin}">
+          <img src="../../../static/images/people.png">
         </div>
         <div class="user_information" v-if="isLogin">
           <div class="user_tel">{{mobile | plusXing(3, 4)}}</div>

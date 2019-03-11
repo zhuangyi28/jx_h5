@@ -153,7 +153,7 @@
 
           method: 'get',
 
-          url: process.env.API_ROOT + '/jx/action/paymsg',
+          url: process.env.API_ROOT + 'jx/action/paymsg',
 
 
         }).then((res)=>{

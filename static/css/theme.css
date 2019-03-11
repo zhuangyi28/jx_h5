@@ -72,6 +72,10 @@ button.btn_color,.btn_color {
 .change_color_background{
   background: url("../../static/images/main_bg.png") ,-webkit-linear-gradient(180deg,var(--lessColor), var(--mainColor))!important;
 }
+.person_bg_color{
+
+  background-color: var(--borderColor)!important;
+}
 /*--------------------------------------------------------------------------*/
 /*渐变背景-银行卡*/
 .change_color_background_bank_card {
@@ -132,8 +136,11 @@ button.btn_color,.btn_color {
 .selected~.state_box p.border{
   border-bottom: 1px solid var(--garyColor)!important;
 }
-/*--------------------------------------------------------------------------*/
-
-
+/*!*--------------------------------------------------------------------------*!
+checkbox*/
+input[type='checkbox']:checked{
+  background-color: var(--mainColor)!important;
+  border: 1px solid var(--mainColor)!important;
+}
 
 

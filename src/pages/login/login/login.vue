@@ -60,7 +60,9 @@
 
           code:'',
 
-          src: "./static/images/logo.png"
+          src: "./static/images/logo.png",
+
+          channel:''
 
         }
 
@@ -75,6 +77,10 @@
 
 
       var str = this.getCookie('anotherCompany')|| 'orange';
+
+      str=='orange'?this.channel='jiaxin':this.channel = str
+
+
 
       switch (str) {
 
@@ -184,7 +190,9 @@
 
                 code: thisUserCode,
 
-                device: 'platform'
+                device: 'platform',
+
+                channel:_this.channel
 
               }
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="contract_list">
+  <div class="contract_list" v-infinite-scroll="loadMore" infinite-scroll-disabled="moreLoading" infinite-scroll-distance="20" infinite-scroll-immediate-check="false">
     <!-- 订单 -->
     <div class="contract_list_order">
       <div class="tab_box">
@@ -12,7 +12,7 @@
 
     </div>
 
-    <div class="bill" v-infinite-scroll="loadMore" infinite-scroll-disabled="moreLoading" infinite-scroll-distance="20" infinite-scroll-immediate-check="false">
+    <div class="bill">
       <!-- 列表 -->
       <mt-loadmore :top-method="loadTop" ref="loadmore">
         <div class="contract_list_list">

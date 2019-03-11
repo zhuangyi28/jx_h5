@@ -344,6 +344,13 @@
 
     },
 
+    destroyed(){
+
+
+      window.removeEventListener('scroll', this.handelscroll);
+
+    },
+
     methods: {
 
 
@@ -1320,6 +1327,8 @@
 
 
     },
+
+
 
 
 

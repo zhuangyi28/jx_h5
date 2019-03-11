@@ -1,7 +1,10 @@
 <template>
   <div class="transfer_history">
     <div class="transfer_another" v-on:click="$router.push('/transfer')">
-      <img src="../../../../static/images/jx_transfer_users.png">
+      <div class="transfer_user color_background_gradient">
+        <img src="../../../../static/images/jx_transfer_user_new.png">
+      </div>
+
       <span>转账给其他账户</span>
     </div>
     <div class="transfer_history_title">
@@ -13,7 +16,10 @@
     <div class="transfer_history_recent">
       <div class="transfer_history_one" v-for="user in transferUser" v-bind:recordId="user.recordId" v-on:click="jumpTo">
         <div class="transfer_history_user" v-on:click="jumpToPage">
-          <img src="../../../../static/images/jx_transfer_user.png">
+          <div class="transfer_users color_background_gradient">
+            <img src="../../../../static/images/jx_transfer_users_new.png">
+          </div>
+
           <div class="transfer_history_user_name">
             <span>{{user.userName}}</span>
             <span>{{user.hideMobile}}</span>
