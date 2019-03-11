@@ -41,7 +41,13 @@
     </div>
 
     <!-- 签署-->
-    <orangeBtn v-bind:name="btnName" v-show="showBtn" v-on:clickEvent="signEvent" v-if="signStateNum == 2||signStateNum == 7"></orangeBtn>
+    <div class="signArea" v-if="signStateNum == 2||signStateNum == 7" v-show="showBtn">
+      <orangeBtn v-bind:name="btnName"  v-on:clickEvent="signEvent" ></orangeBtn>
+      <div class="sign_ps">
+        <p><input type="checkbox" class="checkbox" name="checkbox" v-on:click="chooseAgreementFn" v-model="checkedValue"/>我已同意并阅读<span class="color_text" @click="$router.push('/contractAgreement')">《数字证书使用协议》</span></p>
+      </div>
+    </div>
+
 
     <!-- 签署loading -->
     <div class="button" v-show="!showBtn">
@@ -109,6 +115,8 @@
         contractUrlImage: '',//文件图片链接
 
         showBtn:true,
+
+        checkedValue:true,
 
       }
 
@@ -287,12 +295,30 @@
       },
 
 
+      chooseAgreementFn:function() {
 
+        console.log('点击状态'+this.checkedValue)
+
+      },
 
       //签约事件
       signEvent: function () {
 
-        if(this.signStateNum == 7){
+
+        if(this.checkedValue==false){
+
+          this.$toast({
+
+            message: '请先阅读并同意《数字证书使用协议》',
+            position: 'bottom',
+            duration: 1500
+
+          })
+
+        }
+
+
+        else if(this.signStateNum == 7){
 
           this.$messagebox({
             message: '合同异常，请联系管理员重新发送',
@@ -301,167 +327,171 @@
             confirmButtonClass:'confirm_btn_orange',
           });
 
-          return;
 
         }
 
-        /**
-         * 接口：用户中心
-         * 请求方式：POST
-         * 接口：/user/center/usercenter
-         * 入参：null
-         **/
-
-        this.$http({
-
-          method: 'post',
-
-          url: process.env.API_ROOT + 'user/center/usercenter',
+        else {
 
 
-        }).then(res=>{
+          /**
+           * 接口：用户中心
+           * 请求方式：POST
+           * 接口：/user/center/usercenter
+           * 入参：null
+           **/
 
-          if(res.data.data.isVerify == 0){
+          this.$http({
 
-            this.$messagebox({
-              title: '提示',
-              message: '当前账户尚未进行实名认证，完成实名认证后即可签约合同',
-              showConfirmButton: true,
-              showCancelButton: true,
-              confirmButtonText: '去认证',
-              cancelButtonText: '取消',
-              cancelButtonClass:'cancel_btn',
-              confirmButtonClass:'confirm_btn_orange',
-            }).then(res=>{
+            method: 'post',
 
-              if(res == 'cancel'){
+            url: process.env.API_ROOT + 'user/center/usercenter',
 
-                return;
 
-              }else if(res == 'confirm'){
+          }).then(res=>{
 
-                this.setStorage('hrefId','7');
-                this.$router.push('/certificationChoose');
-
-              }
-
-            });
-            return;
-
-          }else if(res.data.data.isVerify == 2){
-
-            this.$messagebox({
-              title: '提示',
-              message: '实名认证审核中，审核通过后即可签约合同',
-              confirmButtonText: '我知道了',
-              confirmButtonClass:'confirm_btn_orange',
-            });
-            return;
-
-          }else if(res.data.data.isVerify == 3){
-
-            this.$messagebox({
-              title: '提示',
-              message: '当前账户实名认证审核失败，需要重新审核',
-              showConfirmButton: true,
-              showCancelButton: true,
-              confirmButtonText: '去认证',
-              cancelButtonText: '取消',
-              cancelButtonClass:'cancel_btn',
-              confirmButtonClass:'confirm_btn_orange',
-            }).then(res=>{
-
-              if(res == 'cancel'){
-
-                return;
-
-              }else if(res == 'confirm'){
-
-                this.setStorage('hrefId','7');
-                this.$router.push('/certificationChoose');
-
-              }
-
-            });
-
-          }else if(res.data.data.isVerify == 1){
-
-            if(!this.signUrl){
+            if(res.data.data.isVerify == 0){
 
               this.$messagebox({
-                message: '正在为您申请电子签名资质，申请成后即可进行签署，请稍后再试',
+                title: '提示',
+                message: '当前账户尚未进行实名认证，完成实名认证后即可签约合同',
                 showConfirmButton: true,
-                confirmButtonText: '确定',
+                showCancelButton: true,
+                confirmButtonText: '去认证',
+                cancelButtonText: '取消',
+                cancelButtonClass:'cancel_btn',
                 confirmButtonClass:'confirm_btn_orange',
-              });
-
-            }else{
-
-
-              /**
-               * 接口：重新发送合同
-               * 请求方式：POST
-               * 接口：user/contract/sendcontractagain
-               * 入参：null
-               **/
-
-              this.$http({
-
-                method: 'post',
-
-                url: process.env.API_ROOT + 'user/contract/sendcontractagain',
-
-                params: {
-
-                  signId: localStorage.getItem('signId')
-
-            },
-
               }).then(res=>{
 
-                console.log(res.data)
+                if(res == 'cancel'){
 
-                if(res.data.code=='-1'){
-
-                  this.$toast({
-                    message: res.data.msg,
-                    duration: 1500
-
-                  })
-
-                }
-                else if(res.data.code=='-7'){
-
-                  this.$messagebox({
-                    title: '提示',
-                    message: '合同异常，请联系管理员重新发送',
-                    confirmButtonText: '确定',
-                    confirmButtonClass:'confirm_btn_orange',
-                  });
                   return;
 
-                }
-                else {
+                }else if(res == 'confirm'){
 
-
-                  this.showBtn = false
-
-                  window.location.href = res.data.data;
+                  this.setStorage('hrefId','7');
+                  this.$router.push('/certificationChoose');
 
                 }
 
+              });
+              return;
+
+            }else if(res.data.data.isVerify == 2){
+
+              this.$messagebox({
+                title: '提示',
+                message: '实名认证审核中，审核通过后即可签约合同',
+                confirmButtonText: '我知道了',
+                confirmButtonClass:'confirm_btn_orange',
+              });
+              return;
+
+            }else if(res.data.data.isVerify == 3){
+
+              this.$messagebox({
+                title: '提示',
+                message: '当前账户实名认证审核失败，需要重新审核',
+                showConfirmButton: true,
+                showCancelButton: true,
+                confirmButtonText: '去认证',
+                cancelButtonText: '取消',
+                cancelButtonClass:'cancel_btn',
+                confirmButtonClass:'confirm_btn_orange',
+              }).then(res=>{
+
+                if(res == 'cancel'){
+
+                  return;
+
+                }else if(res == 'confirm'){
+
+                  this.setStorage('hrefId','7');
+                  this.$router.push('/certificationChoose');
+
+                }
+
+              });
+
+            }else if(res.data.data.isVerify == 1){
+
+              if(!this.signUrl){
+
+                this.$messagebox({
+                  message: '正在为您申请电子签名资质，申请成后即可进行签署，请稍后再试',
+                  showConfirmButton: true,
+                  confirmButtonText: '确定',
+                  confirmButtonClass:'confirm_btn_orange',
+                });
+
+              }else{
 
 
-              }).catch((res)=>{})
+                /**
+                 * 接口：重新发送合同
+                 * 请求方式：POST
+                 * 接口：user/contract/sendcontractagain
+                 * 入参：null
+                 **/
+
+                this.$http({
+
+                  method: 'post',
+
+                  url: process.env.API_ROOT + 'user/contract/sendcontractagain',
+
+                  params: {
+
+                    signId: localStorage.getItem('signId')
+
+                  },
+
+                }).then(res=>{
+
+                  console.log(res.data)
+
+                  if(res.data.code=='-1'){
+
+                    this.$toast({
+                      message: res.data.msg,
+                      duration: 1500
+
+                    })
+
+                  }
+                  else if(res.data.code=='-7'){
+
+                    this.$messagebox({
+                      title: '提示',
+                      message: '合同异常，请联系管理员重新发送',
+                      confirmButtonText: '确定',
+                      confirmButtonClass:'confirm_btn_orange',
+                    });
+                    return;
+
+                  }
+                  else {
 
 
-              //window.location.href = this.signUrl;
+                    this.showBtn = false
+
+                    window.location.href = res.data.data;
+
+                  }
+
+
+
+                }).catch((res)=>{})
+
+
+                //window.location.href = this.signUrl;
 
               }
 
             }
 
-        })
+          })
+        }
+
 
       },
 

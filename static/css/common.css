@@ -37,7 +37,7 @@ a,ul,li,button,span,div,p {
 
 }
 
-input,textarea,button{
+input:not([type="checkbox"]),textarea,button{
   border: 0;
   outline: 0;
   -webkit-appearance:none;

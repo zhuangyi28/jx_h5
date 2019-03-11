@@ -135,6 +135,9 @@
     },
     watch: {
       cardId: function () {
+
+        this.cardId = this.cardId.replace(/\D/,'');
+
         if(this.cardId.length >= 10 && this.bankName == ''){
           this.$http({
             method: 'post',
@@ -296,7 +299,7 @@
             console.log(res);
           })
         }
-      }
+      },
     }
   }
 </script>

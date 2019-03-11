@@ -62,7 +62,7 @@
 
     <!-- 名称-->
     <div class="name">
-      <div class="icon"><img src="../../../../static/images/jx_mine_image.png"/></div>
+      <div class="icon person_bg_color"><img src="../../../../static/images/people.png"/></div>
       <div class="taskCreateInfo">
         <div class="people">
           <div>{{nickName}}</div>

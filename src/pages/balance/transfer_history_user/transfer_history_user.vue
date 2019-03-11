@@ -3,8 +3,8 @@
     <div class="transfer_history_user_list">
       <div class="transfer_list" v-for="list in transferList" v-bind:recordId="list.recordId" v-on:click="jumpTo">
         <div class="transfer_history_user">
-          <div class="user_img">
-            <img src="../../../../static/images/jx_transfer_user.png">
+          <div class="user_img color_background_gradient">
+              <img src="../../../../static/images/jx_transfer_user_new.png">
           </div>
           <div class="user_info">
             <div>{{list.userName}}</div>

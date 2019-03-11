@@ -73,6 +73,7 @@ import certificationState from '@/pages/mine/certification_state/certification_s
 import countryList from '@/pages/mine/country_list/country_list'
 import anotherCertificationIndex from '@/pages/mine/another_certification_index/another_certification_index'
 import taskNews from'@/pages/feedback/task_news/task_news'
+import contractAgreement from'@/pages/contract/agreement/agreement'
 
 Vue.use(Router)
 
@@ -571,6 +572,14 @@ export default new Router({
         title: '众包任务通知'
       },
       component: taskNews
+    },
+    {
+      path: '/contractAgreement',
+      name: 'contractAgreement',
+      meta:{
+        title: '数字证书使用协议'
+      },
+      component: contractAgreement
     },
     {
       path: '/workDesk',
