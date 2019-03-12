@@ -199,27 +199,113 @@
 
                   if (res.data.code == '0000') {
 
-                    loading.close();
-
-                    that.$toast({
-
-                      message: '上传成功',
-                      position: 'middle',
-                      duration: 1500
-                    })
-
-                    if (Event.target.classList.contains('face_img')) {
-
-                      that.faceUrl = res.data.data.url;
-
-                    }
-
-                    else if (Event.target.classList.contains('back_img')) {
+                    var imgUrl = res.data.data.url;
 
 
-                      that.backUrl = res.data.data.url;
+                    (function () {
 
-                    }
+                      var img = new Image();
+
+                      img.onload = function () {
+
+                        loading.close();
+
+                        console.log(res)
+
+                        that.$toast({
+
+                          message: '上传成功',
+                          position: 'middle',
+                          duration: 1500
+                        });
+
+                        if (Event.target.classList.contains('face_img')) {
+
+                          that.faceUrl = res.data.data.url;
+
+                        }
+
+                        else if (Event.target.classList.contains('back_img')) {
+
+
+                          that.backUrl = res.data.data.url;
+
+                        }
+
+                          //console.log("img is loaded")
+
+
+
+                      };
+
+                      img.onerror = function () {
+
+                        loading.close();
+
+                        that.$toast({
+                          message: '上传失败，页面自动刷新后请重试',
+                          position: 'middle',
+                          duration: 1500
+                        });
+
+                        setTimeout(function () {
+
+                          window.location.reload();
+
+                        },1000)
+
+
+
+                      };
+
+                      img.src = imgUrl;
+
+                    })();
+
+
+
+                    /*that._http({
+
+                      method: 'get',
+
+                      url: imgUrl,
+
+                    }).then(function(res) {
+
+
+                      loading.close();
+
+                      console.log(res)
+
+                      that.$toast({
+
+                        message: '上传成功',
+                        position: 'middle',
+                        duration: 1500
+                      });
+
+                      if (Event.target.classList.contains('face_img')) {
+
+                        that.faceUrl = res.data.data.url;
+
+                      }
+
+                      else if (Event.target.classList.contains('back_img')) {
+
+
+                        that.backUrl = res.data.data.url;
+
+                      }
+
+
+
+                    }).catch((res)=>{
+
+                      console.log(res);
+
+                    })*/
+
+
                   }
 
 
