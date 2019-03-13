@@ -1,0 +1,69 @@
+.all_history{
+  .list_show{
+    padding: 5px 15px;
+    .list_one{
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 0 8px #ddd;
+      margin: 10px 0;
+      .title{
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        div{
+          display: inline-flex;
+          align-items: center;
+          .img{
+            width: 20px;
+            height: 20px;
+            border-radius: 5px;
+            img{
+              width: 100%;
+              height: 100%;
+            }
+          }
+          span{
+            color: #4a4a4a;
+            font-size: 16px;
+            margin-left: 10px;
+          }
+        }
+        .close{
+          width: 15px;
+          height: 15px;
+          opacity: 0.6;
+          img{
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+      .booking_content{
+        padding: 0 10px;
+        font-size: 16px;
+      }
+      .booking_card{
+        font-size: 14px;
+        color: #4a4a4a;
+        padding: 10px;
+      }
+      .booking_time{
+        position: relative;
+        padding: 10px;
+        color: #ababab;
+        font-size: 14px;
+        &:before{
+          content: '';
+          position: absolute;
+          display: block;
+          width: 100%;
+          height: 1px;
+          border-top: 1px solid #f5f5f5;
+          top: 0;
+          left: 0;
+        }
+      }
+    }
+  }
+}

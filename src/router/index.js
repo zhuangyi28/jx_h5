@@ -73,7 +73,13 @@ import certificationState from '@/pages/mine/certification_state/certification_s
 import countryList from '@/pages/mine/country_list/country_list'
 import anotherCertificationIndex from '@/pages/mine/another_certification_index/another_certification_index'
 import taskNews from'@/pages/feedback/task_news/task_news'
-import contractAgreement from'@/pages/contract/agreement/agreement'
+import bookingList from '@/pages/booking_withdrawals/booking_list/booking_list'
+import addBookingWithdrawals from '@/pages/booking_withdrawals/add_booking_withdrawals/add_booking_withdrawals'
+import addBookingSuccess from '@/pages/booking_withdrawals/add_booking_success/add_booking_success'
+import bookingWithdrawalsDetail from '@/pages/booking_withdrawals/booking_withdrawals_detail/booking_withdrawals_detail'
+import allBooking from '@/pages/booking_withdrawals/all_booking/all_booking'
+import allHistory from '@/pages/booking_withdrawals/all_history/all_history'
+import contractAgreement from '@/pages/contract/agreement/agreement'
 
 Vue.use(Router)
 
@@ -574,14 +580,6 @@ export default new Router({
       component: taskNews
     },
     {
-      path: '/contractAgreement',
-      name: 'contractAgreement',
-      meta:{
-        title: '数字证书使用协议'
-      },
-      component: contractAgreement
-    },
-    {
       path: '/workDesk',
       name: 'workDesk',
       component: workDesk,
@@ -708,6 +706,62 @@ export default new Router({
           component: countryList
         },
       ]
+    },
+    {
+      path: '/bookingList',
+      name: 'bookingList',
+      meta: {
+        title: '预约提现'
+      },
+      component: bookingList
+    },
+    {
+      path: '/addBookingWithdrawals',
+      name: 'addBookingWithdrawala',
+      meta: {
+        title: '添加预约提现'
+      },
+      component: addBookingWithdrawals
+    },
+    {
+      path: '/addBookingSuccess',
+      name: 'addBookingSuccess',
+      meta: {
+        title: '添加预约提现'
+      },
+      component: addBookingSuccess
+    },
+    {
+      path: '/bookingWithdrawalsDetail',
+      name: 'bookingWithdrawalsDetail',
+      meta: {
+        title: '预约提现详情'
+      },
+      component: bookingWithdrawalsDetail
+    },
+    {
+      path: '/allBooking',
+      name: 'allBooking',
+      meta: {
+        title: '全部预约计划'
+      },
+      component: allBooking
+    },
+    {
+      path: '/allHistory',
+      name: 'allHistory',
+      meta: {
+        title: '历史预约提现'
+      },
+      component: allHistory
+    },
+    {
+      path: '/contractAgreement',
+      name: 'contractAgreement',
+      meta: {
+        title: '数字证书使用协议'
+      },
+      component: contractAgreement
     }
 
 
