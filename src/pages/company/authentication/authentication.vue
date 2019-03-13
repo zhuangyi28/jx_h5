@@ -3,7 +3,16 @@
   <div class="authentication">
 
     <div class="banner_box">
-      <img src="../../../../static/images/jx_id.png"/>
+      <div class="iconfont icon-new_signing color_text"></div>
+      <div class="icon_ball_big color_background"></div>
+      <div class="icon_ball_middle color_background">
+        <img src="../../../../static/images/jx_right_icon.png">
+      </div>
+      <div class="three border_color"></div>
+      <div class="little_point color_background"></div>
+      <div class="ball color_background"></div>
+      <div class="border_ball border_color"></div>
+      <div class="shadow"></div>
     </div>
 
     <div class="text_box">

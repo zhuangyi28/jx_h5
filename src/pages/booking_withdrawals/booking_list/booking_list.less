@@ -1,0 +1,178 @@
+.booking_list{
+  padding: 1px 0;
+  .list_show{
+    padding: 5px 15px;
+    .list_one{
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 0 8px #ddd;
+      margin: 10px 0;
+      .title{
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        &>div{
+          display: inline-flex;
+          align-items: center;
+          &>div{
+            width: 20px;
+            height: 20px;
+            border-radius: 5px;
+            img{
+              width: 100%;
+              height: 100%;
+            }
+          }
+          span{
+            color: #4a4a4a;
+            font-size: 16px;
+            margin-left: 10px;
+          }
+        }
+        &>.img {
+          width: 16px;
+          height: 16px;
+          opacity: 0.6;
+          img{
+            height: 100%;
+            width: 100%;
+          }
+        }
+      }
+      .booking_content{
+        padding: 0 10px;
+        font-size: 16px;
+      }
+      .booking_card{
+        font-size: 14px;
+        color: #4a4a4a;
+        padding: 10px;
+      }
+      .booking_time_state{
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        padding: 10px;
+        &:before{
+          content: '';
+          position: absolute;
+          display: block;
+          width: 100%;
+          height: 1px;
+          border-top: 1px solid #f5f5f5;
+          top: 0;
+          left: 0;
+        }
+        .booking_time{
+          color: #ababab;
+          font-size: 14px;
+        }
+        .booking_state{
+          font-size: 14px;
+          border: 1px solid;
+          padding: 0 10px;
+          border-radius: 10px;
+          line-height: 20px;
+        }
+      }
+    }
+  }
+  .list_no{
+    text-align: center;
+    padding: 40px 0 50px;
+    .nodata_img{
+      margin: 50px auto;
+      height: 50px;
+      width: 100px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      &>div{
+        position: absolute;
+      }
+      .big_round{
+        height: 75px;
+        width: 150px;
+        border-top-left-radius: 75px;
+        border-top-right-radius: 75px;
+        opacity: 0.25;
+      }
+      .middle_round{
+        height: 60px;
+        border-top-left-radius: 60px;
+        border-top-right-radius: 60px;
+        width: 120px;
+        opacity: 0.7;
+      }
+      .long_line{
+        bottom: 0;
+        left: -50%;
+        width: 200%;
+        height: 2px;
+      }
+      .short_line{
+        bottom: -5px;
+        right: -25%;
+        width: 75%;
+        height: 2px;
+        opacity: 0.7;
+      }
+      .small_round_one{
+        width: 4px;
+        height: 4px;
+        border: 1px solid;
+        top: 50%;
+        right: -20%;
+        border-radius: 50%;
+      }
+      .small_round_two{
+        width: 7px;
+        height: 7px;
+        border: 1px solid;
+        top: 40%;
+        left: -30%;
+        border-radius: 50%;
+      }
+      .small_round_three{
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        top: -50%;
+        right: 0;
+      }
+      .small_square_one{
+        width: 6px;
+        height: 6px;
+        top: -9%;
+        left: -9%;
+      }
+      .small_square_two{
+        width: 4px;
+        height: 4px;
+        border: 1px solid;
+        top: 0;
+        right: -35%;
+      }
+    }
+    .title{
+      font-size: 18px;
+    }
+    .content{
+      font-size: 14px;
+      color: #4a4a4a;
+    }
+  }
+  .ps{
+    text-align: center;
+    color: #ababab;
+    font-size: 12px;
+  }
+  .help{
+    margin: 30px 0 10px;
+    text-align: center;
+    font-size: 12px;
+    color: #ababab;
+  }
+}
