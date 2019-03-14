@@ -88,7 +88,7 @@
     },
     methods: {
 
-      updateface: function () {
+      updateface: function (event) {
 
         var Event = event;
 
@@ -99,6 +99,11 @@
         var param = new FormData(); //创建form对象
 
         param.append('File',file);//通过append向form对象添加数据
+
+        this.$indicator.open({
+          text: '上传中...',
+          spinnerType: 'fading-circle'
+        });
 
 
         this.$http.post(process.env.API_ROOT + 'jx/uploadimg/oss',param,{
@@ -113,17 +118,19 @@
             var imgUrl = res.data.data.url;
 
 
+
+
             (function () {
 
               var img = new Image();
 
               img.onload = function () {
 
-                loading.close();
+                this.$indicator.close();
 
                 console.log(res)
 
-                that.$toast({
+                this.$toast({
 
                   message: '上传成功',
                   position: 'middle',
@@ -132,14 +139,14 @@
 
                 if (Event.target.classList.contains('face_img')) {
 
-                  that.faceUrl = res.data.data.url;
+                  this.faceUrl = res.data.data.url;
 
                 }
 
                 else if (Event.target.classList.contains('back_img')) {
 
 
-                  that.backUrl = res.data.data.url;
+                  this.backUrl = res.data.data.url;
 
                 }
 

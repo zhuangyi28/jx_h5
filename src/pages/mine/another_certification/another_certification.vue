@@ -409,128 +409,216 @@
 
         var imgSize = file.size;
 
+        var param = new FormData(); //创建form对象
+
+        param.append('File', file);//通过append向form对象添加数据
+
         console.log(file);
 
-          var loading = that.$toast({
-            message: '图片上传中',
-            position: 'middle'
-          });
+        that.$indicator.open({
+          text: '上传中,请耐心等待',
+          spinnerType: 'fading-circle'
+        });
 
 
 
-          lrz(file, {
-            width: 800,
-            quality: 0.8   //自定义使用压缩方式
-          })
-            .then(function (rst) {
-              //成功时执行
-              console.log(rst)
+        that.$http.post(process.env.API_ROOT + 'jx/uploadimg/oss', param, {
+          headers: {'Content-Type': 'multipart/form-data'}
 
-              var thisfiles = new window.File([rst.file], file.name, {type: file.type})
+        }).then((res) => {
 
-              var param = new FormData(); //创建form对象
+          console.log(res.data);
 
-              param.append('File', thisfiles);//通过append向form对象添加数据
+          if (res.data.code == '0000') {
 
-              if(rst.file.size>1024*1024*2){
+            var imgUrl = res.data.data.url;
+
+            (function () {
+
+              var img = new Image();
+
+              img.onload = function () {
+
+
+
+                that.$indicator.close();
+
+                setTimeout(function () {
+
+                  that.$toast({
+
+                    message: '上传成功',
+                    position: 'middle',
+                    duration: 1500
+                  });
+
+                },500)
+
+
+
+                if (Event.target.classList.contains('face_img')) {
+
+                  that.faceUrl = res.data.data.url;
+
+                }
+
+                else if (Event.target.classList.contains('back_img')) {
+
+
+                  that.backUrl = res.data.data.url;
+
+                }
+
+                //console.log("img is loaded")
+
+
+
+              };
+
+              img.onerror = function () {
+
+                that.$indicator.close();
 
                 that.$toast({
-
-                  message: '文件大于2M，请重新上传！',
+                  message: '上传失败，页面自动刷新后请重试',
                   position: 'middle',
                   duration: 1500
+                });
 
-                })
+                setTimeout(function () {
 
-              }
+                  window.location.reload();
 
-              else {
-
-                that.$http.post(process.env.API_ROOT + 'jx/uploadimg/oss', param, {
-                  headers: {'Content-Type': 'multipart/form-data'},
-
-
-                }).then((res) => {
-
-                  console.log(res.data);
-
-                  if (res.data.code == '0000') {
-
-                    var imgUrl = res.data.data.url;
-
-
-                    (function () {
-
-                      var img = new Image();
-
-                      img.onload = function () {
-
-                        loading.close();
-
-                        console.log(res)
-
-                        that.$toast({
-
-                          message: '上传成功',
-                          position: 'middle',
-                          duration: 1500
-                        });
-
-                        if (Event.target.classList.contains('face_img')) {
-
-                          that.faceUrl = res.data.data.url;
-
-                        }
-
-                        else if (Event.target.classList.contains('back_img')) {
-
-
-                          that.backUrl = res.data.data.url;
-
-                        }
-
-                        //console.log("img is loaded")
+                },1000)
 
 
 
-                      };
+              };
 
-                      img.onerror = function () {
+              img.src = imgUrl;
 
-                        loading.close();
+            })();
+
+          }
+        }).catch((res)=>{})
+
+
+
+        /*
+                  lrz(file, {
+                    width: 800,
+                    quality: 0.8   //自定义使用压缩方式
+                  })
+                    .then(function (rst) {
+                      //成功时执行
+                      console.log(rst)
+
+                      var thisfiles = new window.File([rst.file], file.name, {type: file.type})
+
+                      var param = new FormData(); //创建form对象
+
+                      param.append('File', thisfiles);//通过append向form对象添加数据
+
+                      if(rst.file.size>1024*1024*2){
 
                         that.$toast({
-                          message: '上传失败，页面自动刷新后请重试',
+
+                          message: '文件大于2M，请重新上传！',
                           position: 'middle',
                           duration: 1500
-                        });
 
-                        setTimeout(function () {
+                        })
 
-                          window.location.reload();
+                      }
 
-                        },1000)
+                      else {
 
-
-
-                      };
-
-                      img.src = imgUrl;
-
-                    })();
-                  }
+                        that.$http.post(process.env.API_ROOT + 'jx/uploadimg/oss', param, {
+                          headers: {'Content-Type': 'multipart/form-data'},
 
 
-                }).catch((res) => {
-                  console.log(res);
-                })
+                        }).then((res) => {
 
-              }
-            }).catch(function (error) {
-            //失败时执行
-          }).always(function () {
-            //不管成功或失败，都会执行
-          })
+                          console.log(res.data);
+
+                          if (res.data.code == '0000') {
+
+                            var imgUrl = res.data.data.url;
+
+
+                            (function () {
+
+                              var img = new Image();
+
+                              img.onload = function () {
+
+                                loading.close();
+
+                                console.log(res)
+
+                                that.$toast({
+
+                                  message: '上传成功',
+                                  position: 'middle',
+                                  duration: 1500
+                                });
+
+                                if (Event.target.classList.contains('face_img')) {
+
+                                  that.faceUrl = res.data.data.url;
+
+                                }
+
+                                else if (Event.target.classList.contains('back_img')) {
+
+
+                                  that.backUrl = res.data.data.url;
+
+                                }
+
+                                //console.log("img is loaded")
+
+
+
+                              };
+
+                              img.onerror = function () {
+
+                                loading.close();
+
+                                that.$toast({
+                                  message: '上传失败，页面自动刷新后请重试',
+                                  position: 'middle',
+                                  duration: 1500
+                                });
+
+                                setTimeout(function () {
+
+                                  window.location.reload();
+
+                                },1000)
+
+
+
+                              };
+
+                              img.src = imgUrl;
+
+                            })();
+                          }
+
+
+                        }).catch((res) => {
+                          console.log(res);
+                        })
+
+                      }
+                    }).catch(function (error) {
+                    //失败时执行
+                  }).always(function () {
+                    //不管成功或失败，都会执行
+                  })
+        */
 
 
 

@@ -120,7 +120,7 @@
 
                 if(res == 'confirm'){
 
-                  this.$router.push('/contractList');
+                  this.$router.replace('/contractList');
 
                 }
 
@@ -148,7 +148,7 @@
                   this.password = '';
                   return;
                 }else if(res == 'cancel'){
-                  this.$router.push('/code');
+                  this.$router.replace('/code');
                   return;
                 }
               });
@@ -159,7 +159,7 @@
               (this.change == 1) && (this.setStorage('transferOrderId',res.data.data));
 
               setTimeout(()=>{
-                this.$router.push('/paySuccess');
+                this.$router.replace('/paySuccess');
               },1500);
 
             }
