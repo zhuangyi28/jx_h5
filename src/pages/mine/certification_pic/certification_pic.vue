@@ -4,9 +4,20 @@
       请上传（证件号：{{idNumber}}）对应的证件照片
     </div>
     <div class="certification_pic_input">
-      <div class="img">
-        <img v-bind:src="faceUrl">
+      <div class="img" v-if="faceUrl == './static/images/jx_card_face.png'">
+        <div class="color_background"></div>
+        <div class="card_background">
+          <div class="left_border border_color"></div>
+          <div class="right_border border_color"></div>
+          <div class="top_border border_color"></div>
+          <div class="bottom_border border_color"></div>
+          <img v-bind:src="faceUrl">
+        </div>
         <input type="file" name="file" accept="image/png,image/gif,image/jpeg" @change="updateface" class="face_img"/>
+      </div>
+      <div class="img" v-else>
+        <img v-bind:src="faceUrl">
+        <input type="file" name="file" accept="image/*" @change="updateface" class="face_img"/>
       </div>
       <div class="title">
         <span v-if="cardTypeId == 4 || cardTypeId == 3">上传港、澳、台通行证正面</span>
@@ -15,9 +26,20 @@
       </div>
     </div>
     <div class="certification_pic_input" v-if="cardTypeId == 4 || cardTypeId == 3">
-      <div class="img">
-        <img v-bind:src="backUrl">
+      <div class="img" v-if="backUrl == './static/images/jx_card_back.png'">
+        <div class="color_background"></div>
+        <div class="card_background">
+          <div class="left_border border_color"></div>
+          <div class="right_border border_color"></div>
+          <div class="top_border border_color"></div>
+          <div class="bottom_border border_color"></div>
+          <img v-bind:src="backUrl">
+        </div>
         <input type="file" name="file" accept="image/png,image/gif,image/jpeg" @change="updateface" class="back_img"/>
+      </div>
+      <div class="img" v-else>
+        <img v-bind:src="backUrl">
+        <input type="file" name="file" accept="image/*" @change="updateface" class="back_img"/>
       </div>
       <div class="title">
         上传港、澳、台通行证反面<span v-on:click="exampleImg" class="back">示例</span>
@@ -55,8 +77,8 @@
         cardTypeId: '',
         idNumber: '',
         popupExample: false,
-        faceUrl: "./static/images/ID_card_face.png",
-        backUrl: "./static/images/ID_card_back.png",
+        faceUrl: "./static/images/jx_card_face.png",
+        backUrl: "./static/images/jx_card_back.png",
         exampleUrl: '',
         files: [],
         userName: '',
@@ -89,6 +111,8 @@
     methods: {
 
       updateface: function (event) {
+
+        var _this = this;
 
         var Event = event;
 
@@ -126,11 +150,9 @@
 
               img.onload = function () {
 
-                this.$indicator.close();
-
                 console.log(res)
 
-                this.$toast({
+                _this.$toast({
 
                   message: '上传成功',
                   position: 'middle',
@@ -139,16 +161,18 @@
 
                 if (Event.target.classList.contains('face_img')) {
 
-                  this.faceUrl = res.data.data.url;
+                  _this.faceUrl = res.data.data.url;
 
                 }
 
                 else if (Event.target.classList.contains('back_img')) {
 
 
-                  this.backUrl = res.data.data.url;
+                  _this.backUrl = res.data.data.url;
 
                 }
+
+                _this.$indicator.close();
 
                 //console.log("img is loaded")
 
@@ -160,7 +184,7 @@
 
                 loading.close();
 
-                that.$toast({
+                _this.$toast({
                   message: '上传失败，页面自动刷新后请重试',
                   position: 'middle',
                   duration: 1500
@@ -206,7 +230,7 @@
       },
       handleClick: function () {
 
-          if(this.faceUrl == "./static/images/ID_card_face.png"){
+          if(this.faceUrl == "./static/images/jx_card_face.png"){
 
             this.$toast({
 
@@ -222,7 +246,7 @@
 
           else{
 
-            if(this.cardTypeId != 2 && this.backUrl == "./static/images/ID_card_back.png"){
+            if(this.cardTypeId != 2 && this.backUrl == "./static/images/jx_card_back.png"){
 
               this.$toast({
 

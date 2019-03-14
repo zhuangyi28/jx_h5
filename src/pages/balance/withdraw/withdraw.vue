@@ -15,7 +15,7 @@
             <div class="bank_info">
               <span class="bank_name">{{bankList[index].bankName}}</span>
               <span class="bank_type">{{bankList[index].bankType}}</span>
-              <span class="bank_No">{{bankList[index].bankNo.replace(/\s/g,'').replace(/(\w{4})(?=\w)/g,"$1 ")}}</span>
+              <span class="bank_No">**** **** **** {{bankList[index].bankNo.substr(-4)}}</span>
             </div>
           </div>
         </div>

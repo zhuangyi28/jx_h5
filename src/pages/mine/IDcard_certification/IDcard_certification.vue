@@ -6,18 +6,40 @@
         <span v-else>上传<span v-if="userName">（姓名：{{userName}}）</span>身份证照片，请确保证件照片完整、清晰</span>
       </div>
       <div class="certification_pic_input">
-      <div class="img">
-        <img v-bind:src="faceUrl">
+      <div class="img" v-if="faceUrl == './static/images/jx_card_face.png'">
+        <div class="color_background"></div>
+        <div class="card_background">
+          <div class="left_border border_color"></div>
+          <div class="right_border border_color"></div>
+          <div class="top_border border_color"></div>
+          <div class="bottom_border border_color"></div>
+          <img v-bind:src="faceUrl">
+        </div>
         <div class="face_img"></div>
         <input type="file" name="file" accept="image/*" @change="updateface" class="face_img"/>
       </div>
+        <div class="img" v-else>
+          <img v-bind:src="faceUrl">
+          <input type="file" name="file" accept="image/*" @change="updateface" class="face_img"/>
+        </div>
       <div class="title">
         <span>上传身份证正面</span>
         <span v-on:click="exampleImg" class="face color_text">示例</span>
       </div>
     </div>
       <div class="certification_pic_input">
-        <div class="img">
+        <div class="img" v-if="backUrl == './static/images/jx_card_back.png'">
+          <div class="color_background"></div>
+          <div class="card_background">
+            <div class="left_border border_color"></div>
+            <div class="right_border border_color"></div>
+            <div class="top_border border_color"></div>
+            <div class="bottom_border border_color"></div>
+            <img v-bind:src="backUrl">
+          </div>
+          <input type="file" name="file" accept="image/*" @change="updateface" class="back_img"/>
+        </div>
+        <div class="img" v-else>
           <img v-bind:src="backUrl">
           <input type="file" name="file" accept="image/*" @change="updateface" class="back_img"/>
         </div>
@@ -64,9 +86,9 @@
 
         userName: '',
 
-        faceUrl: './static/images/ID_card_face.png',
+        faceUrl: './static/images/jx_card_face.png',
 
-        backUrl: './static/images/ID_card_back.png',
+        backUrl: './static/images/jx_card_back.png',
 
         popupExample: false,
 
@@ -432,8 +454,8 @@
 
       submit: function () {
 
-        /*faceUrl: './static/images/ID_card_face.png', backUrl: './static/images/ID_card_back.png',*/
-        if(this.faceUrl == './static/images/ID_card_face.png'){
+        /*faceUrl: './static/images/jx_card_face.png', backUrl: './static/images/jx_card_back.png',*/
+        if(this.faceUrl == './static/images/jx_card_face.png'){
 
           this.$toast({
 
@@ -445,7 +467,7 @@
 
           });
 
-        }else if(this.backUrl == './static/images/ID_card_back.png'){
+        }else if(this.backUrl == './static/images/jx_card_back.png'){
 
           this.$toast({
 
