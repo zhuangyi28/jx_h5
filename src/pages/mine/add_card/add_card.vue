@@ -9,7 +9,7 @@
         </div>
         <div class="card_ID must_input">
           <span>银行卡号</span>
-          <input type="text" pattern="\d*" placeholder="请输入卡号" v-model="cardId" maxlength="19">
+          <input type="text" pattern="\d*" placeholder="请输入卡号" v-model="cardId">
         </div>
         <div class="card_bank">
           <div class="bank_name" v-if="bankName == ''">
@@ -22,6 +22,16 @@
           </div>
           <span v-on:click="$router.push('/bankList')" class="color_text">查看支持银行</span>
         </div>
+        <!--<div class="card_tel must_input">
+          <span>手机号</span>
+          <input type="text" placeholder="请输入银行预留手机号">
+          <span>i</span>
+        </div>
+        <div class="card_code">
+          <span>验证码</span>
+          <input type="text" placeholder="请输入验证码" maxlength="6">
+          <span>获取验证码</span>
+        </div>-->
       </div>
       <div class="card_information_ps">信息填写完整，资金更安全</div>
       <div class="bank_information">

@@ -53,6 +53,15 @@
         <div class="cell_value"></div>
         <i class="allow_right"></i>
       </div>
+
+      <!--预约提现-->
+      <!--<div class="cell" v-on:click="cashUrlFn">
+        <div class="title">
+          <span class="iconfont icon-withdraw_cash"></span><span class="cell_text">预约提现</span>
+        </div>
+        <div class="cell_value">到期自动提现</div>
+        <i class="allow_right"></i>
+      </div>-->
     </div>
 
     <div class="tips">

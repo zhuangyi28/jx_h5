@@ -45,7 +45,18 @@
         证件照片
       </div>
       <div class="certification_pic_input">
-        <div class="img">
+        <div class="img" v-if="faceUrl == './static/images/jx_card_face.png'">
+          <div class="color_background"></div>
+          <div class="card_background">
+            <div class="left_border border_color"></div>
+            <div class="right_border border_color"></div>
+            <div class="top_border border_color"></div>
+            <div class="bottom_border border_color"></div>
+            <img v-bind:src="faceUrl">
+          </div>
+          <input type="file" name="file" accept="image/*" @change="updateface" class="face_img"/>
+        </div>
+        <div class="img" v-else>
           <img v-bind:src="faceUrl">
           <input type="file" name="file" accept="image/*" @change="updateface" class="face_img"/>
         </div>
@@ -57,9 +68,20 @@
         </div>
       </div>
       <div class="certification_pic_input" v-if="cardTypeId != 2">
-        <div class="img">
-          <img v-bind:src="backUrl">
+        <div class="img" v-if="backUrl == './static/images/jx_card_back.png'">
+          <div class="color_background"></div>
+          <div class="card_background">
+            <div class="left_border border_color"></div>
+            <div class="right_border border_color"></div>
+            <div class="top_border border_color"></div>
+            <div class="bottom_border border_color"></div>
+            <img v-bind:src="backUrl">
+          </div>
           <input type="file" name="file" accept="image/*" @change="updateface" class="back_img"/>
+        </div>
+        <div class="img" v-else>
+          <img v-bind:src="backUrl">
+          <input type="file" name="file" accept="image/*" @change="updateface" class="face_img"/>
         </div>
         <div class="title">
           <span v-if="cardTypeId == 3">上传港澳通行证反面</span>
@@ -116,9 +138,9 @@
 
         userName: '',
 
-        faceUrl: './static/images/ID_card_face.png',
+        faceUrl: './static/images/jx_card_face.png',
 
-        backUrl: './static/images/ID_card_back.png',
+        backUrl: './static/images/jx_card_back.png',
 
         popupExample: false,
 
@@ -276,12 +298,12 @@
           });
           return;
         }
-        /*faceUrl: './static/images/ID_card_face.png',
+        /*faceUrl: './static/images/jx_card_face.png',
 
-        backUrl: './static/images/ID_card_back.png',*/
+        backUrl: './static/images/jx_card_back.png',',*/
         if(this.cardTypeId != 2){
 
-          if(this.faceUrl == './static/images/ID_card_face.png' && this.backUrl == './static/images/ID_card_back.png'){
+          if(this.faceUrl == './static/images/jx_card_face.png' && this.backUrl == './static/images/jx_card_back.png'){
 
             this.$toast({
               message: '请上传证件照片',
@@ -290,7 +312,7 @@
             });
             return;
 
-          }else if(this.faceUrl == './static/images/ID_card_face.png'){
+          }else if(this.faceUrl == './static/images/jx_card_face.png'){
 
             this.$toast({
               message: '请上传证件照正面',
@@ -299,7 +321,7 @@
             });
             return;
 
-          }else if(this.backUrl == './static/images/ID_card_back.png'){
+          }else if(this.backUrl == './static/images/jx_card_back.png'){
 
             this.$toast({
               message: '请上传证件照反面',
@@ -316,7 +338,7 @@
 
         }else if(this.cardTypeId == 2){
 
-          if(this.faceUrl == './static/images/ID_card_face.png'){
+          if(this.faceUrl == './static/images/jx_card_face.png'){
 
             this.$toast({
               message: '请上传证件照片',
