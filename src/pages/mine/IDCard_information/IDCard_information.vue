@@ -406,7 +406,7 @@
 
                 this.$toast({
 
-                  message: '请使用姓名为' + res.data.data.userName + '的证件认证，核对一致再进行实名认证',
+                  message: '姓名与企业管理员添加的不一致，请使用姓名为' + res.data.data.userName + '的证件认证',
                   position: 'middle',
                   duration: 2000
 

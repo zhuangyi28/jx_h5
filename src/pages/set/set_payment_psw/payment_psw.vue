@@ -228,13 +228,13 @@
 
                 if(_this.getStorage('forgetPsw') == 0){
 
-                  _this.$router.push('/setHomepage');
+                  _this.$router.replace('/setHomepage');
 
                 }
 
                 else if(_this.getStorage('forgetPsw') == 1){
 
-                  _this.$router.push('/pswCertification');
+                  _this.$router.replace('/pswCertification');
 
                 }
 

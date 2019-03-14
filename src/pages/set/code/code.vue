@@ -234,7 +234,7 @@
 
             method: 'post',
 
-            url: process.env.API_ROOT + '/user/set/checkpaypwdcode',
+            url: process.env.API_ROOT + 'user/set/checkpaypwdcode',
 
             params: {
 
@@ -265,7 +265,7 @@
                 toast.close();
                 //跳转设置密码
 
-                _this.$router.push('/setPayPassword')
+                _this.$router.replace('/setPayPassword')
 
 
 
