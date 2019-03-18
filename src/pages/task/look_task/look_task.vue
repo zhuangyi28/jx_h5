@@ -462,6 +462,54 @@
 
             return '其他';
 
+          case 9:
+
+            return '会展服务';
+
+          case 10:
+
+            return '技术服务';
+
+          case 11:
+
+            return '运营策划';
+
+          case 12:
+
+            return '生活服务';
+
+          case 13:
+
+            return '生活服务';
+
+          case 14:
+
+            return '影视剧务';
+
+          case 15:
+
+            return '文化传播';
+
+          case 16:
+
+            return '销售/营销/推广';
+
+          case 17:
+
+            return '医疗健康';
+
+          case 18:
+
+            return '旅游';
+
+          case 19:
+
+            return '采购/贸易';
+
+          case 20:
+
+            return '生活制造';
+
           default:
 
             return '其他';
