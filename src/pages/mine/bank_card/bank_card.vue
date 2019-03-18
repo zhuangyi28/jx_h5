@@ -37,32 +37,55 @@
         banks: [],//银行卡数组
         bankCardJson: bankCardJson,//银行卡信息数组
         cardID: '',//银行卡卡号
-        bankCardId: ''//银行卡唯一ID
+        bankCardId: '',//银行卡唯一ID
+        isVerify: ''
       }
     },
     mounted () {
-      /*
+
+      /**
+       * 接口：个人中心
+       * 请求方式：POST
+       * 接口：/user/center/usercenter
+       * 入参：null
+       **/
+      this.$http({
+
+        method: 'post',
+
+        url: process.env.API_ROOT + 'user/center/usercenter',
+
+      }).then(res=>{
+
+        this.isVerify = res.data.data.isVerify;
+
+        /*
       * 接口： 获取用户银行卡信息
       * 请求方式： GET
       * 接口： /user/bank/getbankcardinfo
       * 传参： null
       * */
-      this.$http({
-        method: 'get',
-        url: process.env.API_ROOT+ 'user/bank/getbankcardinfo',
-      }).then((res) => {
-        console.log(res.data);
-        this.banks = res.data.data;
-        for(var bank of this.banks){
-          for(var bankCard of this.bankCardJson){
-            if(bankCard.name == bank.bankName){
-              bank.bankImg = bankCard.img;
+        this.$http({
+          method: 'get',
+          url: process.env.API_ROOT+ 'user/bank/getbankcardinfo',
+        }).then((res) => {
+          console.log(res.data);
+          this.banks = res.data.data;
+          for(var bank of this.banks){
+            for(var bankCard of this.bankCardJson){
+              if(bankCard.name == bank.bankName){
+                bank.bankImg = bankCard.img;
+              }
             }
           }
-        }
-      }).catch((res) => {
+        }).catch((res) => {
+          console.log(res);
+        });
+
+      }).catch(res=>{
         console.log(res);
-      });
+      })
+
     },
     methods: {
       deleteCard: function (e) {
@@ -120,7 +143,7 @@
         });
       },
       addCard: function () {
-        var thisisVerify = this.getStorage('isVerify');
+        var thisisVerify = this.isVerify;
         if(thisisVerify == 0 || thisisVerify == 3){
           this.$messagebox({
             title: '提示',
