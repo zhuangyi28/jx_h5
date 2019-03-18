@@ -23,8 +23,8 @@
             </div>
             <div class='key-row'>
               <div class='key-cell disabled' data-num='-1'></div>
-              <div class='key-cell' data-num='.'>.</div>
               <div class='key-cell' data-num='0'>0</div>
+              <div class='key-cell' data-num='.'>.</div>
               <div class='key-cell' data-num='-1'></div>
             </div>
             <div class='key-confirm' data-num='S'>确认</div>
@@ -122,7 +122,7 @@
 				if (!(S.indexOf('.') > -1)) {
 					//如果第一位是0，只能输入小数点
 					if (num == 0 && S.length == 0)
-						this.money = '0.';
+						this.money = '0';
 
 					else {
 						if (S.length && Number(S.charAt(0)) === 0) return;

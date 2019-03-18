@@ -33,7 +33,7 @@
     },
   destroyed(){
 
-          this.setAutoBack(4)
+
 
     },
     mounted () {

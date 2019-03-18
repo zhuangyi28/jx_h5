@@ -164,6 +164,30 @@
 
             <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 8)}" v-bind:data-type="8">其他</div>
 
+            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 9)}" v-bind:data-type="9">会展服务</div>
+
+            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 10)}" v-bind:data-type="10">技术服务</div>
+
+            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 11)}" v-bind:data-type="11">运输服务</div>
+
+            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 12)}" v-bind:data-type="12">运营策划</div>
+
+            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 13)}" v-bind:data-type="13">生活服务</div>
+
+            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 14)}" v-bind:data-type="14">影视剧务</div>
+
+            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 15)}" v-bind:data-type="15">文化传播</div>
+
+            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 16)}" v-bind:data-type="16">销售/营销/推广</div>
+
+            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 17)}" v-bind:data-type="17">医疗健康</div>
+
+            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 18)}" v-bind:data-type="18">旅游</div>
+
+            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 19)}" v-bind:data-type="19">采购/贸易</div>
+
+            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 20)}" v-bind:data-type="10">生产制造</div>
+
           </div>
 
         </div>
