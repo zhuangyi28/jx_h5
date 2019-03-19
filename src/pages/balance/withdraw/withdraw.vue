@@ -60,6 +60,7 @@
 
     </div>
 <!--    <serviceArea :type1="serviceLeft" :type2="serviceRight" :iconName1="iconName1" :iconName2="iconName2" v-on:clickEventLeft="customerFn" v-on:clickEventRight="moreShow=true" :spanShow="true"></serviceArea>-->
+    <!--选择银行卡-->
     <mt-popup class="information_picker" v-model="pickerShow" position="bottom">
       <div class="picker_btn">
         <mt-button v-on:click="pickerShow=false">取消</mt-button>
@@ -67,6 +68,7 @@
       </div>
       <mt-picker v-bind:slots="slots" v-on:change="onValueChange"></mt-picker>
     </mt-popup>
+    <!--确认提现按钮-->
     <mt-popup v-model="withdrawClick" position="bottom">
       <div class="withdraw_money_info">
         <div class="withdraw_title">确认提现<span class="close_btn" v-on:click="withdrawClick=false"></span></div>
@@ -87,6 +89,7 @@
       </div>
       <orangeBtn v-bind:name="withdrawBtnName" v-on:clickEvent="jumpTo"></orangeBtn>
     </mt-popup>
+    <!--更多按键弹出框-->
     <mt-popup position="bottom" v-model="moreShow">
       <div class="more">
         <div class="choose">
@@ -96,9 +99,11 @@
         <div class="close" v-on:click="moreShow = false">取消</div>
       </div>
     </mt-popup>
+    <!--键盘-->
     <transition name="toggle">
       <calculation v-on:num="numInput" v-if="inputShow" v-bind:newNum="withdrawMoney" v-on:inputClose="inputClose" key="money"></calculation>
     </transition>
+    <!--输入密码/验证码-->
     <mt-popup position="bottom" v-model="passwordinput">
       <div class="password_input">
         <div class="title">
@@ -106,7 +111,7 @@
             <img src="../../../../static/images/go.png">
           </div>
           <span v-if="isSecurity == 1">请输入短信验证码</span>
-          <span v-else-if="isSecurity == 2">请输入密码</span>
+          <span v-else-if="isSecurity == 2">请输入支付密码</span>
         </div>
         <div class="password_block">
           <div></div>
@@ -168,12 +173,12 @@
         withdrawBtnName: '确认',//提现弹窗按钮名称
         moreShow: false,//控制联系客服按钮是否显示
         inputShow: true,//控制输入框是否显示
-        passwordinput: false,
-        password: '',
-        used: true,
-        seconds: '',
-        bankCardId: '',
-        mobile: ''
+        passwordinput: false,//输入密码/验证码弹出框是否显示
+        password: '',//密码/验证码
+        used: true,//获取验证码按钮判断
+        seconds: '',//倒计时
+        bankCardId: '',//银行卡卡号
+        mobile: '',//用户手机号
 /*
         serviceLeft: '联系客服',
         serviceRight: '更多',
@@ -184,122 +189,9 @@
       }
     },
     mounted () {
-        this.setStorage('addCard','withdraw');
-      //美恰初始化
-      customerInit({
-        name:this.getStorage('userName'),// 名字
-        tel:this.getStorage('mobile'),// 电话
-      });
-      this.mobile = localStorage.getItem('mobile');
-      /**
-       * 接口：用户中心
-       * 请求方式：POST
-       * 接口：/user/center/usercenter
-       * 入参：null
-       **/
-      this.$http({
-        method: 'post',
-        url: process.env.API_ROOT + 'user/center/usercenter',
-        header: {
-          'content-type': 'application/x-www-form-urlencoded', // post请求
-        }
-      }).then((res)=>{
-        if(res.data.code == '3001'){
-          this.$router.push('/');
-        }else{
-          this.isSecurity = res.data.data.isSecurity;
-          if(res.data.data.isVerify == 0 || res.data.data.isVerify == 3){
-            this.$messagebox({
-              title: '提示',
-              message: '当前账户尚未进行实名认证，完成实名认证后方可提现',
-              showConfirmButton: true,
-              showCancelButton: true,
-              confirmButtonText: '去认证',
-              cancelButtonText: '取消',
-              cancelButtonClass:'cancel_btn',
-              confirmButtonClass:'confirm_btn_orange',
-              closeOnClickModal: false
-            }).then((res)=>{
-              if(res == 'cancel'){
-                this.$router.go(-1);
-              }else if(res == 'confirm'){
-                this.setStorage('hrefId','4');
-                this.$router.push('/certificationChoose');
-              }
-            });
-          }else if(res.data.data.isVerify == 2){
-            this.$messagebox({
-              title: '提示',
-              message: '实名认证审核中，审核通过后方可提现',
-              confirmButtonText: '我知道了',
-              confirmButtonClass:'confirm_btn_orange',
-            }).then(()=>{
-              this.$router.go(-1);
-            })
-          }else{
-            /**
-             * 接口：检测用户发起提现操作
-             * 请求方式：GET
-             * 接口：user/work/checkwithdraw
-             * 入参：null
-             **/
-            this.$http({
-              method: 'get',
-              url: process.env.API_ROOT + 'user/work/checkwithdraw'
-            }).then((res)=>{
-              if(res.data.code == -10){
-                this.$messagebox({
-                  title: '提示',
-                  message: '您有文件待签署，请至 “ 我的签约”中完成签署后再提现',
-                  showConfirmButton: true,
-                  showCancelButton: true,
-                  confirmButtonText: '去签约',
-                  cancelButtonText: '取消',
-                  cancelButtonClass:'cancel_btn',
-                  confirmButtonClass:'confirm_btn_orange',
-                }).then((res)=>{
 
-                  if(res == 'confirm'){
+      this.getData();
 
-                    this.$router.push('/contractList');
-
-                  }
-
-
-                }).catch((res=>{}))
-
-              }
-              else if(res.data.code == -7){
-                this.$messagebox({
-                  title: '提示',
-                  message: res.data.msg,
-                  showConfirmButton: true,
-                  showCancelButton: true,
-                  confirmButtonText: '去添加',
-                  cancelButtonText: '取消',
-                  cancelButtonClass:'cancel_btn',
-                  confirmButtonClass:'confirm_btn_orange',
-                }).then((res)=>{
-                  if(res == 'cancel'){
-                    this.$router.go(-1);
-                  }else if(res == 'confirm'){
-                    this.$router.push('/addCard');
-                  }
-                })
-              }else if(res.data.code == '0000'){
-                this.amountMax = res.data.data.amountMax;
-                this.amountMin = res.data.data.amountMin;
-                this.balance = res.data.data.balance;
-                this.dayMaxAmount = res.data.data.dayMaxAmount;
-                this.monthMaxAmount = res.data.data.monthMaxAmount;
-                this.rate = res.data.data.rate;
-                this.userBankCardDTOList = res.data.data.userBankCardDTOList;
-                this.mountedDid = true;
-              }
-            })
-          }
-        }
-      });
     },
     destroyed (){
       this.$messagebox.close();
@@ -340,6 +232,131 @@
       }
     },
     methods: {
+
+      /*页面初始化*/
+      getData: function () {
+
+
+        this.setStorage('addCard','withdraw');
+        //美恰初始化
+        customerInit({
+          name:this.getStorage('userName'),// 名字
+          tel:this.getStorage('mobile'),// 电话
+        });
+        this.mobile = localStorage.getItem('mobile');
+        /**
+         * 接口：用户中心
+         * 请求方式：POST
+         * 接口：/user/center/usercenter
+         * 入参：null
+         **/
+        this.$http({
+          method: 'post',
+          url: process.env.API_ROOT + 'user/center/usercenter',
+          header: {
+            'content-type': 'application/x-www-form-urlencoded', // post请求
+          }
+        }).then((res)=>{
+          if(res.data.code == '3001'){
+            this.$router.push('/');
+          }else{
+            this.isSecurity = res.data.data.isSecurity;
+            if(res.data.data.isVerify == 0 || res.data.data.isVerify == 3){
+              this.$messagebox({
+                title: '提示',
+                message: '当前账户尚未进行实名认证，完成实名认证后方可提现',
+                showConfirmButton: true,
+                showCancelButton: true,
+                confirmButtonText: '去认证',
+                cancelButtonText: '取消',
+                cancelButtonClass:'cancel_btn',
+                confirmButtonClass:'confirm_btn_orange',
+                closeOnClickModal: false
+              }).then((res)=>{
+                if(res == 'cancel'){
+                  this.$router.go(-1);
+                }else if(res == 'confirm'){
+                  this.setStorage('hrefId','4');
+                  this.$router.push('/certificationChoose');
+                }
+              });
+            }else if(res.data.data.isVerify == 2){
+              this.$messagebox({
+                title: '提示',
+                message: '实名认证审核中，审核通过后方可提现',
+                confirmButtonText: '我知道了',
+                confirmButtonClass:'confirm_btn_orange',
+              }).then(()=>{
+                this.$router.go(-1);
+              })
+            }else{
+              /**
+               * 接口：检测用户发起提现操作
+               * 请求方式：GET
+               * 接口：user/work/checkwithdraw
+               * 入参：null
+               **/
+              this.$http({
+                method: 'get',
+                url: process.env.API_ROOT + 'user/work/checkwithdraw'
+              }).then((res)=>{
+                if(res.data.code == -10){
+                  this.$messagebox({
+                    title: '提示',
+                    message: '您有文件待签署，请至 “ 我的签约”中完成签署后再提现',
+                    showConfirmButton: true,
+                    showCancelButton: true,
+                    confirmButtonText: '去签约',
+                    cancelButtonText: '取消',
+                    cancelButtonClass:'cancel_btn',
+                    confirmButtonClass:'confirm_btn_orange',
+                  }).then((res)=>{
+
+                    if(res == 'confirm'){
+
+                      this.$router.push('/contractList');
+
+                    }
+
+
+                  }).catch((res=>{}))
+
+                }
+                else if(res.data.code == -7){
+                  this.$messagebox({
+                    title: '提示',
+                    message: res.data.msg,
+                    showConfirmButton: true,
+                    showCancelButton: true,
+                    confirmButtonText: '去添加',
+                    cancelButtonText: '取消',
+                    cancelButtonClass:'cancel_btn',
+                    confirmButtonClass:'confirm_btn_orange',
+                  }).then((res)=>{
+                    if(res == 'cancel'){
+                      this.$router.go(-1);
+                    }else if(res == 'confirm'){
+                      this.$router.push('/addCard');
+                    }
+                  })
+                }else if(res.data.code == '0000'){
+                  this.amountMax = res.data.data.amountMax;
+                  this.amountMin = res.data.data.amountMin;
+                  this.balance = res.data.data.balance;
+                  this.dayMaxAmount = res.data.data.dayMaxAmount;
+                  this.monthMaxAmount = res.data.data.monthMaxAmount;
+                  this.rate = res.data.data.rate;
+                  this.userBankCardDTOList = res.data.data.userBankCardDTOList;
+                  this.mountedDid = true;
+                }
+              })
+            }
+          }
+        });
+
+      },
+
+
       //选择银行卡弹出框值
       onValueChange: function (picker,values) {
         console.log(picker);
@@ -430,6 +447,7 @@
         }
         this.setStorage('withdraw','1');//设定值来区分是转账还是提现
         this.setStorage('change','0');
+
         this.setStorage('withdrawMoney',(+this.withdrawMoney).toFixed(2));
         this.setStorage('rate',this.rate/100);
         for(var bankCard of this.userBankCardDTOList){
@@ -440,7 +458,7 @@
         }
         this.withdrawClick = true;
       },
-      //跳转到输入密码界面
+      //弹出密码/验证码框
       jumpTo: function () {
 
         this.withdrawClick = false;
@@ -465,6 +483,7 @@
       },
 
 
+      //跳转到提现订单明细
       cashBillfn:function () {
 
         this.setStorage('whichBill', '1');
@@ -473,14 +492,17 @@
 
       },
 
+      /*键盘输入事件*/
       numInput: function (num) {
         this.withdrawMoney = num;
       },
 
+      /*键盘确认事件*/
       inputClose: function (value) {
         this.inputShow = value;
       },
 
+      /*密码/验证码键盘输入事件*/
       passwordInput: function (num) {
 
         var divs = document.getElementsByClassName('password_block')[0].children;
@@ -561,6 +583,8 @@
 
         console.log(this.password);
       },
+
+      /*密码/验证码键盘确认事件*/
       passwordSubmit: function (num) {
         var type;
         (this.isSecurity == 1) && (type='验证码');
@@ -628,6 +652,18 @@
               setTimeout(() => {
                 this.$router.replace( '/paySuccess');
               },1500);
+
+            }else{
+
+              this.password = '';
+
+              var divs = document.getElementsByClassName('password_block')[0].children;
+
+              for(let div of divs){
+
+                div.innerHTML = '';
+
+              }
 
             }
 
