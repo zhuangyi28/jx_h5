@@ -64,6 +64,18 @@
       </div>-->
     </div>
 
+    <!--<div class="list">
+
+      <div class="cell">
+        <div class="title">
+          <span class="iconfont icon-wage_advance"></span><span class="cell_text">工资预支</span>
+        </div>
+        <div class="cell_value"></div>
+        <i class="allow_right"></i>
+      </div>
+
+    </div>-->
+
     <div class="tips">
       <p>账户资金由以下机构进行委托管理：</p>
       <p>平安付科技服务有限公司、汇潮支付有限公司、新浪支付有限公司</p>

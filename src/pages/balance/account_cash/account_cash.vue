@@ -32,6 +32,7 @@
     <div class="click_btn" v-else>
       <button>确认转账</button>
     </div>
+    <!--转账确认框-->
     <mt-popup v-model="transferClick" position="bottom">
       <div class="withdraw_money_info">
         <div class="withdraw_title">确认转账<span class="close_btn" v-on:click="transferClick=false"></span></div>
@@ -56,9 +57,11 @@
       </div>
       <orangeBtn v-bind:name="transferBtnName" v-on:clickEvent="jumpTo"></orangeBtn>
     </mt-popup>
+    <!--键盘-->
     <transition name="toggle">
       <calculation v-on:num="numInput" v-if="inputShow" v-bind:newNum="money" v-on:inputClose="inputClose"></calculation>
     </transition>
+    <!--验证码/密码框-->
     <mt-popup position="bottom" v-model="passwordinput">
       <div class="password_input">
         <div class="title">
@@ -66,7 +69,7 @@
             <img src="../../../../static/images/go.png">
           </div>
           <span v-if="isSecurity == 1">请输入短信验证码</span>
-          <span v-else-if="isSecurity == 2">请输入密码</span>
+          <span v-else-if="isSecurity == 2">请输入支付密码</span>
         </div>
         <div class="password_block">
           <div></div>
@@ -108,55 +111,65 @@
         unused: false, //控制显示button
         tips: '',//备注
         inputShow: true,//控制输入框是否显示
-        passwordinput: false,
-        password: '',
-        used: true,
-        seconds: '',
-        isSecurity: '',
-        mobile: ''
+        passwordinput: false,//输入密码/验证码弹出框是否显示
+        password: '',//密码/验证码
+        used: true,//获取验证码按钮判断
+        seconds: '',//倒计时
+        isSecurity: '',//支付验证方式
+        mobile: '',//用户手机号
       }
     },
 
     mounted () {
-      this.transferName = this.getStorage('transferName');
-      this.transferMobile = this.getStorage('transferMobile');
-      this.mobile = localStorage.getItem('mobile');
 
-      /*
-      * 接口： 获取账户余额信息
-      * 请求方式： GET
-      * 接口： /user/account/getbalance
-      * 入参： null
-      * */
-      this.$http({
-        method: 'get',
-        url: process.env.API_ROOT+ 'user/account/getbalance'
-      }).then((res)=>{
-        if(res.data.code == '0000'){
-          this.transferBalance = res.data.data;
-        }
-        /**
-         * 接口：查询支付验证方式
-         * 请求方式：GET
-         * 接口：/user/set.getpaymode
-         * 入参：null
-         * */
-        this.$http({
-          method: 'get',
-          url: process.env.API_ROOT + 'user/set/getpaymode'
-        }).then((res)=>{
-          if(res.data.code == '0000'){
-            this.setStorage('withdraw','0');//设定值来区分是转账还是提现
-            this.setStorage('change','1');
-            this.isSecurity = res.data.data.isSecurity;
-          }
-          else{
-            console.log(res);
-          }
-        })
-      });
+      this.getData();
+
     },
     methods: {
+
+      //页面数据初始化
+      getData: function () {
+
+
+        this.transferName = this.getStorage('transferName');
+        this.transferMobile = this.getStorage('transferMobile');
+        this.mobile = localStorage.getItem('mobile');
+
+        /*
+        * 接口： 获取账户余额信息
+        * 请求方式： GET
+        * 接口： /user/account/getbalance
+        * 入参： null
+        * */
+        this.$http({
+          method: 'get',
+          url: process.env.API_ROOT+ 'user/account/getbalance'
+        }).then((res)=>{
+          if(res.data.code == '0000'){
+            this.transferBalance = res.data.data;
+          }
+          /**
+           * 接口：查询支付验证方式
+           * 请求方式：GET
+           * 接口：/user/set.getpaymode
+           * 入参：null
+           * */
+          this.$http({
+            method: 'get',
+            url: process.env.API_ROOT + 'user/set/getpaymode'
+          }).then((res)=>{
+            if(res.data.code == '0000'){
+              this.setStorage('withdraw','0');//设定值来区分是转账还是提现
+              this.setStorage('change','1');
+              this.isSecurity = res.data.data.isSecurity;
+            }
+            else{
+              console.log(res);
+            }
+          })
+        });
+
+      },
       //判断输入的转账金额是否符合标准
       handleClick: function () {
         var reg = /^\d+\.?(\d{1,2})?$/;
@@ -200,6 +213,8 @@
           this.transferClick = true;
         }
       },
+
+      //验证码/密码框弹出
       jumpTo: function () {
 
         this.transferClick = false;
@@ -220,14 +235,17 @@
 
       },
 
+      //键盘输入事件
       numInput: function (num) {
         this.money = num;
       },
 
+      //键盘确认事件
       inputClose: function (value) {
         this.inputShow = value;
       },
 
+      //备注获取焦点事件（页面适应系统键盘）
       blurFn:function () {
 
 
@@ -246,6 +264,8 @@
 
 
       },
+
+      //验证码/密码框键盘输入事件
 
       passwordInput: function (num) {
 
@@ -327,6 +347,8 @@
 
         console.log(this.password);
       },
+
+      //验证码/密码框键盘确认事件
       passwordSubmit: function (num) {
         var type;
         (this.isSecurity == 1) && (type='验证码');
@@ -397,6 +419,18 @@
                 this.$router.replace( '/paySuccess');
               },1500);
 
+            }else{
+
+              this.password = '';
+
+              var divs = document.getElementsByClassName('password_block')[0].children;
+
+              for(let div of divs){
+
+                div.innerHTML = '';
+
+              }
+
             }
 
           }).catch(res=>console.log(res));
@@ -454,6 +488,8 @@
       }
     },
     watch: {
+
+      //限制转账金额格式
       money: function () {
         var reg = /^\d+\.?(\d{1,2})?$/;
         if(this.money == ''){
