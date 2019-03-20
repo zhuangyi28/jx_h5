@@ -1,5 +1,5 @@
 <template>
-  <div class="add_card_two">
+  <div class="add_card_two" v-bind:class="{'body_overflow': pickerShow}">
     <topTips :tips="tipsText"></topTips>
     <div class="card_information_input">
       <div class="card_information">
@@ -49,6 +49,7 @@
         </div>
       </div>
     </div>
+    <!--开户行地区弹出框-->
     <mt-popup class="information_picker" v-model="pickerShow" position="bottom">
       <div class="picker_btn">
         <mt-button v-on:click="pickerShow=false">取消</mt-button>
@@ -71,13 +72,13 @@
     },
     data () {
       return {
-        btnName: '确认添加',
-        userName: '',
-        cardId: '',
-        bankName: '',
-        bankCardJson: bankCardJson,
-        bankPlaces: [],
-        pickerShow: false,
+        btnName: '确认添加',//按钮名称
+        userName: '',//用户名称
+        cardId: '',//银行卡号
+        bankName: '',//开户行
+        bankCardJson: bankCardJson,//银行名称图片列表
+        bankPlaces: [],//开户行地址
+        pickerShow: false,//地区选择弹框判断
         slots: [
           {
             flex: 1,
@@ -91,9 +92,9 @@
             className: 'city',
             textAlign: 'center'
           }
-        ],
-        city: '',
-        cardType: '',
+        ],//开户行地区弹出框内容表
+        city: '',//开户行地区
+        cardType: '',//银行卡类型
         tipsText:'请绑定持卡人本人的银行卡'
       }
     },
@@ -144,6 +145,7 @@
       });
     },
     watch: {
+      //自动识别开户行
       cardId: function () {
 
         this.cardId = this.cardId.replace(/\D/,'');
@@ -186,6 +188,7 @@
       }
     },
     methods: {
+      /*获取城市列表*/
       getCity: function (provincesId) {
         this.$http({
           method: 'get',
@@ -199,6 +202,7 @@
           }
         })
       },
+      /*更换城市*/
       changeCity: function (picker,value) {
         if(picker.getSlotValue(0)){
           for(var province of this.province) {
@@ -212,12 +216,14 @@
         console.log(picker.getSlotValue(0));
         this.city = picker;
       },
+      /*选择开户地区确定按钮事件*/
       getBankPlace: function () {
         this.bankPlaces.length = 0;
         this.bankPlaces.push(this.city.getSlotValue(0));
         this.bankPlaces.push(this.city.getSlotValue(1));
         this.pickerShow = false;
       },
+      /*添加银行卡*/
       addCard: function () {
         var regNeg = /^([1-9]\d{14,18})$/;
         /**
