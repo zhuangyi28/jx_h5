@@ -90,6 +90,8 @@
 
               <div v-on:click="industry = 10" v-bind:class="{'border_text_bg  selected': industry == 10}">其他</div>
 
+
+
             </div>
 
           </div>
@@ -162,13 +164,13 @@
 
             <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 7)}" v-bind:data-type="7">中介服务</div>
 
-            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 8)}" v-bind:data-type="8">其他</div>
+            <!--<div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 8)}" v-bind:data-type="8">其他</div>-->
 
             <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 9)}" v-bind:data-type="9">会展服务</div>
 
             <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 10)}" v-bind:data-type="10">技术服务</div>
 
-            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 11)}" v-bind:data-type="11">运输服务</div>
+            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 11)}" v-bind:data-type="11">运输配送</div>
 
             <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 12)}" v-bind:data-type="12">运营策划</div>
 
