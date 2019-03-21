@@ -186,7 +186,7 @@
 
             <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 19)}" v-bind:data-type="19">采购/贸易</div>
 
-            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 20)}" v-bind:data-type="10">生产制造</div>
+            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 20)}" v-bind:data-type="20">生产制造</div>
 
           </div>
 

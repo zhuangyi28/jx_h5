@@ -2,6 +2,8 @@
 
   <div class="homepage" v-infinite-scroll="loadMore" infinite-scroll-disabled="moreLoading" infinite-scroll-distance="20" infinite-scroll-immediate-check="false">
 
+    <backHome></backHome>
+
     <mt-loadmore :top-method="loadTop" ref="loadmore">
       <!-- 余额 -->
 
@@ -53,9 +55,17 @@
 
 <script>
 
+  import backHome from '../../components/back_home/back_home'
+
   export default {
 
     name: 'salary',
+
+    components: {
+
+      backHome: backHome
+
+    },
 
     data () {
 

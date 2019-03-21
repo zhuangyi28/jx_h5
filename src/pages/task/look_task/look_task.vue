@@ -508,7 +508,7 @@
 
           case 20:
 
-            return '生活制造';
+            return '生产制造';
 
           default:
 
