@@ -1,5 +1,7 @@
 <template>
   <div class="cash_details">
+
+    <backHome></backHome>
     <!-- 提现详情 -->
     <div class="details">
       <div class="details_box color_background_gradient">
@@ -107,6 +109,8 @@
 
   import { customerInit, customerClick } from "../../../../static/js/basic"
 
+  import backHome from '../../../components/back_home/back_home'
+
   export default{
 
      name:'cashDetail',
@@ -116,6 +120,8 @@
      orangeBtn: orangeBtn,
 
        serviceArea: serviceArea,
+
+       backHome: backHome
 
    },
 

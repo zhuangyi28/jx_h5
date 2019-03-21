@@ -1,5 +1,7 @@
 <template>
   <div class="transfer_details">
+
+    <backHome></backHome>
     <!-- 提现金额 -->
     <div class="cash change_color_background">
       <p>
@@ -69,6 +71,8 @@
   //帮助
   import serviceArea from '../../../components/service/service'
 
+  import backHome from '../../../components/back_home/back_home'
+
   import { customerInit, customerClick } from "../../../../static/js/basic"
 
   export default{
@@ -77,7 +81,9 @@
 
       components: {
 
-     serviceArea: serviceArea,
+        serviceArea: serviceArea,
+
+        backHome: backHome
 
 
    },
