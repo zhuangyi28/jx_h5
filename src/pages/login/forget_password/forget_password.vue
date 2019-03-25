@@ -61,13 +61,26 @@
 
         timer: null,
 
-        btnName:'确认'
+        btnName:'确认',
+
+        channel:'',
 
 
       }
 
     },
 
+    mounted () {
+
+      var anotherCompany = this.getCookie('anotherCompany') || 'orange';
+
+      //console.log('cookie' + anotherCompany)
+
+      anotherCompany == 'orange' ? this.channel = 'jiaxin' : this.channel = anotherCompany;
+
+      //console.log('传值' + this.channel);
+
+    },
 
     methods:{
 
@@ -110,6 +123,8 @@
             params:{
 
               mobile:_this.mobile,
+
+              channel: _this.channel
 
             }
 

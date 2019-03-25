@@ -70,11 +70,11 @@
 
       var anotherCompany = this.getCookie('anotherCompany') || 'orange';
 
-      console.log('cookie' + anotherCompany)
+      //console.log('cookie' + anotherCompany)
 
       anotherCompany == 'orange' ? this.channel = 'jiaxin' : this.channel = anotherCompany;
 
-      console.log('传值' + this.channel);
+      //console.log('传值' + this.channel);
 
     },
 
@@ -281,6 +281,8 @@
             params:{
 
               mobile:that.mobile,
+
+              channel: that.channel
 
             }
 
