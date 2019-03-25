@@ -472,11 +472,11 @@
 
           case 11:
 
-            return '运营策划';
+            return '运输配送';
 
           case 12:
 
-            return '生活服务';
+            return '运营策划';
 
           case 13:
 
