@@ -1,5 +1,8 @@
 <template>
   <div class="payroll">
+
+    <backHome></backHome>
+
     <div class="company_and_money change_color_background">
       <div class="money">
         <div>{{salaryMonth}}<span v-if="salaryType=='8'">个体经营所得（元）</span><span v-else>收入（元）</span></div>
@@ -103,6 +106,7 @@
 <script>
 
   import orangeBtn from '../../../components/orange_btn/orange_btn'
+  import backHome from '../../../components/back_home/back_home'
 
   export default {
 
@@ -111,6 +115,8 @@
     components: {
 
       orangeBtn: orangeBtn,
+
+      backHome: backHome
 
     },
 

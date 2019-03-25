@@ -1,6 +1,8 @@
 <template>
   <div class="task_details">
 
+    <backHome></backHome>
+
     <!-- 任务详情 -->
     <div class="task_title color_background_gradient" v-on:click="jumpTo">
 
@@ -142,10 +144,13 @@
 </template>
 <script>
   import orangeBtn from '../../../components/orange_btn/orange_btn'
+  import backHome from '../../../components/back_home/back_home'
   export default {
     name: 'taskDetail',
     components: {
       orangeBtn: orangeBtn,
+
+      backHome: backHome
     },
     data () {
       return{

@@ -2,6 +2,8 @@
 
   <div class="balance">
 
+    <backHome></backHome>
+
     <div class="detail change_color_background">
 
       <div class="money">
@@ -87,9 +89,17 @@
 
 </template>
 <script>
+
+  import backHome from '../../../components/back_home/back_home'
   export default {
 
     name: 'balance',
+
+    components: {
+
+      backHome: backHome
+
+    },
 
     data(){
 

@@ -69,6 +69,12 @@ router.beforeEach((to,from,next)=>{
 
   if(Authorization){
 
+    if((from.path == '/') && ((to.path == '/payroll') || (to.path == '/contractDetail') || (to.path == '/cashDetail') || (to.path == '/taskDetail') || (to.path == '/balance') || (to.path == '/transferDetail'))){
+
+      (window.history.length <= 2) && localStorage.setItem('needBackHome','1');
+
+    }
+
    if((from.path == '/contractDetail') && (to.path == '/sign')){
 
       next({path: '/workDesk/mine'})

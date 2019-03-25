@@ -24,7 +24,7 @@
         <div class="add_bank" v-on:click="$router.push('/addCard')">
           <span>添加新卡</span>
         </div>
-        <div class="withdraw_money_ps">单笔￥<span>{{amountMin|thousandBitSeparator}}</span>-￥<span>{{amountMax|thousandBitSeparator}}</span>（手续费<span>{{rate/100}}</span>%）</div>
+        <div class="withdraw_money_ps">单笔￥<span>{{amountMin|thousandBitSeparator}}</span>-￥<span>{{amountMax|thousandBitSeparator}}</span>（手续费<span>{{rate}}</span>%）</div>
         <div class="withdraw_money_input">
           <span>￥</span>
           <div v-on:click="inputShow=true" v-on:click.stop>
@@ -300,6 +300,8 @@
                 method: 'get',
                 url: process.env.API_ROOT + 'user/work/checkwithdraw'
               }).then((res)=>{
+
+                console.log(res);
                 if(res.data.code == -10){
                   this.$messagebox({
                     title: '提示',
@@ -359,8 +361,6 @@
 
       //选择银行卡弹出框值
       onValueChange: function (picker,values) {
-        console.log(picker);
-        console.log(values);
         this.changeValue = values;
       },
       //获取选择银行卡弹出框值
@@ -461,21 +461,35 @@
       //弹出密码/验证码框
       jumpTo: function () {
 
-        this.withdrawClick = false;
+        if(+this.balance < +this.withdrawMoney * (1 + (+this.rate))){
 
-        this.passwordinput = true;
+          this.$toast({
 
-        this.password = '';
+            message: '支付金额已超可提余额',
+            position: 'middle',
+            duration: 1500
 
-        var divs = document.getElementsByClassName('password_block')[0].children;
+          });
 
-        for(let div of divs){
+        }else{
 
-          div.innerText = '';
+          this.withdrawClick = false;
+
+          this.passwordinput = true;
+
+          this.password = '';
+
+          var divs = document.getElementsByClassName('password_block')[0].children;
+
+          for(let div of divs){
+
+            div.innerText = '';
+
+          }
+
+          (this.isSecurity == 1) && (this.getAgain());
 
         }
-
-        (this.isSecurity == 1) && (this.getAgain());
 
       },
       customerFn:function () {

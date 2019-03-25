@@ -1,5 +1,6 @@
 <template>
   <div class="contract_detail" v-bind:class="{'overFlow': popupShow}">
+    <backHome></backHome>
     <div class="contract_part_bg change_color_background"></div>
     <div class="contract_part">
       <div class="contract_file" v-on:click="showAll">
@@ -68,13 +69,16 @@
 <script>
 
   import orangeBtn from '../../../components/orange_btn/orange_btn'
+  import backHome from  '../../../components/back_home/back_home'
 
   export default {
     name: 'contractDetail',
 
     components: {
 
-      orangeBtn: orangeBtn
+      orangeBtn: orangeBtn,
+
+      backHome: backHome
 
     },
 
