@@ -63,11 +63,12 @@
         <div class="title">
           <span v-if="cardTypeId==3">上传港澳通行证正面</span>
           <span v-else-if="cardTypeId==4">上传台湾通行证正面</span>
+          <span v-else-if="cardTypeId==5">上传临时身份证正面</span>
           <span v-else>上传护照照片</span>
           <span v-on:click="exampleImg" class="face color_text">示例</span>
         </div>
       </div>
-      <div class="certification_pic_input" v-if="cardTypeId != 2">
+      <div class="certification_pic_input" v-if="cardTypeId != 2&&cardTypeId != 5">
         <div class="img" v-if="backUrl == './static/images/jx_card_back.png'">
           <div class="color_background"></div>
           <div class="card_background">
@@ -155,7 +156,7 @@
         isVerify: '',//是否认证
         slots: [
           {
-            values: ['港澳居民来往内地通行证','台湾居民来往大陆通行证','护照'],
+            values: ['港澳居民来往内地通行证','台湾居民来往大陆通行证','护照','临时身份证'],
             textAlign: 'center'
           }
         ],//证件类型弹窗值
@@ -234,6 +235,9 @@
               if(this.cardType == 4){
                 this.cardType = '台湾居民来往大陆通行证'
               }
+              if(this.cardType == 5){
+                this.cardType = '临时身份证'
+              }
 
             }
 
@@ -260,6 +264,9 @@
       //提交
       submit: function () {
         var check = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
+
+        var idcardReg = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/;
+
         if(this.cardTypeId == 3){
           //港澳
           check = /^[a-z0-9A-Z]{9}$/;
@@ -272,6 +279,13 @@
 
           //护照
           check = /^[a-z0-9A-Z]{6,20}$/;
+        }
+        else if(this.cardTypeId == 5){
+
+         check = idcardReg
+
+            //临时身份证
+
         }
         if(!this.userName){
           this.$toast({
@@ -301,7 +315,7 @@
         /*faceUrl: './static/images/jx_card_face.png',
 
         backUrl: './static/images/jx_card_back.png',',*/
-        if(this.cardTypeId != 2){
+        if(this.cardTypeId != 2&&this.cardTypeId != 5){
 
           if(this.faceUrl == './static/images/jx_card_face.png' && this.backUrl == './static/images/jx_card_back.png'){
 
@@ -336,7 +350,7 @@
 
           }
 
-        }else if(this.cardTypeId == 2){
+        }else if(this.cardTypeId == 2||this.cardTypeId == 5){
 
           if(this.faceUrl == './static/images/jx_card_face.png'){
 
@@ -672,6 +686,10 @@
           }
 
         }
+        else if(this.cardTypeId == 5){
+
+          this.exampleUrl = './static/images/jx_example_linshi_face.jpg'
+        }
 
         this.popupExample = true;
 
@@ -690,6 +708,10 @@
         }
         if(this.cardType == '台湾居民来往大陆通行证'){
           return 4;
+        }
+        if(this.cardType == '临时身份证'){
+
+            return 5
         }
       }
     },

@@ -243,7 +243,12 @@
           name:this.getStorage('userName'),// 名字
           tel:this.getStorage('mobile'),// 电话
         });
-        this.mobile = localStorage.getItem('mobile');
+
+        if(localStorage.getItem('mobile')){
+
+          this.mobile = localStorage.getItem('mobile');
+        }
+
         /**
          * 接口：用户中心
          * 请求方式：POST

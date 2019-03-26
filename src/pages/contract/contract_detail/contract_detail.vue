@@ -140,6 +140,8 @@
 
       this.getData();
 
+      //保证签署完毕之后可以两次返回到我的页面
+
       localStorage.getItem('contractDetailBack') || localStorage.setItem('contractDetailBack','1');
 
 
@@ -498,8 +500,6 @@
 
 
       },
-
-
 
 
       showAll: function () {
