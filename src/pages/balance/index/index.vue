@@ -66,17 +66,17 @@
       </div>-->
     </div>
 
-    <!--<div class="list">
+    <div class="list">
 
-      <div class="cell">
+      <div class="cell" v-on:click="jbtUrlFn">
         <div class="title">
           <span class="iconfont icon-wage_advance"></span><span class="cell_text">工资预支</span>
         </div>
-        <div class="cell_value"></div>
+        <div class="cell_value">工资不够花？到这借！</div>
         <i class="allow_right"></i>
       </div>
 
-    </div>-->
+    </div>
 
     <div class="tips">
       <p>账户资金由以下机构进行委托管理：</p>
@@ -117,11 +117,16 @@
 
         mobile:'',
 
+        isOpen:'',
+
+
       }
 
     },
 
     mounted(){
+
+
 
       /**
        * 接口：获取用户工资金额状况
@@ -185,19 +190,99 @@
 
           this.mobile =res.data.data.mobile
 
+          this.isOpen = res.data.data.isOpen
+
 
       }).catch((res)=>{})
 
 
 
+
     },
+
+
     destroyed (){
       this.$messagebox.close();
     },
     methods: {
 
 
+      jbtUrlFn: function () {
 
+        if((this.isOpen=='0'&&this.isVerify == '3')||(this.isOpen=='0'&&this.isVerify == '0')){
+
+          //存指定的页面  （在实名认证中取值）
+          this.setStorage('hrefId','6');
+
+          this.$messagebox({
+            title: '提示',
+            message:'为保障账户资金安全，实名用户才能使用账户消费，请先完成实名认证',
+            showCancelButton: true,
+            cancelButtonText: '取消',
+            confirmButtonText: '去认证',
+            cancelButtonClass: 'cancel_btn',
+            confirmButtonClass: 'confirm_btn_orange',
+          }).then((action) =>{
+            console.log(action);
+            if(action == 'confirm'){
+              this.$router.push('/certificationChoose');
+            }
+          }).catch((res)=>{
+            console.log(res);
+          });
+
+
+        }
+
+        else if(this.isOpen=='0'&&this.isVerify == '2'){
+
+          //存指定的页面  （在实名认证中取值）
+          this.setStorage('hrefId','6');
+
+          this.$messagebox({
+            title: '提示',
+            message:'为保障账户资金安全，实名用户才能使用账户消费，您的账户正在审核中',
+            showCancelButton: false,
+            confirmButtonText: '我知道了',
+            confirmButtonClass: 'confirm_btn_orange',
+          }).then((action) =>{
+            console.log(action);
+          }).catch((res)=>{
+            console.log(res);
+          });
+
+
+
+        }
+
+        else {
+
+          /**
+           * 接口：消费场景-嘉白条
+           * 请求方式：GET
+           * 接口：/open/jbt/redirect
+           * 入参：null
+           **/
+          this.$http({
+
+            method: 'get',
+
+            url: process.env.API_ROOT + 'open/jbt/redirect',
+
+          }).then((res) => {
+
+            console.log(res.data);
+
+            window.location.href = res.data.data;
+
+          }).catch((res)=>{})
+
+        }
+
+
+
+
+      },
       frozenFn:function () {
 
         this.$messagebox({

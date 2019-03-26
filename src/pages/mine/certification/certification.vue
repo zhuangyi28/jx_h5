@@ -136,6 +136,11 @@
             this.cardType = '台湾居民来往大陆通行证'
           }
 
+          if(this.cardType == 5){
+            this.cardType = '临时身份证'
+
+          }
+
         }
 
 
@@ -424,6 +429,9 @@
         }
         if(this.cardType == '台湾居民来往大陆通行证'){
           return 4;
+        }
+        if(this.cardType == '临时身份证'){
+          return 5;
         }
       }
     },
