@@ -63,9 +63,9 @@ button.btn_color,.btn_color {
 }
 /*边框+字体+背景*/
 .border_text_bg{
-  border: 1px solid var(--lessColor)!important;
+  border: 1px solid var(--mainColor)!important;
   background-color: var(--lightColor)!important;
-  color:var(--lessColor)!important;
+  color:var(--mainColor)!important;
 }
 /*--------------------------------------------------------------------------*/
 /*渐变背景-我的&余额*/

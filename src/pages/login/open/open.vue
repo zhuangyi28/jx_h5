@@ -58,6 +58,18 @@
 
             break;
 
+          case 'xinqidian':
+
+            document.title = '薪企点';
+
+            break;
+
+
+          case'zuirenli':
+
+              document.title = '最人力企服';
+
+            break;
 
         }
 

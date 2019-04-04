@@ -139,6 +139,42 @@
 
             break;
 
+          case 'xinqidian':
+
+            document.title = '薪企点';
+
+            this.slogan='./static/images/xinqidian/jx_loading_title_1.png',
+
+              this.bgUrl='./static/images/xinqidian/jx_start_page7.png',//背景图
+
+              this.bottomUrl='./static/images/xinqidian/jx_start_page8.png',//底部
+
+              this.cardUrl='./static/images/xinqidian/jx_start_page1.png',
+
+              this.msgUrl='./static/images/xinqidian/jx_start_page2.png',
+
+              this.paperUrl='./static/images/xinqidian/jx_start_page3.png'
+
+            break;
+
+          case 'zuirenli':
+
+          document.title = '最人力企服';
+
+          this.slogan='./static/images/zuirenli/jx_loading_title_1.png',
+
+            this.bgUrl='./static/images/zuirenli/jx_start_page7.png',//背景图
+
+            this.bottomUrl='./static/images/zuirenli/jx_start_page8.png',//底部
+
+            this.cardUrl='./static/images/zuirenli/jx_start_page1.png',
+
+            this.msgUrl='./static/images/zuirenli/jx_start_page2.png',
+
+            this.paperUrl='./static/images/zuirenli/jx_start_page3.png'
+
+          break;
+
         }
 
       }

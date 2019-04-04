@@ -144,7 +144,7 @@
 
 
         <!--分类下拉框-->
-        <div class="select_content" v-if="selectShow">
+        <div class="select_content" v-if="selectShow"  v-bind:class="{'body_overflow': selectShow}">
 
           <div class="select_list">
 
@@ -189,6 +189,31 @@
             <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 19)}" v-bind:data-type="19">采购/贸易</div>
 
             <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 20)}" v-bind:data-type="20">生产制造</div>
+
+            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 21)}" v-bind:data-type="21">前台/接待</div>
+
+            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 22)}" v-bind:data-type="22">物业/家政/保洁/保安</div>
+
+            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 23)}" v-bind:data-type="23">酒店/餐饮</div>
+
+            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 24)}" v-bind:data-type="24">新闻/媒体/娱乐/广告</div>
+
+            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 25)}" v-bind:data-type="25">维修服务</div>
+
+            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 26)}" v-bind:data-type="26">运动健身</div>
+
+            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 27)}" v-bind:data-type="27">会计/金融/保险</div>
+
+            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 28)}" v-bind:data-type="28">物流/仓储</div>
+
+            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 29)}" v-bind:data-type="29">建筑/房地产</div>
+
+            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 30)}" v-bind:data-type="30">人事/行政/高级管理</div>
+
+            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 31)}" v-bind:data-type="31">美容保健/运动健身/休闲娱乐</div>
+
+            <div v-on:click="changeType" v-bind:class="{'border_text_bg  selected': (type == 32)}" v-bind:data-type="32">艺术/摄影</div>
+
 
           </div>
 

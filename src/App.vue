@@ -47,7 +47,6 @@
 
           document.documentElement.style.setProperty('--borderColor', '#89bfff');
 
-          /*require('!style-loader!css-loader!less-loader!../static/css/blue_css.css');*/
 
           break;
 
@@ -73,7 +72,6 @@
 
           document.documentElement.style.setProperty('--borderColor', '#b6d5ff');
 
-          //require('!style-loader!css-loader!less-loader!../static/css/rongyada_css.css');
 
           break;
 
@@ -87,7 +85,31 @@
 
           document.documentElement.style.setProperty('--borderColor', '#ffd389');
 
-          //require('!style-loader!css-loader!less-loader!../static/css/rongyada_css.css');
+          break;
+
+
+        case 'xinqidian':
+
+          document.documentElement.style.setProperty('--mainColor', '#f08200');
+
+          document.documentElement.style.setProperty('--lessColor', '#ffb45b');
+
+          document.documentElement.style.setProperty('--lightColor', '#fffaf0');
+
+          document.documentElement.style.setProperty('--borderColor', '#ffd389');
+
+
+          break;
+
+        case 'zuirenli':
+
+          document.documentElement.style.setProperty('--mainColor', '#da6925');
+
+          document.documentElement.style.setProperty('--lessColor', '#d98145');
+
+          document.documentElement.style.setProperty('--lightColor', '#ffe8da');
+
+          document.documentElement.style.setProperty('--borderColor', '#ffc49c');
 
           break;
 

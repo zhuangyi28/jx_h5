@@ -249,7 +249,17 @@
             break;
 
 
+          case 'xinqidian':
 
+            this.imgUrl = "./static/images/xinqidian/jx_bg.png";
+
+            break;
+
+          case 'zuirenli':
+
+            this.imgUrl = "./static/images/zuirenli/jx_bg.png";
+
+            break;
 
         }
 

@@ -510,6 +510,54 @@
 
             return '生产制造';
 
+          case 21:
+
+            return '前台/接待';
+
+          case 22:
+
+            return '物业/家政/保洁/保安';
+
+          case 23:
+
+            return '酒店/餐饮';
+
+          case 24:
+
+            return '新闻/媒体/娱乐/广告';
+
+          case 25:
+
+            return '维修服务';
+
+          case 26:
+
+            return '运动健身';
+
+          case 27:
+
+            return '会计/金融/保险';
+
+          case 28:
+
+            return '物流/仓储';
+
+          case 29:
+
+            return '建筑/房地产';
+
+          case 30:
+
+            return '人事/行政/高级管理';
+
+          case 31:
+
+            return '美容保健/运动健身/休闲娱乐';
+
+          case 32:
+
+            return '艺术/摄影';
+
           default:
 
             return '其他';

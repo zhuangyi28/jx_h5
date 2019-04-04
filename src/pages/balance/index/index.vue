@@ -57,7 +57,7 @@
       </div>
 
       <!--预约提现-->
-      <!--<div class="cell" v-on:click="cashUrlFn">
+<!--      <div class="cell" v-on:click="bookingUrlFn">
         <div class="title">
           <span class="iconfont icon-withdraw_cash"></span><span class="cell_text">预约提现</span>
         </div>
@@ -609,6 +609,89 @@
 
 
           }).catch((res)=>{})
+
+        }
+
+
+
+      },
+
+      bookingUrlFn:function () {
+
+
+        //获取已认证未认证
+        var _isVerify = this.isVerify;
+
+
+        //没认证的去认证 已认证直接跳接口
+        if (_isVerify == '0'||_isVerify == '3') {
+
+          //存指定的页面  （在实名认证中取值）
+          this.setStorage('hrefId','10');
+
+          this.setStorage('personCenter','2');
+
+          this.$messagebox({
+            title: '提示',
+            message: '为保障账户资金安全，实名用户才能使用预约提现服务，请先完成实名认证',
+            showConfirmButton: true,
+            showCancelButton: true,
+            confirmButtonText: '去认证',
+            cancelButtonText: '取消',
+            cancelButtonClass:'cancel_btn',
+            confirmButtonClass:'confirm_btn_orange',
+          }).then((res)=>{
+
+            if(res == 'confirm'){
+
+              this.$router.push('/certificationChoose');
+
+            }
+            else {
+
+              return
+
+            }
+
+          }).catch((res=>{}))
+
+
+
+
+
+        }
+
+        else if(_isVerify == '2'){
+          //存指定的页面  （在实名认证中取值）
+          this.setStorage('hrefId','10');
+
+          this.setStorage('personCenter','2');
+
+          this.$messagebox({
+            title: '提示',
+            message: '实名认证审核中，审核通过后即可使用预约提现服务',
+            showCancelButton: false,
+            confirmButtonText: '我知道了',
+            confirmButtonClass:'confirm_btn_orange',
+          }).then((res)=>{
+
+            if(res == 'confirm'){
+
+              //this.$router.push('/certification');
+
+            }
+
+
+          }).catch((res=>{}))
+
+
+        }
+
+
+        else{
+
+
+          this.$router.push('/bookingList');
 
         }
 
