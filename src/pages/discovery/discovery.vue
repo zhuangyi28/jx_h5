@@ -9,7 +9,7 @@
         <div v-on:click="urlFn" class="jbt">
           <div class="btn_icon"><img src="../../../static/images/icon_jbt_1.png"/></div>
           <div class="btn_information">
-            <span class="btn_name">嘉白条</span>
+            <span class="btn_name">工资预支</span>
             <span class="btn_slogen">工资不够花?到这借!</span>
           </div>
         </div>

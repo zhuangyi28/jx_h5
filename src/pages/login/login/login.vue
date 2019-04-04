@@ -114,6 +114,17 @@
 
           break;
 
+        case 'xinqidian':
+
+          this.src = "./static/images/xinqidian/logo.png";
+
+          break;
+
+        case 'zuirenli':
+
+          this.src = "./static/images/zuirenli/logo.png";
+
+          break;
 
       }
 

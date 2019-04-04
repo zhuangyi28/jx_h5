@@ -16,7 +16,7 @@
         <p>{{item.clearingDate|fmtDateStr}}</p>
       </div>
 
-      <div v-bind:class="item.transType==5||item.transType==6||item.transType==11||item.transType==3?'color_text':''">{{item.transAmt}}</div>
+      <div v-bind:class="item.transType==5||item.transType==6||item.transType==11||item.transType==3||item.transType==1||item.transType==14?'color_text':''">{{item.transAmt}}</div>
 
     </div>
 

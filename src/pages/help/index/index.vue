@@ -165,8 +165,17 @@
             this.phoneNumber = 'tel:022-65183210';
 
             break
+          case 'xinqidian':
 
+            this.phoneNumber = 'tel:010-59081288';
 
+            break
+
+          case 'zuirenli':
+
+            this.phoneNumber = 'tel:025-66062636';
+
+            break
         }
 
       }

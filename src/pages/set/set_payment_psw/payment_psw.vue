@@ -74,7 +74,7 @@
     },
     destroyed(){
 
-      this.setAutoBack(2)
+      //this.setAutoBack(2)
     },
     methods: {
 
@@ -226,7 +226,7 @@
 
                 toast.close();
 
-                if(_this.getStorage('forgetPsw') == 0){
+/*                if(_this.getStorage('forgetPsw') == 0){
 
                   _this.$router.replace('/setHomepage');
 
@@ -236,7 +236,9 @@
 
                   _this.$router.replace('/pswCertification');
 
-                }
+                }*/
+
+                _this.$router.go(-1);
 
               }, 1500)
 

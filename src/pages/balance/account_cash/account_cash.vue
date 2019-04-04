@@ -83,7 +83,7 @@
           <span v-if="isSecurity ==1">验证码已发送至{{mobile | plusXing(3, 4)}},<span class="color_text">{{seconds}}s后</span>可
             <span  v-bind:class="{color_text: used}" v-on:click="getAgain">重新获取</span>
           </span>
-          <span v-else-if="isSecurity == 2" class="color_text">忘记密码</span>
+          <span v-else-if="isSecurity == 2" class="color_text" v-on:click="$router.push('/code')">忘记密码</span>
         </div>
         <calculation v-on:num="passwordInput" v-on:inputClose="passwordSubmit" key="password" newNum="" ref="passwordInput"></calculation>
       </div>
