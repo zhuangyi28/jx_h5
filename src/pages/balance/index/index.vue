@@ -57,13 +57,13 @@
       </div>
 
       <!--预约提现-->
-<!--      <div class="cell" v-on:click="bookingUrlFn">
+      <div class="cell" v-on:click="bookingUrlFn">
         <div class="title">
           <span class="iconfont icon-withdraw_cash"></span><span class="cell_text">预约提现</span>
         </div>
         <div class="cell_value">到期自动提现</div>
         <i class="allow_right"></i>
-      </div>-->
+      </div>
     </div>
 
     <div class="list">
@@ -125,6 +125,8 @@
     },
 
     mounted(){
+
+      (localStorage.getItem('bookingBack') == '1') && ((localStorage.removeItem('bookingBack')) || (this.$router.push('/bookingList')));
 
 
 
@@ -616,8 +618,8 @@
 
       },
 
-      bookingUrlFn:function () {
 
+      bookingUrlFn: function () {
 
         //获取已认证未认证
         var _isVerify = this.isVerify;
@@ -643,6 +645,8 @@
           }).then((res)=>{
 
             if(res == 'confirm'){
+
+              localStorage.setItem('bookingCertification','1');
 
               this.$router.push('/certificationChoose');
 
@@ -673,29 +677,43 @@
             showCancelButton: false,
             confirmButtonText: '我知道了',
             confirmButtonClass:'confirm_btn_orange',
-          }).then((res)=>{
+          }).then((res)=>{}).catch((res=>{}))
 
-            if(res == 'confirm'){
 
-              //this.$router.push('/certification');
+        }else{
+
+          /**
+           * 接口：检测用户发起提现操作
+           * 请求方式：GET
+           * 接口：user/work/checkwithdraw
+           * 入参：null
+           **/
+          this.$http({
+            method: 'get',
+            url: process.env.API_ROOT + 'user/work/checkwithdraw'
+          }).then(res=>{
+
+            console.log(res);
+
+            if(res.data.code == -10){
+
+              this.$toast({
+
+                message: res.data.msg,
+                position: 'middle',
+                duration: 1500
+
+              })
+
+            }else{
+
+              this.$router.push('/bookingList');
 
             }
 
-
-          }).catch((res=>{}))
-
+          });
 
         }
-
-
-        else{
-
-
-          this.$router.push('/bookingList');
-
-        }
-
-
 
       }
 

@@ -40,6 +40,30 @@
 
     mounted () {
 
+      if(this.$route.query.jumpto == 'jiabaitiao'){
+
+        /**
+         * 接口：消费场景-嘉白条
+         * 请求方式：GET
+         * 接口：/open/jbt/redirect
+         * 入参：null
+         **/
+        this.$http({
+
+          method: 'get',
+
+          url: process.env.API_ROOT + 'open/jbt/redirect',
+
+        }).then((res) => {
+
+          console.log(res.data);
+
+          window.location.href = res.data.data;
+
+        }).catch((res)=>{})
+
+      }
+
 
 
 
