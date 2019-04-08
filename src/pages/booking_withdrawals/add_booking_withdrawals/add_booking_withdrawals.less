@@ -71,7 +71,7 @@
       input{
         flex: 1;
         color: #4a4a4a;
-        font-size: 14px;
+        font-size: 16px;
         &::placeholder{
           color: #dddddd;
         }
@@ -161,6 +161,49 @@
       &:checked{
         background-color: grey;
       }
+    }
+  }
+  .ps{
+    width: 90vw;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: white;
+    text-align: center;
+    padding: 10px 10%;
+    box-sizing: border-box;
+    .title{
+      font-size: 16px;
+      color: #4a4a4a;
+    }
+    .content{
+      text-align: left;
+      margin: 10px 0;
+      position: relative;
+      &:after{
+        content: '';
+        display: block;
+        width: 100%;
+        height: 1px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        border-top: 1px solid #ababab;
+      }
+      div{
+        font-size: 14px;
+        color: #ababab;
+      }
+      .import{
+        color: #ff7a3c;
+        padding-bottom: 15px;
+      }
+      div+div{
+        margin-top: 15px;
+      }
+    }
+    .close{
+      font-size: 18px;
+      color: #ff7a3c;
     }
   }
 }

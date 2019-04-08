@@ -37,7 +37,7 @@
       <div class="content">添加后系统将按您的计划时间自动执行提现操作</div>
     </div>
     <!--按钮-->
-    <orangeBtn v-bind:name="btnName" v-if="booking_list.length < 5"></orangeBtn>
+    <orangeBtn v-bind:name="btnName" v-if="booking_list.length < 5" v-on:clickEvent="addBookingWithdrawalsFn"></orangeBtn>
     <!--提示-->
     <div class="ps">温馨提示：最多可设置<span class="color_text">5个</span>预约提现任务</div>
     <!--帮助-->
@@ -74,7 +74,30 @@
 
     methods: {
 
+      addBookingWithdrawalsFn: function () {
 
+        /*
+      * 接口： 获取用户银行卡信息
+      * 请求方式： GET
+      * 接口： /user/bank/getbankcardinfo
+      * 传参： null
+      * */
+        this.$http({
+          method: 'get',
+          url: process.env.API_ROOT+ 'user/bank/getbankcardinfo',
+        }).then(res=>{
+
+          console.log(res);
+
+          localStorage.setItem('booking','1');
+
+          (res.data.data.length == 0) ? (this.$router.push('/addCard')) : (this.$router.push('/addBookingWithdrawals'));
+
+        }).catch(res=>{console.log(res)});
+
+
+
+      }
 
     },
 

@@ -6,7 +6,7 @@
         <div class="bank_logo">
           <img v-bind:src="bank.bankImg">
         </div>
-        <div class="bank_card_information">
+        <div class="bank_card_information" v-on:click="chooseCard(bank.bankCardId, bank.bankName, bank.bankNo)">
           <span>{{bank.bankName}}</span>
           <div v-if="bank.cardType == 1">储蓄卡</div>
           <div v-else-if="bank.cardType == 2">信用卡</div>
@@ -170,6 +170,23 @@
             this.setStorage('addCard','');
           this.$router.push('/addCard');
         }
+      },
+
+
+      chooseCard: function (card, bankName, bankNo) {
+
+        if(localStorage.getItem('booking')){
+
+          this.$store.bankCardId = card;
+
+          this.$store.bankName = bankName;
+
+          this.$store.bankNo = bankNo;
+
+          this.$router.replace('/addBookingWithdrawals');
+
+        }
+
       }
     },
     destroyed (){
