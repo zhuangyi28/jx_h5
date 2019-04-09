@@ -236,8 +236,6 @@
       /*页面初始化*/
       getData: function () {
 
-
-        this.setStorage('addCard','withdraw');
         //美恰初始化
         customerInit({
           name:this.getStorage('userName'),// 名字
@@ -343,6 +341,7 @@
                     if(res == 'cancel'){
                       this.$router.go(-1);
                     }else if(res == 'confirm'){
+                      this.setStorage('addCard','withdraw');
                       this.$router.push('/addCard');
                     }
                   })

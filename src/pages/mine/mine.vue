@@ -192,6 +192,10 @@
 
     mounted(){
 
+      localStorage.removeItem('booking');
+
+      localStorage.removeItem('bookingCertification');
+
       (this.getStorage('anotherCertification') == 1) && (this.removeStorage('anotherCertification') || this.$router.push('/personalCenter'));
 
       this.bus.$emit('pageChange','3');

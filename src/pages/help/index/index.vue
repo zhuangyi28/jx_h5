@@ -80,6 +80,22 @@
               'title':'提现限额？',
               'no':'4',
           },
+          {
+              'title': '什么是预约提现？',
+              'no': '11',
+          },
+          {
+              'title': '预约提现规则？',
+              'no': '12',
+          },
+          {
+              'title': '如何设置预约提现？',
+              'no': '13'
+          },
+          {
+              'title': '预约提现失败怎么办？',
+              'no': '14'
+          }
 
         ],
         helpDetail2:[
@@ -165,6 +181,7 @@
             this.phoneNumber = 'tel:022-65183210';
 
             break
+
           case 'xinqidian':
 
             this.phoneNumber = 'tel:010-59081288';

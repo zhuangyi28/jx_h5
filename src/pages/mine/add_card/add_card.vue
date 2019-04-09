@@ -305,8 +305,13 @@
               setTimeout(()=>{
                 toast.close();
                 if(this.getStorage('addCard') == 'withdraw'){
+                  localStorage.removeItem('addCard');
                     this.$router.push('/withdraw');
                     return;
+                }
+                else if(localStorage.getItem('booking') == 1){
+                  this.$router.replace('/addBookingWithdrawals');
+                  return;
                 }
                 this.$router.push('/bankCard');
               },500);

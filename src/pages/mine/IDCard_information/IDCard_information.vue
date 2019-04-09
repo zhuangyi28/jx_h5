@@ -478,6 +478,8 @@
                       duration: 2000
                     });
 
+                    (localStorage.getItem('bookingCertification') == '1') && (localStorage.setItem('bookingBack','1')) && (localStorage.removeItem('bookingCertification'));
+
                     this.$router.go(-3);
 
                   }else if(res.data.code == '-1'){
