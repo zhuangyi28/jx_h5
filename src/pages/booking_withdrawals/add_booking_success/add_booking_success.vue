@@ -5,16 +5,39 @@
     </div>
     <div class="success_detail">
       <div>预约提现添加成功</div>
-      <div>￥100.00</div>
-      <div class="color_text">每天自动提现值工商银行（0568）</div>
+      <div>￥{{balance}}</div>
+      <div class="color_text">{{information}}</div>
     </div>
-    <div class="back_btn message_btn_color color_text">返回</div>
+    <div class="back_btn message_btn_color color_text" v-on:click="$router.push('/bookingList')">返回</div>
   </div>
 </template>
 <script>
   export default {
 
-    name: 'addBookingSuccess'
+    name: 'addBookingSuccess',
+
+    data () {
+
+      return {
+
+        balance: '',
+
+        information: ''
+
+      }
+
+    },
+
+    mounted () {
+
+      this.balance = this.$store.data.balance;
+
+      this.information = this.$store.data.information;
+
+      this.balance = (+this.balance/100).toFixed(2);
+
+    },
+
 
   }
 </script>
