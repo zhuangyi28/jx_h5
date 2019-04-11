@@ -177,11 +177,13 @@
 
         if(localStorage.getItem('booking')){
 
-          this.$store.bankCardId = card;
+          this.$store.bank = {};
 
-          this.$store.bankName = bankName;
+          this.$store.bank.bankCardId = card;
 
-          this.$store.bankNo = bankNo;
+          this.$store.bank.bankName = bankName;
+
+          this.$store.bank.bankNo = bankNo;
 
           this.$router.replace('/addBookingWithdrawals');
 
