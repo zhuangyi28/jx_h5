@@ -19,7 +19,7 @@
 
       var url;
 
-      url1 && (url = url1.split('=')[1]);
+      url1 && (url = url1.split('=')[1].split('&')[0]);
 
       (url && url1.indexOf('theme') != -1) ? this.setCookie('anotherCompany',url) : (url = this.getCookie('anotherCompany'));
 

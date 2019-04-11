@@ -71,11 +71,13 @@ axios.install = (Vue) => {
 
       localStorage.clear();
 
+/*
       Toast({
         message: error.response.data.msg,
         position: 'middle',
         duration: 1000
       });
+*/
 
       setTimeout(function () {
 
