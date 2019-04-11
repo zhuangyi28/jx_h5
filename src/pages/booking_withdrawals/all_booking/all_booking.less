@@ -1,9 +1,10 @@
 .all_booking{
-  padding-bottom: 80px;
   box-sizing: border-box;
   position: relative;
-  min-height: 100vh;
+  margin-bottom: 30px;
+
   .booking_list{
+    margin: 0 0 20px;
     background-color: white;
     .list_one{
       padding: 15px;
@@ -25,15 +26,44 @@
             color: #4a4a4a;
           }
           .time{
-            font-size: 12px;
             color: #ababab;
           }
         }
       }
-      .state{
-        color: #ababab;
-        font-size: 14px;
+      .cell{
+        position: relative;
+        text-align: right;
+        margin-right: 15px;
+        .state{
+          font-size: 16px;
+        }
+        .reason{
+          color: #8a8a8a;
+        }
+
       }
+      .next_btn{
+        position: absolute;
+        display: inline-block;
+        top: 45%;
+        right: 15px;
+        width: 5px;
+        height: 5px;
+        margin-left: 5px;
+        &:after{
+          border: solid 2px #ddd;
+          border-bottom-width: 0;
+          border-left-width: 0;
+          content: " ";
+          top: 0;
+          right: 0;
+          position: absolute;
+          width: 5px;
+          height: 5px;
+          transform: rotate(45deg);
+        }
+      }
+
     }
     .list_one+.list_one:before{
       content: '';
@@ -47,11 +77,15 @@
     }
   }
   .look_bill{
-    position: absolute;
-    bottom: 40px;
+    position: fixed;
+    bottom: 0;
     width: 100%;
-    font-size: 12px;
-    color: #ababab;
+    font-size: 14px;
+    padding: 10px 0;
     text-align: center;
+    background-color: #fff;
+    i{
+      margin-right: 5px;
+    }
   }
 }

@@ -80,6 +80,7 @@ import bookingWithdrawalsDetail from '@/pages/booking_withdrawals/booking_withdr
 import allBooking from '@/pages/booking_withdrawals/all_booking/all_booking'
 import allHistory from '@/pages/booking_withdrawals/all_history/all_history'
 import contractAgreement from '@/pages/contract/agreement/agreement'
+import bookingAgreement from '@/pages/booking_withdrawals/agreement/agreement'
 
 Vue.use(Router)
 
@@ -732,6 +733,7 @@ export default new Router({
       component: addBookingSuccess
     },
     {
+      //此页面不需要
       path: '/bookingWithdrawalsDetail',
       name: 'bookingWithdrawalsDetail',
       meta: {
@@ -743,11 +745,12 @@ export default new Router({
       path: '/allBooking',
       name: 'allBooking',
       meta: {
-        title: '全部预约计划'
+        title: '预约提现详情'
       },
       component: allBooking
     },
     {
+      //此页面不需要
       path: '/allHistory',
       name: 'allHistory',
       meta: {
@@ -762,8 +765,15 @@ export default new Router({
         title: '数字证书使用协议'
       },
       component: contractAgreement
+    },
+    {
+      path: '/bookingAgreement',
+      name: 'bookingAgreement',
+      meta: {
+        title: '预约提现服务协议'
+      },
+      component: bookingAgreement
     }
-
 
   ]
 })

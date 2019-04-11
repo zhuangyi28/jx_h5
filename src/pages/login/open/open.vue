@@ -22,6 +22,10 @@
 
      var anotherCompany = this.getCookie('anotherCompany') || 'orange';
 
+      var url1 = location.href.split('?')[1];
+
+      url1.indexOf('type=jbt')!= -1 ?this.setCookie('type','jbt'):this.setCookie('type','jx')
+
       if(anotherCompany){
 
         switch (anotherCompany) {
@@ -79,11 +83,11 @@
 
       //var APPID = 'wx1c4f2e1dc540639e';//生产开发者ID
 
-      var REDIRECT_URI = 'http://jxtest.99payroll.cn/jxpf-h5/#/loadingPage';//测试回调的URL
+     var REDIRECT_URI = 'http://jxtest.99payroll.cn/jxpf-h5/#/loadingPage';//测试回调的URL
 
       //var REDIRECT_URI = 'https://user.99payroll.cn/#/loadingPage';//生产回调的URL
 
-      var thisUrl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+APPID+'&redirect_uri='+encodeURIComponent(REDIRECT_URI)+'&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect';
+      var thisUrl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+APPID+'&redirect_uri='+encodeURIComponent(REDIRECT_URI)+'&response_type=code&scope=snsapi_base&state=1#wechat_redirect';
 
       //alert(thisUrl)
 

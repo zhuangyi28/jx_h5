@@ -40,34 +40,9 @@
 
     mounted () {
 
-      if(this.$route.query.jumpto == 'jiabaitiao'){
-
-        /**
-         * 接口：消费场景-嘉白条
-         * 请求方式：GET
-         * 接口：/open/jbt/redirect
-         * 入参：null
-         **/
-        this.$http({
-
-          method: 'get',
-
-          url: process.env.API_ROOT + 'open/jbt/redirect',
-
-        }).then((res) => {
-
-          console.log(res.data);
-
-          window.location.href = res.data.data;
-
-        }).catch((res)=>{})
-
-      }
-
-
-
 
       var anotherCompany = this.getCookie('anotherCompany') || 'orange';
+
 
       if(anotherCompany){
 
@@ -226,6 +201,8 @@
 
       //this.init();
 
+      console.log('loading页code'+thisUserCode)
+
       //获取UnionID
 
     this.$http({
@@ -281,11 +258,71 @@
 
       init: function () {
 
-        setTimeout(()=> {
 
-          this.$router.push('/workDesk/taskSquare');
+          if(this.getCookie('type')=='jbt'){
 
-        },200)
+            if(!localStorage.getItem('Authorization')){
+
+              this.$router.push('/login');
+
+            }
+
+            else {
+
+              console.log('跳转嘉白条')
+              /**
+               * 接口：消费场景-嘉白条
+               * 请求方式：GET
+               * 接口：/open/jbt/redirect
+               * 入参：null
+               **/
+              this.$http({
+
+                method: 'get',
+
+                url: process.env.API_ROOT + 'open/jbt/redirect',
+
+              }).then((res) => {
+
+                console.log(res.data);
+
+                window.location.href = res.data.data;
+
+              }).catch((res)=>{
+
+
+                  console.log(res.response.data.code)
+
+                if(res.response.data.code=='3001'){
+
+
+                  localStorage.clear();
+
+                  delete this.$http.defaults.headers.common['Authorization'];
+
+                  this.$router.push('/login')
+
+
+                }
+
+              })
+
+            }
+
+
+
+          }
+          else{
+
+            setTimeout(()=> {
+
+              this.$router.push('/workDesk/taskSquare');
+
+            },200)
+
+
+          }
+
 
 
 

@@ -45,10 +45,17 @@
 
       </div>
 
+      <div class="cell" v-if="orderType=='08'">
+        <div>提现方式</div>
+        <div>预约提现</div>
+      </div>
+
       <div class="cell">
         <div>提现金额</div>
         <div>￥{{orderAmount}}</div>
       </div>
+
+
 
       <div class="cell" v-show="errorMsg?true:false">
         <div>退款原因</div>
@@ -155,6 +162,8 @@
 
            errorMsg:'',
 
+           orderType:'',
+
            hasErrorMsg:'',
 
            btnName:'去支付',
@@ -243,6 +252,8 @@
            this.rateAmount=res.data.data.rateAmount;
 
            this.createDate= res.data.data.createDate;
+
+            this.orderType = res.data.data.orderType;
 
 
          if(res.data.data.errorMsg){
