@@ -1,22 +1,25 @@
 <template>
   <div class="booking_list">
     <!--预约提现列表-->
-    <div class="list_show" v-if="booking_list.length != 0">
-      <div class="list_one" v-for="content in booking_list" >
+    <div class="list_show" v-if="bookingList.length != 0">
+      <div class="list_one" v-for="content in bookingList" v-on:click="$router.push({path: '/allBooking', query: {appointmentId: content.appointmentId}})">
         <div class="title">
           <div>
             <div class="color_background"><img src="../../../../static/images/cash_appt_clock.png"></div>
-            <span>预约提现</span>
+            <span v-if="!!content.remark">{{content.remark}}</span>
+            <span v-else>预约提现{{bookingList.indexOf(content)}}</span>
           </div>
-          <div class="img">
+          <div class="img" v-on:click="getChange('delete',content.appointmentId,bookingList.indexOf(content))" v-on:click.stop>
             <img src="../../../../static/images/contract_close.png">
           </div>
         </div>
-        <div class="booking_content color_text">每月15日提现3000.86元</div>
-        <div class="booking_card">至南京银行（**1468）</div>
+        <div class="booking_content color_text">{{content.caseDate}}日提现{{content.banlane|thousandBitSeparator}}元</div>
+        <div class="booking_card">至{{content.bankName}}（{{content.bankNo}}）</div>
         <div class="booking_time_state">
-          <div class="booking_time">下期02月15日执行</div>
-          <div class="booking_state border_color">暂停</div>
+          <div class="booking_time" v-if="content.isStartup == 1">下期{{content.nextDate}}执行</div>
+          <div class="booking_time" v-else-if="content.isStartup == 2">预约提现已暂停</div>
+          <div class="booking_state border_color" v-if="content.isStartup == 2"  v-on:click="getChange('open',content.appointmentId,bookingList.indexOf(content))">开启</div>
+          <div class="booking_state border_color" v-else-if="content.isStartup == 1"  v-on:click="getChange('stop',content.appointmentId,bookingList.indexOf(content))">暂停</div>
         </div>
       </div>
     </div>
@@ -37,12 +40,12 @@
       <div class="content">添加后系统将按您的计划时间自动执行提现操作</div>
     </div>
     <!--按钮-->
-    <orangeBtn v-bind:name="btnName" v-if="booking_list.length < 5" v-on:clickEvent="addBookingWithdrawalsFn"></orangeBtn>
+    <orangeBtn v-bind:name="btnName" v-if="bookingList.length < 5" v-on:clickEvent="addBookingWithdrawalsFn"></orangeBtn>
     <!--提示-->
     <div class="ps">温馨提示：最多可设置<span class="color_text">5个</span>预约提现任务</div>
     <!--帮助-->
     <div class="help">
-      <div class="rule">规则说明</div>
+      <span class="iconfont icon-rule_declaration color_text"></span><span class="rule">规则说明</span>
     </div>
   </div>
 </template>
@@ -58,7 +61,7 @@
 
       return {
 
-        booking_list: [],
+        bookingList: [],
 
         btnName: '添加预约提现'
 
@@ -72,7 +75,40 @@
 
     },
 
+    mounted () {
+
+      this.data();
+
+    },
+
     methods: {
+
+      data: function () {
+
+        /*
+      * 接口： 查询预约列表
+      * 请求方式： GET
+      * 接口： userappointment/user/getappoinmentlist
+      * 传参： null
+      * */
+        this.$http({
+          method: 'get',
+          url: process.env.API_ROOT+ 'userappointment/user/getappointmentlist',
+        }).then(res=>{
+
+          this.bookingList = res.data.data;
+
+          for(var list of this.bookingList){
+
+            var date = new Date(list.nextDate);
+
+            list.nextDate = ((date.getMonth()+1)+'').padStart(2,'0') + '月' + ((date.getDate()+'').padStart(2,'0') + '日');
+
+          }
+
+        })
+
+      },
 
       addBookingWithdrawalsFn: function () {
 
@@ -96,6 +132,125 @@
         }).catch(res=>{console.log(res)});
 
 
+
+      },
+
+      getChange: function (type, id, index) {
+
+        var isStartup;
+
+        switch (type) {
+
+          case 'delete':
+
+            isStartup = 3;
+
+            this.$messagebox({
+
+              title: '提示',
+              message: '预约提现删除后，将不再进行自动提现，且将删除所有记录，确定要删除吗？',
+              showCancelButton:true,
+              confirmButtonText: '删除',
+              cancelButtonText: '取消',
+              closeOnClickModal: true,
+              cancelButtonClass: 'cancel_btn',
+              confirmButtonClass: 'confirm_btn_orange',
+
+            }).then(res=>{
+
+              (res == 'confirm') && (this.changeBooking(isStartup ,id ,index));
+
+            });
+
+            break;
+
+          case  'open':
+
+            isStartup = 1;
+
+            this.$messagebox({
+
+              title: '提示',
+              message: '重新开启后，将继续按照计划时间自动提现，确定要开启吗？',
+              showCancelButton:true,
+              confirmButtonText: '开启',
+              cancelButtonText: '取消',
+              closeOnClickModal: true,
+              cancelButtonClass: 'cancel_btn',
+              confirmButtonClass: 'confirm_btn_orange',
+
+            }).then(res=>{
+
+              (res == 'confirm') && (this.changeBooking(isStartup ,id ,index));
+
+            });
+
+            break;
+
+          case 'stop':
+
+            isStartup = 2;
+
+            this.$messagebox({
+
+              title: '提示',
+              message: '预约提现暂停后，将不再进行自动提现，确定要暂停吗？',
+              showCancelButton:true,
+              confirmButtonText: '暂停',
+              cancelButtonText: '取消',
+              closeOnClickModal: true,
+              cancelButtonClass: 'cancel_btn',
+              confirmButtonClass: 'confirm_btn_orange',
+
+            }).then(res=>{
+
+              (res == 'confirm') && (this.changeBooking(isStartup ,id ,index));
+
+            });
+
+            break;
+
+        }
+
+      },
+
+
+
+
+      changeBooking: function (isStartup, id, index) {
+
+        /*
+      * 接口： 更改预约状态
+      * 请求方式： POST
+      * 接口： userappointment/update/updateappointmentlist
+      * 传参： appointmentId, isStartup
+      * */
+        this.$http({
+          method: 'get',
+          url: process.env.API_ROOT+ 'userappointment/update/updateappointmentlist',
+          params: {
+
+            isStartup: isStartup,
+
+            appointmentId: id
+
+          }
+        }).then(res=>{
+          this.$toast({
+
+          message: res.data.msg,
+          position: 'middle',
+          duration: 1500
+
+        });
+
+          if(res.data.code == '0000'){
+
+            (isStartup != 3) ? (this.bookingList[index].isStartup = isStartup) : (this.bookingList.splice(index,1));
+
+          }
+
+        })
 
       }
 

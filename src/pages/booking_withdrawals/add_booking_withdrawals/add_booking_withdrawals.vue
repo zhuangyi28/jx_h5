@@ -13,10 +13,10 @@
       <span class="allow_right"></span>
     </div>
     <div class="withdraw_detail">
-      <div class="title">提现金额<span class="help color_text" v-on:click="psShow=true">?</span></div>
+      <div class="title">提现金额<span class="help color_text" v-on:click="showPs">?</span></div>
       <div class="withdraw_input">
         <span>￥</span>
-        <input type="text" v-bind:placeholder="maxWithdraw+amountMax+'元'" v-model="withdrawMoney">
+        <input type="text" v-bind:placeholder="maxWithdraw+amountMax+'元'" v-model="withdrawMoney" v-on:blur="moneyToFixed">
         <span class="color_text" v-on:click="withdrawMoney = '到期提现全部余额'">全部提现</span>
       </div>
     </div>
@@ -36,7 +36,7 @@
           <div><img src="../../../../static/images/cash_appt_start.png"></div>
           <div>
             <div>首次开始事件</div>
-            <div>首次提现： <span class="color_text">2019.02.15</span></div>
+            <div>首次提现： <span class="color_text">{{firstTimeBooking}}</span></div>
           </div>
         </div>
         <div class="option">
@@ -59,14 +59,14 @@
           <div><img src="../../../../static/images/cash_appt_tips.png"></div>
           <div>备注</div>
         </div>
-        <input type="text" placeholder="选填，1-10个字" maxlength="10">
+        <input type="text" placeholder="选填，1-10个字" maxlength="10" v-model="remark">
       </div>
     </div>
     <div class="agreement">
       <input type="checkbox" name="agree" id="agree">
       <label for="agree">同意</label><span class="color_text">《预约提现服务协议》</span>
     </div>
-    <orangeBtn v-bind:name="btnName"></orangeBtn>
+    <orangeBtn v-bind:name="btnName" v-on:clickEvent="handleClick"></orangeBtn>
     <mt-popup v-model="psShow">
       <div class="ps">
         <div class="title">提示</div>
@@ -101,11 +101,15 @@
 
       <mt-picker v-bind:slots="firstTimeList" @change="firstTimeChange"></mt-picker>
     </mt-popup>
+
+    <passwordBox v-on:clickEvent="submit" v-if="passwordBoxShow" v-on:boxClose="boxClose"></passwordBox>
+
   </div>
 </template>
 <script>
   import { bankCardJson } from "../../../../static/js/bankCardJson"
   import orangeBtn from '../../../components/orange_btn/orange_btn'
+  import passwordBox from '../../../components/password_box/password_box'
 
   export default {
 
@@ -115,25 +119,27 @@
 
       orangeBtn: orangeBtn,
 
+      passwordBox: passwordBox
+
     },
 
     data () {
 
       return {
 
-        maxWithdraw: '每笔最高',
+        maxWithdraw: '每笔最高',//预约提现限额
 
-        btnName: '完成',
+        btnName: '完成',//按钮名称
 
-        bankName: '',
+        bankName: '',//银行名称
 
-        cardId: '',
+        cardId: '',//银行卡代码
 
-        bankCardJson: bankCardJson,
+        bankCardJson: bankCardJson,//银行logo列表
 
-        bankImg: '',
+        bankImg: '',//银行logo
 
-        bankNo: '',
+        bankNo: '',//银行卡号码
 
         amountMax: '',//最大提现金额
         amountMin: '',//最小提现金额
@@ -142,17 +148,17 @@
         monthMaxAmount: '',//每月最大提现金额
         rate: '',//费率,
 
-        psShow: false,
+        psShow: false,//预约提现介绍显示
 
-        withdrawMoney: '',
+        withdrawMoney: '',//预约提现金额
 
-        date: '',
+        date: '',//提现截止时间
 
-        startDate: '',
+        startDate: '',//时间插件开始时间
 
-        newDate: '长期有效',
+        newDate: '',//页面显示的提现截止时间
 
-        cycleShow: false,
+        cycleShow: false,//周期选择插件
 
         cycleList: [
 
@@ -161,13 +167,13 @@
             values: ['按月循环','按周循环','按天循环']
           }
 
-        ],
+        ],//周期显示插件数据
 
-        cycleType: '按月循环',
+        cycleType: '按月循环',//提现周期值
 
-        char: '',
+        char: '',//临时变量，临时保存数据
 
-        firstTimeShow: false,
+        firstTimeShow: false,//首次开始提现插件
 
         firstTimeList: [
 
@@ -176,9 +182,17 @@
             values: ["1日", "2日", "3日", "4日", "5日", "6日", "7日", "8日", "9日", "10日", "11日", "12日", "13日", "14日", "15日", "16日", "17日", "18日", "19日", "20日", "21日", "22日", "23日", "24日", "25日", "26日", "27日","28日"]
           }
 
-        ],
+        ],//首次开始提现插件数据
 
-        firstTimeType: '15日'
+        firstTimeType: '15日',//首次开始提现时间（每月）
+
+        firstTimeBooking: '',//首次开始提现事件（最近一次）
+
+        passwordBoxShow: false,//密码输入显示
+
+        params: {},//添加预约参数
+
+        remark: '',//备注
 
       }
 
@@ -194,52 +208,15 @@
 
       data: function () {
 
-        if(!!this.$store.bankCardId){
-
-          this.bankName = this.$store.bankName;
-
-          this.cardId = this.$store.bankCardId;
-
-          this.bankImg = this.getBankImg(this.bankName);
-
-          this.bankNo = this.$store.bankNo;
-
-        }else{
-
-              /*
-         * 接口： 获取用户银行卡信息
-         * 请求方式： GET
-         * 接口： /user/bank/getbankcardinfo
-         * 传参： null
-         * */
-          this.$http({
-            method: 'get',
-            url: process.env.API_ROOT+ 'user/bank/getbankcardinfo',
-          }).then(res=>{
-
-            var bank = res.data.data[0];
-
-            this.bankName = bank.bankName;
-
-            this.cardId = bank.bankCardId;
-
-            this.bankImg = this.getBankImg(this.bankName);
-
-            this.bankNo = bank.bankNo;
-
-          })
-
-        }
-
         /**
-         * 接口：检测用户发起提现操作
+         * 接口：检测用户发起添加预约操作操作
          * 请求方式：GET
          * 接口：user/work/checkwithdraw
          * 入参：null
          **/
         this.$http({
           method: 'get',
-          url: process.env.API_ROOT + 'user/work/checkwithdraw'
+          url: process.env.API_ROOT + 'user/work/checkappointment'
         }).then(res=>{
 
           this.amountMax = res.data.data.amountMax;
@@ -249,11 +226,25 @@
           this.monthMaxAmount = res.data.data.monthMaxAmount;
           this.rate = res.data.data.rate;
 
+          var bank;
+
+          (!!this.$store.bank) ? (bank = this.$store.bank) : (bank = res.data.data.userBankCardDTOList[0]);
+
+          this.bankName = bank.bankName;
+
+          this.cardId = bank.bankCardId;
+
+          this.bankNo = bank.bankNo;
+
+          this.bankImg = this.getBankImg(this.bankName);
+
+          this.date = new Date((new Date()).getTime()+60*60*24*1000);
+
+          this.startDate = this.date.getFullYear() + '-' + (this.date.getMonth()+1) + '-' + (this.date.getDate());
+
+          this.firstTimeBooking = this.firstTimeNear(15);
+
         });
-
-        this.date = new Date((new Date()).getTime()+60*60*24*1000);
-
-        this.startDate = this.date.getFullYear() + '-' + (this.date.getMonth()+1) + '-' + (this.date.getDate());
 
       },
 
@@ -326,13 +317,189 @@
 
         this.firstTimeType = this.char;
 
+        this.firstTimeBooking = this.firstTimeNear(this.firstTimeType);
+
         this.firstTimeShow = false;
+
+      },
+
+
+
+      firstTimeNear: function (time) {
+
+        var now = new Date();
+
+        if(parseInt(time) > now.getDate()){
+
+          return now.getFullYear() + '.' + ((now.getMonth()+1)+'').padStart(2,'0') + '.' + (parseInt(time)+'').padStart(2,'0');
+
+        }else{
+
+          return now.getFullYear() + '.' + ((now.getMonth()+2)+'').padStart(2,'0') + '.' + (parseInt(time)+'').padStart(2,'0');
+
+        }
+
+      },
+
+
+
+      submit: function (password, type) {
+
+        console.log(password, type);
+
+        this.params[type] = password;
+
+        /**
+         * 接口：用户添加预约提现操作
+         * 请求方式：GET
+         * 接口：user/user/addappointment
+         * 入参：bankCardId, banlane, appoinmentType, startDate, endDate, remark, payPassword, code
+         **/
+        this.$http({
+          method: 'post',
+          url: process.env.API_ROOT + 'user/user/addappointment',
+          params: this.params
+        }).then(res=>{
+
+          if(res.data.code == '0000'){
+
+            this.$store.data = res.data.data;
+
+            this.passwordBoxShow = false;
+
+            this.$router.push('/addBookingSuccess');
+
+          }else{
+
+            this.$toast({
+
+              message: res.data.msg,
+              position: 'middle',
+              duration: 1500
+
+            });
+
+            this.$indicator.close();
+
+            this.passwordBoxShow = false;
+
+          }
+
+        })
+
+
+      },
+
+
+
+      boxClose: function (bool) {
+
+        this.passwordBoxShow = bool;
+
+      },
+
+
+
+
+      handleClick: function () {
+
+        var checkbox = document.getElementById('agree');
+
+        if(!checkbox.checked){
+
+          this.$toast({
+
+            message: '请同意《预约提现服务协议》',
+            position: 'middle',
+            duration: 1500
+          });
+
+          return;
+
+        }
+
+        if(this.withdrawMoney){
+
+          this.params.banlane = this.withdrawMoney;
+
+        }else{
+
+          this.$toast({
+
+            message: '请输入提现金额',
+            position: 'middle',
+            duration: 1500
+
+          });
+
+          return;
+
+        }
+
+        (!!this.date) ? (this.params.endDate = (this.date.getFullYear()) + '-' + ((this.date.getMonth()+1)+'').padStart(2,'0') + '-' + ((this.date.getDate())+'').padStart(2,'0')):
+          (this.params.endDate = null);
+
+        switch (this.cycleType) {
+
+          case '按月循环':
+
+            this.params.appoinmentType = '1';
+
+            break;
+
+          case '按周循环':
+
+            this.params.appoinmentType = '2';
+
+            break;
+
+          case '按天循环':
+
+            this.params.appoinmentType = '3';
+
+            break;
+
+        }
+
+        this.params.startDate = this.firstTimeBooking.split('.').join('-');
+
+        console.log(this.params.startDate);
+
+        this.params.bankCardId = this.cardId;
+
+        this.params.remark = this.remark;
+
+        this.passwordBoxShow = true;
+
+      },
+
+
+
+      showPs: function () {
+
+        this.$messagebox({
+
+          title: '提示',
+          message: `*手续费：0%，单卡单笔${this.amountMax}元，当日${this.dayMaxAmount}元，当月${this.monthMaxAmount}元</br>
+          *若提现金额超出单笔最高额度，将分多笔进行提现`,
+          confirmButtonText: '确定',
+          closeOnClickModal: true,
+          confirmButtonClass: 'confirm_btn_orange',
+
+        })
+
+      },
+
+
+
+
+      moneyToFixed: function () {
+
+        this.withdrawMoney = (+this.withdrawMoney).toFixed(2);
 
       }
 
-
     },
-
 
 
     watch: {
@@ -358,6 +525,14 @@
       }
 
 
+
+    },
+
+
+
+    destroyed () {
+
+      this.$indicator.close();
 
     }
 

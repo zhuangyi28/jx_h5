@@ -230,44 +230,41 @@
     },
     methods: {
 
-        init:function () {
+      init: function () {
 
-          /**
-           * 接口：登录
-           * 请求方式：POST
-           * 接口：login
-           * 入参：mobile，password,code
-           **/
+        this.appointmentId = this.$route.query.appointmentId;
 
-          this.$http({
+        /**
+         * 接口：预约提现详情
+         * 请求方式：GET
+         * 接口：userappointment/update/getappointmentplan
+         * 入参：appointmentId, pageNum, pageSize
+         **/
+        this.$http({
+          method: 'get',
+          url: process.env.API_ROOT + 'userappointment/update/getappointmentplan',
+          params: {
 
-            method: 'post',
+            appointmentId: this.appointmentId
 
-            url:process.env.API_ROOT+'userappointment/update/getappointmentplan',
+          }
+        }).then(res=>{
 
-            params: {
+          this.bookingList = res.data.data.list;
 
-              appointmentId:'10000000000049',
+          for(var content of this.bookingList){
 
-              pageNum:1,
+            (content.banlane == '∞') && (content.banlane = '全部余额');
 
-              pageSize:10,
+            var date = new Date(content.executionDate);
 
-            }
+            content.executionDate = date.getFullYear() + '-' + ((date.getMonth()+1)+'').padStart(2,'0') + '-' + (date.getDate()+'').padStart(2,'0') + ' ' + date.getHours() + ':' + (date.getMonth()+'').padStart(2,'0') + ':' + (date.getSeconds()+'').padStart(2,'0');
 
+          }
 
-          }).then((res)=>{
+        });
 
-
-              console.log(res.data)
-
-
-
-
-
-          }).catch((res)=>{})
-
-        },
+      },
 
       showReasonFn:function () {
 
