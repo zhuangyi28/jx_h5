@@ -27,6 +27,8 @@
 
         case 'orange':
 
+          document.title = '嘉薪';
+
           document.documentElement.style.setProperty('--mainColor', '#ff7a3c');
 
           document.documentElement.style.setProperty('--lessColor', '#ff6855');
@@ -38,6 +40,8 @@
           break;
 
         case 'blue':
+
+          document.title = '派云众包';
 
           document.documentElement.style.setProperty('--mainColor', '#4199f0');
 
@@ -52,6 +56,8 @@
 
         case 'lexiang':
 
+          document.title = '乐享易保';
+
           document.documentElement.style.setProperty('--mainColor', '#4199f0');
 
           document.documentElement.style.setProperty('--lessColor', '#4490e8');
@@ -63,6 +69,8 @@
           break;
 
         case 'rongyada':
+
+          document.title = '嵘雅达';
 
           document.documentElement.style.setProperty('--mainColor', '#063786');
 
@@ -77,6 +85,8 @@
 
          case 'yibangsheng':
 
+           document.title = '亿邦盛';
+
           document.documentElement.style.setProperty('--mainColor', '#ffa200');
 
           document.documentElement.style.setProperty('--lessColor', '#ffcd72');
@@ -90,6 +100,8 @@
 
         case 'xinqidian':
 
+          document.title = '薪企点';
+
           document.documentElement.style.setProperty('--mainColor', '#f08200');
 
           document.documentElement.style.setProperty('--lessColor', '#ffb45b');
@@ -102,6 +114,8 @@
           break;
 
         case 'zuirenli':
+
+          document.title = '最人力企服';
 
           document.documentElement.style.setProperty('--mainColor', '#da6925');
 
