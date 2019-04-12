@@ -5,7 +5,7 @@
     </div>
     <div class="success_detail">
       <div>预约提现添加成功</div>
-      <div>￥{{balance}}</div>
+      <div>{{balance}}</div>
       <div class="color_text">{{information}}</div>
     </div>
     <div class="back_btn message_btn_color color_text" v-on:click="$router.push('/bookingList')">返回</div>
@@ -34,7 +34,7 @@
 
       this.information = this.$store.data.information;
 
-      this.balance = (+this.balance/100).toFixed(2);
+      (this.balance != '提现全部余额') && (this.balance ='￥' + (+this.balance/100).toFixed(2));
 
     },
 
