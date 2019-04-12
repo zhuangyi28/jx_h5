@@ -13,13 +13,18 @@
             <img src="../../../../static/images/contract_close.png">
           </div>
         </div>
-        <div class="booking_content color_text">{{content.caseDate}}日提现{{content.banlane|thousandBitSeparator}}元</div>
+        <div class="booking_content color_text" v-if="content.banlane == '∞'">{{content.caseDate}}日提现全部余额</div>
+        <div class="booking_content color_text" v-else>{{content.caseDate}}日提现{{content.banlane|thousandBitSeparator}}元</div>
         <div class="booking_card">至{{content.bankName}}（{{content.bankNo}}）</div>
         <div class="booking_time_state">
           <div class="booking_time" v-if="content.isStartup == 1">下期{{content.nextDate}}执行</div>
           <div class="booking_time" v-else-if="content.isStartup == 2">预约提现已暂停</div>
-          <div class="booking_state border_color" v-if="content.isStartup == 2"  v-on:click="getChange('open',content.appointmentId,bookingList.indexOf(content))">开启</div>
-          <div class="booking_state border_color" v-else-if="content.isStartup == 1"  v-on:click="getChange('stop',content.appointmentId,bookingList.indexOf(content))">暂停</div>
+          <div class="booking_state border_color" v-if="content.isStartup == 2"
+               v-on:click="getChange('open',content.appointmentId,bookingList.indexOf(content))" v-on:click.stop>
+            开启</div>
+          <div class="booking_state border_color" v-else-if="content.isStartup == 1"
+               v-on:click="getChange('stop',content.appointmentId,bookingList.indexOf(content))" v-on:click.stop>
+            暂停</div>
         </div>
       </div>
     </div>
