@@ -286,6 +286,8 @@
 
                 console.log(res.data);
 
+                (this.getCookie('type') == 'jbt') && (this.setCookie('type','jx'));
+
                 window.location.href = res.data.data;
 
               }).catch((res)=>{
