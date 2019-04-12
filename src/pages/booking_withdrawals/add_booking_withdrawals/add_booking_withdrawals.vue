@@ -21,7 +21,7 @@
       </div>
     </div>
     <div class="withdraw_option">
-      <div class="withdraw_cycle" v-on:click="cycleShow = true">
+      <div class="withdraw_cycle" v-on:click="cycleShow = true ; char = cycleType">
         <div class="title">
           <div><img src="../../../../static/images/cash_appt_cycle.png"></div>
           <div>提现周期</div>
@@ -31,7 +31,7 @@
           <span class="allow_right"></span>
         </div>
       </div>
-      <div class="withdraw_start" v-on:click="firstTimeShow=true">
+      <div class="withdraw_start" v-on:click="firstTimeSelect">
         <div class="title">
           <div><img src="../../../../static/images/cash_appt_start.png"></div>
           <div>
@@ -40,7 +40,9 @@
           </div>
         </div>
         <div class="option">
-          <span>每月{{firstTimeType}}</span>
+          <span v-if="cycleType == '按月循环'">每月{{firstTimeType}}</span>
+          <span v-else-if="cycleType == '按周循环'">每周{{firstTimeType}}</span>
+          <span v-else-if="cycleType == '按天循环'">{{firstTimeType}}</span>
           <span class="allow_right"></span>
         </div>
       </div>
@@ -88,6 +90,18 @@
       </div>
 
       <mt-picker v-bind:slots="cycleList" @change="cycleChange"></mt-picker>
+    </mt-popup>
+
+    <mt-popup v-model="firstTimeWeek" position="bottom">
+
+      <div class="button">
+
+        <div class="cancel" v-on:click="firstTimeWeek=false">取消</div>
+        <div class="confirm" v-on:click="firstTimeConfirm">确定</div>
+
+      </div>
+
+      <mt-picker v-bind:slots="cycleWeekList" @change="firstTimeChange"></mt-picker>
     </mt-popup>
 
     <mt-popup v-model="firstTimeShow" position="bottom">
@@ -169,6 +183,16 @@
 
         ],//周期显示插件数据
 
+        cycleWeekList: [
+
+          {
+            flex: 1,
+            values: ['每周一','每周二','每周三','每周四','每周五','每周六','每周日'],
+            defaultIndex: 0
+          }
+
+        ],
+
         cycleType: '按月循环',//提现周期值
 
         char: '',//临时变量，临时保存数据
@@ -179,12 +203,13 @@
 
           {
             flex: 1,
-            values: ["1日", "2日", "3日", "4日", "5日", "6日", "7日", "8日", "9日", "10日", "11日", "12日", "13日", "14日", "15日", "16日", "17日", "18日", "19日", "20日", "21日", "22日", "23日", "24日", "25日", "26日", "27日","28日"]
+            values: ["1日", "2日", "3日", "4日", "5日", "6日", "7日", "8日", "9日", "10日", "11日", "12日", "13日", "14日", "15日", "16日", "17日", "18日", "19日", "20日", "21日", "22日", "23日", "24日", "25日", "26日", "27日","28日"],
+            defaultIndex: 0,
           }
 
         ],//首次开始提现插件数据
 
-        firstTimeType: '15日',//首次开始提现时间（每月）
+        firstTimeType: '',//首次开始提现时间（每月）
 
         firstTimeBooking: '',//首次开始提现事件（最近一次）
 
@@ -193,6 +218,10 @@
         params: {},//添加预约参数
 
         remark: '',//备注
+
+        dateFor: '',
+
+        firstTimeWeek: false,//按周循环选择弹窗
 
       }
 
@@ -242,7 +271,11 @@
 
           this.startDate = this.date.getFullYear() + '-' + (this.date.getMonth()+1) + '-' + (this.date.getDate());
 
-          this.firstTimeBooking = this.firstTimeNear(15);
+          this.firstTimeType = this.date.getDate()-1 + '日';
+
+          this.firstTimeList[0].defaultIndex = this.firstTimeList[0].values.indexOf(this.firstTimeType);
+
+          this.firstTimeBooking = this.firstTimeNear(this.firstTimeType);
 
         });
 
@@ -263,7 +296,9 @@
 
       selectTime: function () {
 
-        this.newDate = this.date.getFullYear() + '' + ((this.date.getMonth()+1)+'').padStart(2,'0') + (this.date.getDate() + '').padStart(2,'0');
+        (this.dateFor == 'stop') && (this.newDate = this.dateChange('',this.date));
+
+        (this.dateFor == 'start') && (this.firstTimeType = this.dateChange('-',this.date)) && (this.firstTimeBooking = this.firstTimeType);
 
       },
 
@@ -283,6 +318,30 @@
 
         divLong.innerText = '长期有效';*/
 
+        this.dateFor = 'stop';
+
+        var nowTime = '';
+
+        if(!!this.newDate){
+
+          var year = this.newDate.substr(0,4);
+
+          var month = this.newDate.substr(4,2);
+
+          var day = this.newDate.substr(6,2);
+
+          nowTime = year+ '-' + month + '-'+ day;
+
+        }
+
+        var tomorrow = (new Date()).getTime()+60*60*24*1000;
+
+        var newDate = this.dateChange('-',new Date(tomorrow));
+
+        this.startDate = newDate;
+
+        this.date = new Date(nowTime);
+
         this.$refs.date.open();
 
       },
@@ -299,7 +358,17 @@
 
       cycleConfirm: function () {
 
+        var date = new Date();
+
         this.cycleType = this.char;
+
+        (this.char == '按月循环') && (this.firstTimeType = date.getDate() + '日');
+
+        (this.char == '按周循环') && (this.firstTimeType = this.weekChange(date.getDay())) && (this.cycleWeekList[0].defaultIndex = this.cycleWeekList[0].values.indexOf('每周'+this.firstTimeType));
+
+        (this.char == '按天循环') && (this.firstTimeType = this.dateChange('-',date));
+
+        this.firstTimeBooking = this.firstTimeNear(this.firstTimeType);
 
         this.cycleShow = false;
 
@@ -315,11 +384,15 @@
 
       firstTimeConfirm: function () {
 
-        this.firstTimeType = this.char;
+        (this.cycleType == '按月循环') && (this.firstTimeType = this.char);
+
+        (this.cycleType == '按周循环') && (this.firstTimeType = this.char[2]);
 
         this.firstTimeBooking = this.firstTimeNear(this.firstTimeType);
 
         this.firstTimeShow = false;
+
+        this.firstTimeWeek = false;
 
       },
 
@@ -329,13 +402,31 @@
 
         var now = new Date();
 
-        if(parseInt(time) > now.getDate()){
+        if(this.cycleType == '按月循环'){
 
-          return now.getFullYear() + '.' + ((now.getMonth()+1)+'').padStart(2,'0') + '.' + (parseInt(time)+'').padStart(2,'0');
+          if(parseInt(time) > now.getDate()){
 
-        }else{
+            return now.getFullYear() + '.' + ((now.getMonth()+1)+'').padStart(2,'0') + '.' + (parseInt(time)+'').padStart(2,'0');
 
-          return now.getFullYear() + '.' + ((now.getMonth()+2)+'').padStart(2,'0') + '.' + (parseInt(time)+'').padStart(2,'0');
+          }else{
+
+            return now.getFullYear() + '.' + ((now.getMonth()+2)+'').padStart(2,'0') + '.' + (parseInt(time)+'').padStart(2,'0');
+
+          }
+
+        }else if(this.cycleType == '按周循环'){
+
+          var weekArr = ['0','一','二','三','四','五','六','日'];
+
+          var week = weekArr.indexOf(time);
+
+          var thisWeek = weekArr.indexOf(this.weekChange(now.getDay()));
+
+          return this.dateChange('.', new Date((new Date()).getTime()+60*60*24*1000*(week - thisWeek)));
+
+        }else if(this.cycleType == '按天循环'){
+
+          return time.split('-').join('.');
 
         }
 
@@ -420,7 +511,7 @@
 
         if(this.withdrawMoney){
 
-          this.params.banlane = this.withdrawMoney;
+          (this.withdrawMoney == '到期提现全部余额') ? (this.params.banlane = '∞') : (this.params.banlane = this.withdrawMoney);
 
         }else{
 
@@ -436,8 +527,7 @@
 
         }
 
-        (!!this.date) ? (this.params.endDate = (this.date.getFullYear()) + '-' + ((this.date.getMonth()+1)+'').padStart(2,'0') + '-' + ((this.date.getDate())+'').padStart(2,'0')):
-          (this.params.endDate = null);
+        (!!this.date) ? (this.params.endDate = this.dateChange('-',this.date)): (this.params.endDate = null);
 
         switch (this.cycleType) {
 
@@ -497,7 +587,54 @@
 
         this.withdrawMoney = (+this.withdrawMoney).toFixed(2);
 
+      },
+
+
+
+      firstTimeSelect: function () {
+
+        (this.cycleType == '按月循环') && (this.firstTimeShow = true) && (this.char = this.firstTimeType);
+
+        (this.cycleType == '按周循环') && (this.firstTimeWeek = true) && (this.char = '每周'+this.firstTimeType);
+
+        if(this.cycleType == '按天循环'){
+
+          this.dateFor = 'start';
+
+          this.startDate = this.dateChange('-',new Date());
+
+          this.date = new Date(this.firstTimeBooking);
+
+          this.$refs.date.open();
+
+        }
+
+      },
+
+
+
+      weekChange: function (day) {
+
+        var weekArr = ['日','一','二','三','四','五','六'];
+
+        return weekArr[day];
+
+      },
+
+
+
+      dateChange: function (addPoint, date) {
+
+        var year = date.getFullYear();
+
+        var month = ((date.getMonth()+1)+'').padStart(2,'0');
+
+        var day = (date.getDate()+'').padStart(2,'0');
+
+        return year + addPoint + month + addPoint + day;
+
       }
+
 
     },
 
