@@ -185,7 +185,7 @@
 
           this.$store.bank.bankNo = bankNo;
 
-          this.$router.replace('/addBookingWithdrawals');
+          this.$router.go(-1);
 
         }
 

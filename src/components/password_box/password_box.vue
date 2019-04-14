@@ -44,7 +44,13 @@
 
         isSecurity: '',
 
-        password: ''
+        password: '',
+
+        mobile: '',
+
+        seconds: '',
+
+        used: true
 
       }
 
@@ -81,6 +87,10 @@
         }).then(res=>{
 
           this.isSecurity = res.data.data.isSecurity;
+
+          this.mobile = res.data.data.mobile;
+
+          (this.isSecurity == 1) && (this.getAgain());
 
         })
 
@@ -212,6 +222,48 @@
       boxClose: function () {
 
         this.$emit('boxClose',false);
+
+      },
+
+
+
+      getAgain: function () {
+
+        if(this.used){
+
+          this.used = false;
+
+          var time = 60;
+
+          this.seconds = time;
+
+          this.getCode();
+
+          var interval = setInterval(()=>{
+
+            if(!this.seconds){
+
+              this.used = true;
+
+              clearInterval(interval);
+
+            }else{
+
+              this.seconds--;
+
+            }
+
+          },1000);
+
+        }
+
+      },
+
+
+
+      getCode: function () {
+
+        this.$emit('getCode');
 
       }
 
