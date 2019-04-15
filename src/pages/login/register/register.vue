@@ -369,7 +369,17 @@
 
         var str = location.href;
 
-        var thisUserCode = str.split('?')[1].split('&')[0].split('=')[1];
+        if(str.includes('code')){
+
+          var thisUserCode = str.split('?')[1].split('&')[0].split('=')[1];
+
+        }
+
+        else {
+
+          var thisUserCode = 0
+        }
+
 
         /**
          * 接口：登录

@@ -66,7 +66,7 @@
     </div>
     <div class="agreement">
       <input type="checkbox" name="agree" id="agree">
-      <label for="agree">同意</label><span class="color_text">《预约提现服务协议》</span>
+      <label for="agree">同意</label><span class="color_text" v-on:click="$router.push('/bookingAgreement')">《预约提现服务协议》</span>
     </div>
     <orangeBtn v-bind:name="btnName" v-on:clickEvent="handleClick"></orangeBtn>
     <mt-popup v-model="psShow">

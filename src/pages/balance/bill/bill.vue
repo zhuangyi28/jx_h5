@@ -5,25 +5,28 @@
       <div class="bill_box" v-for="item in billList" v-on:click="clickBill(item.orderId, item.orderType)" v-bind:data-no="item.orderId"
          v-bind:data-type="item.orderType">
         <div class="bill_img">
-          <img v-if="item.orderType=='01'" src="../../../../static/images/jx_record.png"/>
+          <img v-if="item.orderType=='01'||item.orderType=='08'" src="../../../../static/images/jx_record.png"/>
           <img v-else-if="item.orderType=='02'" src="../../../../static/images/jx_roll_out.png"/>
           <img v-else-if="item.orderType=='03'" src="../../../../static/images/jx_switch_to.png"/>
         </div>
         <div class="bill_content">
           <div class="bill_cell">
             <p>￥{{item.orderAmount}}</p>
-            <p v-if="item.orderType=='01'">余额提现</p>
+            <p v-if="item.orderType=='01'||item.orderType=='08'">余额提现</p>
             <p v-else-if="item.orderType=='02'">转账-转出</p>
             <p v-else-if="item.orderType=='03'">转账-转入</p>
           </div>
           <div class="bill_cell">
+            <!-- 余额提现-->
             <p class="color_text" v-if="item.orderType=='01'&& item.orderState=='0'">待支付</p>
-            <p class="color_text" v-else-if="item.orderType=='01'&& item.orderState=='1'">完成</p>
+            <p class="color_text" v-else-if="(item.orderType=='01'||item.orderType=='08')&& item.orderState=='1'">完成</p>
             <p class="color_text" v-else-if="item.orderType=='02'&& item.orderState=='1'">成功</p>
             <p class="color_text" v-else-if="item.orderType=='03'&& item.orderState=='1'" >成功</p>
             <p class="color_text" v-else-if="item.orderType=='01'&& item.orderState=='2'">提交成功</p>
-            <p class="color_text" v-else-if="item.orderType=='01'&& item.orderState=='3'">处理中</p>
-            <p class="gray" v-else-if="item.orderType=='01'&& item.orderState=='4'">已退款</p>
+            <p class="color_text" v-else-if="(item.orderType=='01'||item.orderType=='08')&& item.orderState=='3'">处理中</p>
+            <p class="color_text" v-else-if="item.orderType=='08'&& item.orderState=='1'">完成</p>
+            <p class="color_text" v-else-if="item.orderType=='08'&& item.orderState=='3'">处理中</p>
+            <p class="gray" v-else-if="(item.orderType=='01'||item.orderType=='08')&& item.orderState=='4'">已退款</p>
             <p class="gray" v-else-if="item.orderType=='01'&& item.orderState=='5'">订单关闭</p>
             <p class="gray" v-else-if="item.orderType=='01'&& item.orderState=='7'">退款中</p>
             <p>{{item.createTime | fmtDateStr}}</p>
@@ -121,6 +124,18 @@
 
         }
 
+        else if(_whichBill=='8'){
+
+          console.log('我的预约提现');
+
+          this.orderTypes='08',
+
+          document.title="我的订单"
+
+          this.loadList();
+
+        }
+
 
 
         },
@@ -133,7 +148,7 @@
         //存储从哪个页面跳到我的账单 来判断导航名称（在我的账单取到 1为提现记录 2为转账记录）
         var _whichBill = this.getStorage('whichBill');
 
-        if(_whichBill=='1'||_whichBill=='2'){
+        if(_whichBill=='1'||_whichBill=='2'||_whichBill=='8'){
 
           var dataList = {
 

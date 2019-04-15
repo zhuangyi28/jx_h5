@@ -41,7 +41,7 @@
     <!--提示-->
     <div class="ps">温馨提示：最多可设置<span class="color_text">5个</span>预约提现任务</div>
     <!--帮助-->
-    <div class="help">
+    <div class="help" v-bind:data-no="12" v-on:click="helpDetailFn">
       <span class="iconfont icon-rule_declaration color_text"></span><span class="rule">规则说明</span>
     </div>
   </div>
@@ -211,9 +211,13 @@
 
       },
 
+      helpDetailFn:function (e) {
 
+        this.setStorage('helpPage',e.currentTarget.dataset.no)
 
+        this.$router.push('/helpDetail')
 
+      },
       changeBooking: function (isStartup, id, index) {
 
         /*

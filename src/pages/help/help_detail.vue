@@ -1,6 +1,6 @@
 <template>
 
-  <helpPages :ask="ask" :answer="answer"></helpPages>
+  <helpPages :ask="ask" :answer="answer" :tipsShow="tipsShow"></helpPages>
 
 </template>
 
@@ -26,7 +26,9 @@
 
         ask:'',
 
-        answer:''
+        answer:'',
+
+        tipsShow:false,
 
       }
 
@@ -126,7 +128,9 @@
          this.answer = '1、设置好预约提现规则后，系统将按照您设置的时间自动提交提现订单<br/><br/>' +
            '2、预约提现执行成功<span style="color: #ff4646">仅代表系统自动帮您提交了一笔提现订单，并不代表提现成功，</span>您可以在“我的订单”中关注提现处理结果<br/><br/>' +
            '3、您需保证在您设置的提现时间账户余额充足，若因账户余额不足导致计划执行失败，则责任由您本人承担<br/><br/>' +
-           '4、您可以暂停或删除预约提现，若您在暂停时，系统已执行当前周期的自动提现任务，则当前执行仍然有效，自下个周期起不再执行';
+           '4、您可以暂停或删除预约提现，若您在暂停时，系统已执行当前周期的自动提现任务，则当前执行仍然有效，自下个周期起不再执行<br/><br/>';
+
+         this.tipsShow = true
 
        }
        else if(_helpPage=='13'){
@@ -146,6 +150,7 @@
        }
 
     },
+
 
   }
 </script>
