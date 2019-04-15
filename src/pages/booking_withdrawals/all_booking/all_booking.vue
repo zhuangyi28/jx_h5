@@ -200,7 +200,10 @@
       </div>-->
     </div>
     <div class="nodata" v-else>
-
+      <div class="nodata_img">
+        <img src="../../../../static/images/jx_list.png">
+      </div>
+      <div class="nodata_ps">暂无预约提现执行记录</div>
     </div>
     <div class="look_bill color_text" v-on:click=""><i class="iconfont icon-withdraw_cash"></i>查看预约提现订单</div>
   </div>

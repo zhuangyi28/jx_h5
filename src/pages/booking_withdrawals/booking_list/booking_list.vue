@@ -18,7 +18,7 @@
         <div class="booking_card">至{{content.bankName}}（{{content.bankNo}}）</div>
         <div class="booking_time_state">
           <div class="booking_time" v-if="content.isStartup == 1">下期{{content.nextDate}}执行</div>
-          <div class="booking_time" v-else-if="content.isStartup == 2">预约提现已暂停</div>
+          <div class="booking_time booking_pause" v-else-if="content.isStartup == 2">预约提现已暂停</div>
           <div class="booking_state border_color" v-if="content.isStartup == 2"
                v-on:click="getChange('open',content.appointmentId,bookingList.indexOf(content))" v-on:click.stop>
             开启</div>
@@ -31,15 +31,7 @@
     <!--长度为零时-->
     <div class="list_no" v-else>
       <div class="nodata_img">
-        <div class="big_round color_background"></div>
-        <div class="middle_round color_background"></div>
-        <div class="long_line color_background"></div>
-        <div class="short_line color_background"></div>
-        <div class="small_round_one border_color"></div>
-        <div class="small_round_two border_color"></div>
-        <div class="small_round_three color_background"></div>
-        <div class="small_square_one color_background"></div>
-        <div class="small_square_two border_color"></div>
+        <img src="../../../../static/images/jx_list.png">
       </div>
       <div class="title color_text">您还没有预约提现哦~</div>
       <div class="content">添加后系统将按您的计划时间自动执行提现操作</div>
