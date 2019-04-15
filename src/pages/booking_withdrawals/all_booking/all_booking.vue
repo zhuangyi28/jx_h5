@@ -205,7 +205,7 @@
       </div>
       <div class="nodata_ps">暂无预约提现执行记录</div>
     </div>
-    <div class="look_bill color_text" v-on:click=""><i class="iconfont icon-withdraw_cash"></i>查看预约提现订单</div>
+    <div class="look_bill color_text" v-on:click="lookBookingDetailFn"><i class="iconfont icon-withdraw_cash"></i>查看预约提现订单</div>
   </div>
 </template>
 <script>
@@ -296,6 +296,14 @@
           }
         })
 
+
+      },
+
+      lookBookingDetailFn:function () {
+
+        this.setStorage('whichBill', '8');
+
+        this.$router.push('/bill')
 
       }
 

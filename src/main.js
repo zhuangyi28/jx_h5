@@ -37,6 +37,11 @@ import store from './api/store'
 
 import AMap from 'vue-amap'
 
+AMap.initAMapApiLoader({
+  key: '91346f1a20ac9f3db7691f94b8547873',
+  plugin: ['AMap.Geolocation']
+});
+
 //!!!!!_____!!!!!!!!!!-------------控制台---------------!!!!!!!!!!!!!!!!!!!
 
 
@@ -71,7 +76,7 @@ router.beforeEach((to,from,next)=>{
 
     if((from.path == '/') && ((to.path == '/payroll') || (to.path == '/contractDetail') || (to.path == '/cashDetail') || (to.path == '/taskDetail') || (to.path == '/balance') || (to.path == '/transferDetail'))){
 
-      (window.history.length <= 2) && localStorage.setItem('needBackHome','1');
+      (window.history.length <= 3) && localStorage.setItem('needBackHome','1');
 
     }
 

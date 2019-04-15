@@ -225,7 +225,12 @@
       },
       /*添加银行卡*/
       addCard: function () {
+
         var regNeg = /^([1-9]\d{14,18})$/;
+
+
+
+
         /**
          * 接口：添加用户银行卡信息
          * 请求方式：POST
@@ -282,6 +287,13 @@
         }
 
         else{
+
+
+          this.$indicator.open({
+            text: '银行卡添加中...',
+            spinnerType: 'fading-circle'
+          });
+
           this.$http({
             method: 'post',
             url: process.env.API_ROOT + 'user/bank/addbankcardinfo',
@@ -296,6 +308,9 @@
               cardType: this.cardType //卡类型
             }
           }).then((res)=>{
+
+            this.$indicator.close()
+
             var toast = this.$toast({
               message: res.data.msg,
               position: 'bottom',

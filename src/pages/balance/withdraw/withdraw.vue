@@ -43,10 +43,13 @@
     <div class="withdraw_ps">
       <div class="title">温馨提示</div>
       <div class="content">
-        <span>1.订单提交后工作日一般2小时内处理，如出款失败，则5个工作日内退款至原支付账户，具体以银行事件为准，正常退款时间内，建议咨询相关银行</span>
+        <span>1、订单提交后工作日一般2小时内处理，如出款失败，则5个工作日内退款至原支付账户，具体以银行时间为准</span>
       </div>
       <div class="content">
         <span>2.限额说明：单卡单笔<span>{{amountMax|thousandBitSeparator}}</span>元，当日99,000.00元，当月198,000.00元</span>
+      </div>
+      <div class="content">
+        <span>3、若提现时系统频繁退款，建议您更换银行卡后重新提现或联系客服处理</span>
       </div>
     </div>
 
