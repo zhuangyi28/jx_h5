@@ -116,7 +116,7 @@
       <mt-picker v-bind:slots="firstTimeList" @change="firstTimeChange"></mt-picker>
     </mt-popup>
 
-    <passwordBox v-on:clickEvent="submit" v-if="passwordBoxShow" v-on:boxClose="boxClose"></passwordBox>
+    <passwordBox v-on:clickEvent="submit" v-if="passwordBoxShow" v-on:boxClose="boxClose" v-on:getCode="getCode" ref="passwordbox"></passwordBox>
 
   </div>
 </template>
@@ -458,7 +458,7 @@
 
             this.passwordBoxShow = false;
 
-            this.$router.push('/addBookingSuccess');
+            this.$router.replace('/addBookingSuccess');
 
           }else{
 
@@ -632,6 +632,35 @@
         var day = (date.getDate()+'').padStart(2,'0');
 
         return year + addPoint + month + addPoint + day;
+
+      },
+
+
+      getCode: function () {
+
+        /**
+         * 接口：预约提现发送短信验证码
+         * 请求方式：GET
+         * 接口：jx/action/appointment
+         * 入参：null
+         **/
+        this.$http({
+          method: 'post',
+          url: process.env.API_ROOT + 'jx/action/appointment',
+          params: this.params
+        }).then(res=>{
+
+          this.$toast({
+
+            message: res.data.msg,
+            position: 'middle',
+            duration: 1500
+
+          });
+
+          (res.data.code != '0000') && (this.$refs.passwordbox.seconds = 0);
+
+        })
 
       }
 

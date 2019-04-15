@@ -1,22 +1,29 @@
 <template>
   <div class="all_booking">
     <topTips :tips="tipsText"></topTips>
-    <div class="booking_list">
-      <div class="list_one">
+    <div class="booking_list" v-if="bookingList.length !=0">
+      <div class="list_one" v-for="content in bookingList">
         <div class="list_title">
           <span class="iconfont icon-withdraw_cash"></span>
           <div>
-            <div class="withdrawals">自动提现300.00元</div>
-            <div class="time">2019-02-15</div>
+            <div class="withdrawals" v-if="content.banlane == '∞'">自动提现全部余额</div>
+            <div class="withdrawals" v-else>自动提现{{content.banlane | thousandBitSeparator}}元</div>
+            <div class="time">{{content.executionDate}}</div>
           </div>
         </div>
-        <div class="cell" v-on:click="showReasonFn">
+        <div class="cell" v-on:click="showReasonFn(content.remarkDetails)" v-if="content.planState == 4">
           <div class="state">执行失败</div>
-          <div class="reason">账户余额不足</div>
+          <div class="reason">{{content.remark}}</div>
         </div>
-        <span class="next_btn"></span>
+        <span class="next_btn" v-if="content.planState == 4"></span>
+        <div class="cell" v-else-if="content.planState == 2">
+          <div class="state">执行中</div>
+        </div>
+        <div class="cell" v-else-if="content.planState == 3">
+          <div class="state color_text">执行成功</div>
+        </div>
       </div>
-      <div class="list_one">
+      <!--<div class="list_one">
         <div class="list_title">
           <span class="iconfont icon-withdraw_cash"></span>
           <div>
@@ -175,7 +182,7 @@
         </div>
 
 
-      </div>
+      </div>-->
 
      <!-- <div class="loadmore" v-show="!noData">
         &lt;!&ndash; 暂无账单 &ndash;&gt;
@@ -191,6 +198,9 @@
         <mt-spinner class="loadmore_icon" type="double-bounce" color="#ababab" :size="16"></mt-spinner>
         <div class="loadmore_tips">正在加载</div>
       </div>-->
+    </div>
+    <div class="nodata" v-else>
+
     </div>
     <div class="look_bill color_text" v-on:click=""><i class="iconfont icon-withdraw_cash"></i>查看预约提现订单</div>
   </div>
@@ -250,15 +260,19 @@
           }
         }).then(res=>{
 
-          this.bookingList = res.data.data.list;
+          if(!!res.data.data.list){
 
-          for(var content of this.bookingList){
+            this.bookingList = res.data.data.list;
 
-            (content.banlane == '∞') && (content.banlane = '全部余额');
+            for(var content of this.bookingList){
 
-            var date = new Date(content.executionDate);
+              (content.banlane != '∞') && (content.banlane = (+content.banlane).toFixed(2));
 
-            content.executionDate = date.getFullYear() + '-' + ((date.getMonth()+1)+'').padStart(2,'0') + '-' + (date.getDate()+'').padStart(2,'0') + ' ' + date.getHours() + ':' + (date.getMonth()+'').padStart(2,'0') + ':' + (date.getSeconds()+'').padStart(2,'0');
+              var date = new Date(content.executionDate);
+
+              content.executionDate = date.getFullYear() + '-' + ((date.getMonth()+1)+'').padStart(2,'0') + '-' + (date.getDate()+'').padStart(2,'0') + ' ' + date.getHours() + ':' + (date.getMonth()+'').padStart(2,'0') + ':' + (date.getSeconds()+'').padStart(2,'0');
+
+            }
 
           }
 
@@ -266,11 +280,11 @@
 
       },
 
-      showReasonFn:function () {
+      showReasonFn:function (reason) {
 
         this.$messagebox({
           title: '提示',
-          message: '根据设置，需要在2019-4-15自动提现500.00元，执行时账户余额不足以支付导致无法自动提现，执行失败',
+          message: reason,
           showCancelButton: false,
           confirmButtonText: '确定',
           confirmButtonClass: 'confirm_btn_orange',
