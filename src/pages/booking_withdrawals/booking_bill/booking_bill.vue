@@ -220,7 +220,7 @@
 
         clickBill: function (orderId) {
 
-          this.$router.push({path: '/cashDetail',query: {orderId: orderId}});
+          this.$router.push({path: '/cashDetail',query: {orderId: orderId, orderType: '08'}});
 
         }
 

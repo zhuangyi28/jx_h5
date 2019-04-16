@@ -188,6 +188,8 @@
 
      this.orderId = this.$route.query.orderId;
 
+     (!!this.$route.query.orderType) && (this.orderType = this.$route.query.orderType);
+
      //美恰初始化
      customerInit({
        name:this.getStorage('userName'),// 名字
@@ -207,7 +209,11 @@
 
          this.mobile=this.getStorage('mobile');
 
-         var _orderId = this.orderId;
+         var params = {};
+
+         params.orderId = this.orderId;
+
+       (this.orderType) && (params.orderType = this.orderType);
 
          //console.log(_orderId)
 
@@ -225,10 +231,7 @@
 
          url: process.env.API_ROOT + 'user/withdraw/getdetailrecord',
 
-         params: {
-
-           orderId: _orderId,
-         }
+         params: params
 
 
        }).then((res)=>{

@@ -116,7 +116,9 @@
       <mt-picker v-bind:slots="firstTimeList" @change="firstTimeChange"></mt-picker>
     </mt-popup>
 
-    <passwordBox v-on:clickEvent="submit" v-if="passwordBoxShow" v-on:boxClose="boxClose" v-on:getCode="getCode" ref="passwordbox" v-on:visible-change="visibleChange"></passwordBox>
+    <keep-alive>
+      <passwordBox v-on:clickEvent="submit" v-if="passwordBoxShow" v-on:boxClose="boxClose" v-on:getCode="getCode" ref="passwordbox"></passwordBox>
+    </keep-alive>
 
   </div>
 </template>
@@ -571,8 +573,6 @@
 
         this.params.startDate = this.firstTimeBooking;
 
-        console.log(this.params.startDate);
-
         this.params.bankCardId = this.cardId;
 
         this.params.remark = this.remark;
@@ -692,14 +692,6 @@
         document.body.scrollTop =document.documentElement.scrollTop = window.pageYOffset = 100;
 
       },
-
-
-
-      visibleChange: function () {
-
-        this.timeBoxShow = false;
-
-      }
 
 
     },
