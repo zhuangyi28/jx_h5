@@ -1,5 +1,5 @@
 <template>
-  <div class="add_booking_withdrawals">
+  <div class="add_booking_withdrawals" v-bind:class="{overflow: (cycleShow || firstTimeShow || timeBoxShow)}">
     <div class="bank_choose" v-on:click="$router.push('/bankCard')">
       <div>
         <div class="bank_icon">
@@ -35,14 +35,14 @@
         <div class="title">
           <div><img src="../../../../static/images/cash_appt_start.png"></div>
           <div>
-            <div>首次开始事件</div>
+            <div>首次开始时间</div>
             <div>首次提现： <span class="color_text">{{firstTimeBooking}}</span></div>
           </div>
         </div>
         <div class="option">
           <span v-if="cycleType == '按月循环'">每月{{firstTimeType}}</span>
           <span v-else-if="cycleType == '按周循环'">每周{{firstTimeType}}</span>
-          <span v-else-if="cycleType == '按天循环'">{{firstTimeType}}</span>
+          <span v-else-if="cycleType == '按日循环'">{{firstTimeType}}</span>
           <span class="allow_right"></span>
         </div>
       </div>
@@ -65,7 +65,7 @@
       </div>
     </div>
     <div class="agreement">
-      <input type="checkbox" name="agree" id="agree">
+      <input type="checkbox" name="agree" id="agree" checked>
       <label for="agree">同意</label><span class="color_text" v-on:click="$router.push('/bookingAgreement')">《预约提现服务协议》</span>
     </div>
     <orangeBtn v-bind:name="btnName" v-on:clickEvent="handleClick"></orangeBtn>
@@ -116,7 +116,7 @@
       <mt-picker v-bind:slots="firstTimeList" @change="firstTimeChange"></mt-picker>
     </mt-popup>
 
-    <passwordBox v-on:clickEvent="submit" v-if="passwordBoxShow" v-on:boxClose="boxClose" v-on:getCode="getCode" ref="passwordbox"></passwordBox>
+    <passwordBox v-on:clickEvent="submit" v-if="passwordBoxShow" v-on:boxClose="boxClose" v-on:getCode="getCode" ref="passwordbox" v-on:visible-change="visibleChange"></passwordBox>
 
   </div>
 </template>
@@ -178,7 +178,7 @@
 
           {
             flex: 1,
-            values: ['按月循环','按周循环','按天循环']
+            values: ['按月循环','按周循环','按日循环']
           }
 
         ],//周期显示插件数据
@@ -222,6 +222,8 @@
         dateFor: '',
 
         firstTimeWeek: false,//按周循环选择弹窗
+
+        timeBoxShow: false
 
       }
 
@@ -296,7 +298,9 @@
 
       selectTime: function () {
 
-        (this.dateFor == 'stop') && (this.newDate = this.dateChange('',this.date));
+        this.timeBoxShow = false;
+
+        (this.dateFor == 'stop') && (this.newDate = this.dateChange('-',this.date));
 
         (this.dateFor == 'start') && (this.firstTimeType = this.dateChange('-',this.date)) && (this.firstTimeBooking = this.firstTimeType);
 
@@ -304,6 +308,8 @@
 
 
       cancelTime: function () {
+
+        this.timeBoxShow = false;
 
         this.date = new Date((new Date()).getTime()+60*60*24*1000);
 
@@ -342,7 +348,11 @@
 
         this.date = new Date(nowTime);
 
+
+
         this.$refs.date.open();
+
+        this.timeBoxShow = true;
 
       },
 
@@ -366,7 +376,7 @@
 
         (this.char == '按周循环') && (this.firstTimeType = this.weekChange(date.getDay())) && (this.cycleWeekList[0].defaultIndex = this.cycleWeekList[0].values.indexOf('每周'+this.firstTimeType));
 
-        (this.char == '按天循环') && (this.firstTimeType = this.dateChange('-',date));
+        (this.char == '按日循环') && (this.firstTimeType = this.dateChange('-',date));
 
         this.firstTimeBooking = this.firstTimeNear(this.firstTimeType);
 
@@ -406,11 +416,11 @@
 
           if(parseInt(time) > now.getDate()){
 
-            return now.getFullYear() + '.' + ((now.getMonth()+1)+'').padStart(2,'0') + '.' + (parseInt(time)+'').padStart(2,'0');
+            return now.getFullYear() + '-' + ((now.getMonth()+1)+'').padStart(2,'0') + '-' + (parseInt(time)+'').padStart(2,'0');
 
           }else{
 
-            return now.getFullYear() + '.' + ((now.getMonth()+2)+'').padStart(2,'0') + '.' + (parseInt(time)+'').padStart(2,'0');
+            return now.getFullYear() + '-' + ((now.getMonth()+2)+'').padStart(2,'0') + '-' + (parseInt(time)+'').padStart(2,'0');
 
           }
 
@@ -422,11 +432,19 @@
 
           var thisWeek = weekArr.indexOf(this.weekChange(now.getDay()));
 
-          return this.dateChange('.', new Date((new Date()).getTime()+60*60*24*1000*(week - thisWeek)));
+          if(week >= thisWeek){
 
-        }else if(this.cycleType == '按天循环'){
+            return this.dateChange('-', new Date((new Date()).getTime()+60*60*24*1000*(week - thisWeek)));
 
-          return time.split('-').join('.');
+          }else{
+
+            return this.dateChange('-', new Date((new Date()).getTime()+60*60*24*1000*(week - thisWeek+7)));
+
+          }
+
+        }else if(this.cycleType == '按日循环'){
+
+          return time;
 
         }
 
@@ -527,7 +545,7 @@
 
         }
 
-        (!!this.date) ? (this.params.endDate = this.dateChange('-',this.date)): (this.params.endDate = null);
+        (!!this.newDate) ? (this.params.endDate = this.newDate) : (this.params.endDate = null);
 
         switch (this.cycleType) {
 
@@ -543,7 +561,7 @@
 
             break;
 
-          case '按天循环':
+          case '按日循环':
 
             this.params.appoinmentType = '3';
 
@@ -551,7 +569,7 @@
 
         }
 
-        this.params.startDate = this.firstTimeBooking.split('.').join('-');
+        this.params.startDate = this.firstTimeBooking;
 
         console.log(this.params.startDate);
 
@@ -560,6 +578,8 @@
         this.params.remark = this.remark;
 
         this.passwordBoxShow = true;
+
+        console.log(this.params);
 
       },
 
@@ -597,7 +617,7 @@
 
         (this.cycleType == '按周循环') && (this.firstTimeWeek = true) && (this.char = '每周'+this.firstTimeType);
 
-        if(this.cycleType == '按天循环'){
+        if(this.cycleType == '按日循环'){
 
           this.dateFor = 'start';
 
@@ -606,6 +626,8 @@
           this.date = new Date(this.firstTimeBooking);
 
           this.$refs.date.open();
+
+          this.timeBoxShow = true;
 
         }
 
@@ -668,6 +690,14 @@
       lostPointFn:function () {
 
         document.body.scrollTop =document.documentElement.scrollTop = window.pageYOffset = 100;
+
+      },
+
+
+
+      visibleChange: function () {
+
+        this.timeBoxShow = false;
 
       }
 

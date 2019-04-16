@@ -301,9 +301,7 @@
 
       lookBookingDetailFn:function () {
 
-        this.setStorage('whichBill', '8');
-
-        this.$router.push('/bill')
+        this.$router.push({path: '/bookingBill', query: {appointmentId: this.appointmentId}});
 
       }
 

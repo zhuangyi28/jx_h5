@@ -17,12 +17,15 @@
         <div class="booking_content color_text" v-else>{{content.caseDate}}日提现{{content.banlane|thousandBitSeparator}}元</div>
         <div class="booking_card">至{{content.bankName}}（{{content.bankNo}}）</div>
         <div class="booking_time_state">
-          <div class="booking_time" v-if="content.isStartup == 1">下期{{content.nextDate}}执行</div>
+          <div class="booking_time" v-if="content.isStartup == 1">
+            <span v-if="!!content.nextDate">下期{{content.nextDate}}执行</span>
+            <span v-else>预约提现已截止</span>
+          </div>
           <div class="booking_time booking_pause" v-else-if="content.isStartup == 2">预约提现已暂停</div>
-          <div class="booking_state border_color" v-if="content.isStartup == 2"
+          <div class="booking_state border_color" v-if="content.isStartup == 2 && !!content.nextDate"
                v-on:click="getChange('open',content.appointmentId,bookingList.indexOf(content))" v-on:click.stop>
             开启</div>
-          <div class="booking_state border_color" v-else-if="content.isStartup == 1"
+          <div class="booking_state border_color" v-else-if="content.isStartup == 1 && !!content.nextDate"
                v-on:click="getChange('stop',content.appointmentId,bookingList.indexOf(content))" v-on:click.stop>
             暂停</div>
         </div>
@@ -93,13 +96,19 @@
           url: process.env.API_ROOT+ 'userappointment/user/getappointmentlist',
         }).then(res=>{
 
+          console.log(res.data);
+
           this.bookingList = res.data.data;
 
           for(var list of this.bookingList){
 
-            var date = new Date(list.nextDate);
+            if(!!list.nextDate){
 
-            list.nextDate = ((date.getMonth()+1)+'').padStart(2,'0') + '月' + ((date.getDate()+'').padStart(2,'0') + '日');
+              var date = new Date(list.nextDate);
+
+              list.nextDate = ((date.getMonth()+1)+'').padStart(2,'0') + '月' + ((date.getDate()+'').padStart(2,'0') + '日');
+
+            }
 
           }
 
@@ -124,11 +133,34 @@
 
           localStorage.setItem('booking','1');
 
-          (res.data.data.length == 0) ? (this.$router.push('/addCard')) : (this.$router.push('/addBookingWithdrawals'));
+          (res.data.data.length == 0) ? (this.addCard()) : (this.$router.push('/addBookingWithdrawals'));
 
         }).catch(res=>{console.log(res)});
 
 
+
+      },
+
+      addCard: function () {
+
+        this.$messagebox({
+          title: '提示',
+          message: '当前账户尚未进行实名认证，完成实名认证后即可设置支付密码',
+          showCancelButton:true,
+          confirmButtonText: '去认证',
+          cancelButtonText: '取消',
+          closeOnClickModal: true,
+          cancelButtonClass: 'cancel_btn',
+          confirmButtonClass: 'confirm_btn_orange',
+        }).then(res=>{
+
+          if(res == 'confirm'){
+
+            this.$router.push('/addCard');
+
+          }
+
+        })
 
       },
 
