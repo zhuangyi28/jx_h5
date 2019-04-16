@@ -14,7 +14,7 @@
         </div>
         <div class="field">
           <i class="iconfont icon-sign_password color_text"></i>
-          <input type="password" @blur="lostPointFn" v-model="password" placeholder="请输入密码" class="password" maxlength="20">
+          <input type="password" @blur="lostPointFn" v-model="password" placeholder="请输入密码" class="password" maxlength="20"  v-on:keyup.enter="signin">
         </div>
 
       </div>

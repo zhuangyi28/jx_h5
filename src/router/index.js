@@ -81,6 +81,7 @@ import allBooking from '@/pages/booking_withdrawals/all_booking/all_booking'
 import allHistory from '@/pages/booking_withdrawals/all_history/all_history'
 import contractAgreement from '@/pages/contract/agreement/agreement'
 import bookingAgreement from '@/pages/booking_withdrawals/agreement/agreement'
+import bookingBill from '@/pages/booking_withdrawals/booking_bill/booking_bill'
 
 Vue.use(Router)
 
@@ -236,14 +237,6 @@ export default new Router({
         title: '收入余额'
       },
       component: balance
-    },
-    {
-      path: '/bankCard',
-      name: 'bankCard',
-      meta: {
-        title: '银行卡'
-      },
-      component: bankCard
     },
     {
       path: '/addCard',
@@ -474,14 +467,6 @@ export default new Router({
         title: '实名认证'
       },
       component: certificationSuccess
-    },
-    {
-      path: '/certificationFail',
-      name: 'certificationFail',
-      meta: {
-        title: '实名认证'
-      },
-      component: certificationFail
     },
     {
       path: '/certificationFail',
@@ -773,6 +758,14 @@ export default new Router({
         title: '预约提现服务协议'
       },
       component: bookingAgreement
+    },
+    {
+      path: '/bookingBill',
+      name: 'bookingBill',
+      meta: {
+        title: '我的订单'
+      },
+      component: bookingBill
     }
 
   ]

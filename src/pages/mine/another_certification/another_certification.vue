@@ -406,7 +406,7 @@
 
           if(res.data.code == '0000'){
 
-            this.setStorage('anotherCertification','1');
+            //this.setStorage('anotherCertification','1');
 
             this.$router.push('/certificationSuccess');
 
