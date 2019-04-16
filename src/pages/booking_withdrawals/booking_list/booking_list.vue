@@ -85,6 +85,8 @@
 
       data: function () {
 
+        delete this.$store.bank;
+
         /*
       * 接口： 查询预约列表
       * 请求方式： GET

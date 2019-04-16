@@ -325,7 +325,7 @@
                     return;
                 }
                 else if(localStorage.getItem('booking') == 1){
-                  this.$router.replace('/addBookingWithdrawals');
+                  this.$router.go(-2);
                   return;
                 }
                 this.$router.push('/bankCard');
