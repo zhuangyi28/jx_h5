@@ -23,7 +23,7 @@
 
       helpFn: function () {
 
-          this.$router.go('/helpCenter')
+          this.$router.push('/helpCenter')
 
       },
 

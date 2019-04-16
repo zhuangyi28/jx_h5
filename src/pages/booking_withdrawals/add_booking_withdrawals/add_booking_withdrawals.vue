@@ -61,7 +61,7 @@
           <div><img src="../../../../static/images/cash_appt_tips.png"></div>
           <div>备注</div>
         </div>
-        <input type="text" placeholder="选填，1-10个字" maxlength="10" v-model="remark">
+        <input type="text" placeholder="选填，1-10个字" maxlength="10" v-model="remark" @blur="lostPointFn">
       </div>
     </div>
     <div class="agreement">
@@ -661,6 +661,13 @@
           (res.data.code != '0000') && (this.$refs.passwordbox.seconds = 0);
 
         })
+
+      },
+
+
+      lostPointFn:function () {
+
+        document.body.scrollTop =document.documentElement.scrollTop = window.pageYOffset = 100;
 
       }
 

@@ -74,7 +74,7 @@ router.beforeEach((to,from,next)=>{
 
   if(Authorization){
 
-    if((from.path == '/') && ((to.path == '/payroll') || (to.path == '/contractDetail') || (to.path == '/cashDetail') || (to.path == '/taskDetail') || (to.path == '/balance') || (to.path == '/transferDetail'))){
+    if(((from.path == '/') || (from.path == '/login')) && ((to.path == '/payroll') || (to.path == '/contractDetail') || (to.path == '/cashDetail') || (to.path == '/taskDetail') || (to.path == '/balance') || (to.path == '/transferDetail'))){
 
       (window.history.length <= 3) && localStorage.setItem('needBackHome','1');
 
