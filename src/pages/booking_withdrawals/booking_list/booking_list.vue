@@ -19,7 +19,10 @@
         <div class="booking_time_state">
           <div class="booking_time" v-if="content.isStartup == 1">
             <span v-if="!!content.nextDate">下期{{content.nextDate}}执行（{{content.endDate}}截止）</span>
-            <span v-else>预约提现已截止</span>
+            <span v-else>
+              <span v-if="content.close">预约提现已截止</span>
+              <span v-else>无下期计划({{content.endDate}}截止)</span>
+            </span>
           </div>
           <div class="booking_time booking_pause" v-else-if="content.isStartup == 2">预约提现已暂停</div>
           <div class="booking_state border_color" v-if="content.isStartup == 2"
@@ -116,6 +119,16 @@
 
             }
 
+            var now = new Date();
+
+            var endDate = new Date(list.endDate);
+
+            if(now.getTime() > endDate.getTime()){
+
+              list.close = true;
+
+            }
+
           }
 
         })
@@ -147,6 +160,14 @@
               closeOnClickModal: true,
               cancelButtonClass: 'cancel_btn',
               confirmButtonClass: 'confirm_btn_orange',
+            }).then(res=>{
+
+              if(res == 'confirm'){
+
+                this.$router.push('/contractList');
+
+              }
+
             })
 
           }else{
