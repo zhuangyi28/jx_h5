@@ -87,6 +87,10 @@
 
         delete this.$store.bank;
 
+        localStorage.removeItem('addBankBack');
+
+        localStorage.removeItem('bookingList');
+
         /*
       * 接口： 查询预约列表
       * 请求方式： GET
@@ -176,7 +180,9 @@
 
       addCard: function () {
 
-        this.$messagebox({
+        localStorage.setItem('bookingList','1');
+
+      this.$messagebox({
           title: '提示',
           message: '您还没有可用于提现的银行卡，请先添加一张储蓄卡',
           showCancelButton:true,

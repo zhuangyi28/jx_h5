@@ -43,6 +43,8 @@
     },
     mounted () {
 
+      (localStorage.getItem('addBankBack') == 1) && ((localStorage.removeItem('addBankBack')) || (this.$router.go(-2)));
+
       /**
        * 接口：个人中心
        * 请求方式：POST
