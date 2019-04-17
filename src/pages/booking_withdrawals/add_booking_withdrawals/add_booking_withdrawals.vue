@@ -1,5 +1,5 @@
 <template>
-  <div class="add_booking_withdrawals" v-bind:class="{overflow: (cycleShow || firstTimeShow || timeBoxShow || passwordBoxShow)}">
+  <div class="add_booking_withdrawals" v-bind:class="{overflow: (cycleShow || firstTimeShow || timeBoxShow || passwordBoxShow || firstTimeWeek)}">
     <div class="bank_choose" v-on:click="$router.push('/bankCard')">
       <div>
         <div class="bank_icon">
@@ -16,7 +16,7 @@
       <div class="title">提现金额<span class="help color_text" v-on:click="showPs">?</span></div>
       <div class="withdraw_input">
         <span>￥</span>
-        <input type="text" v-bind:placeholder="maxWithdraw+amountMax+'元'" v-model="withdrawMoney" v-on:blur="moneyToFixed" pattern="[0-9]*">
+        <input type="text" v-bind:placeholder="maxWithdraw+amountMax+'元'" v-model="withdrawMoney" v-on:blur="moneyToFixed">
         <span class="color_text" v-on:click="withdrawMoney = '到期提现全部余额'">全部提现</span>
       </div>
     </div>
@@ -344,7 +344,7 @@
 
         var nowTime = this.firstTimeBooking.split('-');
 
-        nowTime[2] = +nowTime[2] + 1;
+        nowTime[2] = ((+nowTime[2] + 1)+'').padStart(2,'0');
 
         nowTime = nowTime.join('-');
 
@@ -482,17 +482,30 @@
 
           }else{
 
-            this.$messagebox({
-              title: '提示',
-              message: res.data.msg,
-              confirmButtonText: '确定',
-              closeOnClickModal: true,
-              confirmButtonClass: 'confirm_btn_orange',
-            })
-
             this.$indicator.close();
 
-            this.passwordBoxShow = false;
+            if((res.data.code != '-4')&&(res.data.code != '-1')){
+
+              this.$messagebox({
+                title: '提示',
+                message: res.data.msg,
+                confirmButtonText: '确定',
+                closeOnClickModal: true,
+                confirmButtonClass: 'confirm_btn_orange',
+              });
+
+              this.passwordBoxShow = false;
+
+            }else {
+
+              this.$toast({
+
+                message: res.data.msg,
+                position: 'middle',
+                duration: 1500
+
+              });
+            }
 
           }
 
@@ -750,6 +763,10 @@
               ((this.withdrawMoney + '').indexOf('.') != -1) && ((this.withdrawMoney + '').split('.')[1].length > 2) && (this.withdrawMoney = (+this.withdrawMoney).toFixed(2));
 
             }
+
+          }else if(this.withdrawMoney == '到期提现全部余'){
+
+              this.withdrawMoney = '';
 
           }
 
