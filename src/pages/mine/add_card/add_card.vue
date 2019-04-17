@@ -325,7 +325,8 @@
                     return;
                 }
                 else if(localStorage.getItem('booking') == 1){
-                  this.$router.go(-2);
+                  (localStorage.getItem('bookingList') == '1')? (localStorage.removeItem('bookingList')) : localStorage.setItem('addBankBack','1');
+                  this.$router.replace('/addBookingWithdrawals');
                   return;
                 }
                 this.$router.push('/bankCard');

@@ -730,7 +730,7 @@ export default new Router({
       path: '/allBooking',
       name: 'allBooking',
       meta: {
-        title: '预约提现详情'
+        title: '预约提现记录'
       },
       component: allBooking
     },

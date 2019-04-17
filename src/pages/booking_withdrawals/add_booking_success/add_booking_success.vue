@@ -17,7 +17,7 @@
       <div>{{balance}}</div>
       <div class="color_text">{{information}}</div>
     </div>
-    <div class="back_btn message_btn_color color_text" v-on:click="$router.replace('/bookingList')">返回</div>
+    <div class="back_btn message_btn_color color_text" v-on:click="backFn">返回</div>
   </div>
 </template>
 <script>
@@ -46,6 +46,18 @@
       (this.balance != '提现全部余额') && (this.balance ='￥' + (+this.balance).toFixed(2));
 
     },
+
+    methods: {
+
+      backFn: function () {
+
+        (localStorage.getItem('addBankBack')== 1) && (localStorage.removeItem('addBankBack'));
+
+        this.$router.replace('/bookingList');
+
+      }
+
+    }
 
 
   }

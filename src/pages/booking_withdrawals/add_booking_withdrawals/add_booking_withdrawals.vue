@@ -1,5 +1,5 @@
 <template>
-  <div class="add_booking_withdrawals" v-bind:class="{overflow: (cycleShow || firstTimeShow || timeBoxShow)}">
+  <div class="add_booking_withdrawals" v-bind:class="{overflow: (cycleShow || firstTimeShow || timeBoxShow || passwordBoxShow)}">
     <div class="bank_choose" v-on:click="$router.push('/bankCard')">
       <div>
         <div class="bank_icon">
@@ -16,7 +16,7 @@
       <div class="title">提现金额<span class="help color_text" v-on:click="showPs">?</span></div>
       <div class="withdraw_input">
         <span>￥</span>
-        <input type="text" v-bind:placeholder="maxWithdraw+amountMax+'元'" v-model="withdrawMoney" v-on:blur="moneyToFixed">
+        <input type="text" v-bind:placeholder="maxWithdraw+amountMax+'元'" v-model="withdrawMoney" v-on:blur="moneyToFixed" pattern="[0-9]*">
         <span class="color_text" v-on:click="withdrawMoney = '到期提现全部余额'">全部提现</span>
       </div>
     </div>
@@ -49,7 +49,7 @@
       <div class="withdraw_end" v-on:click="selectTimeShow">
         <div class="title">
           <div><img src="../../../../static/images/cash_appt_end.png"></div>
-          <div>提现截止时间</div>
+          <div>预约截止时间</div>
         </div>
         <div class="option">
           <span>{{newDate}}</span>
@@ -482,13 +482,13 @@
 
           }else{
 
-            this.$toast({
-
+            this.$messagebox({
+              title: '提示',
               message: res.data.msg,
-              position: 'middle',
-              duration: 1500
-
-            });
+              confirmButtonText: '确定',
+              closeOnClickModal: true,
+              confirmButtonClass: 'confirm_btn_orange',
+            })
 
             this.$indicator.close();
 
@@ -513,21 +513,6 @@
 
 
       handleClick: function () {
-
-        var checkbox = document.getElementById('agree');
-
-        if(!checkbox.checked){
-
-          this.$toast({
-
-            message: '请同意《预约提现服务协议》',
-            position: 'middle',
-            duration: 1500
-          });
-
-          return;
-
-        }
 
         if(this.withdrawMoney){
 
@@ -578,6 +563,21 @@
             return;
 
           }
+
+        }
+
+        var checkbox = document.getElementById('agree');
+
+        if(!checkbox.checked){
+
+          this.$toast({
+
+            message: '请同意《预约提现服务协议》',
+            position: 'middle',
+            duration: 1500
+          });
+
+          return;
 
         }
 
@@ -639,7 +639,7 @@
 
       moneyToFixed: function () {
 
-        this.withdrawMoney = (+this.withdrawMoney).toFixed(2);
+        (this.withdrawMoney != '') && (this.withdrawMoney = (+this.withdrawMoney).toFixed(2));
 
       },
 
@@ -735,17 +735,21 @@
 
       withdrawMoney: function (newVal, oldVal) {
 
-        if(oldVal.length < newVal.length){
+        if(this.withdrawMoney != ''){
 
-          if(this.withdrawMoney != '到期提现全部余额'){
+          if(oldVal.length < newVal.length){
 
-            (Number.isNaN(+this.withdrawMoney)) && (this.withdrawMoney = oldVal);
+            if(this.withdrawMoney != '到期提现全部余额'){
 
-            (+this.withdrawMoney > +this.dayMaxAmount) && (this.withdrawMoney = this.dayMaxAmount);
+              (Number.isNaN(+this.withdrawMoney)) && (this.withdrawMoney = oldVal);
 
-            (+this.withdrawMoney < +this.amountMin) && (this.withdrawMoney = this.amountMin);
+              (+this.withdrawMoney > +this.dayMaxAmount) && (this.withdrawMoney = this.dayMaxAmount);
 
-            ((this.withdrawMoney + '').indexOf('.') != -1) && ((this.withdrawMoney + '').split('.')[1].length > 2) && (this.withdrawMoney = (+this.withdrawMoney).toFixed(2));
+              (+this.withdrawMoney < +this.amountMin) && (this.withdrawMoney = this.amountMin);
+
+              ((this.withdrawMoney + '').indexOf('.') != -1) && ((this.withdrawMoney + '').split('.')[1].length > 2) && (this.withdrawMoney = (+this.withdrawMoney).toFixed(2));
+
+            }
 
           }
 
