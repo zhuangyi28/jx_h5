@@ -22,7 +22,7 @@
             <span v-else>预约提现已截止</span>
           </div>
           <div class="booking_time booking_pause" v-else-if="content.isStartup == 2">预约提现已暂停</div>
-          <div class="booking_state border_color" v-if="content.isStartup == 2 && !!content.nextDate"
+          <div class="booking_state border_color" v-if="content.isStartup == 2"
                v-on:click="getChange('open',content.appointmentId,bookingList.indexOf(content))" v-on:click.stop>
             开启</div>
           <div class="booking_state border_color" v-else-if="content.isStartup == 1 && !!content.nextDate"
@@ -119,25 +119,56 @@
       },
 
       addBookingWithdrawalsFn: function () {
+        /**
+         * 接口：检测用户添加预约提现操作
+         * 请求方式：GET
+         * 接口：user/work/checkappointment
+         * 入参：null
+         **/
+        this.$http({
+          method: 'get',
+          url: process.env.API_ROOT + 'user/work/checkappointment'
+        }).then(res=>{
 
-        /*
+          console.log(res);
+
+          if(res.data.code == -10){
+
+            this.$messagebox({
+              title: '提示',
+              message: res.data.msg,
+              showCancelButton:true,
+              confirmButtonText: '去签约',
+              cancelButtonText: '取消',
+              closeOnClickModal: true,
+              cancelButtonClass: 'cancel_btn',
+              confirmButtonClass: 'confirm_btn_orange',
+            })
+
+          }else{
+
+            /*
       * 接口： 获取用户银行卡信息
       * 请求方式： GET
       * 接口： /user/bank/getbankcardinfo
       * 传参： null
       * */
-        this.$http({
-          method: 'get',
-          url: process.env.API_ROOT+ 'user/bank/getbankcardinfo',
-        }).then(res=>{
+            this.$http({
+              method: 'get',
+              url: process.env.API_ROOT+ 'user/bank/getbankcardinfo',
+            }).then(res=>{
 
-          console.log(res);
+              console.log(res);
 
-          localStorage.setItem('booking','1');
+              localStorage.setItem('booking','1');
 
-          (res.data.data.length == 0) ? (this.addCard()) : (this.$router.push('/addBookingWithdrawals'));
+              (res.data.data.length == 0) ? (this.addCard()) : (this.$router.push('/addBookingWithdrawals'));
 
-        }).catch(res=>{console.log(res)});
+            }).catch(res=>{console.log(res)});
+
+          }
+
+        });
 
 
 
@@ -147,9 +178,9 @@
 
         this.$messagebox({
           title: '提示',
-          message: '当前账户尚未进行实名认证，完成实名认证后即可设置支付密码',
+          message: '您还没有可用于提现的银行卡，请先添加一张储蓄卡',
           showCancelButton:true,
-          confirmButtonText: '去认证',
+          confirmButtonText: '去添加',
           cancelButtonText: '取消',
           closeOnClickModal: true,
           cancelButtonClass: 'cancel_btn',
@@ -179,7 +210,7 @@
             this.$messagebox({
 
               title: '提示',
-              message: '预约提现删除后，将不再进行自动提现，且将删除所有记录，确定要删除吗？',
+              message: '预约提现删除后，将不再进行自动提现，确定要删除吗？',
               showCancelButton:true,
               confirmButtonText: '删除',
               cancelButtonText: '取消',

@@ -416,7 +416,7 @@
 
         if(this.cycleType == '按月循环'){
 
-          if(parseInt(time) > now.getDate()){
+          if(parseInt(time) >= now.getDate()){
 
             return now.getFullYear() + '-' + ((now.getMonth()+1)+'').padStart(2,'0') + '-' + (parseInt(time)+'').padStart(2,'0');
 

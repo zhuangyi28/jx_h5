@@ -273,7 +273,11 @@
 
               var date = new Date(content.executionDate);
 
-              content.executionDate = date.getFullYear() + '-' + ((date.getMonth()+1)+'').padStart(2,'0') + '-' + (date.getDate()+'').padStart(2,'0') + ' ' + date.getHours() + ':' + (date.getMonth()+'').padStart(2,'0') + ':' + (date.getSeconds()+'').padStart(2,'0');
+              (content.planState != 2) ?
+
+              (content.executionDate = date.getFullYear() + '-' + ((date.getMonth()+1)+'').padStart(2,'0') + '-' + (date.getDate()+'').padStart(2,'0') + ' ' + date.getHours() + ':' + (date.getMinutes()+'').padStart(2,'0') + ':' + (date.getSeconds()+'').padStart(2,'0'))
+
+              : (content.executionDate = date.getFullYear() + '-' + ((date.getMonth()+1)+'').padStart(2,'0') + '-' + (date.getDate()+'').padStart(2,'0'));
 
             }
 
