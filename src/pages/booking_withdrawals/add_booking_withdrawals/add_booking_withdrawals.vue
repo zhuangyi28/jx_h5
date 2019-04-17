@@ -241,6 +241,20 @@
 
       data: function () {
 
+        var _this = this;
+
+        var div = document.getElementsByClassName('add_booking_withdrawals')[0];
+
+        div.addEventListener('click',function () {
+
+          if(event.target.classList.contains('v-modal')){
+
+            _this.timeBoxShow = false;
+
+          }
+
+        });
+
         /**
          * 接口：检测用户发起添加预约操作操作
          * 请求方式：GET
@@ -328,29 +342,15 @@
 
         this.dateFor = 'stop';
 
-        var nowTime = '';
+        var nowTime = this.firstTimeBooking.split('-');
 
-        if(!!this.newDate){
+        nowTime[2] = +nowTime[2] + 1;
 
-          var year = this.newDate.substr(0,4);
+        nowTime = nowTime.join('-');
 
-          var month = this.newDate.substr(4,2);
-
-          var day = this.newDate.substr(6,2);
-
-          nowTime = year+ '-' + month + '-'+ day;
-
-        }
-
-        var tomorrow = (new Date()).getTime()+60*60*24*1000;
-
-        var newDate = this.dateChange('-',new Date(tomorrow));
-
-        this.startDate = newDate;
+        this.startDate = nowTime;
 
         this.date = new Date(nowTime);
-
-
 
         this.$refs.date.open();
 
