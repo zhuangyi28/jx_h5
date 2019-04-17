@@ -682,36 +682,7 @@
 
         }else{
 
-          /**
-           * 接口：检测用户发起提现操作
-           * 请求方式：GET
-           * 接口：user/work/checkwithdraw
-           * 入参：null
-           **/
-          this.$http({
-            method: 'get',
-            url: process.env.API_ROOT + 'user/work/checkwithdraw'
-          }).then(res=>{
-
-            console.log(res);
-
-            if(res.data.code == -10){
-
-              this.$toast({
-
-                message: res.data.msg,
-                position: 'middle',
-                duration: 1500
-
-              })
-
-            }else{
-
-              this.$router.push('/bookingList');
-
-            }
-
-          });
+          this.$router.push('/bookingList');
 
         }
 
