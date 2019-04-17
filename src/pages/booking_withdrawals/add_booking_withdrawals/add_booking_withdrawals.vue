@@ -547,7 +547,39 @@
 
         }
 
-        (!!this.newDate) ? (this.params.endDate = this.newDate) : (this.params.endDate = null);
+        if(!this.newDate){
+
+          this.$toast({
+
+            message: '请选择截止时间',
+            position: 'middle',
+            duration: 1500
+
+          });
+
+          return;
+
+        }else{
+
+          var first = new Date(this.firstTimeBooking);
+
+          var last = new Date(this.newDate);
+
+          if(first.getTime() > last.getTime()){
+
+            this.$toast({
+
+              message: '提示：截止日期必须大于首次执行时间',
+              position: 'middle',
+              duration: 1500
+
+            });
+
+            return;
+
+          }
+
+        }
 
         switch (this.cycleType) {
 
@@ -578,6 +610,8 @@
         this.params.remark = this.remark;
 
         this.passwordBoxShow = true;
+
+        this.params.endDate = this.newDate;
 
         console.log(this.params);
 
