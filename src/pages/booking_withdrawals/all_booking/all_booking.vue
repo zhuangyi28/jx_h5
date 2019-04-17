@@ -1,6 +1,9 @@
 <template>
   <div class="all_booking">
-    <topTips :tips="tipsText"></topTips>
+    <div class="tips bubble_color">
+      <p class="color_text"><i class="iconfont icon-icon_reminder"></i>温馨提示:</p>
+      <p>执行成功仅代表系统自动提交了一笔提现订单，提现处理结果请在“我的订单”中查看<span class="color_text" v-on:click="lookBookingDetailFn">，点我>></span></p>
+    </div>
     <div class="booking_lists" v-infinite-scroll="loadMore" infinite-scroll-disabled="moreLoading" infinite-scroll-distance="20" infinite-scroll-immediate-check="false">
       <div class="booking_list" v-if="bookingList.length !=0">
         <div class="list_one" v-for="content in bookingList">
@@ -214,21 +217,17 @@
         <div class="loadmore_tips">正在加载</div>
       </div>
     </div>
-    <div class="look_bill color_text" v-on:click="lookBookingDetailFn"><i class="iconfont icon-withdraw_cash"></i>查看预约提现订单</div>
   </div>
 </template>
 <script>
   import orangeBtn from '../../../components/orange_btn/orange_btn'
-  import topTips from '../../../components/tips/tips'
   export default {
     name: 'all_booking',
     components: {
-      topTips: topTips,
       orangeBtn: orangeBtn
     },
     data(){
         return{
-          tipsText:'温馨提示：执行成功仅代表系统自动提交了一笔提现订单，提现处理结果请在“我的订单”中查看',
 
           pageNum: 1,//接口数据页目录
 

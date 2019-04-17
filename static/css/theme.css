@@ -32,6 +32,7 @@
 .color_background{
   background-color: var(--mainColor)!important;
 }
+
 .bubble_color{
   background-color: var(--lightColor)!important;
 }
@@ -99,7 +100,7 @@ button.btn_color,.btn_color {
 
   color: var(--mainColor)!important;
 }
-.confirm_btn_orange {
+.confirm_btn_orange,.mint-datetime-action {
   color: var(--mainColor)!important;
 }
 .mint-switch-input:checked + .mint-switch-core {
