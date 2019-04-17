@@ -7,7 +7,7 @@
           <div>
             <div class="color_background"><img src="../../../../static/images/cash_appt_clock.png"></div>
             <span v-if="!!content.remark">{{content.remark}}</span>
-            <span v-else>预约提现{{bookingList.indexOf(content)}}</span>
+            <span v-else>预约提现{{bookingList.indexOf(content)+1}}</span>
           </div>
           <div class="img" v-on:click="getChange('delete',content.appointmentId,bookingList.indexOf(content))" v-on:click.stop>
             <img src="../../../../static/images/contract_close.png">
