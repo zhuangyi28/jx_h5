@@ -1,6 +1,7 @@
 <template>
   <div class="all_booking">
     <div class="tips bubble_color">
+      <p class="color_text"><i class="iconfont icon-icon_reminder"></i>温馨提示:</p>
       <p>执行成功仅代表系统自动提交了一笔提现订单，提现处理结果请在“我的订单”中查看<span class="color_text" v-on:click="lookBookingDetailFn">，点我>></span></p>
     </div>
     <div class="booking_lists" v-infinite-scroll="loadMore" infinite-scroll-disabled="moreLoading" infinite-scroll-distance="20" infinite-scroll-immediate-check="false">
