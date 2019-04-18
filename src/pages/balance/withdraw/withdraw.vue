@@ -107,32 +107,9 @@
       <calculation v-on:num="numInput" v-if="inputShow" v-bind:newNum="withdrawMoney" v-on:inputClose="inputClose" key="money"></calculation>
     </transition>
     <!--输入密码/验证码-->
-    <mt-popup position="bottom" v-model="passwordinput">
-      <div class="password_input">
-        <div class="title">
-          <div class="close" v-on:click="passwordinput = false">
-            <img src="../../../../static/images/go.png">
-          </div>
-          <span v-if="isSecurity == 1">请输入短信验证码</span>
-          <span v-else-if="isSecurity == 2">请输入支付密码</span>
-        </div>
-        <div class="password_block">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-        <div class="another_click">
-          <span v-if="isSecurity ==1">验证码已发送至{{mobile | plusXing(3, 4)}},<span class="color_text">{{seconds}}s后</span>可
-            <span  v-bind:class="{color_text: used}" v-on:click="getAgain">重新获取</span>
-          </span>
-          <span v-else-if="isSecurity == 2" class="color_text" v-on:click="$router.push('/code')">忘记密码</span>
-        </div>
-        <calculation v-on:num="passwordInput" v-on:inputClose="passwordSubmit" key="password" newNum="" ref="passwordInput"></calculation>
-      </div>
-    </mt-popup>
+    <keep-alive>
+      <passwordInput v-if="passwordInputShow" v-on:boxClose="passwordInputShow=false" v-on:clickEvent="submit" v-on:getCode="getAgain"></passwordInput>
+    </keep-alive>
   </div>
 </template>
 <script>
@@ -141,12 +118,14 @@
   import {bankCardJson} from "../../../../static/js/bankCardJson";
   import { customerInit, customerClick } from "../../../../static/js/basic"
   import calculation from '../../../components/keyboard/calculation'
+  import passwordInput from '../../../components/password_box/password_box'
   export default {
     name: 'withdraw',
     components: {
       orangeBtn: orangeBtn,
       serviceArea: serviceArea,
-      calculation: calculation
+      calculation: calculation,
+      passwordInput: passwordInput
     },
     data () {
       return {
@@ -182,6 +161,8 @@
         seconds: '',//倒计时
         bankCardId: '',//银行卡卡号
         mobile: '',//用户手机号
+
+        passwordInputShow: false
 /*
         serviceLeft: '联系客服',
         serviceRight: '更多',
@@ -482,19 +463,9 @@
 
           this.withdrawClick = false;
 
-          this.passwordinput = true;
+          this.passwordInputShow = true;
 
           this.password = '';
-
-          var divs = document.getElementsByClassName('password_block')[0].children;
-
-          for(let div of divs){
-
-            div.innerText = '';
-
-          }
-
-          (this.isSecurity == 1) && (this.getAgain());
 
         }
 
@@ -523,221 +494,81 @@
         this.inputShow = value;
       },
 
-      /*密码/验证码键盘输入事件*/
-      passwordInput: function (num) {
-
-        var divs = document.getElementsByClassName('password_block')[0].children;
-
-        var length = divs.length;
-
-        if(num === ''){
-
-          if(event.target.dataset.num == 'C'){
-
-            for(let div of divs){
-
-              div.innerHTML = '';
-
-              this.password = num;
-
-            }
-
-            return;
-
-          }
-
-          else if(event.target.dataset.num == 'D'){
-
-            this.password = this.password.slice(0,-1);
-
-          }
-
-        }
-
-        else if(num.indexOf('.') != -1 || this.password.length >= 6){
-
-          this.$refs.passwordInput.money = '';
-
-          return;
-
-        }else{
-
-          this.password = this.password + num;
-
-        }
-
-        if(this.isSecurity == 1){
-
-          while(length--){
-
-            if((typeof this.password[length]) == 'string'){
-
-              divs[length].innerHTML = this.password[length];
-
-            }else{
-
-              divs[length].innerHTML = '';
-
-            }
-
-          }
-
-        }else if(this.isSecurity == 2){
-
-          while(length--){
-
-            if((typeof this.password[length]) == 'string'){
-
-              divs[length].innerHTML = '●';
-
-            }else{
-
-              divs[length].innerHTML = '';
-
-            }
-
-          }
-
-        }
-
-        this.$refs.passwordInput.money = '';
-
-        console.log(this.password);
-      },
-
       /*密码/验证码键盘确认事件*/
-      passwordSubmit: function (num) {
-        var type;
-        (this.isSecurity == 1) && (type='验证码');
-        (this.isSecurity == 2) && (type='密码');
+      submit: function (password, type) {
 
-        if(this.password == ''){
+        var params = {
+
+          balance: this.withdrawMoney,
+
+          bankCardId: this.bankCardId
+
+        };
+
+        params[type] = password;
+
+        /*
+         * 接口： 用户发起提现操作
+         * 请求方式： GET
+         * 接口： /user/withdraw/dowithdraw
+         * 入参： bankCardId,balance,payPassword
+         * */
+
+        this.$http({
+
+          method: 'get',
+          url: process.env.API_ROOT + 'user/withdraw/dowithdraw',
+          params: params
+
+        }).then(res=>{
+
+          console.log(res);
+
+          this.$indicator.close();
+
           this.$toast({
-            message: '请输入' + type,
+            message: res.data.msg,
             position: 'bottom',
             duration: 1500
           });
-        }else if(this.password.length != 6){
-          this.$toast({
-            message: '请输入正确的' + type,
-            position: 'bottom',
-            duration: 1500
-          });
-        }else{
 
-          this.$indicator.open({
-            text: '加载中...',
-            spinnerType: 'fading-circle'
-          });
+          if(res.data.code == '0000'){
 
-          var params = {
+            (this.setStorage('orderId',res.data.data));
 
-            balance: this.withdrawMoney,
+            setTimeout(() => {
+              this.$router.replace( '/paySuccess');
+            },1500);
 
-            bankCardId: this.bankCardId
+          }
 
-          };
-
-          (this.isSecurity == 1) && (params.code = this.password);
-          (this.isSecurity == 2) && (params.payPassword = hexMD5(this.password));
-
-          /*
-           * 接口： 用户发起提现操作
-           * 请求方式： GET
-           * 接口： /user/withdraw/dowithdraw
-           * 入参： bankCardId,balance,payPassword
-           * */
-
-          this.$http({
-
-            method: 'get',
-            url: process.env.API_ROOT + 'user/withdraw/dowithdraw',
-            params: params
-
-          }).then(res=>{
-
-            console.log(res);
-
-            this.$indicator.close();
-
-            this.$toast({
-              message: res.data.msg,
-              position: 'bottom',
-              duration: 1500
-            });
-
-            if(res.data.code == '0000'){
-
-              (this.setStorage('orderId',res.data.data));
-
-              setTimeout(() => {
-                this.$router.replace( '/paySuccess');
-              },1500);
-
-            }else{
-
-              this.password = '';
-
-              var divs = document.getElementsByClassName('password_block')[0].children;
-
-              for(let div of divs){
-
-                div.innerHTML = '';
-
-              }
-
-            }
-
-          }).catch(res=>console.log(res));
-
-        }
+        }).catch(res=>console.log(res));
       },
       //获取验证码
       getAgain: function () {
-        const TIME_COUNT = 60;
-        if(this.used){
-          this.used = false;
-          this.seconds = TIME_COUNT;
 
-          /**
-           * 接口：支付发送短信认证
-           * 请求方式：GET
-           * 接口：/jx/action/withdrawmsg
-           * 入参：null
-           * */
-          this.$http({
-            method: 'post',
-            url: process.env.API_ROOT + 'jx/action/withdrawmsg'
-          }).then((res)=>{
+        /**
+         * 接口：支付发送短信认证
+         * 请求方式：GET
+         * 接口：/jx/action/withdrawmsg
+         * 入参：null
+         * */
+        this.$http({
+          method: 'post',
+          url: process.env.API_ROOT + 'jx/action/withdrawmsg'
+        }).then((res)=>{
 
-            this.$toast({
+          this.$toast({
 
-              message: res.data.msg,
-              position: 'bottom',
-              duration: 1500
+            message: res.data.msg,
+            position: 'bottom',
+            duration: 1500
 
-            });
+          });
 
-            if(res.data.code == '0000'){
-
-              //倒计时
-              var countDown = setInterval(()=>{
-                this.seconds--;
-                if(!this.seconds){
-                  clearInterval(countDown);
-                  this.used = true;
-                }
-              },1000);
-
-
-            }else{
-              this.seconds = 0;
-              this.used = true;
-            }
-          }).catch((res)=>{
-            console.log(res);
-          })
-        }
+        }).catch((res)=>{
+          console.log(res);
+        })
 
 
       }
