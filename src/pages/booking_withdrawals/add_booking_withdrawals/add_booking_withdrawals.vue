@@ -1,5 +1,8 @@
 <template>
-  <div class="add_booking_withdrawals" v-bind:class="{overflow: (cycleShow || firstTimeShow || timeBoxShow || passwordBoxShow || firstTimeWeek)}">
+  <div class="add_booking_withdrawals"  v-on:click="keyboardShow = false"
+       v-bind:class="{overflow: (cycleShow || firstTimeShow || timeBoxShow || passwordBoxShow || firstTimeWeek)}">
+
+    <!--银行卡选择-->
     <div class="bank_choose" v-on:click="$router.push('/bankCard')">
       <div>
         <div class="bank_icon">
@@ -12,15 +15,26 @@
       </div>
       <span class="allow_right"></span>
     </div>
+
+    <!--提现输入-->
     <div class="withdraw_detail">
       <div class="title">提现金额<span class="help color_text" v-on:click="showPs">?</span></div>
       <div class="withdraw_input">
         <span>￥</span>
-        <input type="text" v-bind:placeholder="maxWithdraw+amountMax+'元'" v-model="withdrawMoney" v-on:blur="moneyToFixed">
+        <div v-on:click="keyboardShow = true" v-on:click.stop>
+          <span v-if="withdrawMoney!=''" class="withdraw_money">{{withdrawMoney}}</span>
+          <span v-if="keyboardShow" class="flicker"></span>
+          <span v-if="withdrawMoney==''">每笔最高{{amountMax}}元</span>
+        </div>
+        <!--<input type="text" v-bind:placeholder="maxWithdraw+amountMax+'元'" v-model="withdrawMoney" v-on:blur="moneyToFixed">-->
         <span class="color_text" v-on:click="withdrawMoney = '到期提现全部余额'">全部提现</span>
       </div>
     </div>
+
+    <!--预约选项-->
     <div class="withdraw_option">
+
+      <!--提现周期-->
       <div class="withdraw_cycle" v-on:click="cycleShow = true ; char = cycleType">
         <div class="title">
           <div><img src="../../../../static/images/cash_appt_cycle.png"></div>
@@ -31,6 +45,8 @@
           <span class="allow_right"></span>
         </div>
       </div>
+
+      <!--首次开始时间-->
       <div class="withdraw_start" v-on:click="firstTimeSelect">
         <div class="title">
           <div><img src="../../../../static/images/cash_appt_start.png"></div>
@@ -46,6 +62,8 @@
           <span class="allow_right"></span>
         </div>
       </div>
+
+      <!--预约截止时间-->
       <div class="withdraw_end" v-on:click="selectTimeShow">
         <div class="title">
           <div><img src="../../../../static/images/cash_appt_end.png"></div>
@@ -56,6 +74,8 @@
           <span class="allow_right"></span>
         </div>
       </div>
+
+      <!--备注-->
       <div class="withdraw_tips">
         <div class="title">
           <div><img src="../../../../static/images/cash_appt_tips.png"></div>
@@ -64,11 +84,16 @@
         <input type="text" placeholder="选填，1-10个字" maxlength="10" v-model="remark" @blur="lostPointFn">
       </div>
     </div>
+
+    <!--提现服务协议-->
     <div class="agreement">
       <input type="checkbox" name="agree" id="agree" checked>
       <label for="agree">同意</label><span class="color_text" v-on:click="$router.push('/bookingAgreement')">《预约提现服务协议》</span>
     </div>
+
     <orangeBtn v-bind:name="btnName" v-on:clickEvent="handleClick"></orangeBtn>
+
+    <!--提示弹框-->
     <mt-popup v-model="psShow">
       <div class="ps">
         <div class="title">提示</div>
@@ -79,7 +104,11 @@
         <div class="close" v-on:click="psShow=false">确定</div>
       </div>
     </mt-popup>
+
+    <!--时间组件-->
     <mt-datetime-picker v-model="date" type="date" ref="date" v-bind:startDate="new Date(startDate)" @confirm="selectTime" @cancel="cancelTime"></mt-datetime-picker>
+
+    <!--提现周期选择组件-->
     <mt-popup v-model="cycleShow" position="bottom">
 
       <div class="button">
@@ -90,6 +119,8 @@
       </div>
 
       <mt-picker v-bind:slots="cycleList" @change="cycleChange"></mt-picker>
+
+      <!--首次开始时间选择组件（按周循环）-->
     </mt-popup>
 
     <mt-popup v-model="firstTimeWeek" position="bottom">
@@ -104,6 +135,7 @@
       <mt-picker v-bind:slots="cycleWeekList" @change="firstTimeChange"></mt-picker>
     </mt-popup>
 
+    <!--首次开始时间选择组件（按月循环）-->
     <mt-popup v-model="firstTimeShow" position="bottom">
 
       <div class="button">
@@ -116,16 +148,19 @@
       <mt-picker v-bind:slots="firstTimeList" @change="firstTimeChange"></mt-picker>
     </mt-popup>
 
+    <!--密码/验证码输入组件-->
     <keep-alive>
       <passwordBox v-on:clickEvent="submit" v-if="passwordBoxShow" v-on:boxClose="boxClose" v-on:getCode="getCode" ref="passwordbox"></passwordBox>
     </keep-alive>
 
+    <keyboard v-if="keyboardShow" v-on:num="keyboardInput" v-bind:newNum="withdrawMoney" ref="keyboard" v-on:inputClose="inputClose"></keyboard>
   </div>
 </template>
 <script>
   import { bankCardJson } from "../../../../static/js/bankCardJson"
   import orangeBtn from '../../../components/orange_btn/orange_btn'
   import passwordBox from '../../../components/password_box/password_box'
+  import keyboard from '../../../components/keyboard/calculation'
 
   export default {
 
@@ -135,15 +170,15 @@
 
       orangeBtn: orangeBtn,
 
-      passwordBox: passwordBox
+      passwordBox: passwordBox,
+
+      keyboard: keyboard
 
     },
 
     data () {
 
       return {
-
-        maxWithdraw: '每笔最高',//预约提现限额
 
         btnName: '完成',//按钮名称
 
@@ -193,7 +228,7 @@
             defaultIndex: 0
           }
 
-        ],
+        ],//首次开始时间选择插件数据（按周循环）
 
         cycleType: '按月循环',//提现周期值
 
@@ -209,7 +244,7 @@
             defaultIndex: 0,
           }
 
-        ],//首次开始提现插件数据
+        ],//首次开始提现插件数据（按月循环）
 
         firstTimeType: '',//首次开始提现时间（每月）
 
@@ -221,11 +256,13 @@
 
         remark: '',//备注
 
-        dateFor: '',
+        dateFor: '',//时间插件内容控制
 
         firstTimeWeek: false,//按周循环选择弹窗
 
-        timeBoxShow: false
+        timeBoxShow: false,//时间插件状态
+
+        keyboardShow: false
 
       }
 
@@ -239,6 +276,7 @@
 
     methods: {
 
+      /*页面数据初始化*/
       data: function () {
 
         var _this = this;
@@ -266,34 +304,63 @@
           url: process.env.API_ROOT + 'user/work/checkappointment'
         }).then(res=>{
 
-          this.amountMax = res.data.data.amountMax;
-          this.amountMin = res.data.data.amountMin;
-          this.balance = res.data.data.balance;
-          this.dayMaxAmount = res.data.data.dayMaxAmount;
-          this.monthMaxAmount = res.data.data.monthMaxAmount;
-          this.rate = res.data.data.rate;
+          if(res.data.code == '0000'){
 
-          var bank;
+            this.amountMax = res.data.data.amountMax;
+            this.amountMin = res.data.data.amountMin;
+            this.balance = res.data.data.balance;
+            this.dayMaxAmount = res.data.data.dayMaxAmount;
+            this.monthMaxAmount = res.data.data.monthMaxAmount;
+            this.rate = res.data.data.rate;
 
-          (!!this.$store.bank) ? (bank = this.$store.bank) : (bank = res.data.data.userBankCardDTOList[0]);
+            var bank;
 
-          this.bankName = bank.bankName;
+            (!!this.$store.bank) ? (bank = this.$store.bank) : (bank = res.data.data.userBankCardDTOList[0]);
 
-          this.cardId = bank.bankCardId;
+            this.bankName = bank.bankName;
 
-          this.bankNo = bank.bankNo;
+            this.cardId = bank.bankCardId;
 
-          this.bankImg = this.getBankImg(this.bankName);
+            this.bankNo = bank.bankNo;
 
-          this.date = new Date((new Date()).getTime()+60*60*24*1000);
+            this.bankImg = this.getBankImg(this.bankName);
 
-          this.startDate = this.date.getFullYear() + '-' + (this.date.getMonth()+1) + '-' + (this.date.getDate());
+            this.date = new Date((new Date()).getTime()+60*60*24*1000);
 
-          this.firstTimeType = this.date.getDate()-1 + '日';
+            this.startDate = this.date.getFullYear() + '-' + (this.date.getMonth()+1) + '-' + (this.date.getDate());
 
-          this.firstTimeList[0].defaultIndex = this.firstTimeList[0].values.indexOf(this.firstTimeType);
+            this.firstTimeType = this.date.getDate()-1 + '日';
 
-          this.firstTimeBooking = this.firstTimeNear(this.firstTimeType);
+            this.firstTimeList[0].defaultIndex = this.firstTimeList[0].values.indexOf(this.firstTimeType);
+
+            this.firstTimeBooking = this.firstTimeNear(this.firstTimeType);
+
+          }else if(res.data.code == '-7'){
+
+            this.$messagebox({
+              title: '提示',
+              message: res.data.msg,
+              showCancelButton:true,
+              confirmButtonText: '去添加',
+              cancelButtonText: '取消',
+              closeOnClickModal: true,
+              cancelButtonClass: 'cancel_btn',
+              confirmButtonClass: 'confirm_btn_orange',
+            }).then(res=>{
+
+              if(res == 'confirm'){
+
+                this.$router.push('/bankCard');
+
+              }else if(res == 'cancel'){
+
+                this.$router.go(-1);
+
+              }
+
+            })
+
+          }
 
         });
 
@@ -301,6 +368,7 @@
 
 
 
+      /*获取银行卡照片*/
       getBankImg: function (bankName) {
 
         for(var bankCard of this.bankCardJson){
@@ -312,6 +380,7 @@
       },
 
 
+      /*时间组件确定事件*/
       selectTime: function () {
 
         this.timeBoxShow = false;
@@ -323,6 +392,7 @@
       },
 
 
+      /*时间组件取消事件*/
       cancelTime: function () {
 
         this.timeBoxShow = false;
@@ -332,6 +402,7 @@
       },
 
 
+      /*调用时间组件*/
       selectTimeShow: function () {
 
         /*var div = document.getElementsByClassName('picker-slot')[2];
@@ -360,6 +431,7 @@
 
 
 
+      /*周期组件滑动事件*/
       cycleChange: function (component,value) {
 
         this.char = value[0];
@@ -368,6 +440,7 @@
 
 
 
+      /*周期组件确定事件*/
       cycleConfirm: function () {
 
         var date = new Date();
@@ -387,6 +460,7 @@
       },
 
 
+      /*首次开始时间组件滑动事件*/
       firstTimeChange: function (componet,value) {
 
         this.char = value[0];
@@ -394,6 +468,7 @@
       },
 
 
+      /*首次开始时间组件确定事件*/
       firstTimeConfirm: function () {
 
         (this.cycleType == '按月循环') && (this.firstTimeType = this.char);
@@ -410,6 +485,7 @@
 
 
 
+      /*首次提现时间计算*/
       firstTimeNear: function (time) {
 
         var now = new Date();
@@ -454,9 +530,8 @@
 
 
 
+      /*添加预约提现*/
       submit: function (password, type) {
-
-        console.log(password, type);
 
         this.params[type] = password;
 
@@ -484,7 +559,7 @@
 
             this.$indicator.close();
 
-            if((res.data.code != '-4')&&(res.data.code != '-1')){
+            if((res.data.code != '-4') && (res.data.code != '-1')){
 
               this.$messagebox({
                 title: '提示',
@@ -496,7 +571,7 @@
 
               this.passwordBoxShow = false;
 
-            }else {
+            }else{
 
               this.$toast({
 
@@ -505,6 +580,7 @@
                 duration: 1500
 
               });
+
             }
 
           }
@@ -516,6 +592,7 @@
 
 
 
+      /*验证码/密码组件控制*/
       boxClose: function (bool) {
 
         this.passwordBoxShow = bool;
@@ -525,6 +602,7 @@
 
 
 
+      /*检测页面数据*/
       handleClick: function () {
 
         if(this.withdrawMoney){
@@ -632,6 +710,7 @@
 
 
 
+      /*显示提现提醒*/
       showPs: function () {
 
         this.$messagebox({
@@ -650,6 +729,7 @@
 
 
 
+      /*金额显示状态改变*/
       moneyToFixed: function () {
 
         (this.withdrawMoney != '') && (this.withdrawMoney = (+this.withdrawMoney).toFixed(2));
@@ -658,6 +738,7 @@
 
 
 
+      /*首次时间选择组件显示*/
       firstTimeSelect: function () {
 
         (this.cycleType == '按月循环') && (this.firstTimeShow = true) && (this.char = this.firstTimeType);
@@ -682,6 +763,7 @@
 
 
 
+      /*首次开始时间滑动事件*/
       weekChange: function (day) {
 
         var weekArr = ['日','一','二','三','四','五','六'];
@@ -692,6 +774,7 @@
 
 
 
+      /*时间格式输出*/
       dateChange: function (addPoint, date) {
 
         var year = date.getFullYear();
@@ -705,6 +788,7 @@
       },
 
 
+      /*获取验证码*/
       getCode: function () {
 
         /**
@@ -741,11 +825,26 @@
       },
 
 
+      keyboardInput: function (value) {
+
+        this.withdrawMoney = value;
+
+      },
+
+
+      inputClose: function () {
+
+        this.keyboardShow = false;
+
+      }
+
+
     },
 
 
     watch: {
 
+      /*监听提现金额*/
       withdrawMoney: function (newVal, oldVal) {
 
         if(this.withdrawMoney != ''){
@@ -760,17 +859,24 @@
 
               (+this.withdrawMoney < +this.amountMin) && (this.withdrawMoney = this.amountMin);
 
-              ((this.withdrawMoney + '').indexOf('.') != -1) && ((this.withdrawMoney + '').split('.')[1].length > 2) && (this.withdrawMoney = (+this.withdrawMoney).toFixed(2));
+              ((this.withdrawMoney + '').indexOf('.') != -1) && ((this.withdrawMoney + '').split('.')[1].length > 2)
+              && (this.withdrawMoney = (+this.withdrawMoney).toFixed(2));
 
             }
 
-          }else if(this.withdrawMoney == '到期提现全部余'){
+          }else{
+
+            if(this.withdrawMoney == '到期提现全部余'){
 
               this.withdrawMoney = '';
+
+            }
 
           }
 
         }
+
+        (!!this.$refs.keyboard) && (this.$refs.keyboard.money = this.withdrawMoney);
 
       }
 
