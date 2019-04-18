@@ -12,7 +12,7 @@
           <div v-else-if="bank.cardType == 2">信用卡</div>
           <div class="card_ID" v-bind:bankCardId="bank.bankCardId">**** **** **** {{bank.bankNo.substr(-4)}}</div>
         </div>
-        <div class="delete_btn" v-bind:data-card="bank.bankCardId" v-bind:data-num="bank.bankNo" v-on:click="deleteCard">
+        <div class="delete_btn" v-bind:data-card="bank.bankCardId" v-bind:data-num="bank.bankNo" v-on:click="checkCard(bank.bankCardId)">
           <img src="../../../../static/images/jx_delate.png">
         </div>
       </div>
@@ -61,6 +61,17 @@
 
         this.isVerify = res.data.data.isVerify;
 
+        this.data();
+
+      }).catch(res=>{
+        console.log(res);
+      })
+
+    },
+    methods: {
+
+      data: function () {
+
         /*
       * 接口： 获取用户银行卡信息
       * 请求方式： GET
@@ -84,23 +95,13 @@
           console.log(res);
         });
 
-      }).catch(res=>{
-        console.log(res);
-      })
+      },
 
-    },
-    methods: {
-      deleteCard: function (e) {
-
-        var div_bank_card = e.currentTarget.parentElement;
-
-        this.bankCardId=e.currentTarget.dataset.card;
-
-        this.cardID=e.currentTarget.dataset.num;
+      deleteCard: function (msg, cardId) {
 
         this.$messagebox({
           title: '提示',
-          message: '确认删除尾号是'+ this.cardID.substr(this.cardID.length-4)+'的银行卡',
+          message: msg,
           showCancelButton: true,
           cancelButtonText: '取消',
           confirmButtonText: '删除',
@@ -120,11 +121,11 @@
                * */
             this.$http({
               method: 'get',
-              url: process.env.API_ROOT + 'user/bank/deletebankcardinfo?bankCardId=' + this.bankCardId
+              url: process.env.API_ROOT + 'user/bank/deletebankcardinfo?bankCardId=' + cardId
             }).then((res) => {
               console.log(res);
               if (res.data.code == '0000') {
-                div_bank_card.remove();
+                this.data();
               } else {
                 this.$toast({
                   message: res.data.msg,
@@ -190,6 +191,30 @@
           this.$router.go(-1);
 
         }
+
+      },
+
+
+      checkCard: function (cardId) {
+
+        /*
+               * 接口： 检测删除用户银行卡信息
+               * 请求方式： GET
+               * 接口： /user/bank/deletecheckbandcardinfo
+               * 传参： bankCardId
+               * */
+        this.$http({
+          method: 'get',
+          url: process.env.API_ROOT + 'user/bank/deletecheckbankcardinfo?bankCardId=' + cardId
+        }).then(res=>{
+
+          if(res.data.code == '0000'){
+
+            this.deleteCard(res.data.msg, cardId);
+
+          }
+
+        })
 
       }
     },

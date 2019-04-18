@@ -63,18 +63,42 @@
     .withdraw_input{
       display: flex;
       align-items: center;
-      span:first-child{
+      &>span:first-child{
         color: #4a4a4a;
         font-size: 22px;
       }
-      input{
+      div{
+        flex: 1;
+        color: #dddddd;
+        position: relative;
+        display: flex;
+        align-items: center;
+        @keyframes flicker{
+          from {opacity: 1;}
+          to {opacity: 0;}
+        }
+        &>.flicker{
+          display: inline-block;
+          height: 16px;
+          width: 1px;
+          border-left: 1px solid #ababab;
+          animation: flicker 1s infinite;
+        }
+        &>span{
+          font-size: 16px;
+        }
+        .withdraw_money{
+          color: #4a4a4a;
+        }
+      }
+      /*input{
         flex: 1;
         color: #4a4a4a;
         font-size: 16px;
         &::placeholder{
           color: #dddddd;
         }
-      }
+      }*/
     }
   }
   .withdraw_option{
