@@ -7,7 +7,9 @@
               <div class='key-cell' data-num='7'>7</div>
               <div class='key-cell' data-num='8'>8</div>
               <div class='key-cell' data-num='9'>9</div>
-              <div class='key-cell' data-num='D'>C</div>
+              <div class='key-cell' data-num='D'>
+                <i class="iconfont icon-shanchu"></i>
+              </div>
             </div>
             <div class='key-row'>
               <div class='key-cell' data-num='4'>4</div>
@@ -27,7 +29,7 @@
               <div class='key-cell' data-num='.'>.</div>
               <div class='key-cell' data-num='-1'></div>
             </div>
-            <div class='key-confirm' data-num='S'>确认</div>
+            <div class='key-confirm color_background' data-num='S'>确认</div>
           </div>
         </div>
 </template>
