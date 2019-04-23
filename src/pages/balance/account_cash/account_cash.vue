@@ -384,14 +384,14 @@
       getAgain: function () {
 
         /**
-         * 接口：支付发送短信认证
+         * 接口：转账发送短信认证
          * 请求方式：GET
-         * 接口：/jx/action/withdrawmsg
+         * 接口：/jx/action/dotransferp
          * 入参：null
          * */
         this.$http({
           method: 'post',
-          url: process.env.API_ROOT + 'jx/action/withdrawmsg'
+          url: process.env.API_ROOT + 'jx/action/dotransferp'
         }).then((res)=>{
 
           this.$toast({
