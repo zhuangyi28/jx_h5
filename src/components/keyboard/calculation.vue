@@ -8,7 +8,7 @@
               <div class='key-cell' data-num='8'>8</div>
               <div class='key-cell' data-num='9'>9</div>
               <div class='key-cell' data-num='D'>
-                <i class="iconfont icon-shanchu"></i>
+                <i class="iconfont icon-shanchu" data-num='D'></i>
               </div>
             </div>
             <div class='key-row'>
