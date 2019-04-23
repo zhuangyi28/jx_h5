@@ -93,7 +93,7 @@
 
           console.log('提现')
 
-          this.orderTypes='01',
+          this.orderTypes='01,08',
 
           //判断导航
             document.title="提现订单"
