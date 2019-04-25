@@ -78,11 +78,11 @@
             <div class="bottom_border border_color"></div>
             <img v-bind:src="backUrl">
           </div>
-          <input type="file" name="file" accept="image/*" @change="updateface" class="back_img"/>
+          <input type="file" name="file" accept="image/*" @change="updateback" class="back_img"/>
         </div>
         <div class="img" v-else>
           <img v-bind:src="backUrl">
-          <input type="file" name="file" accept="image/*" @change="updateface" class="face_img"/>
+          <input type="file" name="file" accept="image/*" @change="updateback" class="back_img"/>
         </div>
         <div class="title">
           <span v-if="cardTypeId == 3">上传港澳通行证反面</span>
@@ -435,7 +435,7 @@
         });
       },
       //上传照片
-      updateface: function () {
+      updateface1: function () {
 
         var that = this
 
@@ -450,6 +450,8 @@
         param.append('File', file);//通过append向form对象添加数据
 
         console.log(file);
+
+
 
         that.$indicator.open({
           text: '上传中,请耐心等待',
@@ -490,6 +492,8 @@
 
                 },500)
 
+
+                console.log(Event.target.classList)
 
 
                 if (Event.target.classList.contains('face_img')) {
@@ -695,7 +699,214 @@
 
       },
 
+      photoCompress:function(file,obj,callback){
+        let that=this;
+        let ready=new FileReader();
+        /*开始读取指定File对象中的内容. 读取操作完成时,返回一个URL格式的字符串.*/
+        ready.readAsDataURL(file);
+        ready.onload=function(){
+          let re=this.result;
+          that.canvasDataURL(re,obj,callback)  //开始压缩
+        }
+      },
+      canvasDataURL(path, obj, callback){
 
+        let img = new Image();
+        img.src = path;
+        img.onload = function(){
+          let that = this;   //指到img
+          // 默认按比例压缩
+          let w = that.width,
+            h = that.height,
+            scale = w / h;
+          w = obj.width || w;
+          h = obj.height || (w / scale);
+          let quality = 0.7;  // 默认图片质量为0.7
+          //生成canvas
+          let canvas = document.createElement('canvas');
+          let ctx = canvas.getContext('2d');
+          // 创建属性节点
+          let anw = document.createAttribute("width");
+          anw.nodeValue = w;
+          let anh = document.createAttribute("height");
+          anh.nodeValue = h;
+          canvas.setAttributeNode(anw);
+          canvas.setAttributeNode(anh);
+          ctx.drawImage(that, 0, 0, w, h);
+          // 图像质量
+          if(obj.quality && obj.quality <= 1 && obj.quality > 0){
+            quality = obj.quality;
+          }
+          // quality值越小，所绘制出的图像越模糊
+          let base64 = canvas.toDataURL('image/jpeg', quality);
+          // 回调函数返回base64的值
+          callback(base64);
+        }
+      },
+      /*这里转blob*/
+      base64UrlToBlob:function(urlData){
+    let arr = urlData.split(','),
+      mime = arr[0].match(/:(.*?);/)[1],  // 去掉url的头，并转化为byte
+      bstr = atob(arr[1]),    // 处理异常,将ascii码小于0的转换为大于0
+      n = bstr.length,
+      u8arr = new Uint8Array(n);
+    while(n--){
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new Blob([u8arr], {type:mime});
+    //转file
+    //return new File([u8arr], filename, {type:mime});
+  },
+      /*上传正面*/
+      updateface:function(e) {    //选择文件后执行
+        let that=this
+        let fileObj=e.target.files[0]  //获取file
+        console.log(fileObj)
+        var form = new FormData();  // 创建FormData 对象
+        if(fileObj.size/1024 > 1025) { //文件大于1M（根据需求更改），进行压缩上传
+          that.photoCompress(fileObj, {   //调用压缩图片方法
+            quality: 0.2
+          }, function(base64Codes){
+            //console.log("压缩后：" + base.length / 1024 + " " + base);
+            let bl = that.base64UrlToBlob(base64Codes);
+            console.log(bl)
+            form.append("File", bl, "File_"+Date.parse(new Date())+".jpg"); // 文件对象
+            that.imgRequest(form,'face')
+
+          });
+        }else{ //小于等于1M 原图上传
+          form.append("File", fileObj); // 文件对象
+          that.imgRequest(form,'face');   //请求图片上传接口
+        }
+      },
+      /*上传反面面*/
+      updateback:function(e) {    //选择文件后执行
+        let that=this
+        let fileObj=e.target.files[0]  //获取file
+        console.log(fileObj)
+        var form = new FormData();  // 创建FormData 对象
+        if(fileObj.size/1024 > 1025) { //文件大于1M（根据需求更改），进行压缩上传
+          that.photoCompress(fileObj, {   //调用压缩图片方法
+            quality: 0.2
+          }, function(base64Codes){
+            //console.log("压缩后：" + base.length / 1024 + " " + base);
+            let bl = that.base64UrlToBlob(base64Codes);
+            console.log(bl)
+            form.append("File", bl, "File_"+Date.parse(new Date())+".jpg"); // 文件对象
+            that.imgRequest(form,'back')
+
+          });
+        }else{ //小于等于1M 原图上传
+          form.append("File", fileObj); // 文件对象
+          that.imgRequest(form,'back');   //请求图片上传接口
+        }
+      },
+      imgRequest:function(param,type){
+
+        let that =this;
+
+        let Event = event;
+
+        that.$indicator.open({
+          text: '上传中,请耐心等待',
+          spinnerType: 'fading-circle'
+        });
+
+
+
+        that.$http.post(process.env.API_ROOT + 'jx/uploadimg/oss', param, {
+          headers: {'Content-Type': 'multipart/form-data'}
+
+        }).then((res) => {
+
+          console.log(res.data);
+
+          if (res.data.code == '0000') {
+
+            var imgUrl = res.data.data.url;
+
+            (function () {
+
+              var img = new Image();
+
+              img.onload = function () {
+
+
+
+                that.$indicator.close();
+
+                setTimeout(function () {
+
+                  that.$toast({
+
+                    message: '上传成功',
+                    position: 'middle',
+                    duration: 1500
+                  });
+
+                },500);
+
+                if(type=='face'){
+
+                  that.faceUrl = res.data.data.url;
+
+                }
+
+                else if(type=='back'){
+
+                  that.backUrl = res.data.data.url;
+
+                }
+
+ /*               if () {
+
+                  that.faceUrl = res.data.data.url;
+
+                }
+
+
+                else if (Event.target.classList.contains('back_img')) {
+
+
+                  that.backUrl = res.data.data.url;
+
+                }*/
+
+                //console.log("img is loaded")
+
+
+
+              };
+
+              img.onerror = function () {
+
+                that.$indicator.close();
+
+                that.$toast({
+                  message: '上传失败，页面自动刷新后请重试',
+                  position: 'middle',
+                  duration: 1500
+                });
+
+                setTimeout(function () {
+
+                  window.location.reload();
+
+                },1000)
+
+
+
+              };
+
+              img.src = imgUrl;
+
+            })();
+
+          }
+        }).catch((res)=>{})
+
+
+      },
 
   },
     computed: {
