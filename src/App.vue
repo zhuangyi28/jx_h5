@@ -127,6 +127,20 @@
 
           break;
 
+        case 'jianzhile':
+
+          document.title = '兼职乐';
+
+          document.documentElement.style.setProperty('--mainColor', '#ffa200');
+
+          document.documentElement.style.setProperty('--lessColor', '#ffcd72');
+
+          document.documentElement.style.setProperty('--lightColor', '#fffaf0');
+
+          document.documentElement.style.setProperty('--borderColor', '#ffd389');
+
+          break;
+
 
       }
 

@@ -126,6 +126,12 @@
 
           break;
 
+        case 'jianzhile':
+
+          this.src = "./static/images/jianzhile/logo.png";
+
+          break;
+
       }
 
     // console.log(this.getStorage('thisKey'))
