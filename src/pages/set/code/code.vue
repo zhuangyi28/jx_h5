@@ -21,6 +21,8 @@
 
   <orangeBtn v-bind:name="btnName" v-on:clickEvent="codeUrlFn"></orangeBtn>
 
+  <div class="get_sound_code" v-if="soundCodeShow">没有收到验证码？请尝试获取<span class="color_text" v-on:click="getSoundCode">语音验证码</span></div>
+
 </div>
 
 
@@ -65,6 +67,10 @@
         timer: null,//倒计时函数
 
         btnName:'确定',//按钮名称
+
+        soundCodeShow: false,
+
+        soundCodeTime: 60,
 
 
       }
@@ -125,6 +131,8 @@
             } else {
 
               this.lockBtn = 1;
+
+              this.soundCodeShow = true;
 
               clearInterval(this.timer);
 
@@ -297,6 +305,71 @@
       lostPointFn:function () {
 
         document.body.scrollTop =document.documentElement.scrollTop = window.pageYOffset = 200;
+
+      },
+
+
+
+
+      getSoundCode: function () {
+
+        if(this.soundCodeTime < 60){
+
+          this.$toast({
+
+            message: '操作过于频繁，请稍后再试',
+            position: 'middle',
+            duration: 1500
+
+          });
+
+          return;
+
+        }
+
+        /**
+         * 接口：设置支付密码语音信息
+         * 请求方式：GET
+         * 接口：/jx/action/paymsgaudio
+         * 入参：null
+         * */
+
+        this.$http({
+
+          method: 'get',
+
+          url: process.env.API_ROOT + 'jx/action/paymsgaudio',
+
+
+        }).then(res=>{
+
+          this.$toast({
+
+            message: res.data.msg,
+            position: 'middle',
+            duration: 1500
+
+          });
+
+          if(res.data.code == '0000'){
+
+            this.soundCodeTime = 0;
+
+            var addTime = setInterval(()=>{
+
+              this.soundCodeTime++;
+
+              if(this.soundCodeTime > 60){
+
+                clearInterval(addTime);
+
+              }
+
+            },1000);
+
+          }
+
+        })
 
       }
     },
