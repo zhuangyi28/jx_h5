@@ -63,7 +63,7 @@
     </transition>
     <!--验证码/密码框-->
     <keep-alive>
-      <passwordInput v-on:boxClose="passwordInputClose" v-if="passwordInputShow" v-on:clickEvent="submit" v-on:getCode="getAgain"></passwordInput>
+      <passwordInput v-on:boxClose="passwordInputClose" v-if="passwordInputShow" v-on:clickEvent="submit" v-on:getCode="getAgain" v-on:getSoundCode="getSoundCode"></passwordInput>
     </keep-alive>
   </div>
 </template>
@@ -96,7 +96,9 @@
         seconds: '',//倒计时
         isSecurity: '',//支付验证方式
         mobile: '',//用户手机号
-        passwordInputShow: false
+        passwordInputShow: false,
+
+        soundCodeTime: 60
       }
     },
 
@@ -414,7 +416,67 @@
 
         this.passwordInputShow = false;
 
+      },
+
+
+      getSoundCode: function () {
+
+        if(this.soundCodeTime < 60){
+
+          this.$toast({
+
+            message: '操作过于频繁，请稍后再试',
+            position: 'middle',
+            duration: 1500
+
+          });
+
+          return;
+
+        }
+
+
+        /**
+         * 接口：转账发送语音短信认证
+         * 请求方式：GET
+         * 接口：/jx/action/dotransferpaudio
+         * 入参：null
+         * */
+        this.$http({
+          method: 'post',
+          url: process.env.API_ROOT + 'jx/action/dotransferpaudio'
+        }).then(res=>{
+
+          this.$toast({
+
+            message: res.data.msg,
+            position: 'middle',
+            duration: 1500
+
+          });
+
+          if(res.data.code == '0000') {
+
+            this.soundCodeTime = 0;
+
+            var addTime = setInterval(() => {
+
+              this.soundCodeTime++;
+
+              if (this.soundCodeTime > 60) {
+
+                clearInterval(addTime);
+
+              }
+
+            }, 1000);
+
+          }
+
+        })
+
       }
+
     },
     watch: {
 

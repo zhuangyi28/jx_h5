@@ -11,6 +11,11 @@
         <span v-if="isSecurity == 1">请输入短信验证码</span>
         <span v-else-if="isSecurity == 2">请输入支付密码</span>
       </div>
+      <div class="code_click" v-if="isSecurity ==1">
+          <span>验证码已发送至{{mobile | plusXing(3, 4)}},<span class="color_text">{{seconds}}s后</span>可
+            <span  v-bind:class="{color_text: used}" v-on:click="getAgain">重新获取</span>
+          </span>
+      </div>
       <div class="password_block">
         <div></div>
         <div></div>
@@ -19,11 +24,11 @@
         <div></div>
         <div></div>
       </div>
-      <div class="another_click">
-          <span v-if="isSecurity ==1">验证码已发送至{{mobile | plusXing(3, 4)}},<span class="color_text">{{seconds}}s后</span>可
-            <span  v-bind:class="{color_text: used}" v-on:click="getAgain">重新获取</span>
-          </span>
-        <span v-else-if="isSecurity == 2" class="color_text" v-on:click="$router.push('/code')">忘记密码</span>
+      <div class="another_click" v-if="isSecurity == 2">
+        <span class="color_text" v-on:click="$router.push('/code')">忘记密码</span>
+      </div>
+      <div class="get_sound_code" v-if="isSecurity == 1 && soundCodeShow">
+        没有收到验证码？请尝试获取<span class="color_text" v-on:click="getSoundCode">语音验证码</span>
       </div>
       <calculation v-on:num="passwordInput" v-on:inputClose="passwordSubmit" key="password" newNum="" ref="passwordInput"></calculation>
     </div>
@@ -50,7 +55,9 @@
 
         seconds: '',
 
-        used: true
+        used: true,
+
+        soundCodeShow: false
 
       }
 
@@ -245,6 +252,8 @@
 
               this.used = true;
 
+              this.soundCodeShow = true;
+
               clearInterval(interval);
 
             }else{
@@ -264,6 +273,13 @@
       getCode: function () {
 
         this.$emit('getCode');
+
+      },
+
+
+      getSoundCode: function () {
+
+        this.$emit('getSoundCode');
 
       }
 
