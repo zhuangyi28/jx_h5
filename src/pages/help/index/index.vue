@@ -192,6 +192,12 @@
 
             this.phoneNumber = 'tel:025-66062636';
 
+            break;
+
+          case 'jianzhile':
+
+            this.phoneNumber = 'tel:0311-68068000';
+
             break
         }
 
