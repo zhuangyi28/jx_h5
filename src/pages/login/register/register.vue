@@ -9,7 +9,7 @@
         <div class="field">
           <i class="iconfont icon-sign_pen color_text"></i>
           <input type="text" pattern="\d*" v-model="checkCode" placeholder="请输入验证码" class="code" maxlength="6">
-          <span v-show="show" class="get_code color_background" @click="registerMsg">获取验证码</span>
+          <span v-show="show" class="get_code color_background" @click="registerMsg('code')">获取验证码</span>
           <span v-show="!show" class="get_code color_text_bg">{{count}}s后重新发送</span>
         </div>
         <div class="field">
@@ -20,7 +20,6 @@
     </div>
 
 
-    <orangeBtn v-on:clickEvent="register" :name="btnName"></orangeBtn>
     <div class="register_button">
 
       <div class="register_ps">
@@ -28,6 +27,9 @@
       </div>
     </div>
 
+    <orangeBtn v-on:clickEvent="register" :name="btnName"></orangeBtn>
+
+    <div class="get_sound_code" v-if="getSoundCodeShow">没有收到验证码？请尝试获取<span class="color_text" v-on:click="registerMsg('sound')">语音验证码</span></div>
 
   </div>
 </template>
@@ -59,7 +61,11 @@
 
         btnName:'注册',//按钮名称
 
-        channel:''
+        channel:'',
+
+        getSoundCodeShow: false,//语音验证码显示
+
+        soundCodeTime: 60
 
       }
 
@@ -80,6 +86,8 @@
 
     methods:{
 
+
+      //注册
       register:function () {
 
         let _this=this;
@@ -243,7 +251,9 @@
 
       },
 
-      registerMsg:function () {
+
+      //获取验证码事件
+      registerMsg:function (type) {
 
           var that = this;
 
@@ -264,74 +274,17 @@
 
         else {
 
-          /**
-           * 接口：注册发送短信认证
-           * 请求方式：/jx/action/registmsg
-           * 接口：GET
-           * 入参：mobile
-           **/
-          this.$http({
+          (type == 'code') && (this.getCode());
 
-            method: 'get',
-
-            url:process.env.API_ROOT+'jx/action/registmsg',
-
-            //url:process.env.API_ROOT+'jx/action/registmsg',
-
-            params:{
-
-              mobile:that.mobile,
-
-              channel: that.channel
-
-            }
-
-          }).then((res)=>{
-
-            console.log(res.data);
-
-            if(res.data.code=='0000'){
-
-              this.$toast({
-
-                message:  res.data.msg,
-                position: 'bottom',
-                duration: 1500
-
-              });
-
-              this.getCode();
-
-
-            }
-
-            else {
-
-              this.$toast({
-
-                message:  res.data.msg,
-                position: 'bottom',
-                duration: 1500
-
-              });
-
-            }
-
-
-
-          }).catch((res)=>{
-
-            //console.log(res.data);
-
-
-          })
-
+          (type == 'sound') && (this.getSoundCode());
 
         }
 
       },
 
-      getCode:function(){
+
+      //倒计时
+      countdown:function(){
 
         const TIME_COUNT = 60;
 
@@ -353,6 +306,8 @@
 
               clearInterval(this.timer);
 
+              this.getSoundCodeShow = true;
+
               this.timer = null;
 
             }
@@ -363,6 +318,8 @@
 
       },
 
+
+      //登录
       signin:function () {
 
         var _this=this;
@@ -446,6 +403,151 @@
 
 
       },
+
+
+
+      //获取短信验证码
+      getCode: function () {
+
+        var that = this;
+
+        /**
+         * 接口：注册发送短信认证
+         * 请求方式：/jx/action/registmsg
+         * 接口：GET
+         * 入参：mobile
+         **/
+        this.$http({
+
+          method: 'get',
+
+          url:process.env.API_ROOT+'jx/action/registmsg',
+
+          //url:process.env.API_ROOT+'jx/action/registmsg',
+
+          params:{
+
+            mobile:that.mobile,
+
+            channel: that.channel
+
+          }
+
+        }).then((res)=>{
+
+          console.log(res.data);
+
+          if(res.data.code=='0000'){
+
+            this.$toast({
+
+              message:  res.data.msg,
+              position: 'bottom',
+              duration: 1500
+
+            });
+
+            this.countdown();
+
+
+          }
+
+          else {
+
+            this.$toast({
+
+              message:  res.data.msg,
+              position: 'bottom',
+              duration: 1500
+
+            });
+
+          }
+
+
+
+        }).catch((res)=>{
+
+          //console.log(res.data);
+
+
+        })
+
+      },
+
+
+      //获取语音短信验证码
+      getSoundCode: function () {
+
+        var that = this;
+
+        if(this.soundCodeTime < 60){
+
+          this.$toast({
+
+            message: '操作过于频繁，请稍后再试',
+            position: 'middle',
+            duration: 1500
+
+          });
+
+          return;
+
+        }
+
+        /**
+         * 接口：注册发送语音短信认证
+         * 请求方式：/jx/action/registaudiomsg
+         * 接口：GET
+         * 入参：mobile
+         **/
+        this.$http({
+
+          method: 'get',
+
+          url:process.env.API_ROOT+'jx/action/registaudiomsg',
+
+          //url:process.env.API_ROOT+'jx/action/registmsg',
+
+          params:{
+
+            mobile:that.mobile,
+
+            channel: that.channel
+
+          }
+
+        }).then(res=>{
+
+          this.$toast({
+
+            message: res.data.msg,
+            position: 'middle',
+            duration: 1500
+
+          });
+
+          if(res.data.code == '0000'){
+
+            this.soundCodeTime = 0;
+
+            var addTime = setInterval(()=>{
+
+              this.soundCodeTime++;
+
+              if(this.soundCodeTime > 60){
+
+                clearInterval(addTime);
+
+              }
+
+            },1000);
+
+          }
+
+        })
+
+      }
 
 
     },

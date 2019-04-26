@@ -108,7 +108,7 @@
     </transition>
     <!--输入密码/验证码-->
     <keep-alive>
-      <passwordInput v-if="passwordInputShow" v-on:boxClose="passwordInputShow=false" v-on:clickEvent="submit" v-on:getCode="getAgain"></passwordInput>
+      <passwordInput v-if="passwordInputShow" v-on:boxClose="passwordInputShow=false" v-on:clickEvent="submit" v-on:getCode="getAgain" v-on:getSoundCode="getSoundCode"></passwordInput>
     </keep-alive>
   </div>
 </template>
@@ -162,7 +162,9 @@
         bankCardId: '',//银行卡卡号
         mobile: '',//用户手机号
 
-        passwordInputShow: false
+        passwordInputShow: false,
+
+        soundCodeTime: 60
 /*
         serviceLeft: '联系客服',
         serviceRight: '更多',
@@ -571,7 +573,68 @@
         })
 
 
+      },
+
+
+
+      getSoundCode: function () {
+
+        if(this.soundCodeTime < 60){
+
+          this.$toast({
+
+            message: '操作过于频繁，请稍后再试',
+            position: 'middle',
+            duration: 1500
+
+          });
+
+          return;
+
+        }
+
+
+        /**
+         * 接口：支付发送语音短信认证
+         * 请求方式：GET
+         * 接口：/jx/action/withdrawmsgaudio
+         * 入参：null
+         * */
+        this.$http({
+          method: 'post',
+          url: process.env.API_ROOT + 'jx/action/withdrawmsgaudio'
+        }).then(res=>{
+
+          this.$toast({
+
+            message: res.data.msg,
+            position: 'middle',
+            duration: 1500
+
+          });
+
+          if(res.data.code == '0000') {
+
+            this.soundCodeTime = 0;
+
+            var addTime = setInterval(() => {
+
+              this.soundCodeTime++;
+
+              if (this.soundCodeTime > 60) {
+
+                clearInterval(addTime);
+
+              }
+
+            }, 1000);
+
+          }
+
+        })
+
       }
+
     },
 
 

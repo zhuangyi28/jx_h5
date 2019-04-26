@@ -22,6 +22,8 @@
     <div class="change_new_tel_btn">
       <orangeBtn v-bind:name="btnName" v-on:clickEvent="handleClick"></orangeBtn>
     </div>
+
+    <div class="get_sound_code" v-if="soundCodeShow">没有收到验证码？请尝试获取<span class="color_text" v-on:click="getSoundCode">语音验证码</span></div>
   </div>
 </template>
 <script>
@@ -39,7 +41,11 @@
         btnName: '确认',//按钮名称
         seconds: 60,//验证码倒计时
         show: '',//获取验证码显示
-        oldCode: ''//上一页面验证码
+        oldCode: '',//上一页面验证码
+
+        soundCodeShow: false,
+
+        soundCodeTime: 60,
       }
     },
     mounted () {
@@ -80,6 +86,7 @@
                 time--;
                 this.seconds = time;
                 if (!time) {
+                  this.soundCodeShow = true;
                   clearInterval(countDown);
                   this.show = false;
                 }
@@ -133,9 +140,6 @@
           });
           return;
         }
-        if(!this.mobileTest()){
-          return;
-        }
         if(!this.code){
           this.$toast({
             message: '请输入验证码',
@@ -183,7 +187,77 @@
           console.log(res);
           alert(res.data.msg);
         })
+      },
+
+
+      getSoundCode: function () {
+
+        if(!this.mobileTest()){
+          return
+        }
+
+        if(this.soundCodeTime < 60){
+
+          this.$toast({
+
+            message: '操作过于频繁，请稍后再试',
+            position: 'middle',
+            duration: 1500
+
+          });
+
+          return;
+
+        }
+
+        /*
+        * 接口： 更换用户手机号-新手机号验证语音验证码
+        * 请求方式： GET
+        * 接口： /jx/action/newmobileaudiocheck
+        * 传参： null
+        * */
+        this.$http({
+          method: 'get',
+          url: process.env.API_ROOT + 'jx/action/newmobileaudiocheck',
+
+          params:{
+
+            mobile: this.newMobile
+
+          }
+        }).then(res=>{
+
+          this.$toast({
+
+            message: res.data.msg,
+            position: 'middle',
+            duration: 1500
+
+          });
+
+          if(res.data.code == '0000'){
+
+            this.soundCodeTime = 0;
+
+            var addTime = setInterval(()=>{
+
+              this.soundCodeTime++;
+
+              if(this.soundCodeTime > 60){
+
+                clearInterval(addTime);
+
+              }
+
+            },1000);
+
+          }
+
+        })
+
       }
+
+
     }
   }
 </script>

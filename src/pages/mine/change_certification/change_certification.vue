@@ -17,6 +17,8 @@
 
 
     <orangeBtn v-bind:name="btnName" v-on:clickEvent="enter"></orangeBtn>
+
+    <div class="get_sound_code" v-if="soundCodeShow">没有收到验证码？请尝试获取<span class="color_text" v-on:click="getSoundCode">语音验证码</span></div>
 <!--    <div class="change_certification_ps">
       <img src="../../../../static/images/jx_prompt.png">
       <span>更换登录账号，需验证当前登录账号身份</span>
@@ -48,7 +50,11 @@
         seconds: 0,//获取验证码倒计时
         lockBtn:1,//获取验证码按钮显示
         code: '',//验证码
-        btnName: '确认'
+        btnName: '确认',
+
+        soundCodeShow: false,
+
+        soundCodeTime: 60,
       }
     },
     mounted () {
@@ -81,22 +87,36 @@
           url: process.env.API_ROOT + 'jx/action/oldmobilecheck',
         }).then( (res) => {
           console.log(res);
+
           this.$toast({
             message: res.data.msg,
             position: 'bottom',
             duration: 1500
           });
-          var countDown = setInterval( () => {
-            var time = this.seconds;
-            time--;
-            this.seconds = time;
-            this.lockBtn = 0;
-            if (!time) {
-              clearInterval(countDown);
-              this.lockBtn = 1;
-              //span.style.color = '';
-            }
-          }, 1000);
+
+          if(res.data.code == '0000'){
+
+            var countDown = setInterval( () => {
+              var time = this.seconds;
+              time--;
+              this.seconds = time;
+              this.lockBtn = 0;
+
+              if (!time) {
+                clearInterval(countDown);
+                this.soundCodeShow = true;
+                this.lockBtn = 1;
+                //span.style.color = '';
+              }
+
+            }, 1000);
+
+          }else{
+
+            this.seconds = 0;
+
+          }
+
         }).catch( (res) => {
           console.log(res);
           alert(res.data.msg);
@@ -147,6 +167,65 @@
             duration: 1500
           })
         }
+      },
+
+
+
+      getSoundCode: function () {
+
+        if(this.soundCodeTime < 60){
+
+          this.$toast({
+
+            message: '操作过于频繁，请稍后再试',
+            position: 'middle',
+            duration: 1500
+
+          });
+
+          return;
+
+        }
+
+        /*
+        * 接口： 更换用户手机号-原手机号语音验证码
+        * 请求方式： GET
+        * 接口： /jx/action/oldmobileaudiocheck
+        * 传参： null
+        * */
+        this.$http({
+          method: 'get',
+          url: process.env.API_ROOT + 'jx/action/oldmobileaudiocheck',
+        }).then(res=>{
+
+          this.$toast({
+
+            message: res.data.msg,
+            position: 'middle',
+            duration: 1500
+
+          });
+
+          if(res.data.code == '0000'){
+
+            this.soundCodeTime = 0;
+
+            var addTime = setInterval(()=>{
+
+              this.soundCodeTime++;
+
+              if(this.soundCodeTime > 60){
+
+                clearInterval(addTime);
+
+              }
+
+            },1000);
+
+          }
+
+        })
+
       }
     }
   }

@@ -9,7 +9,7 @@
       <div class="field">
         <i class="iconfont icon-sign_pen color_text"></i>
         <input type="text" pattern="\d*" placeholder="请输入验证码" v-model="checkCode" class="code" maxlength="6">
-        <span v-show="show" class="get_code color_background" @click="registerMsg">获取验证码</span>
+        <span v-show="show" class="get_code color_background" @click="registerMsg('code')">获取验证码</span>
         <span v-show="!show" class="get_code color_text_bg">{{count}}s后重新发送</span>
 
       </div>
@@ -25,6 +25,7 @@
 
       <orangeBtn v-on:clickEvent="settingFn" :name="btnName"></orangeBtn>
 
+    <div class="get_sound_code" v-if="soundCodeShow">没有收到验证码？请尝试获取<span class="color_text" @click="registerMsg('sound')">语音验证码</span></div>
 
 
 
@@ -65,6 +66,10 @@
 
         channel:'',
 
+        soundCodeShow: false,
+
+        soundCodeTime: 60
+
 
       }
 
@@ -85,7 +90,8 @@
     methods:{
 
 
-      registerMsg:function () {
+      //获取验证码
+      registerMsg:function (type) {
 
         var _this= this;
 
@@ -106,74 +112,87 @@
 
         else {
 
-          /**
-           * 接口：忘记密码发送短信认证
-           * 请求方式：/jx/action/forgetmsg
-           * 接口：GET
-           * 入参：mobile
-           **/
-          this.$http({
+          (type == 'code') && (this.getCode());
 
-            method: 'get',
-
-            url:process.env.API_ROOT+'jx/action/forgetmsg',
-
-            //url:process.env.API_ROOT+'jx/action/registmsg',
-
-            params:{
-
-              mobile:_this.mobile,
-
-              channel: _this.channel
-
-            }
-
-          }).then((res)=>{
-
-            console.log(res.data);
-
-            if(res.data.code=='0000'){
-
-              this.$toast({
-
-                message:  res.data.msg,
-                position: 'bottom',
-                duration: 1500
-
-              });
-
-              this.getCode();
-
-
-            }
-
-            else {
-
-              this.$toast({
-
-                message:  res.data.msg,
-                position: 'bottom',
-                duration: 1500
-
-              });
-
-            }
-
-
-
-          }).catch((res)=>{
-
-            //console.log(res.data);
-
-
-          })
-
+          (type == 'sound') && (this.getSoundCode());
 
         }
 
       },
 
-      getCode:function(){
+
+
+      getCode: function () {
+
+        var _this = this;
+
+        /**
+         * 接口：忘记密码发送短信认证
+         * 请求方式：/jx/action/forgetmsg
+         * 接口：GET
+         * 入参：mobile
+         **/
+        this.$http({
+
+          method: 'get',
+
+          url:process.env.API_ROOT+'jx/action/forgetmsg',
+
+          //url:process.env.API_ROOT+'jx/action/registmsg',
+
+          params:{
+
+            mobile:_this.mobile,
+
+            channel: _this.channel
+
+          }
+
+        }).then((res)=>{
+
+          console.log(res.data);
+
+          if(res.data.code=='0000'){
+
+            this.$toast({
+
+              message:  res.data.msg,
+              position: 'bottom',
+              duration: 1500
+
+            });
+
+            this.countdown();
+
+
+          }
+
+          else {
+
+            this.$toast({
+
+              message:  res.data.msg,
+              position: 'bottom',
+              duration: 1500
+
+            });
+
+          }
+
+
+
+        }).catch((res)=>{
+
+          //console.log(res.data);
+
+
+        })
+
+      },
+
+
+      //倒计时
+      countdown:function(){
 
         const TIME_COUNT = 60;
 
@@ -195,6 +214,8 @@
 
               clearInterval(this.timer);
 
+              this.soundCodeShow = true;
+
               this.timer = null;
 
             }
@@ -205,6 +226,8 @@
 
       },
 
+
+      //设置新密码
       settingFn: function () {
 
         var _this = this;
@@ -366,6 +389,81 @@
 
 
       },
+
+
+
+      //获取语音验证码
+      getSoundCode: function () {
+
+        var _this = this;
+
+        if(this.soundCodeTime < 60){
+
+          this.$toast({
+
+            message: '操作过于频繁，请稍后再试',
+            position: 'middle',
+            duration: 1500
+
+          });
+
+          return;
+
+        }
+
+        /**
+         * 接口：忘记密码发送语音短信
+         * 请求方式：/jx/action/forgetaudiomsg
+         * 接口：GET
+         * 入参：mobile
+         **/
+        this.$http({
+
+          method: 'get',
+
+          url:process.env.API_ROOT+'jx/action/forgetaudiomsg',
+
+          //url:process.env.API_ROOT+'jx/action/registmsg',
+
+          params:{
+
+            mobile:_this.mobile,
+
+            channel: _this.channel
+
+          }
+
+        }).then(res=>{
+
+          this.$toast({
+
+            message: res.data.msg,
+            position: 'middle',
+            duration: 1500
+
+          });
+
+          if(res.data.code == '0000'){
+
+            this.soundCodeTime = 0;
+
+            var addTime = setInterval(()=>{
+
+              this.soundCodeTime++;
+
+              if(this.soundCodeTime > 60){
+
+                clearInterval(addTime);
+
+              }
+
+            },1000);
+
+          }
+
+        })
+
+      }
 
 
 
