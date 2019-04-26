@@ -75,6 +75,12 @@
 
             break;
 
+          case'jianzhile':
+
+            document.title = '兼职乐';
+
+            break;
+
         }
 
       }
