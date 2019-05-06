@@ -319,17 +319,12 @@
             if(res.data.code == '0000'){
               setTimeout(()=>{
                 toast.close();
-                if(this.getStorage('addCard') == 'withdraw'){
-                  localStorage.removeItem('addCard');
-                    this.$router.push('/withdraw');
-                    return;
-                }
-                else if(localStorage.getItem('booking') == 1){
+                if(localStorage.getItem('booking') == 1){
                   (localStorage.getItem('bookingList') == '1')? (localStorage.removeItem('bookingList')) : localStorage.setItem('addBankBack','1');
                   this.$router.replace('/addBookingWithdrawals');
                   return;
                 }
-                this.$router.push('/bankCard');
+                this.$router.go(-1);
               },500);
             }
           }).catch((res)=>{

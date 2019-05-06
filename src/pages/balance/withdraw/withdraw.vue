@@ -1,33 +1,50 @@
 <template>
   <div class="withdraw" v-on:click="inputShow=false">
     <div class="withdraw_info">
+      <div class="withdraw_type">
+        <div class="bankcard" v-bind:class="{'used color_text':(withdrawType == 'bankCard')}" v-on:click="withdrawType = 'bankCard'">提现至银行卡</div>
+        <div class="alipay" v-bind:class="{'used color_text': (withdrawType == 'alipay')}" v-on:click="withdrawType = 'alipay'">提现至支付宝</div>
+      </div>
       <div class="withdraw_bank color_background_gradient">
-        <div v-on:click="pickerShow=true">
-          <div class="withdraw_bank_info" v-if="bankList.length==0">
-            <img src="">
-            <div class="bank_info" v-if="bankList.length==0">
-              <span></span>
-              <span></span>
+        <!--银行卡提现-->
+        <div v-if="withdrawType == 'bankCard'">
+          <div class="withdraw_bank_info" v-if="JSON.stringify(this.userBankCard) == '{}'" v-on:click="$router.push('/addCard')">
+            <div class="add_bank">
+              <div class="add">+</div>
+              <div>添加银行卡</div>
             </div>
           </div>
-          <div class="withdraw_bank_info" v-else>
-            <img v-bind:src="bankList[index].img">
+          <div class="withdraw_bank_info" v-else v-on:click="$router.push('bankCard')">
+            <img v-bind:src="userBankCard.img">
             <div class="bank_info">
-              <span class="bank_name">{{bankList[index].bankName}}</span>
-              <span class="bank_type">{{bankList[index].bankType}}</span>
-              <span class="bank_No">**** **** **** {{bankList[index].bankNo.substr(-4)}}</span>
+              <span class="bank_name">{{userBankCard.bankName}}</span>
+              <span class="bank_type">{{userBankCard.cardType}}</span>
+              <span class="bank_No">**** **** **** {{(userBankCard.bankNo + '').substr(-4)}}</span>
+            </div>
+          </div>
+        </div>
+        <!--支付宝提现-->
+        <div v-else-if="withdrawType == 'alipay'">
+          <div class="withdraw_alipay_info" v-if="JSON.stringify(this.alipay) == '{}'" v-on:click="$router.push('/addAlipay')">
+            <div class="add_bank">
+              <div class="add">+</div>
+              <div>添加支付宝账号</div>
+            </div>
+          </div>
+          <div class="withdraw_alipay_info" v-else v-on:click="$router.push('alipayList')">
+            <img src="../../../../static/images/alipay.png">
+            <div class="alipay_info">
+              <span class="alipay_name">{{alipay.userName}}</span>
+              <span class="alipay_No">{{alipay.alipayNo}}</span>
             </div>
           </div>
         </div>
       </div>
       <div class="withdraw_money">
-        <div class="add_bank" v-on:click="$router.push('/addCard')">
-          <span>添加新卡</span>
-        </div>
         <div class="withdraw_money_ps">单笔￥<span>{{amountMin|thousandBitSeparator}}</span>-￥<span>{{amountMax|thousandBitSeparator}}</span>（手续费<span>{{rate}}</span>%）</div>
         <div class="withdraw_money_input">
           <span>￥</span>
-          <div v-on:click="inputShow=true" v-on:click.stop>
+          <div v-on:click="inputNum" v-on:click.stop>
             <span class="money_show">{{withdrawMoney}}</span>
             <span class="input_cursor" v-if="inputShow==true"></span>
             <span v-if="withdrawMoney.length == 0">请输入提现金额</span>
@@ -63,14 +80,6 @@
 
     </div>
 <!--    <serviceArea :type1="serviceLeft" :type2="serviceRight" :iconName1="iconName1" :iconName2="iconName2" v-on:clickEventLeft="customerFn" v-on:clickEventRight="moreShow=true" :spanShow="true"></serviceArea>-->
-    <!--选择银行卡-->
-    <mt-popup class="information_picker" v-model="pickerShow" position="bottom">
-      <div class="picker_btn">
-        <mt-button v-on:click="pickerShow=false">取消</mt-button>
-        <mt-button v-on:click="getCardType">确认</mt-button>
-      </div>
-      <mt-picker v-bind:slots="slots" v-on:change="onValueChange"></mt-picker>
-    </mt-popup>
     <!--确认提现按钮-->
     <mt-popup v-model="withdrawClick" position="bottom">
       <div class="withdraw_money_info">
@@ -138,33 +147,26 @@
         monthMaxAmount: '',//每月最大提现金额
         rate: '',//费率,
         isSecurity: '',//支付验证方式
-        userBankCardDTOList: [],//银行卡信息列表
-        mountedDid: false,//检测数据是否获取成功
-        bankList: [],//处理后的银行卡信息列表，用于页面循环中
+        userBankCard: {},//银行卡信息
         bankCardJson: bankCardJson,//银行卡信息数组
-        slots: [
-          {
-            values: [],
-            textAlign: 'center'
-          }
-        ],//选择银行卡弹窗的数据
-        pickerShow: false,//控制选择银行卡弹窗是否显示
         changeValue: '',//选择银行卡弹窗的数值
-        index: 0,//被选择的银行卡位于银行卡数组的位置
         withdrawClick: false,//控制提现弹窗是否显示
         withdrawBtnName: '确认',//提现弹窗按钮名称
         moreShow: false,//控制联系客服按钮是否显示
-        inputShow: true,//控制输入框是否显示
+        inputShow: false,//控制输入框是否显示
         passwordinput: false,//输入密码/验证码弹出框是否显示
         password: '',//密码/验证码
         used: true,//获取验证码按钮判断
         seconds: '',//倒计时
-        bankCardId: '',//银行卡卡号
         mobile: '',//用户手机号
 
         passwordInputShow: false,
 
-        soundCodeTime: 60
+        soundCodeTime: 60,
+
+        withdrawType: 'bankCard',
+
+        alipay: {}
 /*
         serviceLeft: '联系客服',
         serviceRight: '更多',
@@ -183,26 +185,6 @@
       this.$messagebox.close();
     },
     watch: {
-      //监听数据是否获取成功
-      mountedDid: function () {
-        for(var bankCard of this.userBankCardDTOList){
-          var bankInfo = {};
-          bankInfo.bankName = bankCard.bankName;
-          if(bankCard.cardType == 1){
-             bankInfo.bankType = '储蓄卡';
-          }else if(bankCard.cardType == 2){
-            bankInfo.bankType = '信用卡';
-          }
-          for(var bankImgList of this.bankCardJson){
-            if(bankImgList.name == bankCard.bankName){
-              bankInfo.img = bankImgList.img;
-            }
-          }
-          this.slots[0].values.push(bankCard.bankName + '(' + bankCard.bankNo.substr(-4) + ')');
-          bankInfo.bankNo = bankCard.bankNo;
-          this.bankList.push(bankInfo);
-        }
-      },
       //监听提现金额格式
       withdrawMoney: function () {
         var reg = /^\d+\.?(\d{1,2})?$/;
@@ -221,6 +203,9 @@
 
       /*页面初始化*/
       getData: function () {
+        localStorage.setItem('withdraw','true');
+
+        (!!this.$store.type) && (this.withdrawType = 'alipay') && (delete this.$store.type);
 
         //美恰初始化
         customerInit({
@@ -233,131 +218,70 @@
           this.mobile = localStorage.getItem('mobile');
         }
 
+
         /**
-         * 接口：用户中心
-         * 请求方式：POST
-         * 接口：/user/center/usercenter
+         * 接口：检测用户发起提现操作
+         * 请求方式：GET
+         * 接口：user/work/checkwithdraw
          * 入参：null
          **/
         this.$http({
-          method: 'post',
-          url: process.env.API_ROOT + 'user/center/usercenter',
-          header: {
-            'content-type': 'application/x-www-form-urlencoded', // post请求
+          method: 'get',
+          url: process.env.API_ROOT + 'user/work/checkwithdraw'
+        }).then(function(res){
+
+          console.log(res);
+          if(res.data.code == '0000'){
+            this.amountMax = res.data.data.amountMax;
+            this.amountMin = res.data.data.amountMin;
+            this.balance = res.data.data.balance;
+            this.dayMaxAmount = res.data.data.dayMaxAmount;
+            this.monthMaxAmount = res.data.data.monthMaxAmount;
+            this.rate = res.data.data.rate;
+
+            this.changeBankDetail(res.data.data.userBankCardDTOList);
+
+            this.getAlipay();
           }
-        }).then((res)=>{
-          if(res.data.code == '3001'){
-            this.$router.push('/');
+        }.bind(this));
+
+      },
+
+      //修改银行卡信息
+      changeBankDetail: function (data) {
+
+        if(!!data){
+
+          if(!!this.$store.bank){
+
+            for(var bankCard of data){
+
+              if(this.$store.bank.bankNo == bankCard.bankNo){
+
+                this.userBankCard = bankCard;
+
+              }
+
+            }
+
           }else{
-            this.isSecurity = res.data.data.isSecurity;
-            if(res.data.data.isVerify == 0 || res.data.data.isVerify == 3){
-              this.$messagebox({
-                title: '提示',
-                message: '当前账户尚未进行实名认证，完成实名认证后方可提现',
-                showConfirmButton: true,
-                showCancelButton: true,
-                confirmButtonText: '去认证',
-                cancelButtonText: '取消',
-                cancelButtonClass:'cancel_btn',
-                confirmButtonClass:'confirm_btn_orange',
-                closeOnClickModal: false
-              }).then((res)=>{
-                if(res == 'cancel'){
-                  this.$router.go(-1);
-                }else if(res == 'confirm'){
-                  this.setStorage('hrefId','4');
-                  this.$router.push('/certificationChoose');
-                }
-              });
-            }else if(res.data.data.isVerify == 2){
-              this.$messagebox({
-                title: '提示',
-                message: '实名认证审核中，审核通过后方可提现',
-                confirmButtonText: '我知道了',
-                confirmButtonClass:'confirm_btn_orange',
-              }).then(()=>{
-                this.$router.go(-1);
-              })
-            }else{
-              /**
-               * 接口：检测用户发起提现操作
-               * 请求方式：GET
-               * 接口：user/work/checkwithdraw
-               * 入参：null
-               **/
-              this.$http({
-                method: 'get',
-                url: process.env.API_ROOT + 'user/work/checkwithdraw'
-              }).then((res)=>{
 
-                console.log(res);
-                if(res.data.code == -10){
-                  this.$messagebox({
-                    title: '提示',
-                    message: '您有文件待签署，请至 “ 我的签约”中完成签署后再提现',
-                    showConfirmButton: true,
-                    showCancelButton: true,
-                    confirmButtonText: '去签约',
-                    cancelButtonText: '取消',
-                    cancelButtonClass:'cancel_btn',
-                    confirmButtonClass:'confirm_btn_orange',
-                  }).then((res)=>{
+            this.userBankCard = data[0];
 
-                    if(res == 'confirm'){
+          }
 
-                      this.$router.push('/contractList');
+          this.userBankCard.cardType == 1 ? (this.userBankCard.cardType = '储蓄卡') : (this.userBankCard.cardType = '信用卡');
 
-                    }
-
-
-                  }).catch((res=>{}))
-
-                }
-                else if(res.data.code == -7){
-                  this.$messagebox({
-                    title: '提示',
-                    message: res.data.msg,
-                    showConfirmButton: true,
-                    showCancelButton: true,
-                    confirmButtonText: '去添加',
-                    cancelButtonText: '取消',
-                    cancelButtonClass:'cancel_btn',
-                    confirmButtonClass:'confirm_btn_orange',
-                  }).then((res)=>{
-                    if(res == 'cancel'){
-                      this.$router.go(-1);
-                    }else if(res == 'confirm'){
-                      this.setStorage('addCard','withdraw');
-                      this.$router.push('/addCard');
-                    }
-                  })
-                }else if(res.data.code == '0000'){
-                  this.amountMax = res.data.data.amountMax;
-                  this.amountMin = res.data.data.amountMin;
-                  this.balance = res.data.data.balance;
-                  this.dayMaxAmount = res.data.data.dayMaxAmount;
-                  this.monthMaxAmount = res.data.data.monthMaxAmount;
-                  this.rate = res.data.data.rate;
-                  this.userBankCardDTOList = res.data.data.userBankCardDTOList;
-                  this.mountedDid = true;
-                }
-              })
+          for(var bankImgList of this.bankCardJson){
+            if(bankImgList.name == this.userBankCard.bankName){
+              this.userBankCard.img = bankImgList.img;
             }
           }
-        });
+
+        }
 
       },
 
-
-      //选择银行卡弹出框值
-      onValueChange: function (picker,values) {
-        this.changeValue = values;
-      },
-      //获取选择银行卡弹出框值
-      getCardType: function () {
-        this.index = this.slots[0].values.indexOf(this.changeValue[0]);
-        this.pickerShow = false;
-      },
       //弹出限额提醒
       popUp: function () {
         this.$messagebox({
@@ -367,17 +291,38 @@
           confirmButtonClass:'confirm_btn_orange',
         });
       },
-      //提现按钮，弹出提现弹窗
-      withdrawFn: function () {
+
+      checkWithdraw: function () {
+
         var reg = /^\d+\.?(\d{1,2})?$/;
         var dot = /([1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?)/;
+        if(JSON.stringify(this.userBankCard) == '{}' && this.withdrawType == 'bankCard'){
+
+          this.$toast({
+            message: '请先绑定银行卡',
+            position: 'bottom',
+            duration: 1500
+          });
+          return false;
+
+        }
+        if(JSON.stringify(this.alipay) == '{}' && this.withdrawType == 'alipay'){
+
+          this.$toast({
+            message: '请先绑定支付宝',
+            position: 'bottom',
+            duration: 1500
+          });
+          return false;
+
+        }
         if(this.withdrawMoney == ''){
           this.$toast({
             message: '请输入金额',
             position: 'bottom',
             duration: 1500
           });
-          return;
+          return false;
         }
         if(parseFloat(this.withdrawMoney) < parseFloat(this.amountMin)){
           this.$toast({
@@ -385,7 +330,7 @@
             position: 'bottom',
             duration: 1500
           });
-          return;
+          return false;
         }
         if(parseFloat(this.withdrawMoney) > parseFloat(this.amountMax)){
           this.$toast({
@@ -393,7 +338,7 @@
             position: 'bottom',
             duration: 1500
           });
-          return;
+          return false;
         }
         if(parseFloat(this.withdrawMoney) > parseFloat(this.dayMaxAmount)){
           this.$toast({
@@ -401,7 +346,7 @@
             position: 'bottom',
             duration: 1500
           });
-          return;
+          return false;
         }
         if(parseFloat(this.withdrawMoney) > parseFloat(this.monthMaxAmount)){
           this.$toast({
@@ -409,7 +354,7 @@
             position: 'bottom',
             duration: 1500
           });
-          return;
+          return false;
         }
         if(parseFloat(this.withdrawMoney) > parseFloat(this.balance)){
           this.$toast({
@@ -417,7 +362,7 @@
             position: 'bottom',
             duration: 1500
           });
-          return;
+          return false;
         }
         if(!dot.test(this.withdrawMoney)){
           this.$toast({
@@ -425,7 +370,7 @@
             position: 'bottom',
             duration: 1500
           });
-          return;
+          return false;
         }
         if(!reg.test(this.withdrawMoney)){
           this.$toast({
@@ -433,20 +378,28 @@
             position: 'bottom',
             duration: 1500
           });
-          return;
+          return false;
         }
-        this.setStorage('withdraw','1');//设定值来区分是转账还是提现
-        this.setStorage('change','0');
 
-        this.setStorage('withdrawMoney',(+this.withdrawMoney).toFixed(2));
-        this.setStorage('rate',this.rate/100);
-        for(var bankCard of this.userBankCardDTOList){
-          if(this.bankList[this.index].bankNo == bankCard.bankNo){
-            this.bankCardId = bankCard.bankCardId;
-            this.setStorage('bankCardId',bankCard.bankCardId);
-          }
+        return true;
+
+      },
+
+
+      //提现按钮，弹出提现弹窗
+      withdrawFn: function () {
+        if(this.checkWithdraw()){
+
+          this.setStorage('withdraw','1');//设定值来区分是转账还是提现
+          this.setStorage('change','0');
+
+          this.setStorage('withdrawMoney',(+this.withdrawMoney).toFixed(2));
+          this.setStorage('rate',this.rate/100);
+
+          this.withdrawClick = true;
+
         }
-        this.withdrawClick = true;
+
       },
       //弹出密码/验证码框
       jumpTo: function () {
@@ -499,27 +452,48 @@
       /*密码/验证码键盘确认事件*/
       submit: function (password, type) {
 
+        var url;
+
         var params = {
 
           balance: this.withdrawMoney,
-
-          bankCardId: this.bankCardId
 
         };
 
         params[type] = password;
 
+        if(this.withdrawType == 'bankCard'){
+
+          params.bankCardId=this.userBankCard.bankCardId;
+
+          url = '/user/withdraw/dowithdraw';
+
+        }else if(this.withdrawType == 'alipay'){
+
+          params.alipayId = this.alipay.alipayId;
+
+          url = '/user/withdraw/dowithdrawtoalipay';
+
+        }
+
         /*
          * 接口： 用户发起提现操作
          * 请求方式： GET
          * 接口： /user/withdraw/dowithdraw
-         * 入参： bankCardId,balance,payPassword
+         * 入参： bankCardId,balance,payPassword,code
+         * */
+
+        /*
+         * 接口： 用户发起支付宝提现操作
+         * 请求方式： GET
+         * 接口： /user/withdraw/dowithdrawtoalipay
+         * 入参： alipayId,balance,payPassword,code
          * */
 
         this.$http({
 
           method: 'get',
-          url: process.env.API_ROOT + 'user/withdraw/dowithdraw',
+          url: process.env.API_ROOT + url,
           params: params
 
         }).then(res=>{
@@ -549,15 +523,28 @@
       //获取验证码
       getAgain: function () {
 
+        var url;
+
+        (this.withdrawType == 'bankCard') && (url = 'jx/action/withdrawmsg');
+
+        (this.withdrawType == 'alipay') && (url = 'jx/action/withdrawmsgalipay');
+
         /**
          * 接口：支付发送短信认证
          * 请求方式：GET
          * 接口：/jx/action/withdrawmsg
          * 入参：null
          * */
+
+        /**
+         * 接口：提现到支付宝支付发送短信认证
+         * 请求方式：GET
+         * 接口：/jx/action/withdrawmsgalipay
+         * 入参：null
+         * */
         this.$http({
           method: 'post',
-          url: process.env.API_ROOT + 'jx/action/withdrawmsg'
+          url: process.env.API_ROOT + url
         }).then((res)=>{
 
           this.$toast({
@@ -593,6 +580,11 @@
 
         }
 
+        var url;
+
+        (this.withdrawType == 'bankCard') && (url = 'jx/action/withdrawmsgaudio');
+
+        (this.withdrawType == 'alipay') && (url = 'jx/action/withdrawmsgaudioalipay');
 
         /**
          * 接口：支付发送语音短信认证
@@ -600,9 +592,16 @@
          * 接口：/jx/action/withdrawmsgaudio
          * 入参：null
          * */
+
+        /**
+         * 接口：提现到支付宝支付发送语音短信认证
+         * 请求方式：GET
+         * 接口：/jx/action/withdrawmsgaudioalipay
+         * 入参：null
+         * */
         this.$http({
           method: 'post',
-          url: process.env.API_ROOT + 'jx/action/withdrawmsgaudio'
+          url: process.env.API_ROOT + url
         }).then(res=>{
 
           this.$toast({
@@ -633,7 +632,81 @@
 
         })
 
+      },
+
+
+
+      inputNum: function () {
+
+        if(JSON.stringify(this.userBankCard) == '{}' && this.withdrawType == 'bankCard'){
+
+          this.$toast({
+
+            message: '请先绑定银行卡',
+            position: 'bottom',
+            duration: 1500
+
+          });
+
+        }else if(JSON.stringify(this.alipay) == '{}' && this.withdrawType == 'alipay'){
+
+          this.$toast({
+            message: '请先绑定支付宝',
+            position: 'bottom',
+            duration: 1500
+          });
+          return false;
+
+        }else{
+
+          this.inputShow = true;
+
+        }
+
+      },
+
+
+
+      getAlipay: function () {
+
+        /**
+         * 接口：获取用户支付宝信息
+         * 请求方式：GET
+         * 接口：user/alipay/getuseralipayinfo
+         * 入参：null
+         * */
+        this.$http({
+          method: 'post',
+          url: process.env.API_ROOT + 'user/alipay/getuseralipayinfo'
+        }).then(res=>{
+
+          if(res.data.code == '0000'){
+
+            this.changeAlipay(res.data.data.list);
+
+          }
+
+        });
+
+      },
+
+
+      changeAlipay: function (data) {
+
+        if(!!this.$store.alipay){
+
+          this.alipay = this.$store.alipay;
+
+          delete this.$store.alipay;
+
+        }else{
+
+          (!!data) && (this.alipay = data[0]);
+
+        }
+
       }
+
 
     },
 

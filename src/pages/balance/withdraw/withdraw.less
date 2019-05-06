@@ -9,6 +9,26 @@
   position: relative;
   overflow-x: hidden;
   .withdraw_info{
+    .withdraw_type{
+      display: flex;
+      justify-content: space-around;
+      background-color: white;
+      padding: 10px 0;
+      font-size: 16px;
+    }
+    .used{
+      position: relative;
+      &:after{
+        content: '';
+        display: block;
+        position: absolute;
+        width: 100%;
+        height: 1px;
+        border-bottom: 2px solid;
+        bottom: -10px;
+        left: 0;
+        }
+    }
     .withdraw_bank{
       margin: 15px 15px 0;
       background: linear-gradient(90deg, #ff7a3b, #ff6855);
@@ -17,22 +37,26 @@
       padding: 15px;
       color: white;
       position: relative;
-      &:after{
-        content: '';
-        display: block;
-        width: 10px;
-        height: 10px;
-        position: absolute;
-        transform: rotate(45deg);
-        top: 50%;
-        right: 15px;
-        border: 2px solid white;
-        border-bottom: none;
-        border-left: none;
-      }
-      .withdraw_bank_info{
+      .withdraw_bank_info, .withdraw_alipay_info{
         display: flex;
         position: relative;
+        .add_bank{
+          text-align: center;
+          flex: 1;
+          .add{
+            height: 30px;
+            width: 30px;
+            line-height: 30px;
+            font-size: 30px;
+            text-align: center;
+            border-radius: 50%;
+            background-color: #FEBDA7;
+            margin:0 auto 10px;
+          }
+          div{
+            font-size: 14px;
+          }
+        }
         img{
           width: 30px;
           height: 30px;
@@ -42,6 +66,19 @@
         .bank_info{
           display: flex;
           flex-direction: column;
+          &:after{
+            content: '';
+            display: block;
+            width: 10px;
+            height: 10px;
+            position: absolute;
+            transform: rotate(45deg) translateY(-50%);
+            top: 50%;
+            right: 15px;
+            border: 2px solid white;
+            border-bottom: none;
+            border-left: none;
+          }
           .bank_name{
             font-size: 16px;
           }
@@ -57,42 +94,37 @@
             }
           }
         }
+        .alipay_info{
+          display: flex;
+          flex-direction: column;
+          font-size: 16px;
+          &:after{
+            content: '';
+            display: block;
+            width: 10px;
+            height: 10px;
+            position: absolute;
+            transform: rotate(45deg) translateY(-50%);
+            top: 50%;
+            right: 15px;
+            border: 2px solid white;
+            border-bottom: none;
+            border-left: none;
+          }
+        }
+      }
+      .withdraw_alipay_info{
+        align-items: center;
+        img{
+          height: 40px;
+          width: 40px;
+        }
       }
     }
     .withdraw_money{
       width: 100%;
       background-color: white;
       box-sizing: border-box;
-      .add_bank{
-        padding: 15px;
-        position: relative;
-        font-size: 14px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        &:after{
-          border: solid 1px #c8c8cd;
-          border-bottom-width: 0;
-          border-left-width: 0;
-          content: " ";
-          display: inline-block;
-          width: 8px;
-          height: 8px;
-          transform: rotate(45deg);
-          margin-right: 10px;
-        }
-        &:before{
-          content: '';
-          display: block;
-          width: 100%;
-          height: 1px;
-          position: absolute;
-          bottom: 0;
-          left: 15px;
-          border-top: 1px solid #f1f1f1;
-          transform: scaleY(.6);
-        }
-      }
       .withdraw_money_ps{
         padding: 15px 15px 0;
         color: #ababab;
