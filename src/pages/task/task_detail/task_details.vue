@@ -261,6 +261,12 @@
 
             break;
 
+          case 'facaile':
+
+            this.imgUrl = "./static/images/facaile/jx_bg.png";
+
+            break;
+
         }
 
 
