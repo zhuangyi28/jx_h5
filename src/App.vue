@@ -141,6 +141,21 @@
 
           break;
 
+        case 'facaile':
+
+          document.title = '发才乐';
+
+          document.documentElement.style.setProperty('--mainColor', '#0a6fb8');
+
+          document.documentElement.style.setProperty('--lessColor', '#0188e9');
+
+          document.documentElement.style.setProperty('--lightColor', '#e1f2ff');
+
+          document.documentElement.style.setProperty('--borderColor', '#3eaeff');
+
+          break;
+
+
 
       }
 
