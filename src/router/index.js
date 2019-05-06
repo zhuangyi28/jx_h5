@@ -82,6 +82,8 @@ import allHistory from '@/pages/booking_withdrawals/all_history/all_history'
 import contractAgreement from '@/pages/contract/agreement/agreement'
 import bookingAgreement from '@/pages/booking_withdrawals/agreement/agreement'
 import bookingBill from '@/pages/booking_withdrawals/booking_bill/booking_bill'
+import addAlipay from '@/pages/mine/add_alipay/add_alipay'
+import alipayList from '@/pages/mine/alipay_list/alipay_list'
 
 Vue.use(Router)
 
@@ -766,6 +768,22 @@ export default new Router({
         title: '我的订单'
       },
       component: bookingBill
+    },
+    {
+      path: '/addAlipay',
+      name: 'addAlipay',
+      meta: {
+        title: '添加支付宝账号'
+      },
+      component: addAlipay
+    },
+    {
+      path: '/alipayList',
+      name: 'alipayList',
+      meta: {
+        title: '选择支付宝账号'
+      },
+      component: alipayList
     }
 
   ]

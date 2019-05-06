@@ -128,6 +128,8 @@
 
       (localStorage.getItem('bookingBack') == '1') && ((localStorage.removeItem('bookingBack')) || (this.$router.push('/bookingList')));
 
+      localStorage.removeItem('withdraw');
+
 
 
       /**

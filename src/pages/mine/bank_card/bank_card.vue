@@ -178,7 +178,7 @@
 
       chooseCard: function (card, bankName, bankNo) {
 
-        if(localStorage.getItem('booking')){
+        if(localStorage.getItem('booking') || localStorage.getItem('withdraw')){
 
           this.$store.bank = {};
 
