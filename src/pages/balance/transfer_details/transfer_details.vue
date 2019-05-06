@@ -26,15 +26,17 @@
         <div>￥{{orderAmount}}</div>
       </div>
 
-      <div class="cell">
-        <div>转账类型</div>
-        <div v-if="orderType=='02'">转出</div>
-        <div v-if="orderType=='03'">转入</div>
-      </div>
+
 
     </div>
 
     <div class="details_list">
+
+      <div class="cell">
+        <div>订单类型</div>
+        <div v-if="orderType=='02'">转账-转出</div>
+        <div v-else-if="orderType=='03'">转账-转入</div>
+      </div>
       <div class="cell">
         <div>订单时间</div>
         <div>{{createDate| fmtDateStr}}</div>

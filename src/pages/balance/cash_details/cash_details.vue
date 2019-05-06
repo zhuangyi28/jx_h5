@@ -75,6 +75,14 @@
     </div>
 
     <div class="details_list">
+
+      <div class="cell">
+        <div>订单类型</div>
+        <div v-if="orderType=='09'">提现至支付宝</div>
+        <div v-else-if="orderType=='01'||orderType=='08'">提现至银行卡</div>
+        <div v-else-if="orderType=='02'">转账-转出</div>
+        <div v-else-if="orderType=='03'">转账-转入</div>
+      </div>
       <div class="cell">
         <div>订单时间</div>
         <div>{{createDate| fmtDateStr}}</div>
@@ -84,14 +92,33 @@
         <div>订单号</div>
         <div>{{orderId}}</div>
       </div>
-      <div class="cell">
-        <div>银行</div>
-        <div>{{bankName}}</div>
+
+      <div v-if="orderType=='08'||orderType=='01'">
+
+        <div class="cell">
+          <div>银行</div>
+          <div>{{bankName}}</div>
+        </div>
+
+        <div class="cell">
+          <div>卡号</div>
+          <div>{{bankNo}}</div>
+        </div>
+
       </div>
 
-      <div class="cell">
-        <div>卡号</div>
-        <div>{{bankNo}}</div>
+      <div v-else-if="orderType=='09'">
+
+        <div class="cell">
+          <div>用户姓名</div>
+          <div>{{userName}}</div>
+        </div>
+
+        <div class="cell">
+          <div>支付宝账号</div>
+          <div>{{alipayNo}}</div>
+        </div>
+
       </div>
 
     </div>
@@ -171,6 +198,8 @@
            serviceLeft: '联系客服',
 
            iconName1:'icon-withdraw_custom',
+
+           alipayNo:''
 
 
          }
@@ -258,10 +287,33 @@
 
             this.orderType = res.data.data.orderType;
 
+            this.alipayNo = res.data.data.alipayNo
+
 
          if(res.data.data.errorMsg){
 
              this.errorMsg =  res.data.data.errorMsg
+
+         }
+
+
+         if(res.data.data.bankName&&res.data.data.bankNo){
+
+
+           this.bankName =  res.data.data.bankName;
+
+           this.bankNo =  res.data.data.bankNo;
+
+
+
+
+         }
+
+
+         if(res.data.data.alipayNo){
+
+           this.alipayNo =  res.data.data.alipayNo;
+
 
          }
 
