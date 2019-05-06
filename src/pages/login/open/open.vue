@@ -81,6 +81,12 @@
 
             break;
 
+          case'facaile':
+
+            document.title = '发才乐';
+
+            break;
+
         }
 
       }

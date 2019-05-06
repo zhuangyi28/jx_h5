@@ -198,6 +198,13 @@
 
             this.phoneNumber = 'tel:0311-68068000';
 
+            break;
+
+
+          case 'facaile':
+
+            this.phoneNumber = 'tel:4006051001';
+
             break
         }
 

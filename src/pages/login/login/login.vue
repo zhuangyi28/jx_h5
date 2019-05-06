@@ -132,6 +132,12 @@
 
           break;
 
+        case 'facaile':
+
+          this.src = "./static/images/facaile/logo.png";
+
+          break;
+
       }
 
     // console.log(this.getStorage('thisKey'))
