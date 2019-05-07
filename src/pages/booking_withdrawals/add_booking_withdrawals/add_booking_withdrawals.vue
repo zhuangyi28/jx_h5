@@ -67,7 +67,10 @@
       <div class="withdraw_end" v-on:click="selectTimeShow">
         <div class="title">
           <div><img src="../../../../static/images/cash_appt_end.png"></div>
-          <div>预约截止时间</div>
+          <div>
+            <div>预约截止时间</div>
+            <div>最后一次提现： <span class="color_text" v-if="!!newDate">{{newDate}} 00:00</span></div>
+          </div>
         </div>
         <div class="option">
           <span>{{newDate}}</span>
@@ -92,6 +95,11 @@
     </div>
 
     <orangeBtn v-bind:name="btnName" v-on:clickEvent="handleClick"></orangeBtn>
+
+    <div class="limit">
+      <div>温馨提示</div>
+      <div>限额说明：单卡单笔{{amountMax}}元，当日{{dayMaxAmount}}元，当月{{monthMaxAmount}}元</div>
+    </div>
 
     <!--提示弹框-->
     <mt-popup v-model="psShow">
@@ -415,7 +423,7 @@
 
         var nowTime = this.firstTimeBooking.split('-');
 
-        nowTime[2] = ((+nowTime[2] + 1)+'').padStart(2,'0');
+        nowTime[2] = ((+nowTime[2].slice(0,2) + 1)+'').padStart(2,'0');
 
         nowTime = nowTime.join('-');
 
@@ -490,15 +498,17 @@
 
         var now = new Date();
 
+        var show;
+
         if(this.cycleType == '按月循环'){
 
           if(parseInt(time) >= now.getDate()){
 
-            return now.getFullYear() + '-' + ((now.getMonth()+1)+'').padStart(2,'0') + '-' + (parseInt(time)+'').padStart(2,'0');
+            show =  now.getFullYear() + '-' + ((now.getMonth()+1)+'').padStart(2,'0') + '-' + (parseInt(time)+'').padStart(2,'0');
 
           }else{
 
-            return now.getFullYear() + '-' + ((now.getMonth()+2)+'').padStart(2,'0') + '-' + (parseInt(time)+'').padStart(2,'0');
+            show =  now.getFullYear() + '-' + ((now.getMonth()+2)+'').padStart(2,'0') + '-' + (parseInt(time)+'').padStart(2,'0');
 
           }
 
@@ -512,19 +522,33 @@
 
           if(week >= thisWeek){
 
-            return this.dateChange('-', new Date((new Date()).getTime()+60*60*24*1000*(week - thisWeek)));
+            show = this.dateChange('-', new Date((new Date()).getTime()+60*60*24*1000*(week - thisWeek)));
 
           }else{
 
-            return this.dateChange('-', new Date((new Date()).getTime()+60*60*24*1000*(week - thisWeek+7)));
+            show = this.dateChange('-', new Date((new Date()).getTime()+60*60*24*1000*(week - thisWeek+7)));
 
           }
 
         }else if(this.cycleType == '按日循环'){
 
-          return time;
+          show = time;
 
         }
+
+        var timeArr = show.split('-');
+
+        if(now.getFullYear() == timeArr[0] && now.getMonth()+1 == timeArr[1] && now.getDate() == timeArr[2]){
+
+          show = show + ' ' + (now.getHours()+1) + ':00';
+
+        }else{
+
+          show = show + ' 01:00';
+
+        }
+
+        return show;
 
       },
 
@@ -716,8 +740,7 @@
         this.$messagebox({
 
           title: '提示',
-          message: `*手续费：0%，单卡单笔${this.amountMax}元，当日${this.dayMaxAmount}元，当月${this.monthMaxAmount}元</br>
-          *若提现金额超出单笔最高额度，将分多笔进行提现`,
+          message: '*设置后,系统将在提现日期当天每隔1小时(整点)自动执行一次,知道执行成功<br/>*若提现金额超出单笔最高额度,将分多笔进行提现',
           confirmButtonText: '确定',
           closeOnClickModal: true,
           confirmButtonClass: 'confirm_btn_orange',

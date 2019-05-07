@@ -94,10 +94,10 @@
 
           console.log('提现')
 
-          this.orderTypes='01,08，09',
+          this.orderTypes='01,08,09';
 
           //判断导航
-            document.title="提现订单"
+            document.title="提现订单";
 
           this.loadList();
 
@@ -105,9 +105,9 @@
 
         else if(_whichBill=='2'){
 
-          console.log('转账')
+          console.log('转账');
 
-            this.orderTypes='02,03',
+            this.orderTypes='02,03';
 
           document.title="转账订单";
 
@@ -119,7 +119,7 @@
 
           console.log('我的');
 
-          document.title="我的订单"
+          document.title="我的订单";
 
           this.loadList();
 
@@ -129,9 +129,9 @@
 
           console.log('我的预约提现');
 
-          this.orderTypes='08',
+          this.orderTypes='08';
 
-          document.title="我的订单"
+          document.title="我的订单";
 
           this.loadList();
 
