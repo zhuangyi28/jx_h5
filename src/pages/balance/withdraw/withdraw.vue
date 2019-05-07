@@ -2,8 +2,8 @@
   <div class="withdraw" v-on:click="inputShow=false">
     <div class="withdraw_info">
       <div class="withdraw_type">
-        <div class="bankcard" v-bind:class="{'used color_text':(withdrawType == 'bankCard')}" v-on:click="withdrawBank">提现至银行卡</div>
-        <div class="alipay" v-bind:class="{'used color_text': (withdrawType == 'alipay')}" v-on:click="withdrawAlipay">提现至支付宝</div>
+        <div class="bankcard" v-bind:class="{'used color_text':(withdrawType == 'bankCard')}" v-on:click="withdrawBank">提现到银行卡</div>
+        <div class="alipay" v-bind:class="{'used color_text': (withdrawType == 'alipay')}" v-on:click="withdrawAlipay">提现到支付宝</div>
       </div>
       <div class="withdraw_bank color_background_gradient">
         <!--银行卡提现-->
@@ -165,7 +165,7 @@
         withdrawClick: false,//控制提现弹窗是否显示
         withdrawBtnName: '确认',//提现弹窗按钮名称
         moreShow: false,//控制联系客服按钮是否显示
-        inputShow: false,//控制输入框是否显示
+        inputShow: true,//控制输入框是否显示
         passwordinput: false,//输入密码/验证码弹出框是否显示
         password: '',//密码/验证码
         used: true,//获取验证码按钮判断
@@ -264,6 +264,8 @@
             this.changeBankDetail(res.data.data.userBankCardDTOList);
 
             this.withdrawType = 'bankCard';
+
+            this.inputShow = true;
           }
         });
 
@@ -295,6 +297,8 @@
             this.getAlipay();
 
             this.withdrawType = 'alipay';
+
+            this.inputShow = true;
 
           }
 

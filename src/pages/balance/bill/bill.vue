@@ -12,8 +12,8 @@
         <div class="bill_content">
           <div class="bill_cell">
             <p>￥{{item.orderAmount}}</p>
-            <p v-if="item.orderType=='01'||item.orderType=='08'">提现至银行卡</p>
-            <p v-if="item.orderType=='09'">提现至支付宝</p>
+            <p v-if="item.orderType=='01'||item.orderType=='08'">提现到银行卡</p>
+            <p v-if="item.orderType=='09'">提现到支付宝</p>
             <p v-else-if="item.orderType=='02'">转账-转出</p>
             <p v-else-if="item.orderType=='03'">转账-转入</p>
           </div>

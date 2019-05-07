@@ -18,7 +18,7 @@
 
     <!--提现输入-->
     <div class="withdraw_detail">
-      <div class="title">提现金额<span class="help color_text" v-on:click="showPs">?</span></div>
+      <div class="title">提现金额<span class="help btn_border" v-on:click="showPs">?</span></div>
       <div class="withdraw_input">
         <span>￥</span>
         <div v-on:click="keyboardShow = true" v-on:click.stop>
@@ -158,7 +158,7 @@
 
     <!--密码/验证码输入组件-->
     <keep-alive>
-      <passwordBox v-on:clickEvent="submit" v-if="passwordBoxShow" v-on:boxClose="boxClose" v-on:getCode="getCode" ref="passwordbox"></passwordBox>
+      <passwordBox v-on:clickEvent="submit" v-if="passwordBoxShow" v-on:boxClose="boxClose" v-on:getCode="getCode" ref="passwordbox" v-on:getSoundCode="getSoundCode"></passwordBox>
     </keep-alive>
 
     <keyboard v-if="keyboardShow" v-on:num="keyboardInput" v-bind:newNum="withdrawMoney" ref="keyboard" v-on:inputClose="inputClose"></keyboard>
@@ -270,7 +270,9 @@
 
         timeBoxShow: false,//时间插件状态
 
-        keyboardShow: false
+        keyboardShow: false,
+
+        soundCodeTime: 60
 
       }
 
@@ -740,8 +742,8 @@
         this.$messagebox({
 
           title: '提示',
-          message: '*设置后,系统将在提现日期当天每隔1小时(整点)自动执行一次,知道执行成功<br/>*若提现金额超出单笔最高额度,将分多笔进行提现',
-          confirmButtonText: '确定',
+          message: '*设置后,系统将在提现日期当天每隔1小时(整点)自动执行一次,直到执行成功<br/>*若提现金额超出单笔最高额度,将分多笔进行提现',
+          confirmButtonText: '我知道了',
           closeOnClickModal: true,
           confirmButtonClass: 'confirm_btn_orange',
 
@@ -822,8 +824,7 @@
          **/
         this.$http({
           method: 'post',
-          url: process.env.API_ROOT + 'jx/action/appointment',
-          params: this.params
+          url: process.env.API_ROOT + 'jx/action/appointment'
         }).then(res=>{
 
           this.$toast({
@@ -858,6 +859,69 @@
       inputClose: function () {
 
         this.keyboardShow = false;
+
+      },
+
+
+      getSoundCode: function () {
+
+        if(this.soundCodeTime < 60){
+
+          this.$toast({
+
+            message: '操作过于频繁，请稍后再试',
+            position: 'middle',
+            duration: 1500
+
+          });
+
+          return;
+
+        }
+
+        /**
+         * 接口：预约提现发送语音验证码
+         * 请求方式：GET
+         * 接口：jx/action/appointmentaudio
+         * 入参：null
+         * */
+
+        this.$http({
+
+          method: 'get',
+
+          url: process.env.API_ROOT + 'jx/action/appointmentaudio',
+
+
+        }).then(res=>{
+
+          this.$toast({
+
+            message: res.data.msg,
+            position: 'middle',
+            duration: 1500
+
+          });
+
+          if(res.data.code == '0000'){
+
+            this.soundCodeTime = 0;
+
+            var addTime = setInterval(()=>{
+
+              this.soundCodeTime++;
+
+              if(this.soundCodeTime > 60){
+
+                clearInterval(addTime);
+
+              }
+
+            },1000);
+
+          }
+
+        })
 
       }
 
