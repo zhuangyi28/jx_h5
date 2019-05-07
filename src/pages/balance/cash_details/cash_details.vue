@@ -78,8 +78,8 @@
 
       <div class="cell">
         <div>订单类型</div>
-        <div v-if="orderType=='09'">提现至支付宝</div>
-        <div v-else-if="orderType=='01'||orderType=='08'">提现至银行卡</div>
+        <div v-if="orderType=='09'">提现到支付宝</div>
+        <div v-else-if="orderType=='01'||orderType=='08'">提现到银行卡</div>
         <div v-else-if="orderType=='02'">转账-转出</div>
         <div v-else-if="orderType=='03'">转账-转入</div>
       </div>
