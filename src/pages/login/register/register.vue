@@ -63,7 +63,7 @@
 
         channel:'',
 
-        getSoundCodeShow: false,//语音验证码显示
+        getSoundCodeShow: true,//语音验证码显示
 
         soundCodeTime: 60
 
@@ -116,7 +116,7 @@
 
           this.$toast({
 
-            message: '请输入正确的短信验证码',
+            message: '请输入正确的验证码',
             position: 'bottom',
             duration: 1500
 

@@ -66,7 +66,7 @@
 
         channel:'',
 
-        soundCodeShow: false,
+        soundCodeShow: true,
 
         soundCodeTime: 60
 

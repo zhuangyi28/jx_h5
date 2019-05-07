@@ -2,8 +2,8 @@
   <div class="withdraw" v-on:click="inputShow=false">
     <div class="withdraw_info">
       <div class="withdraw_type">
-        <div class="bankcard" v-bind:class="{'used color_text':(withdrawType == 'bankCard')}" v-on:click="withdrawType = 'bankCard'">提现至银行卡</div>
-        <div class="alipay" v-bind:class="{'used color_text': (withdrawType == 'alipay')}" v-on:click="withdrawType = 'alipay'">提现至支付宝</div>
+        <div class="bankcard" v-bind:class="{'used color_text':(withdrawType == 'bankCard')}" v-on:click="withdrawBank">提现至银行卡</div>
+        <div class="alipay" v-bind:class="{'used color_text': (withdrawType == 'alipay')}" v-on:click="withdrawAlipay">提现至支付宝</div>
       </div>
       <div class="withdraw_bank color_background_gradient">
         <!--银行卡提现-->
@@ -219,6 +219,16 @@
         }
 
 
+        this.withdrawType == 'bankCard' && (this.withdrawBank());
+
+        this.withdrawType == 'alipay' && (this.withdrawAlipay());
+
+      },
+
+
+
+      withdrawBank: function () {
+
         /**
          * 接口：检测用户发起提现操作
          * 请求方式：GET
@@ -228,7 +238,7 @@
         this.$http({
           method: 'get',
           url: process.env.API_ROOT + 'user/work/checkwithdraw'
-        }).then(function(res){
+        }).then(res=>{
 
           console.log(res);
           if(res.data.code == '0000'){
@@ -241,9 +251,42 @@
 
             this.changeBankDetail(res.data.data.userBankCardDTOList);
 
-            this.getAlipay();
+            this.withdrawType = 'bankCard';
           }
-        }.bind(this));
+        });
+
+      },
+
+
+      withdrawAlipay: function () {
+
+        /**
+         * 接口：获取支付宝限额信息
+         * 请求方式：GET
+         * 接口：user/withdraw/getalipaylimit
+         * 入参：null
+         * */
+        this.$http({
+          method: 'post',
+          url: process.env.API_ROOT + 'user/withdraw/getalipaylimit'
+        }).then(res=>{
+
+          if(res.data.code == '0000'){
+
+            this.amountMax = res.data.data.amountMax;
+            this.amountMin = res.data.data.amountMin;
+            this.balance = res.data.data.balance;
+            this.dayMaxAmount = res.data.data.dayMaxAmount;
+            this.monthMaxAmount = res.data.data.monthMaxAmount;
+            this.rate = res.data.data.rate;
+
+            this.getAlipay();
+
+            this.withdrawType = 'alipay';
+
+          }
+
+        });
 
       },
 
@@ -510,7 +553,11 @@
 
           if(res.data.code == '0000'){
 
-            (this.setStorage('orderId',res.data.data));
+            this.setStorage('orderId',res.data.data);
+
+            this.withdrawType == 'alipay' && (localStorage.setItem('withdraw','09'));
+
+            this.withdrawType == 'bankCard' && (localStorage.setItem('withdraw', '01'));
 
             setTimeout(() => {
               this.$router.replace( '/paySuccess');
