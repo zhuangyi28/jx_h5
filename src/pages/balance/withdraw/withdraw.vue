@@ -10,7 +10,7 @@
         <div v-if="withdrawType == 'bankCard'">
           <div class="withdraw_bank_info" v-if="JSON.stringify(this.userBankCard) == '{}'" v-on:click="$router.push('/addCard')">
             <div class="add_bank">
-              <div class="add">+</div>
+              <div class="add person_bg_color">+</div>
               <div>添加银行卡</div>
             </div>
           </div>
@@ -27,7 +27,7 @@
         <div v-else-if="withdrawType == 'alipay'">
           <div class="withdraw_alipay_info" v-if="JSON.stringify(this.alipay) == '{}'" v-on:click="$router.push('/addAlipay')">
             <div class="add_bank">
-              <div class="add">+</div>
+              <div class="add person_bg_color">+</div>
               <div>添加支付宝账号</div>
             </div>
           </div>
@@ -44,7 +44,7 @@
         <div class="withdraw_money_ps">单笔￥<span>{{amountMin|thousandBitSeparator}}</span>-￥<span>{{amountMax|thousandBitSeparator}}</span>（手续费<span>{{rate}}</span>%）</div>
         <div class="withdraw_money_input">
           <span>￥</span>
-          <div v-on:click="inputNum" v-on:click.stop>
+          <div v-on:click="inputNum('show')" v-on:click.stop>
             <span class="money_show">{{withdrawMoney}}</span>
             <span class="input_cursor" v-if="inputShow==true"></span>
             <span v-if="withdrawMoney.length == 0">请输入提现金额</span>
@@ -52,12 +52,12 @@
         </div>
         <div class="withdraw_money_show">
           <span>可提额度{{balance|thousandBitSeparator}}元<span class="pop_up" v-on:click="popUp">?</span></span>
-          <span class="color_text" v-on:click="withdrawMoney = balance">全部提现</span>
+          <span class="color_text" v-on:click="inputNum('all')">全部提现</span>
         </div>
       </div>
     </div>
     <orangeBtn v-bind:name="btnName" v-on:clickEvent="withdrawFn"></orangeBtn>
-    <div class="withdraw_ps">
+    <div class="withdraw_ps" v-if="withdrawType == 'bankCard'">
       <div class="title">温馨提示</div>
       <div class="content">
         <span>1、订单提交后工作日一般2小时内处理，如出款失败，则5个工作日内退款至原支付账户，具体以银行时间为准</span>
@@ -67,6 +67,18 @@
       </div>
       <div class="content">
         <span>3、若提现时系统频繁退款，建议您更换银行卡后重新提现或联系客服处理</span>
+      </div>
+    </div>
+    <div class="withdraw_ps" v-else-if="withdrawType == 'alipay'">
+      <div class="title">温馨提示</div>
+      <div class="content">
+        <span>1、提现支付宝账号须支付宝实名认证才能到账，到账时间为提交后1-2小时。</span>
+      </div>
+      <div class="content">
+        <span>2、请提交订单前确认邮箱和手机绑定了单一支付宝账户，否则会提现失败。</span>
+      </div>
+      <div class="content">
+        <span>3、限额说明：单笔<span>{{amountMax|thousandBitSeparator}}</span>元，当日{{dayMaxAmount|thousandBitSeparator}}元，当月{{monthMaxAmount|thousandBitSeparator}}元</span>
       </div>
     </div>
 
@@ -327,9 +339,13 @@
 
       //弹出限额提醒
       popUp: function () {
+        var message;
+        this.withdrawType == 'alipay' && (message = '单笔');
+        this.withdrawType == 'bankCard' && (message = '单卡单笔');
+
         this.$messagebox({
           title: '提现限额说明',
-          message: '单卡单笔'+this.amountMax+'元，当日'+this.dayMaxAmount+'元，当月'+this.monthMaxAmount+'元',
+          message: message+this.amountMax+'元，当日'+this.dayMaxAmount+'元，当月'+this.monthMaxAmount+'元',
           confirmButtonText: '确认',
           confirmButtonClass:'confirm_btn_orange',
         });
@@ -352,7 +368,7 @@
         if(JSON.stringify(this.alipay) == '{}' && this.withdrawType == 'alipay'){
 
           this.$toast({
-            message: '请先绑定支付宝',
+            message: '请先绑定支付宝账号',
             position: 'bottom',
             duration: 1500
           });
@@ -478,7 +494,7 @@
 
         this.setStorage('whichBill', '1');
 
-        this.$router.push('/bill')
+        this.$router.push('/bill');
 
       },
 
@@ -683,7 +699,7 @@
 
 
 
-      inputNum: function () {
+      inputNum: function (type) {
 
         if(JSON.stringify(this.userBankCard) == '{}' && this.withdrawType == 'bankCard'){
 
@@ -706,7 +722,9 @@
 
         }else{
 
-          this.inputShow = true;
+          type == 'all' && (this.withdrawMoney = this.balance);
+
+          type == 'show' && (this.inputShow = true);
 
         }
 
