@@ -23,7 +23,7 @@
 
     mounted () {
 
-      (localStorage.getItem('needBackHome')) && (this.backHomeShow = true) && (localStorage.removeItem('needBackHome'));
+      (localStorage.getItem('needBackHome')) && (this.backHomeShow = true);
 
       (!this.getCookie('anotherCompany') || this.getCookie('anotherCompany') == 'orange') && (this.company = true);
 
@@ -34,6 +34,8 @@
 
       //获取数据
       toHomeFn: function () {
+
+        localStorage.removeItem('needBackHome');
 
         localStorage.removeItem('contractDetailBack');
 

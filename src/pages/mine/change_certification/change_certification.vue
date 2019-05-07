@@ -52,7 +52,7 @@
         code: '',//验证码
         btnName: '确认',
 
-        soundCodeShow: false,
+        soundCodeShow: true,
 
         soundCodeTime: 60,
       }

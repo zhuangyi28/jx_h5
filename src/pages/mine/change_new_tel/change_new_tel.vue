@@ -43,7 +43,7 @@
         show: '',//获取验证码显示
         oldCode: '',//上一页面验证码
 
-        soundCodeShow: false,
+        soundCodeShow: true,
 
         soundCodeTime: 60,
       }
