@@ -1,8 +1,8 @@
 <template>
   <div class="transfer_accounts" v-on:click="inputShow=false">
     <div class="user_information">
-      <div class="user_img">
-        <img src="../../../../static/images/jx_transfer_user.png">
+      <div class="user_img color_background_gradient">
+        <img src="../../../../static/images/jx_transfer_user_new.png">
       </div>
       <div class="user_name_tel">
         <div>{{transferName}}</div>
