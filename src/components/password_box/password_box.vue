@@ -57,7 +57,7 @@
 
         used: true,
 
-        soundCodeShow: false
+        soundCodeShow: true
 
       }
 

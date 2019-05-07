@@ -1,7 +1,7 @@
 <template>
 <div class="code">
 
-  <div class="tips">为确保是您本人操作,请输入短信验证码以验证身份</div>
+  <div class="tips">为确保是您本人操作,请输入验证码以验证身份</div>
 
   <div class="iphone">
   <img  src="../../../../static/images/code_iphone.png"/>
@@ -68,7 +68,7 @@
 
         btnName:'确定',//按钮名称
 
-        soundCodeShow: false,
+        soundCodeShow: true,
 
         soundCodeTime: 60,
 
