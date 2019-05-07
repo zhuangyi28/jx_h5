@@ -91,6 +91,9 @@ button.btn_color,.btn_color {
 
   background-color:var(--borderColor)!important;
 }
+
+  border-left: 5px solid var(--mainColor)!important;
+}
 /*--------------------------------------------------------------------------*/
 /*弹框按钮等*/
 .mint-msgbox-btns> .mint-msgbox-confirm {

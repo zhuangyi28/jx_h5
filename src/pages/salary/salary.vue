@@ -15,7 +15,7 @@
           <div :class="item.state == '已确认'? '':'already_confirm'" v-on:click="clickSeeList(item.salaryDetailId)" v-bind:data-detail="item.salaryDetailId">
 
             <div class="money_detail_content">
-              <p class="company"><span>{{item.salaryMonth}}</span><span v-if="item.salaryType!='8'">收入</span></p>
+              <p class="company selected_border"><span>{{item.salaryMonth}}</span><span v-if="item.salaryType!='8'">收入</span></p>
               <p class="money color_text">实发金额：<span v-if="lookWages"><span>{{item.realAmount | thousandBitSeparator}}</span><span>元</span></span><span
                 v-else><span class="star">******</span><span>元</span></span>
               </p>
