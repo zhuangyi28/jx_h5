@@ -6,15 +6,13 @@ import Vconsole from 'vconsole';
 //var vConsole = new Vconsole();
 
 
-if(/*process.env.NODE_ENV=='development'*/0)
+if(process.env.NODE_ENV=='development')
  {
   var vConsole = new Vconsole();
 }
-/*
 else{
   var vConsole={}
 }
-*/
 
 
 export default vConsole;

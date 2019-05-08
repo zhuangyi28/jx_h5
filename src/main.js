@@ -37,10 +37,10 @@ import store from './api/store'
 
 import AMap from 'vue-amap'
 
-/*AMap.initAMapApiLoader({
+AMap.initAMapApiLoader({
   key: '91346f1a20ac9f3db7691f94b8547873',
   plugin: ['AMap.Geolocation']
-});*/
+});
 
 //!!!!!_____!!!!!!!!!!-------------控制台---------------!!!!!!!!!!!!!!!!!!!
 
