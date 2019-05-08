@@ -32,6 +32,9 @@
   </div>
 </template>
 <script>
+
+  import {location} from "../../../api/location";
+
   export default {
 
     name: 'taskFeedback',
@@ -70,11 +73,11 @@
 
     mounted(){
 
-      var lactionReload = this.getStorage('lactionReload')
+     var lactionReload = this.getStorage('lactionReload')
 
       if (lactionReload == '1') {
 
-          console.log('刷新')
+        console.log('刷新')
 
         window.location.reload();
 
@@ -82,7 +85,26 @@
 
       }
 
-      this.init()
+      /*this.init()*/
+
+      this.getLocation(); // 调用获取地理位置
+
+      setTimeout(function () {
+
+
+          if(!this.place){
+
+              console.log('没有位置啦啦啦');
+
+              this.place = '暂无位置';
+
+          }
+
+
+
+      }.bind(this),10000)
+
+
 
 
     },
@@ -93,6 +115,33 @@
         var self = this;
 
 
+        /*  if(navigator.geolocation) {
+            // 支持
+            console.log("支持地理位置接口");
+
+            var option = {
+              enableHighAccuracy : true,
+              timeout : Infinity,
+              maximumAge : 0
+            };
+
+            navigator.geolocation.getCurrentPosition(self.geoSuccess(position),self.geoError(event),option);
+
+
+
+
+          } else {
+            // 不支持
+            self.$messagebox({
+              title: '提示',
+              message: '你的微信版本太低，不支持微信JS接口，请升级到最新的微信版本！',
+              showCancelButton: false,
+              confirmButtonText: '我知道了',
+              confirmButtonClass: 'confirm_btn_orange',
+            }).then((action) => {
+            }).catch((res) => {
+            })
+          }*/
         /**
          * 接口：获取微信签名
          * 请求方式：POST
@@ -100,7 +149,7 @@
          * 入参：url
          **/
 
-        console.log(window.location.href);
+/*        console.log(window.location.href);
 
         this.$http({
 
@@ -260,7 +309,137 @@
 
 
         }).catch((res) => {
+        })*/
+
+
+      },
+
+      getLocation() {
+
+        var that = this;
+
+        var geolocation = location.initMap("map-container"); //定位
+
+        AMap.event.addListener(geolocation, "complete", result => {
+
+          console.log(result)
+
+          if(result.info=='FAILED'){
+
+            that.place = '暂无位置'
+
+            return
+
+          }
+
+          if(result.info=='NOT_SUPPORTED'){
+
+            this.$messagebox({
+              title: '提示',
+              message: '你的微信版本太低，不支持微信JS接口，请升级到最新的微信版本！',
+              showCancelButton: false,
+              confirmButtonText: '我知道了',
+              confirmButtonClass: 'confirm_btn_orange',
+            }).then((action) => {
+            }).catch((res) => {
+            })
+            return;
+
+          }
+
+
+          that.latitude = result.position.lat;
+
+          that.longitude = result.position.lng;
+
+          delete that._http.defaults.headers.common.Authorization;
+
+          //转gps
+          that._http({
+
+            method: 'get',
+
+            url: 'https://restapi.amap.com/v3/assistant/coordinate/convert',
+
+            params: {
+
+              key: '91346f1a20ac9f3db7691f94b8547873',//key值
+
+              locations: this.longitude + ',' + this.latitude,//key值
+
+              coordsys: 'gps',
+
+            }
+
+          }).then((res) => {
+
+            console.log(res.data)
+
+            this.gpsLocation = res.data.locations
+
+            if (res.data.info == 'ok') {
+
+
+              //逆编译
+              that._http({
+
+                method: 'get',
+
+                url: 'https://restapi.amap.com/v3/geocode/regeo',
+
+                params: {
+
+                  key: '91346f1a20ac9f3db7691f94b8547873',//key值
+
+                  location: this.gpsLocation
+
+                },
+
+              }).then(function (res) {
+
+                console.log(res.data);
+
+
+                console.log(res.data.regeocode.formatted_address)
+
+                that.place = res.data.regeocode.formatted_address;
+
+                that._http.defaults.headers.common.Authorization = localStorage.getItem('Authorization');
+
+
+
+
+              }.bind(this)).catch((res) => {
+
+                console.log(res);
+
+              });
+
+            }
+
+
+
+          }).catch((res) => {
+
+
+
+          })
+
+
+
+
+        });
+
+
+        AMap.event.addListener(geolocation, "error", result => {
+
+          console.log(result);
+
+          that.place = '暂无位置'
+
         })
+
+
 
 
       },
@@ -457,7 +636,8 @@
       },
 
 
-    },
+
+  },
 
     destroy(){
 
