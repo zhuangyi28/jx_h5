@@ -69,7 +69,7 @@
           <div><img src="../../../../static/images/cash_appt_end.png"></div>
           <div>
             <div>预约截止时间</div>
-            <div>最后一次提现： <span class="color_text" v-if="!!newDate">{{newDate}} 00:00</span></div>
+            <div v-if="!!newDate">最后一次提现： <span class="color_text">{{newDate}} 00:00</span></div>
           </div>
         </div>
         <div class="option">

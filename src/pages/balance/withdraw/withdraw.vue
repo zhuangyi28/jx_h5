@@ -5,7 +5,8 @@
         <div class="bankcard" v-bind:class="{'used color_text':(withdrawType == 'bankCard')}" v-on:click="withdrawBank">提现到银行卡</div>
         <div class="alipay" v-bind:class="{'used color_text': (withdrawType == 'alipay')}" v-on:click="withdrawAlipay">提现到支付宝</div>
       </div>
-      <div class="withdraw_bank color_background_gradient">
+      <div class="withdraw_bank color_background_gradient"
+           v-bind:class="{'opacity': ((withdrawType == 'bankCard') && (JSON.stringify(this.userBankCard) == '{}') || ((withdrawType == 'alipay') && (JSON.stringify(this.alipay) == '{}')))}">
         <!--银行卡提现-->
         <div v-if="withdrawType == 'bankCard'">
           <div class="withdraw_bank_info" v-if="JSON.stringify(this.userBankCard) == '{}'" v-on:click="$router.push('/addCard')">
@@ -128,9 +129,12 @@
       <calculation v-on:num="numInput" v-if="inputShow" v-bind:newNum="withdrawMoney" v-on:inputClose="inputClose" key="money"></calculation>
     </transition>
     <!--输入密码/验证码-->
-    <keep-alive>
+    <keep-alive v-if="keepalive">
       <passwordInput v-if="passwordInputShow" v-on:boxClose="passwordInputShow=false" v-on:clickEvent="submit" v-on:getCode="getAgain" v-on:getSoundCode="getSoundCode"></passwordInput>
     </keep-alive>
+    <div v-else>
+      <passwordInput v-if="passwordInputShow" v-on:boxClose="passwordInputShow=false" v-on:clickEvent="submit" v-on:getCode="getAgain" v-on:getSoundCode="getSoundCode"></passwordInput>
+    </div>
   </div>
 </template>
 <script>
@@ -165,7 +169,7 @@
         withdrawClick: false,//控制提现弹窗是否显示
         withdrawBtnName: '确认',//提现弹窗按钮名称
         moreShow: false,//控制联系客服按钮是否显示
-        inputShow: true,//控制输入框是否显示
+        inputShow: false,//控制输入框是否显示
         passwordinput: false,//输入密码/验证码弹出框是否显示
         password: '',//密码/验证码
         used: true,//获取验证码按钮判断
@@ -178,7 +182,9 @@
 
         withdrawType: 'bankCard',
 
-        alipay: {}
+        alipay: {},
+
+        keepalive: false
 /*
         serviceLeft: '联系客服',
         serviceRight: '更多',
@@ -202,6 +208,11 @@
         var reg = /^\d+\.?(\d{1,2})?$/;
         if(this.withdrawMoney == ''){
           return;
+        }
+        else if((this.withdrawMoney+'').length > 10){
+
+          this.withdrawMoney = (this.withdrawMoney+'').slice(0,10);
+
         }
         else if(this.withdrawMoney == '00'){
           this.withdrawMoney = 0;
@@ -265,7 +276,11 @@
 
             this.withdrawType = 'bankCard';
 
-            this.inputShow = true;
+            JSON.stringify(this.userBankCard) != '{}' && (this.inputShow = true);
+
+            this.withdrawMoney = '';
+
+            this.keepalive = false;
           }
         });
 
@@ -298,7 +313,11 @@
 
             this.withdrawType = 'alipay';
 
-            this.inputShow = true;
+            JSON.stringify(this.alipay)!= '{}' && (this.inputShow = true);
+
+            this.withdrawMoney = '';
+
+            this.keepalive = false;
 
           }
 
@@ -480,6 +499,8 @@
         }else{
 
           this.withdrawClick = false;
+
+          this.keepalive = true;
 
           this.passwordInputShow = true;
 
@@ -718,7 +739,7 @@
         }else if(JSON.stringify(this.alipay) == '{}' && this.withdrawType == 'alipay'){
 
           this.$toast({
-            message: '请先绑定支付宝',
+            message: '请先绑定支付宝账号',
             position: 'bottom',
             duration: 1500
           });

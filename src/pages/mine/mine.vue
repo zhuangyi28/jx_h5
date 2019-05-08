@@ -198,6 +198,8 @@
 
       localStorage.removeItem('addBankBack');
 
+      localStorage.removeItem('needBackHome');
+
       //(this.getStorage('anotherCertification') == 1) && (this.removeStorage('anotherCertification') || this.$router.push('/personalCenter'));
 
       this.bus.$emit('pageChange','3');
