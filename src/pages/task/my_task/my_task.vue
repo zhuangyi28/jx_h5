@@ -473,7 +473,7 @@
         //存下任务id 在任务详情中取
         this.setStorage('taskId',taskId);
 
-        this.setStorage(this.getStorage('mobile')+'myTaskItemState',thisState);
+        (!!this.thisState) && this.setStorage(this.getStorage('mobile')+'myTaskItemState',this.thisState);
 
         this.$router.push({path: '/taskDetail',query: {taskId: taskId, thisState: thisState}});
 
