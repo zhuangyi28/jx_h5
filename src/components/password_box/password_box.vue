@@ -8,7 +8,7 @@
         <div class="close" v-on:click="boxClose">
           <img src="../../../static/images/go.png">
         </div>
-        <span v-if="isSecurity == 1">请输入短信验证码</span>
+        <span v-if="isSecurity == 1">请输入验证码</span>
         <span v-else-if="isSecurity == 2">请输入支付密码</span>
       </div>
       <div class="code_click" v-if="isSecurity ==1">
