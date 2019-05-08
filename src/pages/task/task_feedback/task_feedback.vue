@@ -85,11 +85,11 @@
 
       }
 
-      /*this.init()*/
+      this.init();
 
-      this.getLocation(); // 调用获取地理位置
+      //this.getLocation(); // 调用获取地理位置
 
-      setTimeout(function () {
+      /*setTimeout(function () {
 
 
           if(!this.place){
@@ -102,7 +102,7 @@
 
 
 
-      }.bind(this),10000)
+      }.bind(this),10000)*/
 
 
 
@@ -115,7 +115,7 @@
         var self = this;
 
 
-        /*  if(navigator.geolocation) {
+          /*if(navigator.geolocation) {
             // 支持
             console.log("支持地理位置接口");
 
@@ -149,7 +149,7 @@
          * 入参：url
          **/
 
-/*        console.log(window.location.href);
+        console.log(window.location.href);
 
         this.$http({
 
@@ -309,7 +309,7 @@
 
 
         }).catch((res) => {
-        })*/
+        })
 
 
       },
