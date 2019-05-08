@@ -281,6 +281,8 @@
             this.withdrawMoney = '';
 
             this.keepalive = false;
+
+            this.soundCodeTime = 60;
           }
         });
 
@@ -313,11 +315,17 @@
 
             this.withdrawType = 'alipay';
 
-            JSON.stringify(this.alipay)!= '{}' && (this.inputShow = true);
+            console.log(this.alipay);
+
+            console.log(this.inputShow);
+
+            console.log(this.alipay);
 
             this.withdrawMoney = '';
 
             this.keepalive = false;
+
+            this.soundCodeTime = 60;
 
           }
 
@@ -672,7 +680,7 @@
 
         (this.withdrawType == 'bankCard') && (url = 'jx/action/withdrawmsgaudio');
 
-        (this.withdrawType == 'alipay') && (url = 'jx/action/withdrawmsgaudioalipay');
+        (this.withdrawType == 'alipay') && (url = 'jx/action/withdrawmsgalipayaudio');
 
         /**
          * 接口：支付发送语音短信认证
@@ -773,6 +781,8 @@
           if(res.data.code == '0000'){
 
             this.changeAlipay(res.data.data.list);
+
+            JSON.stringify(this.alipay)!= '{}' && (this.inputShow = true);
 
           }
 

@@ -54,6 +54,8 @@
 
       init: function () {
 
+        this.$store.type = true;
+
         /**
          * 接口：获取用户支付宝信息
          * 请求方式：GET
@@ -143,8 +145,6 @@
 
 
       chooseAlipay: function (data) {
-
-        this.$store.type = true;
 
         this.$store.alipay = data;
 
