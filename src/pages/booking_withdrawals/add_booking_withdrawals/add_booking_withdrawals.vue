@@ -397,7 +397,7 @@
 
         (this.dateFor == 'stop') && (this.newDate = this.dateChange('-',this.date));
 
-        (this.dateFor == 'start') && (this.firstTimeType = this.dateChange('-',this.date)) && (this.firstTimeBooking = this.firstTimeType);
+        (this.dateFor == 'start') && (this.firstTimeType = this.dateChange('-',this.date)) && (this.firstTimeBooking = this.firstTimeNear(this.firstTimeType));
 
       },
 
