@@ -558,13 +558,13 @@
 
           params.bankCardId=this.userBankCard.bankCardId;
 
-          url = '/user/withdraw/dowithdraw';
+          url = 'user/withdraw/dowithdraw';
 
         }else if(this.withdrawType == 'alipay'){
 
           params.alipayId = this.alipay.alipayId;
 
-          url = '/user/withdraw/dowithdrawtoalipay';
+          url = 'user/withdraw/dowithdrawtoalipay';
 
         }
 
